@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'core/services/mock_data_service.dart';
 import 'domain/models/knowledge_node.dart';
 
 void main() async {
@@ -12,6 +13,8 @@ void main() async {
     [KnowledgeNodeSchema],
     directory: dir.path,
   );
+
+  await MockDataService.populateDatabase(isar);
 
   runApp(LaurentiusApp(isar: isar));
 }
