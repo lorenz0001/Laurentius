@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/models/knowledge_node.dart';
 import '../widgets/algebraic_proof_widget.dart';
+import '../widgets/interactive/interactive_template_factory.dart';
 
 class NodeDetailScreen extends StatefulWidget {
   final KnowledgeNode node;
@@ -19,6 +20,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final node = widget.node;
+    final interactiveWidget = InteractiveTemplateFactory.buildWidget(node.interactiveData);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
@@ -96,15 +98,20 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               const SizedBox(height: 24),
 
               // Sezione Dimostrazione Algebrica
-              if (node.algebraicProof.isNotEmpty)
-                AlgebraicProofWidget(proofSteps: node.algebraicProof)
-              else
+              if (node.algebraicProof.isNotEmpty) ...[
+                AlgebraicProofWidget(proofSteps: node.algebraicProof),
+                const SizedBox(height: 28),
+              ] else
                 const Text(
                   'Nessun passaggio dimostrativo presente.',
                   style: TextStyle(color: Color(0xFF64748B)),
                 ),
 
-              const SizedBox(height: 40),
+              // Sezione Interattiva (Server-Driven UI tramite Factory)
+              if (interactiveWidget != null) ...[
+                interactiveWidget,
+                const SizedBox(height: 40),
+              ],
             ],
           ),
         ),
