@@ -45,3 +45,11 @@ Non introdurre nuovi pacchetti senza prima avvisare e giustificare la scelta. I 
 *   Non anticipare mai il lavoro. Se ti viene chiesto di eseguire lo "Step X", concentrati **esclusivamente** sui requisiti dello Step X.
 *   Se un file diventa troppo grande (sopra le 200 righe), proponi un refactoring estraendo i widget in file separati dentro `lib/presentation/widgets/`.
 *   Commenta le parti complesse del codice (soprattutto i parser matematici e le transazioni sul database) usando la lingua italiana.
+
+## 6. Creazione Diretta di Argomenti, Animazioni e Corollari (Modalità Autonoma)
+*   L'applicazione è 100% autonoma ed esegue il caricamento offline locale all'avvio da `MockDataService`.
+*   Quando l'utente richiede un nuovo argomento, legge fisica, dimostrazione o corollario:
+    1. Implementa o arricchisci i passaggi matematici dettagliati in `algebraicProof`, contrassegnando i corollari con `"Corollario: [Nome]"`.
+    2. Se l'argomento include un fenomeno fisico o matematico dinamico, crea o registra il widget di simulazione (es. `CustomPainter` vettoriale animato fluido a 60/120fps) nella `InteractiveTemplateFactory`.
+    3. Registra il nuovo nodo e i suoi collegamenti interdisciplinari in `MockDataService.populateDatabase`.
+    4. Verifica con `flutter test` e `flutter analyze` e crea un commit semantico con `git push`.

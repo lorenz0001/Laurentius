@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:isar/isar.dart';
 
-import '../../core/services/sync_service.dart';
+import '../../core/services/mock_data_service.dart';
 import '../../data/repositories/node_repository.dart';
 import '../../domain/models/knowledge_node.dart';
 import '../widgets/graph_controls_widget.dart';
@@ -77,15 +77,15 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  /// Forza la sincronizzazione HTTP con il server Python e ricarica il grafo
-  Future<void> _syncWithServer() async {
+  /// Ricarica e sincronizza il catalogo delle conoscenze dal servizio locale
+  Future<void> _refreshCatalog() async {
     if (widget.isar == null || _isSyncing) return;
 
     setState(() {
       _isSyncing = true;
     });
 
-    final success = await SyncService().syncWithServer(widget.isar!);
+    await MockDataService.populateDatabase(widget.isar!);
     await _loadKnowledgeGraph();
 
     if (mounted) {
@@ -95,16 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            success
-                ? 'Sincronizzazione completata! Nodi aggiornati.'
-                : 'Modalità offline: server non raggiungibile. Dati locali preservati.',
-          ),
-          backgroundColor:
-              success ? const Color(0xFF16A34A) : const Color(0xFF475569),
+          content: const Text('Catalogo delle conoscenze aggiornato con successo!'),
+          backgroundColor: const Color(0xFF16A34A),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -185,9 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         actions: [
-          // Pulsante di sincronizzazione con server
+          // Pulsante di ricarica catalogo locale
           TextButton.icon(
-            onPressed: _isSyncing ? null : _syncWithServer,
+            onPressed: _isSyncing ? null : _refreshCatalog,
             icon: _isSyncing
                 ? const SizedBox(
                     width: 14,
@@ -197,9 +192,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Color(0xFF2563EB),
                     ),
                   )
-                : const Icon(Icons.sync_rounded, size: 16, color: Color(0xFF2563EB)),
+                : const Icon(Icons.refresh_rounded, size: 16, color: Color(0xFF2563EB)),
             label: const Text(
-              'Sincronizza',
+              'Ricarica',
               style: TextStyle(
                 color: Color(0xFF2563EB),
                 fontWeight: FontWeight.w600,
