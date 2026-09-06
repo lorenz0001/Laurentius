@@ -21,7 +21,7 @@ class TrigCircleWidget extends StatefulWidget {
 class _TrigCircleWidgetState extends State<TrigCircleWidget>
     with TickerProviderStateMixin {
   double _angleRad = math.pi / 4; // 45° default
-  bool _isAutoRotating = false;
+  bool _isAutoRotating = true; // Attivo di default per mostrare subito l'animazione dinamica
 
   late final AnimationController _autoRotateController;
   AnimationController? _chipAnimController;
@@ -37,8 +37,10 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
     super.initState();
     _autoRotateController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 12),
     )..addListener(_onAutoRotateTick);
+    _autoRotateController.forward(from: (_angleRad / (2 * math.pi)));
+    _autoRotateController.repeat();
   }
 
   void _onAutoRotateTick() {
@@ -65,7 +67,10 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
 
   void _animateToAngle(double targetRad) {
     if (_isAutoRotating) {
-      _toggleAutoRotate();
+      setState(() {
+        _isAutoRotating = false;
+        _autoRotateController.stop();
+      });
     }
 
     _chipAnimController?.dispose();

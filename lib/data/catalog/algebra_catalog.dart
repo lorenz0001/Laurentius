@@ -28,13 +28,15 @@ class AlgebraCatalog {
               '\n\n'
               r'I **prodotti notevoli** sono identità algebriche fondamentali che abbreviano il calcolo del prodotto tra polinomi.'
               '\n\n'
-              r'Il quadrato di un binomio $(a + b)^2$ descrive la partizione di un quadrato di lato $a+b$ in 4 regioni disgiunte:'
+              r'Il quadrato di un binomio $(a + b)^2$ descrive la suddivisione geometrica di un quadrato di lato $a+b$ in 4 regioni:'
               '\n'
-              r'1. Un quadrato di area $a^2'
+              r'- Un quadrato grande di area $a^2$'
               '\n'
-              r'2. Un quadrato di area $b^2'
+              r'- Un quadrato piccolo di area $b^2$'
               '\n'
-              r'3. Due rettangoli speculari di area $a \cdot b$',
+              r'- Due rettangoli uguali di area $a \cdot b$'
+              '\n\n'
+              r'Sommando le 4 aree si ottiene la formula esatta: $(a+b)^2 = a^2 + 2ab + b^2$.',
         ContentBlock()
           ..type = 'math_latex'
           ..content = r'(a + b)^2 = a^2 + 2ab + b^2',

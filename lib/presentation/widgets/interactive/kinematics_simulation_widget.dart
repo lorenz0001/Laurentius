@@ -26,7 +26,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
   double _elapsedTime = 0.0; // Tempo simulato in secondi
   bool _isPlaying = true;
 
-  DateTime _lastTick = DateTime.now();
+  double _lastAnimValue = 0.0;
 
   @override
   void initState() {
@@ -38,6 +38,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
       duration: const Duration(seconds: 1),
     )..addListener(_onTick);
 
+    _lastAnimValue = _animController.value;
     _animController.repeat();
   }
 
@@ -57,11 +58,14 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
   double? _finishedTime;
 
   void _onTick() {
-    final now = DateTime.now();
-    final dt = now.difference(_lastTick).inMicroseconds / 1000000.0;
-    _lastTick = now;
+    double delta = _animController.value - _lastAnimValue;
+    if (delta < 0) {
+      delta += 1.0;
+    }
+    _lastAnimValue = _animController.value;
+    final dt = delta;
 
-    if (_isPlaying) {
+    if (_isPlaying && dt > 0) {
       setState(() {
         _elapsedTime += dt;
         // Traguardo a 100m o arresto per decelerazione: pausa di 1.2s e riavvio fluido
@@ -86,19 +90,34 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     super.dispose();
   }
 
+  // Tempo effettivo per il calcolo del moto (la vettura si arresta se v=0 durante frenata con a<0)
+  double get _effectiveTime {
+    if (_a < 0) {
+      final tStop = _v0 / (-_a);
+      return math.min(_elapsedTime, tStop);
+    }
+    return _elapsedTime;
+  }
+
   // Calcolo posizione istantanea x(t) = v0*t + 0.5*a*t^2
   double get _position =>
-      (_v0 * _elapsedTime + 0.5 * _a * _elapsedTime * _elapsedTime).clamp(
+      (_v0 * _effectiveTime + 0.5 * _a * _effectiveTime * _effectiveTime).clamp(
         0.0,
         1000.0,
       );
 
   // Calcolo velocità istantanea v(t) = v0 + a*t
-  double get _velocity => (_v0 + _a * _elapsedTime).clamp(0.0, 150.0);
+  double get _velocity => (_v0 + _a * _effectiveTime).clamp(0.0, 150.0);
 
   void _togglePlayPause() {
     setState(() {
       _isPlaying = !_isPlaying;
+      if (_isPlaying) {
+        _lastAnimValue = _animController.value;
+        _animController.repeat();
+      } else {
+        _animController.stop();
+      }
     });
   }
 
@@ -106,7 +125,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     setState(() {
       _elapsedTime = 0.0;
       _finishedTime = null;
-      _lastTick = DateTime.now();
+      _lastAnimValue = _animController.value;
     });
   }
 

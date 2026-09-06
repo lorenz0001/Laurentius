@@ -23,10 +23,11 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
   double _voltage = 12.0; // Volt
   double _resistance = 6.0; // Ohm
   bool _showElectronFlow = true; // True = moto reale elettroni (- a +), False = corrente convenzionale (+ a -)
+  bool _isPlaying = true;
 
   // Accumulatore di fase per variare la velocità in modo continuo e fluido
   double _phase = 0.0;
-  DateTime _lastTick = DateTime.now();
+  double _lastAnimValue = 0.0;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
       duration: const Duration(seconds: 1),
     )..addListener(_onTick);
 
+    _lastAnimValue = _animController.value;
     _animController.repeat();
   }
 
@@ -55,21 +57,38 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
     }
   }
 
-  void _onTick() {
-    final now = DateTime.now();
-    final dt = now.difference(_lastTick).inMicroseconds / 1000000.0;
-    _lastTick = now;
-
-    // Calcolo corrente istantanea
-    final current = _current;
-
-    // La velocità di deriva degli elettroni è proporzionale all'intensità di corrente
-    // Base speed factor regolato per fluidità visiva a 60/120fps
-    final speed = (current * 0.12).clamp(0.01, 1.8);
-
+  void _togglePlayPause() {
     setState(() {
-      _phase = (_phase + speed * dt) % 1.0;
+      _isPlaying = !_isPlaying;
+      if (_isPlaying) {
+        _lastAnimValue = _animController.value;
+        _animController.repeat();
+      } else {
+        _animController.stop();
+      }
     });
+  }
+
+  void _onTick() {
+    double delta = _animController.value - _lastAnimValue;
+    if (delta < 0) {
+      delta += 1.0;
+    }
+    _lastAnimValue = _animController.value;
+    final dt = delta;
+
+    if (_isPlaying && dt > 0) {
+      // Calcolo corrente istantanea
+      final current = _current;
+
+      // La velocità di deriva degli elettroni è proporzionale all'intensità di corrente
+      // Base speed factor regolato per fluidità visiva a 60/120fps
+      final speed = (current * 0.12).clamp(0.01, 1.8);
+
+      setState(() {
+        _phase = (_phase + speed * dt) % 1.0;
+      });
+    }
   }
 
   @override
@@ -140,6 +159,19 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                   ],
                 ),
               ),
+              // Pulsante Play / Pausa animazione elettroni
+              IconButton(
+                icon: Icon(
+                  _isPlaying
+                      ? Icons.pause_circle_filled_rounded
+                      : Icons.play_circle_fill_rounded,
+                ),
+                color: const Color(0xFF2563EB),
+                iconSize: 28,
+                tooltip: _isPlaying ? 'Pausa flusso' : 'Avvia flusso',
+                onPressed: _togglePlayPause,
+              ),
+              const SizedBox(width: 4),
               // Switch per alternare Flusso Elettroni e Flusso Convenzionale
               Tooltip(
                 message: _showElectronFlow

@@ -17,10 +17,53 @@ class TriangleSolverWidget extends StatefulWidget {
   State<TriangleSolverWidget> createState() => _TriangleSolverWidgetState();
 }
 
-class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
+class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
+    with SingleTickerProviderStateMixin {
   double _sideA = 3.0;
   double _sideB = 4.0;
   double _angleGammaDeg = 90.0;
+  bool _isAutoTransforming = true; // Attivo di default per mostrare la deformazione geometrica
+
+  late final AnimationController _triangleAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _triangleAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )..addListener(_onTriangleAnimTick);
+
+    _triangleAnimController.repeat(reverse: true);
+  }
+
+  void _onTriangleAnimTick() {
+    if (_isAutoTransforming) {
+      setState(() {
+        // Oscilla fluidamente tra 40° e 135°, passando per 90° (Pitagora)
+        final t = Curves.easeInOutCubic.transform(_triangleAnimController.value);
+        _angleGammaDeg = 40.0 + t * 95.0;
+      });
+    }
+  }
+
+  void _toggleAutoTransform() {
+    setState(() {
+      _isAutoTransforming = !_isAutoTransforming;
+      if (_isAutoTransforming) {
+        _triangleAnimController.repeat(reverse: true);
+      } else {
+        _triangleAnimController.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _triangleAnimController.removeListener(_onTriangleAnimTick);
+    _triangleAnimController.dispose();
+    super.dispose();
+  }
 
   double get _gammaRad => _angleGammaDeg * math.pi / 180.0;
 
@@ -83,33 +126,52 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: _isRightTriangle
-                      ? const Color(0xFFEFF6FF)
-                      : const Color(0xFFFFF1F2),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: _isRightTriangle
-                        ? const Color(0xFFBFDBFE)
-                        : const Color(0xFFFECDD3),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      _isAutoTransforming
+                          ? Icons.pause_circle_rounded
+                          : Icons.play_circle_fill_rounded,
+                    ),
+                    color: const Color(0xFFE11D48),
+                    iconSize: 26,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    tooltip: _isAutoTransforming
+                        ? 'Pausa deformazione'
+                        : 'Anima trasformazione triangolo',
+                    onPressed: _toggleAutoTransform,
                   ),
-                ),
-                child: Text(
-                  _isRightTriangle ? 'Pitagora (γ = 90°)' : 'Carnot Generico',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    color: _isRightTriangle
-                        ? const Color(0xFF1D4ED8)
-                        : const Color(0xFFE11D48),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _isRightTriangle
+                          ? const Color(0xFFEFF6FF)
+                          : const Color(0xFFFFF1F2),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: _isRightTriangle
+                            ? const Color(0xFFBFDBFE)
+                            : const Color(0xFFFECDD3),
+                      ),
+                    ),
+                    child: Text(
+                      _isRightTriangle ? 'Pitagora (γ = 90°)' : 'Carnot Generico',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: _isRightTriangle
+                            ? const Color(0xFF1D4ED8)
+                            : const Color(0xFFE11D48),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
@@ -242,6 +304,12 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
               ),
               TextButton(
                 onPressed: () {
+                  if (_isAutoTransforming) {
+                    setState(() {
+                      _isAutoTransforming = false;
+                      _triangleAnimController.stop();
+                    });
+                  }
                   setState(() {
                     _angleGammaDeg = 90.0;
                   });
@@ -261,12 +329,18 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
             ],
           ),
           Slider(
-            value: _angleGammaDeg,
+            value: _angleGammaDeg.clamp(15.0, 160.0),
             min: 15.0,
             max: 160.0,
             divisions: 145,
             activeColor: const Color(0xFFE11D48),
             onChanged: (val) {
+              if (_isAutoTransforming) {
+                setState(() {
+                  _isAutoTransforming = false;
+                  _triangleAnimController.stop();
+                });
+              }
               setState(() {
                 _angleGammaDeg = val;
               });

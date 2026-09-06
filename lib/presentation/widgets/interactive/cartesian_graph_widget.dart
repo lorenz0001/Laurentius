@@ -15,16 +15,58 @@ class CartesianGraphWidget extends StatefulWidget {
   State<CartesianGraphWidget> createState() => _CartesianGraphWidgetState();
 }
 
-class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
+class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
+    with SingleTickerProviderStateMixin {
   final Map<String, double> _paramValues = {};
   final GrammarParser _parser = GrammarParser();
 
   String _equationString = 'a * x * x + b * x + c';
+  bool _isAutoMorphing = true;
+  late final AnimationController _graphAnimController;
 
   @override
   void initState() {
     super.initState();
     _initializeParams();
+    _graphAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )..addListener(_onGraphAnimTick);
+
+    _graphAnimController.repeat(reverse: true);
+  }
+
+  void _onGraphAnimTick() {
+    if (_isAutoMorphing) {
+      setState(() {
+        // Oscilla dolcemente il parametro principale per mostrare la deformazione
+        final t = Curves.easeInOutSine.transform(_graphAnimController.value);
+        if (_paramValues.containsKey('a')) {
+          _paramValues['a'] = -2.0 + t * 4.0;
+        } else if (_paramValues.isNotEmpty) {
+          final firstKey = _paramValues.keys.first;
+          _paramValues[firstKey] = -2.0 + t * 4.0;
+        }
+      });
+    }
+  }
+
+  void _toggleAutoMorph() {
+    setState(() {
+      _isAutoMorphing = !_isAutoMorphing;
+      if (_isAutoMorphing) {
+        _graphAnimController.repeat(reverse: true);
+      } else {
+        _graphAnimController.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _graphAnimController.removeListener(_onGraphAnimTick);
+    _graphAnimController.dispose();
+    super.dispose();
   }
 
   void _initializeParams() {
@@ -161,6 +203,19 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
                     ),
                   ],
                 ),
+              ),
+              IconButton(
+                icon: Icon(
+                  _isAutoMorphing
+                      ? Icons.pause_circle_rounded
+                      : Icons.play_circle_fill_rounded,
+                ),
+                color: const Color(0xFF6366F1),
+                iconSize: 28,
+                tooltip: _isAutoMorphing
+                    ? 'Pausa deformazione'
+                    : 'Anima deformazione curva',
+                onPressed: _toggleAutoMorph,
               ),
             ],
           ),
@@ -306,6 +361,12 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
               max: max,
               divisions: divisions,
               onChanged: (val) {
+                if (_isAutoMorphing) {
+                  setState(() {
+                    _isAutoMorphing = false;
+                    _graphAnimController.stop();
+                  });
+                }
                 setState(() {
                   _paramValues[varName] = val;
                 });

@@ -7,6 +7,7 @@ import 'kinematics_simulation_widget.dart';
 import 'live_equation_widget.dart';
 import 'ohm_circuit_simulation_widget.dart';
 import 'riemann_sum_widget.dart';
+import 'rolle_lagrange_widget.dart';
 import 'triangle_solver_widget.dart';
 import 'trig_circle_widget.dart';
 
@@ -26,8 +27,17 @@ class InteractiveTemplateFactory {
       case 'kinematics_simulation':
       case 'rectilinear_motion':
         return KinematicsSimulationWidget(data: data);
+      case 'rolle_lagrange':
+      case 'rolle':
+      case 'lagrange':
+        return RolleLagrangeWidget(data: data);
       case 'function_graph':
       case 'cartesian_plot':
+        // Se la formula è la cubica dei teoremi di Rolle/Lagrange, usa il simulatore specifico
+        if (data.equations != null &&
+            data.equations!.any((eq) => eq.contains('x * x * x / 3') || eq.contains('rolle'))) {
+          return RolleLagrangeWidget(data: data);
+        }
         return CartesianGraphWidget(data: data);
       case 'trig_circle':
       case 'trigonometric_circle':

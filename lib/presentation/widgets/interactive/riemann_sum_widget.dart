@@ -15,10 +15,53 @@ class RiemannSumWidget extends StatefulWidget {
   State<RiemannSumWidget> createState() => _RiemannSumWidgetState();
 }
 
-class _RiemannSumWidgetState extends State<RiemannSumWidget> {
+class _RiemannSumWidgetState extends State<RiemannSumWidget>
+    with SingleTickerProviderStateMixin {
   int _nRectangles = 6;
   final double _a = 0.0;
   final double _b = 2.0;
+  bool _isAutoPartitioning = true; // Animazione attiva di default: dimostra la convergenza
+
+  late final AnimationController _partitionAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _partitionAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(_onPartitionTick);
+
+    _partitionAnimController.repeat(reverse: true);
+  }
+
+  void _onPartitionTick() {
+    if (_isAutoPartitioning) {
+      setState(() {
+        // N varia dolcemente da 2 a 40 partizioni dimostrando la convergenza dell'area
+        final t = Curves.easeInOutCubic.transform(_partitionAnimController.value);
+        _nRectangles = (2 + t * 38).round();
+      });
+    }
+  }
+
+  void _toggleAutoPartition() {
+    setState(() {
+      _isAutoPartitioning = !_isAutoPartitioning;
+      if (_isAutoPartitioning) {
+        _partitionAnimController.repeat(reverse: true);
+      } else {
+        _partitionAnimController.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _partitionAnimController.removeListener(_onPartitionTick);
+    _partitionAnimController.dispose();
+    super.dispose();
+  }
 
   // Curva di prova: f(x) = 0.75 * x^2 + 0.5
   double _f(double x) => 0.75 * x * x + 0.5;
@@ -61,7 +104,7 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header
+          // Header con Titolo, Play/Pausa e Badge N
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -83,24 +126,44 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEFF6FF),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xFFBFDBFE)),
-                ),
-                child: Text(
-                  'N = $_nRectangles Rettangoli',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF1D4ED8),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      _isAutoPartitioning
+                          ? Icons.pause_circle_rounded
+                          : Icons.play_circle_fill_rounded,
+                    ),
+                    color: const Color(0xFF2563EB),
+                    iconSize: 26,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    tooltip: _isAutoPartitioning
+                        ? 'Pausa convergenza'
+                        : 'Anima convergenza N ➔ 40',
+                    onPressed: _toggleAutoPartition,
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFF6FF),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: const Color(0xFFBFDBFE)),
+                    ),
+                    child: Text(
+                      'N = $_nRectangles Rettangoli',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1D4ED8),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -231,7 +294,15 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
             divisions: 38,
             activeColor: const Color(0xFF2563EB),
             inactiveColor: const Color(0xFFBFDBFE),
-            onChanged: (val) => setState(() => _nRectangles = val.round()),
+            onChanged: (val) {
+              if (_isAutoPartitioning) {
+                setState(() {
+                  _isAutoPartitioning = false;
+                  _partitionAnimController.stop();
+                });
+              }
+              setState(() => _nRectangles = val.round());
+            },
           ),
         ],
       ),

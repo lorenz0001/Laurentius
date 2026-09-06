@@ -15,15 +15,58 @@ class DerivativeTangentWidget extends StatefulWidget {
       _DerivativeTangentWidgetState();
 }
 
-class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
+class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
+    with SingleTickerProviderStateMixin {
   double _x0 = 1.0;
   double _h = 1.2;
+  bool _isAutoAnimating = true; // Animazione attiva di default: dimostra h -> 0
+
+  late final AnimationController _limitAnimController;
 
   // Funzione parabolica di base f(x) = 0.5 * x^2
   double _f(double x) => 0.5 * x * x;
 
   // Derivata esatta f'(x) = x
   double _fPrime(double x) => x;
+
+  @override
+  void initState() {
+    super.initState();
+    _limitAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )..addListener(_onLimitAnimTick);
+
+    _limitAnimController.repeat(reverse: true);
+  }
+
+  void _onLimitAnimTick() {
+    if (_isAutoAnimating) {
+      setState(() {
+        // h oscilla dolcemente tra 2.0 e 0.04 dimostrando il passaggio al limite
+        final t = Curves.easeInOutCubic.transform(_limitAnimController.value);
+        _h = 2.0 - t * 1.95;
+      });
+    }
+  }
+
+  void _toggleAutoAnimate() {
+    setState(() {
+      _isAutoAnimating = !_isAutoAnimating;
+      if (_isAutoAnimating) {
+        _limitAnimController.repeat(reverse: true);
+      } else {
+        _limitAnimController.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _limitAnimController.removeListener(_onLimitAnimTick);
+    _limitAnimController.dispose();
+    super.dispose();
+  }
 
   double get _fx0 => _f(_x0);
   double get _fx0PlusH => _f(_x0 + _h);
@@ -56,7 +99,7 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header
+          // Header con Titolo, Toggle Animazione e Badge
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -78,24 +121,44 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEEF2FF),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xFFC7D2FE)),
-                ),
-                child: Text(
-                  'h = ${_h.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF4338CA),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      _isAutoAnimating
+                          ? Icons.pause_circle_rounded
+                          : Icons.play_circle_fill_rounded,
+                    ),
+                    color: const Color(0xFF4F46E5),
+                    iconSize: 26,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    tooltip: _isAutoAnimating
+                        ? 'Pausa animazione limite'
+                        : 'Anima limite h ➔ 0 a 60 FPS',
+                    onPressed: _toggleAutoAnimate,
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEEF2FF),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: const Color(0xFFC7D2FE)),
+                    ),
+                    child: Text(
+                      'h = ${_h.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF4338CA),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -220,14 +283,23 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
             ],
           ),
           Slider(
-            value: _h,
+            value: _h.clamp(0.05, 2.5),
             min: 0.05,
             max: 2.5,
             activeColor: const Color(0xFF4F46E5),
             inactiveColor: const Color(0xFFC7D2FE),
-            onChanged: (val) => setState(() => _h = val),
+            onChanged: (val) {
+              if (_isAutoAnimating) {
+                setState(() {
+                  _isAutoAnimating = false;
+                  _limitAnimController.stop();
+                });
+              }
+              setState(() {
+                _h = val;
+              });
+            },
           ),
-
           // Slider Punto x0
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

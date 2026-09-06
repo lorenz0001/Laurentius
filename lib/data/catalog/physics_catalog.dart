@@ -148,6 +148,30 @@ La prima legge fondamentale dell'elettrotecnica stabilisce che, a temperatura co
       ..category = 'Elettrotecnica'
       ..subCategory = 'Circuiti in Corrente Continua'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### L'Energia al Secondo: La Potenza Elettrica
+
+La **potenza elettrica** misura il ritmo con cui l'energia elettrica viene assorbita, trasformata o erogata da un dispositivo in ogni secondo:
+- In una lampadina, determina la luminosità emessa.
+- In un motore elettrico, determina la forza meccanica prodotta.
+
+Essa è data dal prodotto tra la tensione $V$ e la corrente $I$:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"P = V \cdot I",
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Le Formule nei Conduttori Resistivi
+
+Combinando questa legge fondamentale con la Legge di Ohm ($V = R \cdot I$), otteniamo due espressioni pratiche:
+- In funzione della corrente: $P = R \cdot I^2$
+- In funzione della tensione: $P = \frac{V^2}{R}$""",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""Nota come la potenza dissipata su una resistenza cresca con il **quadrato** della corrente: raddoppiare gli ampere quadruplica la potenza termica generata!""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Definizione di potenza istantanea come derivata temporale del lavoro elettrico.'
@@ -193,6 +217,22 @@ La prima legge fondamentale dell'elettrotecnica stabilisce che, a temperatura co
       ..category = 'Elettrotecnica'
       ..subCategory = 'Termodinamica & Circuiti'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Perché i Fili si Scaldano? L'Effetto Joule
+
+Quando la corrente elettrica attraversa un materiale conduttore, miliardi di elettroni urtano costantemente gli atomi del reticolo cristallino del metallo.
+A ogni urto microscopico, parte dell'energia cinetica degli elettroni si trasferisce al reticolo facendolo vibrare: questa agitazione termica su scala macroscopica è esattamente il **calore**.
+
+L'energia termica $Q$ dissipata in un intervallo di tempo $\Delta t$ è:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"Q = R \cdot I^2 \cdot \Delta t",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""L'effetto Joule è utilissimo quando vogliamo riscaldare (ferro da stiro, forno elettrico, boiler), ma è una delle principali cause di perdita di energia nelle linee elettriche e nei microprocessori.""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Integrazione della potenza dissipata nel tempo: energia termica generata per attrito reticolare.'
@@ -244,6 +284,27 @@ La prima legge fondamentale dell'elettrotecnica stabilisce che, a temperatura co
       ..category = 'Fisica'
       ..subCategory = 'Chimica Fisica'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### La Scala del pH: Domare i Grandi Numeri
+
+La concentrazione di ioni idronio $[\text{H}_3\text{O}^+]$ in una soluzione acquosa può variare enormemente:
+- Da $1$ mole per litro in un acido molto forte
+- Fino a $0.00000000000001$ ($10^{-14}$) moli per litro in una base fortissima.
+
+Lavorare con quattordici zeri decimali è poco pratico. Per questo si utilizza la scala logaritmica del **pH**, che comprime questi ordini di grandezza in un comodo intervallo da $0$ a $14$:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"\text{pH} = -\log_{10}([\text{H}_3\text{O}^+])",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""**Guida Rapida al pH:**
+- $\text{pH} = 7$: Neutro (acqua pura a 25°C)
+- $\text{pH} < 7$: Acido (succo di limone $\approx 2.4$, caffè $\approx 5$)
+- $\text{pH} > 7$: Basico (sapone $\approx 9$, ammoniaca $\approx 11.5$)
+Ogni salto di 1 unità di pH indica una concentrazione dieci volte superiore o inferiore!""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Equilibrio di autoionizzazione dell\'acqua pura a 25°C e prodotto ionico Kw.'

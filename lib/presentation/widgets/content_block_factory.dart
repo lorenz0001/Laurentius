@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
 import '../../domain/models/knowledge_node.dart';
+import 'math_markdown_view.dart';
 
 /// Factory e builder per il rendering modulare dei blocchi editoriali e didattici (ContentBlock).
-/// Supporta Markdown arricchito, formule matematiche LaTeX in display mode,
+/// Supporta Markdown arricchito, formule matematiche LaTeX vettoriali sia inline sia display,
 /// Info Box di approfondimento (insight/corollari) e richiami multimediali.
 class ContentBlockFactory {
   /// Costruisce il widget corrispondente al singolo blocco di contenuto
@@ -25,70 +25,11 @@ class ContentBlockFactory {
     }
   }
 
-  /// Blocco di testo Markdown formattato
+  /// Blocco di testo Markdown formattato con supporto a formule LaTeX inline ($ ... $) e display ($$ ... $$)
   static Widget _buildMarkdownBlock(String content) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      child: MarkdownBody(
-        data: content,
-        selectable: true,
-        styleSheet: MarkdownStyleSheet(
-          p: const TextStyle(
-            fontSize: 15,
-            height: 1.65,
-            color: Color(0xFF334155),
-            fontWeight: FontWeight.w400,
-          ),
-          strong: const TextStyle(
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF0F172A),
-          ),
-          em: const TextStyle(
-            fontStyle: FontStyle.italic,
-            color: Color(0xFF1E293B),
-          ),
-          h1: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
-            letterSpacing: -0.4,
-          ),
-          h2: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF0F172A),
-            letterSpacing: -0.2,
-          ),
-          h3: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF1E293B),
-          ),
-          listBullet: const TextStyle(
-            color: Color(0xFF2563EB),
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-          ),
-          code: const TextStyle(
-            fontFamily: 'monospace',
-            backgroundColor: Color(0xFFF1F5F9),
-            color: Color(0xFF0F172A),
-            fontSize: 13,
-          ),
-          blockquote: const TextStyle(
-            fontSize: 14,
-            fontStyle: FontStyle.italic,
-            color: Color(0xFF475569),
-          ),
-          blockquoteDecoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
-            border: const Border(
-              left: BorderSide(color: Color(0xFF3B82F6), width: 3.5),
-            ),
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ),
-      ),
+      child: MathMarkdownView(text: content),
     );
   }
 
@@ -136,7 +77,7 @@ class ContentBlockFactory {
     );
   }
 
-  /// Blocco informativo / Insight / Corollario pastello
+  /// Blocco informativo / Insight / Corollario pastello con supporto a LaTeX inline
   static Widget _buildInfoBoxBlock(String insight) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -176,9 +117,9 @@ class ContentBlockFactory {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  insight,
-                  style: const TextStyle(
+                MathMarkdownView(
+                  text: insight,
+                  baseStyle: const TextStyle(
                     fontSize: 13.5,
                     height: 1.5,
                     color: Color(0xFF78350F),

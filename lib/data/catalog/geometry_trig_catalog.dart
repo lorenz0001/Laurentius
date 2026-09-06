@@ -22,6 +22,21 @@ class GeometryTrigCatalog {
       ..category = 'Matematica'
       ..subCategory = 'Geometria Euclidea Piana'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Perché la Somma degli Angoli Interni è Sempre 180°?
+
+Prendi un triangolo qualsiasi, anche scaleno o allungato. Se tracciamo una linea retta parallela alla base che tocca appena il vertice superiore, accade una meraviglia geometrica:
+- I due angoli alla base si riflettono esattamente in alto grazie alla proprietà degli **angoli alterni interni**.
+- Insieme all'angolo del vertice, i tre angoli si incastrano perfettamente uno accanto all'altro formando una linea dritta: un angolo piatto di $180^\circ$ ($\pi$ radianti)!""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"\alpha + \beta + \gamma = 180^\circ = \pi \text{ rad}",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""**Teorema dell'Angolo Esterno:** In qualunque triangolo, l'ampiezza di ciascun angolo esterno è esattamente uguale alla somma dei due angoli interni non adiacenti: $\delta = \alpha + \beta$.""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Tracciamento della retta parallela alla base passante per il vertice opposto.'
@@ -103,6 +118,23 @@ Questo principio geometrico è alla base di tutta la **metrica euclidea** nello 
       ..category = 'Matematica'
       ..subCategory = 'Goniometria Fondamentale'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### La Circonferenza Goniometrica: Il Motore della Trigonometria
+
+Immagina un cerchio di raggio unitario ($R = 1$) centrato nell'origine degli assi cartesiani: l'equazione cartesiana è $x^2 + y^2 = 1$.
+Tracciando un raggio inclinato di un angolo $\theta$:
+- Il **Coseno** ($\cos\theta$) è la proiezione orizzontale (l'ascissa $x$).
+- Il **Seno** ($\sin\theta$) è la proiezione verticale (l'ordinata $y$).
+- La **Tangente** ($\tan\theta$) è il rapporto tra proiezione verticale e orizzontale: $\frac{\sin\theta}{\cos\theta}$.""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"\sin^2\theta + \cos^2\theta = 1",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""La celebre **Relazione Fondamentale della Goniometria** non è altro che il Teorema di Pitagora applicato al triangolo rettangolo interno avente per cateti il seno e il coseno e per ipotenusa il raggio unitario $1$.""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Definizione del cerchio goniometrico di raggio unitario R = 1 con centro nell\'origine.'

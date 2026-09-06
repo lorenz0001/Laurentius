@@ -44,8 +44,16 @@ class CalculusCatalog {
       ]
       ..interactiveData = (InteractiveData()
         ..templateType = 'function_graph'
-        ..equations = ['sin(x) / x']
-        ..parameters = []);
+        ..equations = ['sin(k * x) / x']
+        ..parameters = [
+          InteractiveParameter()
+            ..variableName = 'k'
+            ..label = 'Fattore di scala k in sin(k·x)/x'
+            ..minValue = 0.5
+            ..maxValue = 3.0
+            ..defaultValue = 1.0
+            ..stepSize = 0.5,
+        ]);
   }
 
   /// 2. Rapporto Incrementale e Derivata
@@ -103,6 +111,29 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
       ..category = 'Matematica'
       ..subCategory = 'Calcolo Differenziale'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Come Derivare Espressioni Complesse
+
+Quando conosciamo la derivata di funzioni base, come calcoliamo la derivata del loro prodotto o della loro composizione?
+
+#### 1. Regola del Prodotto (Formula di Leibniz)
+Pensa a un rettangolo di lati $u(x)$ e $v(x)$. Se entrambi i lati crescono di una piccola quantità $\Delta u$ e $\Delta v$, la nuova area cresce sia per l'allargamento della base che per l'innalzamento dell'altezza. La derivata del prodotto non è semplicemente il prodotto delle derivate, ma una combinazione bilineare:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"(u \cdot v)' = u' \cdot v + u \cdot v'",
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""#### 2. Regola della Catena (Funzioni Composte)
+Se una grandezza $y$ dipende da $u$, e a sua volta $u$ dipende da $x$, come ruote dentate di un ingranaggio, la velocità complessiva di rotazione è il prodotto dei singoli tassi di variazione:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx} \iff [f(g(x))]' = f'(g(x)) \cdot g'(x)",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""Grazie a queste regole e alla derivata trigonometrica $(\sin x)' = \cos x$, possiamo determinare istantaneamente il tasso di variazione di qualsiasi modello scientifico o ingegneristico.""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Rapporto incrementale del prodotto f(x)*g(x) con artificio +f(x+h)g(x) - f(x+h)g(x).'
@@ -134,6 +165,35 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
       ..category = 'Matematica'
       ..subCategory = 'Teoremi Differenziali'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### L'Intuizione dei Teoremi del Calcolo
+
+Immagina di percorrere un tratto autostradale di 130 km in esattamente un'ora. La tua **velocità media** è stata di 130 km/h. Anche se hai accelerato o frenato, c'è stato sicuramente almeno un istante durante il viaggio in cui il tuo tachimetro segnava esattamente 130 km/h!
+
+Questo principio intuitivo e fondamentale è il **Teorema del Valor Medio di Lagrange**: se una curva è continua e liscia, esiste sempre almeno un punto interno $c$ in cui la **pendenza istantanea** della tangente coincide con la pendenza media della corda secante:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"f'(c) = \frac{f(b) - f(a)}{b - a}",
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Il Teorema di Rolle: Tornare alla Stessa Quota
+
+Cosa accade se gli estremi si trovano alla stessa altezza, ossia $f(a) = f(b)$?
+Pensa a una palla lanciata verticalmente in aria: sale, raggiunge il punto di massima quota e ricade al punto di partenza. Nel punto più alto, per una frazione infinitesima di secondo, la palla si arresta prima di invertire la direzione: la sua velocità istantanea è zero!
+
+Questo è il **Teorema di Rolle**: se $f(a) = f(b)$, esiste almeno un punto $c \in (a, b)$ in cui la tangente è orizzontale:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"f'(c) = 0",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""**Conseguenza Fondamentale (Criterio di Monotonia):**
+- Se $f'(x) > 0$, la curva sale (funzione crescente).
+- Se $f'(x) < 0$, la curva scende (funzione decrescente).
+- Se $f'(x) = 0$ su un intero intervallo, la curva è perfettamente orizzontale e piatta: la funzione è costante ($f(x) = C$).""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Teorema di Fermat sui punti estremanti interni: se x₀ è punto di massimo o minimo locale e f è derivabile.'
@@ -155,9 +215,24 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
           ..insight = 'Il segno della derivata governa la crescita della funzione; se la derivata è identicamente nulla, la funzione è costante.',
       ]
       ..interactiveData = (InteractiveData()
-        ..templateType = 'cartesian_plot'
+        ..templateType = 'rolle_lagrange'
         ..equations = ['x * x * x / 3 - x']
-        ..parameters = []);
+        ..parameters = [
+          InteractiveParameter()
+            ..variableName = 'a'
+            ..label = 'Estremo sinistro (a)'
+            ..minValue = -2.4
+            ..maxValue = -0.2
+            ..defaultValue = -1.8
+            ..stepSize = 0.1,
+          InteractiveParameter()
+            ..variableName = 'b'
+            ..label = 'Estremo destro (b)'
+            ..minValue = 0.2
+            ..maxValue = 2.4
+            ..defaultValue = 1.4
+            ..stepSize = 0.1,
+        ]);
   }
 
   /// 5. Integrale di Riemann e Somme di Rettangoli
@@ -168,6 +243,31 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
       ..category = 'Matematica'
       ..subCategory = 'Calcolo Integrale'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Misurare l'Area sotto una Curva
+
+Come possiamo calcolare con precisione l'area racchiusa sotto una curva non lineare?
+Bernhard Riemann ebbe un'intuizione semplice ed elegante: suddividere la superficie complessa in tante piccole striscioline verticali rettangolari, facili da calcolare (base per altezza!).
+
+Se dividiamo l'intervallo $[a, b]$ in $N$ parti uguali di ampiezza $\Delta x = \frac{b-a}{N}$, l'area totale approssimata è la somma delle aree dei singoli rettangoli:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"S_N = \sum_{i=1}^N f(x_i^*) \cdot \Delta x",
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Il Limite all'Infinito: La Somma Diventa Integrale
+
+Cosa succede aumentando il numero $N$ di rettangoli all'infinito ($N \to \infty$ e $\Delta x \to 0$)?
+I gradini e gli spazi vuoti tra la curva e i rettangoli svaniscono completamente: l'approssimazione diventa esatta e la sommatoria discreta diventa l'**integrale definito**:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"\lim_{N \to \infty} \sum_{i=1}^N f(x_i^*) \Delta x = \int_a^b f(x) \, dx",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""L'integrale è il cardine dell'accumulazione: permette di calcolare aree, volumi, lavoro fisico ed energia accumulata da forze variabili.""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Partizione dell\'intervallo [a, b] in N sotto-intervalli di ampiezza Δx = (b-a)/N.'

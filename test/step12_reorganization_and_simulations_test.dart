@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:laurentius/data/catalog/arithmetic_catalog.dart';
@@ -145,7 +143,8 @@ void main() {
         ),
       );
 
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('Circonferenza Goniometrica'), findsOneWidget);
       expect(find.text('cos(θ)'), findsOneWidget);
@@ -153,13 +152,14 @@ void main() {
       expect(find.text('tan(θ)'), findsOneWidget);
       expect(find.text('Trascina sul cerchio'), findsOneWidget);
 
-      // Tap sul pulsante di auto-rotazione
-      final autoRotateBtn = find.byTooltip('Auto-rotazione continua 60 FPS');
-      expect(autoRotateBtn, findsOneWidget);
-      await tester.tap(autoRotateBtn);
-      await tester.pump(const Duration(milliseconds: 200));
+      // Inizialmente l'auto-rotazione 60 FPS è attiva di default
+      final stopBtn = find.byTooltip('Ferma rotazione');
+      expect(stopBtn, findsOneWidget);
+      await tester.tap(stopBtn);
+      await tester.pump(const Duration(milliseconds: 50));
 
-      expect(find.byTooltip('Ferma rotazione'), findsOneWidget);
+      // Dopo il tap, la rotazione è ferma e il tooltip permette di riattivarla
+      expect(find.byTooltip('Auto-rotazione continua 60 FPS'), findsOneWidget);
     });
 
     testWidgets('KinematicsSimulationWidget includes checkered finish line at 100m', (tester) async {
