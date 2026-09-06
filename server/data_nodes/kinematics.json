@@ -1,0 +1,59 @@
+{
+  "serverId": "phys_kin_01",
+  "title": "Cinematica: MRUA e Corollario di Torricelli",
+  "category": "Fisica",
+  "prerequisites": [
+    "mat_parabola_01"
+  ],
+  "algebraicProof": [
+    {
+      "description": "Definizione fondamentale di accelerazione costante: tasso di variazione temporale della velocità.",
+      "latexEquation": "a = \\frac{dv}{dt} = \\text{cost.} \\implies v(t) = v_0 + a \\cdot t",
+      "insight": "Nel moto rettilineo uniformemente accelerato la velocità cresce in proporzione lineare diretta col tempo."
+    },
+    {
+      "description": "Legge oraria dello spazio ricavata per integrazione definita della velocità rispetto al tempo.",
+      "latexEquation": "\\Delta x = x(t) - x_0 = \\int_0^t (v_0 + a \\tau) d\\tau = v_0 t + \\frac{1}{2} a t^2",
+      "insight": "La distanza percorsa cresce quadraticamente rispetto al tempo a causa del contributo dell'accelerazione costante."
+    },
+    {
+      "description": "Isolamento algebrico esplicito della variabile tempo t dalla prima equazione.",
+      "latexEquation": "t = \\frac{v - v_0}{a}",
+      "insight": "Passaggio algebrico chiave per eliminare il parametro tempo e correlare direttamente velocità e spostamento."
+    },
+    {
+      "description": "Sostituzione del tempo t nell'equazione dello spazio ed espansione del quadrato del binomio.",
+      "latexEquation": "\\Delta x = v_0 \\left(\\frac{v - v_0}{a}\\right) + \\frac{a}{2} \\left(\\frac{v - v_0}{a}\\right)^2 = \\frac{2 v_0 v - 2 v_0^2 + v^2 - 2 v_0 v + v_0^2}{2a} = \\frac{v^2 - v_0^2}{2a}",
+      "insight": "I termini misti a numeratore si cancellano reciprocamente, lasciando solo la differenza dei quadrati delle velocità."
+    },
+    {
+      "description": "Corollario: Formula senza tempo di Torricelli per il moto uniformemente accelerato.",
+      "latexEquation": "v^2 = v_0^2 + 2 a \\Delta x",
+      "insight": "Celebre corollario: permette di calcolare velocità finale, accelerazione o spazio di frenata conoscendo solo la distanza percorsa, senza misurare il tempo!"
+    }
+  ],
+  "interactiveData": {
+    "templateType": "kinematics_simulation",
+    "equations": [
+      "v0 + a * t"
+    ],
+    "parameters": [
+      {
+        "variableName": "v0",
+        "label": "Velocità Iniziale v0 (m/s)",
+        "minValue": 0.0,
+        "maxValue": 30.0,
+        "defaultValue": 5.0,
+        "stepSize": 1.0
+      },
+      {
+        "variableName": "a",
+        "label": "Accelerazione Costante a (m/s²)",
+        "minValue": -5.0,
+        "maxValue": 10.0,
+        "defaultValue": 2.0,
+        "stepSize": 0.5
+      }
+    ]
+  }
+}

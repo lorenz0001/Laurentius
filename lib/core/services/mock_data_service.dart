@@ -3,13 +3,15 @@ import 'package:isar/isar.dart';
 import '../../domain/models/knowledge_node.dart';
 
 /// Servizio per la popolazione iniziale del database locale Isar con dati dimostrativi STEM.
-/// Include nodi interdisciplinari (Matematica, Chimica, Elettrotecnica) e nodi sia puramente algebrici
-/// che con simulazione fisica interattiva ad animazione continua.
+/// Include nodi interdisciplinari (Matematica, Chimica, Fisica, Elettrotecnica) con corollari
+/// algebrici dettagliati e template di simulazione (circuito, cinematica rettilinea, grafici cartesiani).
 class MockDataService {
   static Future<void> populateDatabase(Isar isar) async {
     final nodesToUpsert = [
       _createLogarithmsNode(),
+      _createParabolaNode(),
       _createPhNode(),
+      _createKinematicsNode(),
       _createOhmNode(),
       _createPowerNode(),
       _createJouleNode(),
@@ -32,7 +34,9 @@ class MockDataService {
     // Fase 2: Salvataggio e collegamento delle dipendenze del grafo (anche interdisciplinari)
     await isar.writeTxn(() async {
       final logNode = await isar.knowledgeNodes.where().serverIdEqualTo('mat_log_01').findFirst();
+      final parabolaNode = await isar.knowledgeNodes.where().serverIdEqualTo('mat_parabola_01').findFirst();
       final phNode = await isar.knowledgeNodes.where().serverIdEqualTo('chem_ph_01').findFirst();
+      final kinNode = await isar.knowledgeNodes.where().serverIdEqualTo('phys_kin_01').findFirst();
       final ohmNode = await isar.knowledgeNodes.where().serverIdEqualTo('ele_ohm_01').findFirst();
       final powerNode = await isar.knowledgeNodes.where().serverIdEqualTo('ele_power_01').findFirst();
       final jouleNode = await isar.knowledgeNodes.where().serverIdEqualTo('ele_joule_01').findFirst();
@@ -43,6 +47,15 @@ class MockDataService {
         if (!phNode.prerequisites.contains(logNode)) {
           phNode.prerequisites.add(logNode);
           await phNode.prerequisites.save();
+        }
+      }
+
+      // Fisica (Cinematica) richiede Matematica (Parabola) -> Collegamento Interdisciplinare
+      if (kinNode != null && parabolaNode != null) {
+        await kinNode.prerequisites.load();
+        if (!kinNode.prerequisites.contains(parabolaNode)) {
+          kinNode.prerequisites.add(parabolaNode);
+          await kinNode.prerequisites.save();
         }
       }
 
@@ -88,12 +101,67 @@ class MockDataService {
               'Alla base del funzionamento dei regoli calcolatori e dell\'elaborazione di segnali su ordini di grandezza.',
         ProofStep()
           ..description =
-              'Proprietà della potenza: l\'esponente dell\'argomento diventa fattore moltiplicativo.'
-          ..latexEquation = r'\log_b(x^k) = k \cdot \log_b(x)'
+              'Corollario: Cambiamento di base per il calcolo numerico e computazionale.'
+          ..latexEquation = r'\log_a(x) = \frac{\log_b(x)}{\log_b(a)}'
           ..insight =
-              'Fondamentale per la risoluzione di equazioni esponenziali e per la definizione di scale come il pH.',
+              'Permette di convertire qualsiasi logaritmo in base naturale (ln) o decimale, fondamentale nei calcoli fisici e chimici.',
       ]
-      ..interactiveData = null; // Puramente matematico: niente simulazione fisica forzata
+      ..interactiveData = null;
+  }
+
+  /// Nodo Matematico con Grafico Cartesiano Interattivo
+  static KnowledgeNode _createParabolaNode() {
+    return KnowledgeNode()
+      ..serverId = 'mat_parabola_01'
+      ..title = 'Funzione Quadratica e Parabola'
+      ..category = 'Matematica'
+      ..lastUpdated = DateTime.now()
+      ..algebraicProof = [
+        ProofStep()
+          ..description =
+              'Forma canonica polinomiale di secondo grado sul piano cartesiano.'
+          ..latexEquation = r'y = a x^2 + b x + c \quad (a \neq 0)'
+          ..insight =
+              'Il coefficiente quadratico a governa l\'apertura e il verso della concavità.',
+        ProofStep()
+          ..description =
+              'Completamento del quadrato per individuare l\'estremante della funzione.'
+          ..latexEquation = r'y = a \left(x + \frac{b}{2a}\right)^2 - \frac{\Delta}{4a}'
+          ..insight =
+              'La forma vertice esplicita la traslazione orizzontale e verticale sul piano.',
+        ProofStep()
+          ..description =
+              'Corollario: Coordinate del Vertice e Asse di Simmetria.'
+          ..latexEquation = r'V = \left(-\frac{b}{2a}, -\frac{\Delta}{4a}\right)'
+          ..insight =
+              'Identifica l\'apice della traiettoria nei moti balistici e proiettivi.',
+      ]
+      ..interactiveData = (InteractiveData()
+        ..templateType = 'function_graph'
+        ..equations = ['a * x * x + b * x + c']
+        ..parameters = [
+          InteractiveParameter()
+            ..variableName = 'a'
+            ..label = 'Curvatura (a)'
+            ..minValue = -3.0
+            ..maxValue = 3.0
+            ..defaultValue = 1.0
+            ..stepSize = 0.1,
+          InteractiveParameter()
+            ..variableName = 'b'
+            ..label = 'Traslazione (b)'
+            ..minValue = -4.0
+            ..maxValue = 4.0
+            ..defaultValue = 0.0
+            ..stepSize = 0.2,
+          InteractiveParameter()
+            ..variableName = 'c'
+            ..label = 'Termine Noto (c)'
+            ..minValue = -5.0
+            ..maxValue = 5.0
+            ..defaultValue = -2.0
+            ..stepSize = 0.5,
+        ]);
   }
 
   /// Nodo Chimico: Collegato a Matematica (Logaritmi) come prerequisito
@@ -131,11 +199,71 @@ class MockDataService {
         ]);
   }
 
-  /// Nodo Elettrico: Con Simulazione Grafica Animata di Elettroni
+  /// Nodo Fisico di Cinematica con Corollario di Torricelli e Simulatore Vettura
+  static KnowledgeNode _createKinematicsNode() {
+    return KnowledgeNode()
+      ..serverId = 'phys_kin_01'
+      ..title = 'Cinematica: MRUA e Corollario di Torricelli'
+      ..category = 'Fisica'
+      ..lastUpdated = DateTime.now()
+      ..algebraicProof = [
+        ProofStep()
+          ..description =
+              'Definizione fondamentale: accelerazione costante come derivata prima della velocità nel tempo.'
+          ..latexEquation = r'a = \frac{dv}{dt} = \text{cost.} \implies v(t) = v_0 + a t'
+          ..insight =
+              'La velocità cresce linearmente con pendenza pari ad a.',
+        ProofStep()
+          ..description =
+              'Legge oraria della posizione ottenuta per integrazione della velocità nel tempo.'
+          ..latexEquation = r'\Delta x = \int_0^t (v_0 + a \tau) d\tau = v_0 t + \frac{1}{2} a t^2'
+          ..insight =
+              'Il secondo termine esprime l\'area del triangolo delle velocità dovuto all\'accelerazione.',
+        ProofStep()
+          ..description =
+              'Isolamento algebrico della variabile tempo t dalla prima equazione cinematica.'
+          ..latexEquation = r't = \frac{v - v_0}{a}'
+          ..insight =
+              'Passaggio algebrico esplicito per eliminare la dipendenza temporale tra le grandezze.',
+        ProofStep()
+          ..description =
+              'Sostituzione ed espansione del quadrato del binomio nella legge dello spostamento.'
+          ..latexEquation = r'\Delta x = v_0 \left(\frac{v - v_0}{a}\right) + \frac{a}{2}\left(\frac{v - v_0}{a}\right)^2 = \frac{v^2 - v_0^2}{2a}'
+          ..insight =
+              'I termini incrociati 2*v0*v si semplificano algebricamente a numeratore.',
+        ProofStep()
+          ..description =
+              'Corollario: Formula senza tempo di Torricelli per il moto rettilineo.'
+          ..latexEquation = r'v^2 = v_0^2 + 2 a \Delta x'
+          ..insight =
+              'Fondamentale corollario: determina la velocità finale o lo spazio di frenata senza dover cronometrare il tempo!',
+      ]
+      ..interactiveData = (InteractiveData()
+        ..templateType = 'kinematics_simulation'
+        ..equations = ['v0 + a * t']
+        ..parameters = [
+          InteractiveParameter()
+            ..variableName = 'v0'
+            ..label = 'Velocità Iniziale (m/s)'
+            ..minValue = 0.0
+            ..maxValue = 30.0
+            ..defaultValue = 5.0
+            ..stepSize = 1.0,
+          InteractiveParameter()
+            ..variableName = 'a'
+            ..label = 'Accelerazione (m/s²)'
+            ..minValue = -5.0
+            ..maxValue = 10.0
+            ..defaultValue = 2.0
+            ..stepSize = 0.5,
+        ]);
+  }
+
+  /// Nodo Elettrotecnico: Con Simulazione Grafica Animata di Elettroni
   static KnowledgeNode _createOhmNode() {
     return KnowledgeNode()
       ..serverId = 'ele_ohm_01'
-      ..title = 'Legge di Ohm'
+      ..title = 'Legge di Ohm e Conduzione Elettrica'
       ..category = 'Elettrotecnica'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -157,7 +285,7 @@ class MockDataService {
           ..insight = 'Unità di misura: 1 Ohm = 1 Volt / 1 Ampere.',
       ]
       ..interactiveData = (InteractiveData()
-        ..templateType = 'circuit_simulation' // Attiva la simulazione con particelle ed elettroni in moto
+        ..templateType = 'circuit_simulation'
         ..equations = ['V / R']
         ..parameters = [
           InteractiveParameter()
@@ -198,16 +326,16 @@ class MockDataService {
               'Mostra la dissipazione termica per effetto Joule dipendente quadraticamente dalla corrente.',
         ProofStep()
           ..description =
-              'Espressione in funzione della sola tensione e della resistenza.'
+              'Corollario: Espressione in funzione della tensione e della resistenza.'
           ..latexEquation = r'P = \frac{V^2}{R}'
-          ..insight = 'Utile quando la tensione ai capi del carico è fissa.',
+          ..insight = 'Essenziale quando la tensione ai capi del carico è fissa.',
       ];
   }
 
   static KnowledgeNode _createJouleNode() {
     return KnowledgeNode()
       ..serverId = 'ele_joule_01'
-      ..title = 'Effetto Joule'
+      ..title = 'Effetto Joule e Dissipazione Termica'
       ..category = 'Elettrotecnica'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -219,7 +347,7 @@ class MockDataService {
               'Descrive la conversione irreversibile dell\'energia cinetica dei portatori di carica in agitazione termica nel reticolo cristallino.',
         ProofStep()
           ..description =
-              'Sostituendo la formula della potenza in funzione della resistenza e della corrente (P = R * I^2).'
+              'Corollario: Calore generato in funzione della corrente e della resistenza.'
           ..latexEquation = r'Q = R \cdot I^2 \cdot t'
           ..insight =
               'La quantità di calore generata aumenta quadraticamente rispetto all\'intensità della corrente.',

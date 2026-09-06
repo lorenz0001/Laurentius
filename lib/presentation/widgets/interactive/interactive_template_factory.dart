@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/knowledge_node.dart';
+import 'cartesian_graph_widget.dart';
+import 'kinematics_simulation_widget.dart';
 import 'live_equation_widget.dart';
 import 'ohm_circuit_simulation_widget.dart';
 
@@ -17,6 +19,12 @@ class InteractiveTemplateFactory {
       case 'circuit_simulation':
       case 'ohm_simulation':
         return OhmCircuitSimulationWidget(data: data);
+      case 'kinematics_simulation':
+      case 'rectilinear_motion':
+        return KinematicsSimulationWidget(data: data);
+      case 'function_graph':
+      case 'cartesian_plot':
+        return CartesianGraphWidget(data: data);
       case 'live_equation':
         return LiveEquationWidget(data: data);
       default:

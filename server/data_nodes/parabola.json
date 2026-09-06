@@ -1,0 +1,55 @@
+{
+  "serverId": "mat_parabola_01",
+  "title": "Funzione Quadratica e Traiettoria Parabolica",
+  "category": "Matematica",
+  "prerequisites": [],
+  "algebraicProof": [
+    {
+      "description": "Forma algebrica canonica del polinomio quadratico sul piano cartesiano bidimensionale.",
+      "latexEquation": "y = f(x) = a x^2 + b x + c \\quad (a \\neq 0)",
+      "insight": "Il segno del coefficiente quadratico a determina la concavità: verso l'alto per a > 0, verso il basso per a < 0."
+    },
+    {
+      "description": "Metodo del completamento del quadrato per individuare l'apice della curva.",
+      "latexEquation": "y = a \\left(x + \\frac{b}{2a}\\right)^2 - \\frac{b^2 - 4ac}{4a} = a (x - x_v)^2 + y_v",
+      "insight": "La forma vertice esplicita la traslazione rigida rispetto alla parabola fondamentale y = a x^2."
+    },
+    {
+      "description": "Corollario: Coordinate del Vertice e Asse di Simmetria.",
+      "latexEquation": "V = \\left(-\\frac{b}{2a}, -\\frac{\\Delta}{4a}\\right), \\quad x = -\\frac{b}{2a}",
+      "insight": "Rappresenta il punto di massimo o minimo globale assoluto, asse su cui si basano le traiettorie balistiche in cinematica."
+    }
+  ],
+  "interactiveData": {
+    "templateType": "function_graph",
+    "equations": [
+      "a * x * x + b * x + c"
+    ],
+    "parameters": [
+      {
+        "variableName": "a",
+        "label": "Curvatura (a)",
+        "minValue": -3.0,
+        "maxValue": 3.0,
+        "defaultValue": 1.0,
+        "stepSize": 0.1
+      },
+      {
+        "variableName": "b",
+        "label": "Traslazione (b)",
+        "minValue": -4.0,
+        "maxValue": 4.0,
+        "defaultValue": 0.0,
+        "stepSize": 0.2
+      },
+      {
+        "variableName": "c",
+        "label": "Termine Noto (c)",
+        "minValue": -5.0,
+        "maxValue": 5.0,
+        "defaultValue": -2.0,
+        "stepSize": 0.5
+      }
+    ]
+  }
+}

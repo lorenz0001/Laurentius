@@ -9,12 +9,13 @@ import '../../domain/models/knowledge_node.dart';
 /// Servizio per la generazione dinamica di esercizi tramite AI (DeepSeek o endpoint compatibile OpenAI).
 class AITutorService {
   static const String defaultEndpoint = 'https://api.deepseek.com/chat/completions';
-  static const String defaultModel = 'deepseek-chat';
+  static const String defaultModel = 'deepseek-v4-flash';
 
   /// Genera un esercizio didattico personalizzato per il nodo indicato e i suoi prerequisiti.
   Future<ExerciseModel> generateExercise(KnowledgeNode node) async {
     final apiKey = dotenv.env['DEEPSEEK_API_KEY']?.trim();
     final baseUrl = dotenv.env['DEEPSEEK_BASE_URL']?.trim() ?? 'https://api.deepseek.com';
+    final model = dotenv.env['DEEPSEEK_MODEL']?.trim() ?? defaultModel;
     final endpoint = baseUrl.endsWith('/chat/completions')
         ? baseUrl
         : '$baseUrl/chat/completions';
@@ -54,7 +55,7 @@ Struttura del JSON:
           'Authorization': 'Bearer $apiKey',
         },
         body: jsonEncode({
-          'model': defaultModel,
+          'model': model,
           'messages': [
             {'role': 'system', 'content': systemPrompt},
             {
