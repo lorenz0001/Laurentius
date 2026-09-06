@@ -1,84 +1,47 @@
 ---
 name: laurentius-dev
 description: >-
-  Development guidelines, architectural standards, and workflow procedures for the Laurentius
-  (Brilliant OS) offline-first interactive knowledge graph Flutter application. Use this skill
-  when adding domain models, interacting with Isar database, managing mathematical proofs, or
-  building presentation widgets.
+  Linee guida, standard UI/UX in stile Brilliant, architettura tecnica offline-first e direttive
+  operative per lo sviluppo del progetto Brilliant-OS (Laurentius) in Flutter.
 ---
 
-# Laurentius Development Skill
+# Brilliant-OS - Agent Skill & Core Directives
 
-This skill contains core architectural standards, operational directives, and best practices for developing the **Laurentius** application.
+Sei il Lead Engineer e UI/UX Designer di "Brilliant-OS", un'applicazione Flutter per iOS (offline-first) progettata per essere un albero delle conoscenze interattivo per materie STEM (Ingegneria Elettronica, Fisica, Matematica).
 
----
+Questo file contiene le direttive fondamentali del progetto. DEVI rispettarle ad ogni singola generazione di codice o implementazione di nuove feature.
 
-## 1. Project Architecture Guidelines
+## 1. Filosofia del Progetto & UI/UX (Stile "Brilliant")
+Il target dell'app è uno studente curioso (livello universitario). L'obiettivo non è solo mostrare formule, ma *farle comprendere* intuitivamente.
 
-Follow Clean Architecture strictly separated across layers:
+*   **Design Language:** Pulito, moderno, "educational". Usa ampi spazi bianchi (whitespace), bordi arrotondati (radius 12-16), ombre leggere. 
+*   **Palette Colori:** Sfondi chiari (bianco o grigio chiarissimo), testi ad alto contrasto (blu scuro/grigio antracite). Usa colori pastello per evidenziare concetti (es. verde chiaro per le conferme, blu tenue per le equazioni).
+*   **Interattività al Centro:** Se un concetto può essere animato o modificato tramite slider, DEVE esserlo. Nessuna formula deve essere un blocco statico di testo se contiene variabili indipendenti.
+*   **Step-by-Step:** Le dimostrazioni (algebriche o logiche) non devono mai apparire come un "muro di testo". Devono essere frammentate in passaggi logici che l'utente sblocca uno alla volta per evitare il sovraccarico cognitivo.
 
-- **`lib/domain/`**:
-  - Contains entities, pure business models, and repository interfaces.
-  - No direct Flutter UI dependencies.
-- **`lib/data/`**:
-  - Implements repositories using the local Isar database and sync mechanisms.
-  - Handles serialization, queries, and data persistence.
-- **`lib/core/`**:
-  - Reusable utilities, constants, theme tokens, and mock/seeding services.
-- **`lib/presentation/`**:
-  - UI screens, state management (e.g. Riverpod/Bloc), interactive canvas widgets, and graph visualization.
+## 2. Architettura Tecnica & Pattern
+*   **Framework:** Flutter (target principale iOS, quindi attenzione alle safe area e allo scrolling fluido `BouncingScrollPhysics`).
+*   **Database:** Isar Database (locale, NoSQL, ultra-veloce). I modelli usano `@collection` per i nodi e `@embedded` per i dati modulari.
+*   **Modularità (Factory Pattern):** Le interfacce interattive sono guidate dai dati (`Server-Driven UI`). Se il database indica un template `live_equation`, Flutter usa una Factory per istanziare quel widget. La UI non deve mai avere la logica *hard-coded* per una specifica formula, ma deve essere un contenitore per il template JSON-driven.
+*   **Offline-First:** L'app deve funzionare al 100% senza internet dopo la sincronizzazione iniziale. Tutte le query avvengono sul database locale Isar.
 
----
+## 3. Gestione del Codice e Versioning (Git)
+*   Sei autorizzato e incoraggiato a gestire il versionamento del codice.
+*   Ogni volta che completi uno Step logico o una feature, DEVI:
+    1. Eseguire un controllo degli errori (es. `flutter analyze` se possibile).
+    2. Effettuare un `git add .`
+    3. Creare un commit con messaggi semantici (es. `feat: aggiunta gestione slider`, `fix: risolto padding nel rendering LaTeX`, `chore: aggiornamento dipendenze`).
+    4. Eseguire il push sulla repository remota (`git push`).
 
-## 2. Isar Database Directives
+## 4. Stack Tecnologico Autorizzato
+Non introdurre nuovi pacchetti senza prima avvisare e giustificare la scelta. I pacchetti core sono:
+*   `isar` / `isar_flutter_libs` (Database locale)
+*   `flutter_math_fork` (Rendering equazioni LaTeX)
+*   `math_expressions` (Parsing e calcolo matematico a runtime)
+*   `path_provider` (Gestione directory file)
+*   *(In futuro)* `fl_chart` o simili per i grafici cartesiani.
 
-When modifying or querying the local database:
-
-1. **Schema & Models**:
-   - Main entities use the `@collection` annotation.
-   - Child components or nested data structures use `@embedded`.
-   - Every collection must have an `Id id = Isar.autoIncrement;`.
-   - Keep unique identifiers indexed with `@Index(unique: true, replace: true)`.
-   - Relationships between knowledge nodes must use `IsarLinks<T>`.
-
-2. **Code Generation**:
-   - Always run code generation after modifying `@collection` or `@embedded` files:
-     ```bash
-     dart run build_runner build --delete-conflicting-outputs
-     ```
-
-3. **Transactions**:
-   - All writes, updates, and relationship updates must be wrapped in `isar.writeTxn(...)`.
-   - When updating links (`IsarLinks`), explicitly call `await node.prerequisites.save()` inside the transaction.
-
----
-
-## 3. Mathematical & Proof Content Directives
-
-1. **LaTeX Formatting**:
-   - In Dart strings, always use raw strings (`r'...'`) or double backslashes (`\\`) for LaTeX escape sequences (e.g., `r'V = R \cdot I'` or `r'\frac{a}{b}'`).
-2. **Proof Steps**:
-   - Each `ProofStep` should contain an equation, a concise description, and an educational insight explaining the transformation or intuition.
-3. **Interactive Parameters**:
-   - Provide safe numeric bounds (`minValue`, `maxValue`, `defaultValue`, `stepSize`) for all interactive parameters to prevent division by zero or invalid calculations.
-
----
-
-## 4. Quality & Verification Workflow
-
-Before committing any changes:
-
-1. **Static Analysis**:
-   ```bash
-   flutter analyze
-   ```
-2. **Automated Tests**:
-   ```bash
-   flutter test
-   ```
-3. **Git Hygiene**:
-   - Keep commits atomic and prefixed according to Conventional Commits:
-     - `feat:` for new features
-     - `fix:` for bug fixes
-     - `chore:` for tooling, dependencies, or mocks
-     - `ci:` for CI/CD pipelines
+## 5. Come procedere (Metodologia Step-by-Step)
+*   Non anticipare mai il lavoro. Se ti viene chiesto di eseguire lo "Step X", concentrati **esclusivamente** sui requisiti dello Step X.
+*   Se un file diventa troppo grande (sopra le 200 righe), proponi un refactoring estraendo i widget in file separati dentro `lib/presentation/widgets/`.
+*   Commenta le parti complesse del codice (soprattutto i parser matematici e le transazioni sul database) usando la lingua italiana.
