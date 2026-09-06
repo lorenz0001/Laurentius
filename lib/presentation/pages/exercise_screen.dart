@@ -372,7 +372,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                         ),
                       ),
                     ),
-                    ?trailingIcon,
+                    // ignore: use_null_aware_elements
+                    if (trailingIcon != null) trailingIcon,
                   ],
                 ),
               ),
