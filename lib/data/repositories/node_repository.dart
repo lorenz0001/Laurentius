@@ -18,6 +18,10 @@ class NodeRepository {
   }
 
   Future<List<KnowledgeNode>> getAllNodes() async {
-    return await _isar.knowledgeNodes.where().findAll();
+    final nodes = await _isar.knowledgeNodes.where().findAll();
+    for (final node in nodes) {
+      await node.prerequisites.load();
+    }
+    return nodes;
   }
 }
