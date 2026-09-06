@@ -22,6 +22,12 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Create placeholder .env file
+        run: |
+          echo "DEEPSEEK_API_KEY=" > .env
+          echo "DEEPSEEK_BASE_URL=https://api.deepseek.com" >> .env
+          echo "DEEPSEEK_MODEL=deepseek-v4-flash" >> .env
+
       - name: Install dependencies
         run: flutter pub get
 
