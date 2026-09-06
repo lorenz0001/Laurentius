@@ -5,6 +5,7 @@ import '../../core/services/mock_data_service.dart';
 import '../widgets/node_search_delegate.dart';
 import 'category_explorer_screen.dart';
 import 'home_screen.dart';
+import 'settings_screen.dart';
 
 /// Schermata principale (Root Layout) di Brilliant-OS.
 /// Gestisce la navigazione tramite BottomNavigationBar in stile iOS tra
@@ -153,7 +154,22 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                     size: 22,
                   ),
           ),
-          const SizedBox(width: 8),
+          // Pulsante Impostazioni AI & DeepSeek
+          IconButton(
+            tooltip: 'Impostazioni AI & DeepSeek',
+            icon: const Icon(
+              Icons.settings_outlined,
+              color: Color(0xFF0F172A),
+              size: 22,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+              );
+            },
+          ),
+          const SizedBox(width: 4),
         ],
       ),
       body: IndexedStack(

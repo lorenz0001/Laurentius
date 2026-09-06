@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/services/ai_tutor_service.dart';
+import '../../core/services/app_settings_service.dart';
 import '../../domain/models/exercise_model.dart';
 import '../../domain/models/knowledge_node.dart';
+import 'settings_screen.dart';
 
 /// Schermata per la risoluzione interattiva di esercizi generati dall'AI Tutor (stile Brilliant).
 class ExerciseScreen extends StatefulWidget {
@@ -24,11 +26,22 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   bool _hasChecked = false;
   bool _isCorrect = false;
   bool _showExplanation = false;
+  bool _hasApiKey = false;
 
   @override
   void initState() {
     super.initState();
+    _checkApiKey();
     _fetchExercise();
+  }
+
+  Future<void> _checkApiKey() async {
+    final hasKey = await AppSettingsService.hasApiKey();
+    if (mounted) {
+      setState(() {
+        _hasApiKey = hasKey;
+      });
+    }
   }
 
   @override
@@ -88,72 +101,154 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         ),
         actions: [
           IconButton(
+            tooltip: 'Impostazioni DeepSeek AI',
+            icon: const Icon(Icons.settings_outlined, color: Color(0xFF64748B)),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+              );
+              _checkApiKey();
+              _fetchExercise();
+            },
+          ),
+          IconButton(
             tooltip: 'Genera un altro esercizio',
             icon: const Icon(Icons.refresh_rounded, color: Color(0xFF2563EB)),
             onPressed: _fetchExercise,
           ),
         ],
       ),
-      body: FutureBuilder<ExerciseModel>(
-        future: _exerciseFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(color: Color(0xFF2563EB)),
-                  SizedBox(height: 18),
-                  Text(
-                    'L\'AI Tutor sta preparando l\'esercizio...',
-                    style: TextStyle(
-                      color: Color(0xFF475569),
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+      body: Column(
+        children: [
+          if (!_hasApiKey) _buildOfflineBanner(),
+          Expanded(
+            child: FutureBuilder<ExerciseModel>(
+              future: _exerciseFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(
+                          color: Color(0xFF2563EB),
+                          strokeWidth: 3,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          _hasApiKey
+                              ? 'Generazione quesito matematico con DeepSeek AI...'
+                              : 'Caricamento esercizio didattico...',
+                          style: const TextStyle(
+                            color: Color(0xFF1E293B),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _hasApiKey
+                              ? 'Verifica di rigore scientifico e calcolo distrattori concettuali'
+                              : 'Adattamento basato sui tuoi prerequisiti',
+                          style: const TextStyle(
+                            color: Color(0xFF64748B),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 6),
-                  Text(
-                    'Adattamento basato sui tuoi prerequisiti',
-                    style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
-                  ),
-                ],
-              ),
-            );
-          }
+                  );
+                }
 
-          if (snapshot.hasError) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.error_outline,
-                      color: Color(0xFFDC2626),
-                      size: 48,
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.error_outline,
+                            color: Color(0xFFDC2626),
+                            size: 48,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Impossibile caricare l\'esercizio: ${snapshot.error}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Color(0xFF475569)),
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: _fetchExercise,
+                            child: const Text('Riprova'),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Impossibile caricare l\'esercizio: ${snapshot.error}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Color(0xFF475569)),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: _fetchExercise,
-                      child: const Text('Riprova'),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
+                  );
+                }
 
-          final exercise = snapshot.data!;
-          return _buildExerciseContent(exercise);
-        },
+                final exercise = snapshot.data!;
+                return _buildExerciseContent(exercise);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOfflineBanner() {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFBEB),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFFDE68A)),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.bolt_rounded, color: Color(0xFFD97706), size: 20),
+          const SizedBox(width: 10),
+          const Expanded(
+            child: Text(
+              'Modalità Offline attiva. Configura la chiave API DeepSeek per generare quesiti rigorosi e personalizzati in tempo reale.',
+              style: TextStyle(
+                color: Color(0xFF92400E),
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                height: 1.3,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          TextButton(
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              backgroundColor: const Color(0xFFFDE68A),
+              foregroundColor: const Color(0xFF78350F),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+              );
+              _checkApiKey();
+              _fetchExercise();
+            },
+            child: const Text(
+              'Configura',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
       ),
     );
   }

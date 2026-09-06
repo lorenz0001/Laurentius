@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 import '../../domain/models/knowledge_node.dart';
 import '../pages/node_detail_screen.dart';
@@ -8,8 +9,9 @@ import 'category_style.dart';
 /// Presenta codice cromatico per materia, indicatori di prerequisiti e tipo di laboratorio.
 class KnowledgeNodeCard extends StatelessWidget {
   final KnowledgeNode node;
+  final Isar? isar;
 
-  const KnowledgeNodeCard({super.key, required this.node});
+  const KnowledgeNodeCard({super.key, required this.node, this.isar});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class KnowledgeNodeCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => NodeDetailScreen(node: node)),
+            MaterialPageRoute(
+              builder: (_) => NodeDetailScreen(node: node, isar: isar),
+            ),
           );
         },
         borderRadius: BorderRadius.circular(18),

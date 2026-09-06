@@ -347,7 +347,7 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
               if (kNode == null) {
                 return const SizedBox.shrink();
               }
-              return KnowledgeNodeCard(node: kNode);
+              return KnowledgeNodeCard(node: kNode, isar: widget.isar);
             },
           ),
         ),

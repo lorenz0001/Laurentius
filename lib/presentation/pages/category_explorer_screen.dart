@@ -401,7 +401,9 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => NodeDetailScreen(node: node)),
+            MaterialPageRoute(
+              builder: (_) => NodeDetailScreen(node: node, isar: widget.isar),
+            ),
           );
         },
         child: Container(

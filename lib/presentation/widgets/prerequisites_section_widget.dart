@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 import '../../domain/models/knowledge_node.dart';
 import '../pages/node_detail_screen.dart';
@@ -8,11 +9,13 @@ import 'category_style.dart';
 class PrerequisitesSectionWidget extends StatelessWidget {
   final KnowledgeNode currentNode;
   final List<KnowledgeNode>? prerequisites;
+  final Isar? isar;
 
   const PrerequisitesSectionWidget({
     super.key,
     required this.currentNode,
     this.prerequisites,
+    this.isar,
   });
 
   @override
@@ -91,7 +94,9 @@ class PrerequisitesSectionWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => NodeDetailScreen(node: prereq)),
+              MaterialPageRoute(
+                builder: (_) => NodeDetailScreen(node: prereq, isar: isar),
+              ),
             );
           },
           child: Container(

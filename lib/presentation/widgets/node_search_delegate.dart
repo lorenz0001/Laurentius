@@ -157,7 +157,9 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => NodeDetailScreen(node: node)),
+                MaterialPageRoute(
+                  builder: (_) => NodeDetailScreen(node: node, isar: isar),
+                ),
               );
             },
             child: Container(

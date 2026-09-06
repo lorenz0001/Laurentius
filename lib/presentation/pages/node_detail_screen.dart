@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 import '../../domain/models/knowledge_node.dart';
+import '../widgets/ai_rephrase_bottom_sheet.dart';
+import '../widgets/ai_tutor_qna_bottom_sheet.dart';
 import '../widgets/algebraic_proof_widget.dart';
 import '../widgets/category_style.dart';
 import '../widgets/content_block_factory.dart';
@@ -10,17 +13,42 @@ import 'exercise_screen.dart';
 
 /// Schermata di dettaglio del nodo di conoscenza.
 /// Presenta: collegamenti interdisciplinari e prerequisiti, passaggi di dimostrazione algebrica,
-/// laboratori o simulazioni interattive e accesso alla verifica con AI Tutor.
+/// laboratori o simulazioni interattive, rielaborazione con AI (matita) e Q&A tutor (punto interrogativo).
 class NodeDetailScreen extends StatefulWidget {
   final KnowledgeNode node;
+  final Isar? isar;
 
-  const NodeDetailScreen({super.key, required this.node});
+  const NodeDetailScreen({super.key, required this.node, this.isar});
 
   @override
   State<NodeDetailScreen> createState() => _NodeDetailScreenState();
 }
 
 class _NodeDetailScreenState extends State<NodeDetailScreen> {
+  void _openAIRephraseModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => AIRephraseBottomSheet(
+        node: widget.node,
+        isar: widget.isar,
+        onApplied: () {
+          setState(() {});
+        },
+      ),
+    );
+  }
+
+  void _openAITutorQnAModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => AITutorQnABottomSheet(node: widget.node),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final node = widget.node;
@@ -53,6 +81,22 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
         ),
         centerTitle: true,
         actions: [
+          // Tasto Matita: Rielaborazione / Semplificazione AI del testo e passaggi
+          IconButton(
+            tooltip: 'Rielabora o semplifica testo con AI',
+            icon: const Icon(Icons.edit_note_rounded, color: Color(0xFF0284C7)),
+            onPressed: _openAIRephraseModal,
+          ),
+          // Tasto Punto Interrogativo: Chiedi chiarimenti all'AI Tutor
+          IconButton(
+            tooltip: 'Chiedi chiarimenti all\'AI Tutor',
+            icon: const Icon(
+              Icons.help_outline_rounded,
+              color: Color(0xFF7C3AED),
+            ),
+            onPressed: _openAITutorQnAModal,
+          ),
+          // Tasto Quiz: Mettiti alla prova
           IconButton(
             tooltip: 'Mettiti alla prova',
             icon: const Icon(Icons.quiz_outlined, color: Color(0xFF2563EB)),
@@ -163,7 +207,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               const SizedBox(height: 20),
 
               // Sezione Prerequisiti & Collegamenti Interdisciplinari
-              PrerequisitesSectionWidget(currentNode: node),
+              PrerequisitesSectionWidget(currentNode: node, isar: widget.isar),
               const SizedBox(height: 20),
 
               const Divider(color: Color(0xFFE2E8F0), height: 1),
@@ -171,21 +215,60 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
 
               // Sezione Blocchi Contenuto Ricco (Markdown, LaTeX, Info Box)
               if (node.effectiveBlocks.isNotEmpty) ...[
-                const Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.auto_stories_rounded,
-                      size: 18,
-                      color: Color(0xFF334155),
+                    const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.auto_stories_rounded,
+                          size: 18,
+                          color: Color(0xFF334155),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'APPROFONDIMENTO TEORICO',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.6,
+                            color: Color(0xFF334155),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 8),
-                    Text(
-                      'APPROFONDIMENTO TEORICO & FORMULAZIONE',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.6,
-                        color: Color(0xFF334155),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      onTap: _openAIRephraseModal,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE0F2FE),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.auto_fix_high_rounded,
+                              size: 14,
+                              color: Color(0xFF0284C7),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'Rielabora con AI',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF0284C7),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
