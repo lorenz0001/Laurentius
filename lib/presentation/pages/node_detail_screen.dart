@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/models/knowledge_node.dart';
 import '../widgets/algebraic_proof_widget.dart';
 import '../widgets/interactive/interactive_template_factory.dart';
+import 'exercise_screen.dart';
 
 class NodeDetailScreen extends StatefulWidget {
   final KnowledgeNode node;
@@ -38,6 +39,20 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Mettiti alla prova',
+            icon: const Icon(Icons.quiz_outlined, color: Color(0xFF2563EB)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ExerciseScreen(node: node),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -110,10 +125,103 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               // Sezione Interattiva (Server-Driven UI tramite Factory)
               if (interactiveWidget != null) ...[
                 interactiveWidget,
-                const SizedBox(height: 40),
+                const SizedBox(height: 32),
               ],
+
+              // Card Invito Esercizio
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEFF6FF),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFFBFDBFE)),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: const Icon(
+                        Icons.psychology_rounded,
+                        color: Color(0xFF2563EB),
+                        size: 28,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Verifica la tua comprensione',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF1E293B),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            'L\'AI genererà un quesito su misura basato su questo concetto.',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF64748B),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => ExerciseScreen(node: node),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.arrow_forward_rounded, size: 16),
+                            label: const Text(
+                              'Mettiti alla Prova',
+                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF2563EB),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 80),
             ],
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ExerciseScreen(node: node),
+            ),
+          );
+        },
+        backgroundColor: const Color(0xFF0F172A),
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.psychology_outlined),
+        label: const Text(
+          'Mettiti alla Prova',
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
     );

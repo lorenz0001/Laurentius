@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -8,6 +9,13 @@ import 'presentation/pages/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Caricamento sicuro delle variabili d'ambiente per DeepSeek API
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (e) {
+    debugPrint('Nota: file .env non caricato ($e). Uso fallback didattico.');
+  }
 
   final dir = await getApplicationDocumentsDirectory();
   final isar = await Isar.open(
