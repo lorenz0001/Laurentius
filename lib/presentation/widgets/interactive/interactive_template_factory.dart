@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/models/knowledge_node.dart';
 import 'cartesian_graph_widget.dart';
+import 'derivative_tangent_widget.dart';
 import 'kinematics_simulation_widget.dart';
 import 'live_equation_widget.dart';
 import 'ohm_circuit_simulation_widget.dart';
+import 'riemann_sum_widget.dart';
+import 'triangle_solver_widget.dart';
+import 'trig_circle_widget.dart';
 
 /// Factory Pattern per l'istanziazione dinamica di widget interattivi (Server-Driven UI).
 /// A seconda del [templateType] specificato nel database, restituisce il widget corrispondente.
@@ -25,6 +29,18 @@ class InteractiveTemplateFactory {
       case 'function_graph':
       case 'cartesian_plot':
         return CartesianGraphWidget(data: data);
+      case 'trig_circle':
+      case 'trigonometric_circle':
+        return TrigCircleWidget(data: data);
+      case 'triangle_solver':
+      case 'pythagoras_carnot':
+        return TriangleSolverWidget(data: data);
+      case 'derivative_tangent':
+      case 'difference_quotient':
+        return DerivativeTangentWidget(data: data);
+      case 'riemann_sum':
+      case 'riemann_integral':
+        return RiemannSumWidget(data: data);
       case 'live_equation':
         return LiveEquationWidget(data: data);
       default:

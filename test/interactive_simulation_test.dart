@@ -4,9 +4,13 @@ import 'package:laurentius/domain/models/knowledge_node.dart';
 import 'package:laurentius/presentation/widgets/algebraic_proof_widget.dart';
 import 'package:laurentius/presentation/widgets/category_style.dart';
 import 'package:laurentius/presentation/widgets/interactive/cartesian_graph_widget.dart';
+import 'package:laurentius/presentation/widgets/interactive/derivative_tangent_widget.dart';
 import 'package:laurentius/presentation/widgets/interactive/interactive_template_factory.dart';
 import 'package:laurentius/presentation/widgets/interactive/kinematics_simulation_widget.dart';
 import 'package:laurentius/presentation/widgets/interactive/ohm_circuit_simulation_widget.dart';
+import 'package:laurentius/presentation/widgets/interactive/riemann_sum_widget.dart';
+import 'package:laurentius/presentation/widgets/interactive/triangle_solver_widget.dart';
+import 'package:laurentius/presentation/widgets/interactive/trig_circle_widget.dart';
 import 'package:laurentius/presentation/widgets/prerequisites_section_widget.dart';
 
 void main() {
@@ -39,6 +43,30 @@ void main() {
         ..equations = ['a * x * x + b * x + c'];
       final widget = InteractiveTemplateFactory.buildWidget(data);
       expect(widget, isA<CartesianGraphWidget>());
+    });
+
+    test('Returns TrigCircleWidget for trig_circle', () {
+      final data = InteractiveData()..templateType = 'trig_circle';
+      final widget = InteractiveTemplateFactory.buildWidget(data);
+      expect(widget, isA<TrigCircleWidget>());
+    });
+
+    test('Returns TriangleSolverWidget for triangle_solver', () {
+      final data = InteractiveData()..templateType = 'triangle_solver';
+      final widget = InteractiveTemplateFactory.buildWidget(data);
+      expect(widget, isA<TriangleSolverWidget>());
+    });
+
+    test('Returns DerivativeTangentWidget for derivative_tangent', () {
+      final data = InteractiveData()..templateType = 'derivative_tangent';
+      final widget = InteractiveTemplateFactory.buildWidget(data);
+      expect(widget, isA<DerivativeTangentWidget>());
+    });
+
+    test('Returns RiemannSumWidget for riemann_sum', () {
+      final data = InteractiveData()..templateType = 'riemann_sum';
+      final widget = InteractiveTemplateFactory.buildWidget(data);
+      expect(widget, isA<RiemannSumWidget>());
     });
 
     test('Returns null for null interactive data (pure math nodes)', () {
@@ -161,6 +189,82 @@ void main() {
 
       expect(find.text('Grafico Cartesiano Dinamico'), findsOneWidget);
       expect(find.text('EQUAZIONE CORRENTE:'), findsOneWidget);
+    });
+  });
+
+  group('TrigCircleWidget Tests', () {
+    testWidgets('Renders trigonometric circle and telemetry', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: TrigCircleWidget(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Circonferenza Goniometrica'), findsOneWidget);
+      expect(find.text('cos(θ)'), findsOneWidget);
+      expect(find.text('sin(θ)'), findsOneWidget);
+      expect(find.text('tan(θ)'), findsOneWidget);
+      expect(find.textContaining('Identità Fondamentale'), findsOneWidget);
+    });
+  });
+
+  group('TriangleSolverWidget Tests', () {
+    testWidgets('Renders triangle solver and Pythagorean / Carnot checks', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: TriangleSolverWidget(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Geometria del Triangolo & Carnot'), findsOneWidget);
+      expect(find.text('Lato a'), findsOneWidget);
+      expect(find.text('Lato b'), findsOneWidget);
+      expect(find.text('Terzo Lato c'), findsOneWidget);
+      expect(find.text('Area'), findsOneWidget);
+    });
+  });
+
+  group('DerivativeTangentWidget Tests', () {
+    testWidgets('Renders difference quotient and tangent limit', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: DerivativeTangentWidget(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Rapporto Incrementale & Tangente'), findsOneWidget);
+      expect(find.text('Secante: Δy / h'), findsOneWidget);
+      expect(find.text('Derivata: f\'(x₀)'), findsOneWidget);
+    });
+  });
+
+  group('RiemannSumWidget Tests', () {
+    testWidgets('Renders Riemann sum rectangles and convergence telemetry', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: RiemannSumWidget(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Integrale di Riemann'), findsOneWidget);
+      expect(find.text('Somma Riemann: Σ'), findsOneWidget);
+      expect(find.text('Integrale Esatto: ∫'), findsOneWidget);
     });
   });
 }
