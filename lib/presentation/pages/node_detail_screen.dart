@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../domain/models/knowledge_node.dart';
 import '../widgets/algebraic_proof_widget.dart';
+import '../widgets/category_style.dart';
 import '../widgets/interactive/interactive_template_factory.dart';
+import '../widgets/prerequisites_section_widget.dart';
 import 'exercise_screen.dart';
 
+/// Schermata di dettaglio del nodo di conoscenza.
+/// Presenta: collegamenti interdisciplinari e prerequisiti, passaggi di dimostrazione algebrica,
+/// laboratori o simulazioni interattive e accesso alla verifica con AI Tutor.
 class NodeDetailScreen extends StatefulWidget {
   final KnowledgeNode node;
 
@@ -21,22 +26,30 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final node = widget.node;
+    final catStyle = CategoryStyle.forCategory(node.category);
     final interactiveWidget = InteractiveTemplateFactory.buildWidget(node.interactiveData);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        scrolledUnderElevation: 0,
+        scrolledUnderElevation: 1,
         iconTheme: const IconThemeData(color: Color(0xFF0F172A)),
-        title: Text(
-          node.category,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF64748B),
-          ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(catStyle.icon, size: 16, color: catStyle.primary),
+            const SizedBox(width: 6),
+            Text(
+              node.category,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: catStyle.primary,
+              ),
+            ),
+          ],
         ),
         centerTitle: true,
         actions: [
@@ -61,21 +74,29 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Categoria badge
+              // Badge Categoria stilizzato con colore semantico
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE2E8F0),
+                  color: catStyle.background,
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: catStyle.border),
                 ),
-                child: Text(
-                  node.category.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
-                    color: Color(0xFF475569),
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(catStyle.icon, size: 12, color: catStyle.primary),
+                    const SizedBox(width: 6),
+                    Text(
+                      node.category.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.8,
+                        color: catStyle.primary,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 12),
@@ -92,115 +113,60 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               ),
               const SizedBox(height: 8),
 
-              // Server ID o info secondaria
+              // Server ID
               Row(
                 children: [
-                  const Icon(Icons.hub_outlined, size: 16, color: Color(0xFF94A3B8)),
+                  const Icon(Icons.hub_outlined, size: 15, color: Color(0xFF94A3B8)),
                   const SizedBox(width: 6),
                   Text(
-                    'Nodo: ${node.serverId}',
+                    'ID Nodo: ${node.serverId}',
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       color: Color(0xFF64748B),
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              // Divider sottile
+              // Sezione Prerequisiti & Collegamenti Interdisciplinari
+              PrerequisitesSectionWidget(currentNode: node),
+              const SizedBox(height: 20),
+
               const Divider(color: Color(0xFFE2E8F0), height: 1),
               const SizedBox(height: 24),
 
-              // Sezione Dimostrazione Algebrica
+              // Sezione Dimostrazione Algebrica (se presente)
               if (node.algebraicProof.isNotEmpty) ...[
-                AlgebraicProofWidget(proofSteps: node.algebraicProof),
-                const SizedBox(height: 28),
-              ] else
-                const Text(
-                  'Nessun passaggio dimostrativo presente.',
-                  style: TextStyle(color: Color(0xFF64748B)),
-                ),
-
-              // Sezione Interattiva (Server-Driven UI tramite Factory)
-              if (interactiveWidget != null) ...[
-                interactiveWidget,
-                const SizedBox(height: 32),
-              ],
-
-              // Card Invito Esercizio
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEFF6FF),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFBFDBFE)),
-                ),
-                child: Row(
+                const Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: const Icon(
-                        Icons.psychology_rounded,
-                        color: Color(0xFF2563EB),
-                        size: 28,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Verifica la tua comprensione',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF1E293B),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          const Text(
-                            'L\'AI genererà un quesito su misura basato su questo concetto.',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF64748B),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => ExerciseScreen(node: node),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.arrow_forward_rounded, size: 16),
-                            label: const Text(
-                              'Mettiti alla Prova',
-                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF2563EB),
-                              foregroundColor: Colors.white,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ],
+                    Icon(Icons.menu_book_rounded, size: 18, color: Color(0xFF334155)),
+                    SizedBox(width: 8),
+                    Text(
+                      'DIMOSTRAZIONE LOGICO-ALGEBRICA',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.6,
+                        color: Color(0xFF334155),
                       ),
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 12),
+                AlgebraicProofWidget(proofSteps: node.algebraicProof),
+                const SizedBox(height: 28),
+              ],
+
+              // Sezione Laboratorio / Simulazione Interattiva (se presente)
+              if (interactiveWidget != null) ...[
+                interactiveWidget,
+                const SizedBox(height: 28),
+              ],
+
+              // Invito Esercizio con AI Tutor
+              _buildExercisePromptCard(node),
 
               const SizedBox(height: 80),
             ],
@@ -223,6 +189,81 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
           'Mettiti alla Prova',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
+      ),
+    );
+  }
+
+  Widget _buildExercisePromptCard(KnowledgeNode node) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEFF6FF),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFBFDBFE)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Icon(
+              Icons.psychology_rounded,
+              color: Color(0xFF2563EB),
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Verifica la tua comprensione',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1E293B),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'L\'AI genererà un quesito su misura basato su questo concetto e i suoi prerequisiti.',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF64748B),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ExerciseScreen(node: node),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.arrow_forward_rounded, size: 16),
+                  label: const Text(
+                    'Mettiti alla Prova',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2563EB),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

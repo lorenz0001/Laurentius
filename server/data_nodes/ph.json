@@ -1,0 +1,36 @@
+{
+  "serverId": "chem_ph_01",
+  "title": "Calcolo del pH ed Equilibrio Acido-Base",
+  "category": "Chimica",
+  "prerequisites": [
+    "mat_log_01"
+  ],
+  "algebraicProof": [
+    {
+      "description": "Definizione operativa di Sørensen: il pH esprime la concentrazione molare di ioni idrogeno su scala logaritmica negativa.",
+      "latexEquation": "pH = -\\log_{10}[H_3O^+]",
+      "insight": "Il segno negativo fa sì che a una concentrazione maggiore di ioni H+ corrisponda un valore di pH inferiore (maggiore acidità)."
+    },
+    {
+      "description": "Autoionizzazione dell'acqua a 25°C e scala di neutralità chimica.",
+      "latexEquation": "K_w = [H_3O^+][OH^-] = 10^{-14} \\implies pH + pOH = 14",
+      "insight": "In soluzione neutra le concentrazioni sono in equilibrio equimolare: [H+] = 10^-7 M, determinando pH = 7."
+    }
+  ],
+  "interactiveData": {
+    "templateType": "live_equation",
+    "equations": [
+      "-1 * (log(h) / log(10))"
+    ],
+    "parameters": [
+      {
+        "variableName": "h",
+        "label": "Concentrazione [H+] (mol/L)",
+        "minValue": 0.0000001,
+        "maxValue": 0.1,
+        "defaultValue": 0.0001,
+        "stepSize": 0.00001
+      }
+    ]
+  }
+}

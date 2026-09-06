@@ -1,0 +1,24 @@
+{
+  "serverId": "mat_log_01",
+  "title": "Logaritmi ed Esponenziali",
+  "category": "Matematica",
+  "prerequisites": [],
+  "algebraicProof": [
+    {
+      "description": "Definizione fondamentale: il logaritmo è l'esponente da assegnare alla base per ottenere l'argomento.",
+      "latexEquation": "b^y = x \\iff y = \\log_b(x)",
+      "insight": "Rappresenta l'operazione inversa della funzione esponenziale con base positiva diversa da 1."
+    },
+    {
+      "description": "Proprietà del prodotto: trasforma la moltiplicazione in una somma algebrica su scala logaritmica.",
+      "latexEquation": "\\log_b(x \\cdot y) = \\log_b(x) + \\log_b(y)",
+      "insight": "Permette di gestire ordini di grandezza estesi tramite semplici somme."
+    },
+    {
+      "description": "Proprietà della potenza: l'esponente dell'argomento diventa coefficiente moltiplicativo.",
+      "latexEquation": "\\log_b(x^k) = k \\cdot \\log_b(x)",
+      "insight": "Essenziale per la risoluzione di equazioni esponenziali e per scale non lineari (decibel, scala pH)."
+    }
+  ],
+  "interactiveData": null
+}

@@ -2,48 +2,136 @@ import 'package:isar/isar.dart';
 
 import '../../domain/models/knowledge_node.dart';
 
+/// Servizio per la popolazione iniziale del database locale Isar con dati dimostrativi STEM.
+/// Include nodi interdisciplinari (Matematica, Chimica, Elettrotecnica) e nodi sia puramente algebrici
+/// che con simulazione fisica interattiva ad animazione continua.
 class MockDataService {
   static Future<void> populateDatabase(Isar isar) async {
-    final existingCount = await isar.knowledgeNodes.count();
+    final nodesToUpsert = [
+      _createLogarithmsNode(),
+      _createPhNode(),
+      _createOhmNode(),
+      _createPowerNode(),
+      _createJouleNode(),
+    ];
 
-    if (existingCount == 0) {
-      final ohmNode = _createOhmNode();
-      final powerNode = _createPowerNode();
-      final jouleNode = _createJouleNode();
-
-      await isar.writeTxn(() async {
-        await isar.knowledgeNodes.putAll([ohmNode, powerNode, jouleNode]);
-        powerNode.prerequisites.add(ohmNode);
-        await powerNode.prerequisites.save();
-        jouleNode.prerequisites.add(powerNode);
-        await jouleNode.prerequisites.save();
-      });
-    } else {
-      // Assicura l'esistenza del terzo nodo anche se il database era già stato creato negli step precedenti
-      final jouleExists = await isar.knowledgeNodes
-          .where()
-          .serverIdEqualTo('ele_joule_01')
-          .findFirst();
-
-      if (jouleExists == null) {
-        final powerNode = await isar.knowledgeNodes
+    // Fase 1: Upsert di tutti i nodi (preservando gli ID locali per mantenere le relazioni)
+    await isar.writeTxn(() async {
+      for (final node in nodesToUpsert) {
+        final existing = await isar.knowledgeNodes
             .where()
-            .serverIdEqualTo('ele_power_01')
+            .serverIdEqualTo(node.serverId)
             .findFirst();
-
-        final jouleNode = _createJouleNode();
-
-        await isar.writeTxn(() async {
-          await isar.knowledgeNodes.put(jouleNode);
-          if (powerNode != null) {
-            jouleNode.prerequisites.add(powerNode);
-            await jouleNode.prerequisites.save();
-          }
-        });
+        if (existing != null) {
+          node.id = existing.id;
+        }
+        await isar.knowledgeNodes.put(node);
       }
-    }
+    });
+
+    // Fase 2: Salvataggio e collegamento delle dipendenze del grafo (anche interdisciplinari)
+    await isar.writeTxn(() async {
+      final logNode = await isar.knowledgeNodes.where().serverIdEqualTo('mat_log_01').findFirst();
+      final phNode = await isar.knowledgeNodes.where().serverIdEqualTo('chem_ph_01').findFirst();
+      final ohmNode = await isar.knowledgeNodes.where().serverIdEqualTo('ele_ohm_01').findFirst();
+      final powerNode = await isar.knowledgeNodes.where().serverIdEqualTo('ele_power_01').findFirst();
+      final jouleNode = await isar.knowledgeNodes.where().serverIdEqualTo('ele_joule_01').findFirst();
+
+      // Chimica (pH) richiede Matematica (Logaritmi) -> Collegamento Interdisciplinare
+      if (phNode != null && logNode != null) {
+        await phNode.prerequisites.load();
+        if (!phNode.prerequisites.contains(logNode)) {
+          phNode.prerequisites.add(logNode);
+          await phNode.prerequisites.save();
+        }
+      }
+
+      // Potenza richiede Legge di Ohm
+      if (powerNode != null && ohmNode != null) {
+        await powerNode.prerequisites.load();
+        if (!powerNode.prerequisites.contains(ohmNode)) {
+          powerNode.prerequisites.add(ohmNode);
+          await powerNode.prerequisites.save();
+        }
+      }
+
+      // Effetto Joule richiede Potenza Elettrica
+      if (jouleNode != null && powerNode != null) {
+        await jouleNode.prerequisites.load();
+        if (!jouleNode.prerequisites.contains(powerNode)) {
+          jouleNode.prerequisites.add(powerNode);
+          await jouleNode.prerequisites.save();
+        }
+      }
+    });
   }
 
+  /// Nodo Matematico: Dimostrazione pura senza animazione fisica superflua
+  static KnowledgeNode _createLogarithmsNode() {
+    return KnowledgeNode()
+      ..serverId = 'mat_log_01'
+      ..title = 'Logaritmi ed Esponenziali'
+      ..category = 'Matematica'
+      ..lastUpdated = DateTime.now()
+      ..algebraicProof = [
+        ProofStep()
+          ..description =
+              'Definizione fondamentale: il logaritmo è l\'esponente da assegnare alla base b per ottenere x.'
+          ..latexEquation = r'b^y = x \iff y = \log_b(x)'
+          ..insight =
+              'Rappresenta l\'operazione inversa della funzione esponenziale per basi positive diverse da 1.',
+        ProofStep()
+          ..description =
+              'Proprietà del prodotto: trasforma la moltiplicazione in una somma su scala logaritmica.'
+          ..latexEquation = r'\log_b(x \cdot y) = \log_b(x) + \log_b(y)'
+          ..insight =
+              'Alla base del funzionamento dei regoli calcolatori e dell\'elaborazione di segnali su ordini di grandezza.',
+        ProofStep()
+          ..description =
+              'Proprietà della potenza: l\'esponente dell\'argomento diventa fattore moltiplicativo.'
+          ..latexEquation = r'\log_b(x^k) = k \cdot \log_b(x)'
+          ..insight =
+              'Fondamentale per la risoluzione di equazioni esponenziali e per la definizione di scale come il pH.',
+      ]
+      ..interactiveData = null; // Puramente matematico: niente simulazione fisica forzata
+  }
+
+  /// Nodo Chimico: Collegato a Matematica (Logaritmi) come prerequisito
+  static KnowledgeNode _createPhNode() {
+    return KnowledgeNode()
+      ..serverId = 'chem_ph_01'
+      ..title = 'Calcolo del pH ed Equilibrio Acido-Base'
+      ..category = 'Chimica'
+      ..lastUpdated = DateTime.now()
+      ..algebraicProof = [
+        ProofStep()
+          ..description =
+              'Definizione di Sørensen: il pH misura la concentrazione idrogenionica in scala logaritmica negativa.'
+          ..latexEquation = r'pH = -\log_{10}[H_3O^+]'
+          ..insight =
+              'Il segno meno fa sì che a concentrazioni ioniche maggiori corrisponda un pH più basso (maggiore acidità).',
+        ProofStep()
+          ..description =
+              'Costante di autoionizzazione dell\'acqua (Kw a 25°C) e relazione col pOH.'
+          ..latexEquation = r'K_w = [H^+][OH^-] = 10^{-14} \implies pH + pOH = 14'
+          ..insight =
+              'In acqua pura le due specie sono in perfetto equilibrio (pH = 7, punto neutro).',
+      ]
+      ..interactiveData = (InteractiveData()
+        ..templateType = 'live_equation'
+        ..equations = ['-1 * (log(h) / log(10))']
+        ..parameters = [
+          InteractiveParameter()
+            ..variableName = 'h'
+            ..label = 'Concentrazione [H+] (mol/L)'
+            ..minValue = 0.0000001
+            ..maxValue = 0.1
+            ..defaultValue = 0.0001
+            ..stepSize = 0.00001,
+        ]);
+  }
+
+  /// Nodo Elettrico: Con Simulazione Grafica Animata di Elettroni
   static KnowledgeNode _createOhmNode() {
     return KnowledgeNode()
       ..serverId = 'ele_ohm_01'
@@ -69,23 +157,23 @@ class MockDataService {
           ..insight = 'Unità di misura: 1 Ohm = 1 Volt / 1 Ampere.',
       ]
       ..interactiveData = (InteractiveData()
-        ..templateType = 'live_equation'
-        ..equations = ['R * I']
+        ..templateType = 'circuit_simulation' // Attiva la simulazione con particelle ed elettroni in moto
+        ..equations = ['V / R']
         ..parameters = [
           InteractiveParameter()
-            ..variableName = 'R'
-            ..label = 'Resistenza (Ω)'
+            ..variableName = 'V'
+            ..label = 'Tensione Batteria (V)'
             ..minValue = 1.0
-            ..maxValue = 100.0
-            ..defaultValue = 10.0
+            ..maxValue = 48.0
+            ..defaultValue = 12.0
             ..stepSize = 1.0,
           InteractiveParameter()
-            ..variableName = 'I'
-            ..label = 'Corrente (A)'
-            ..minValue = 0.0
-            ..maxValue = 10.0
-            ..defaultValue = 2.0
-            ..stepSize = 0.5,
+            ..variableName = 'R'
+            ..label = 'Resistenza Carico (Ω)'
+            ..minValue = 1.0
+            ..maxValue = 48.0
+            ..defaultValue = 6.0
+            ..stepSize = 1.0,
         ]);
   }
 

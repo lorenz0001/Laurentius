@@ -1,0 +1,42 @@
+{
+  "serverId": "ele_ohm_01",
+  "title": "Legge di Ohm",
+  "category": "Elettrotecnica",
+  "prerequisites": [],
+  "algebraicProof": [
+    {
+      "description": "Relazione fondamentale tra tensione, corrente e resistenza.",
+      "latexEquation": "V = R \\cdot I",
+      "insight": "R rappresenta l'opposizione reticolare al passaggio dei portatori di carica (conduttore ohmico)."
+    },
+    {
+      "description": "Formulazione esplicita per determinare la corrente circolante.",
+      "latexEquation": "I = \\frac{V}{R}",
+      "insight": "A parità di tensione, aumentando la resistenza il flusso di elettroni diminuisce linearmente."
+    }
+  ],
+  "interactiveData": {
+    "templateType": "circuit_simulation",
+    "equations": [
+      "V / R"
+    ],
+    "parameters": [
+      {
+        "variableName": "V",
+        "label": "Tensione Batteria (Volt)",
+        "minValue": 1.0,
+        "maxValue": 48.0,
+        "defaultValue": 12.0,
+        "stepSize": 1.0
+      },
+      {
+        "variableName": "R",
+        "label": "Resistenza Carico (Ohm)",
+        "minValue": 1.0,
+        "maxValue": 48.0,
+        "defaultValue": 6.0,
+        "stepSize": 1.0
+      }
+    ]
+  }
+}

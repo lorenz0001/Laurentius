@@ -1,0 +1,44 @@
+{
+  "serverId": "ele_joule_01",
+  "title": "Effetto Joule e Dissipazione Termica",
+  "category": "Elettrotecnica",
+  "prerequisites": [
+    "ele_power_01"
+  ],
+  "algebraicProof": [
+    {
+      "description": "L'energia termica dissipata (Calore Q) per effetto Joule è pari alla potenza istantanea moltiplicata per il tempo.",
+      "latexEquation": "Q = P \\cdot t",
+      "insight": "Descrive la conversione irreversibile dell'energia cinetica dei portatori di carica in calore nel reticolo atomico."
+    },
+    {
+      "description": "Sostituendo l'espressione della potenza P = R * I^2.",
+      "latexEquation": "Q = R \\cdot I^2 \\cdot t",
+      "insight": "Il calore generato cresce quadraticamente rispetto all'intensità di corrente circolante."
+    }
+  ],
+  "interactiveData": {
+    "templateType": "live_equation",
+    "equations": [
+      "R * I * I"
+    ],
+    "parameters": [
+      {
+        "variableName": "R",
+        "label": "Resistenza (Ohm)",
+        "minValue": 1.0,
+        "maxValue": 100.0,
+        "defaultValue": 10.0,
+        "stepSize": 1.0
+      },
+      {
+        "variableName": "I",
+        "label": "Corrente (Ampere)",
+        "minValue": 0.0,
+        "maxValue": 10.0,
+        "defaultValue": 2.0,
+        "stepSize": 0.5
+      }
+    ]
+  }
+}

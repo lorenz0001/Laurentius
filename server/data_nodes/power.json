@@ -1,0 +1,39 @@
+{
+  "serverId": "ele_power_01",
+  "title": "Potenza Elettrica (Effetto Joule)",
+  "category": "Elettrotecnica",
+  "prerequisites": [
+    "ele_ohm_01"
+  ],
+  "algebraicProof": [
+    {
+      "description": "La potenza dissipata o erogata in un componente elettrico è data dal prodotto tra la tensione ai suoi capi e la corrente che lo attraversa.",
+      "latexEquation": "P = V \\cdot I",
+      "insight": "Combinando questa espressione con la legge di Ohm (V = R · I), si possono ricavare le forme equivalenti P = R · I^2 e P = V^2 / R."
+    }
+  ],
+  "interactiveData": {
+    "templateType": "live_equation",
+    "equations": [
+      "V * I"
+    ],
+    "parameters": [
+      {
+        "variableName": "V",
+        "label": "Tensione (Volt)",
+        "minValue": 0.0,
+        "maxValue": 240.0,
+        "defaultValue": 220.0,
+        "stepSize": 1.0
+      },
+      {
+        "variableName": "I",
+        "label": "Corrente (Ampere)",
+        "minValue": 0.0,
+        "maxValue": 20.0,
+        "defaultValue": 2.0,
+        "stepSize": 0.1
+      }
+    ]
+  }
+}

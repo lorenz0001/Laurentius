@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/models/knowledge_node.dart';
 import 'live_equation_widget.dart';
+import 'ohm_circuit_simulation_widget.dart';
 
 /// Factory Pattern per l'istanziazione dinamica di widget interattivi (Server-Driven UI).
 /// A seconda del [templateType] specificato nel database, restituisce il widget corrispondente.
@@ -13,10 +14,17 @@ class InteractiveTemplateFactory {
     }
 
     switch (data.templateType) {
+      case 'circuit_simulation':
+      case 'ohm_simulation':
+        return OhmCircuitSimulationWidget(data: data);
       case 'live_equation':
         return LiveEquationWidget(data: data);
       default:
-        // Template non ancora supportato o sconosciuto
+        // Se non specificato ma ha equazioni e parametri, fallback su live_equation
+        if ((data.equations != null && data.equations!.isNotEmpty) ||
+            (data.parameters != null && data.parameters!.isNotEmpty)) {
+          return LiveEquationWidget(data: data);
+        }
         return null;
     }
   }

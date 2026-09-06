@@ -5,10 +5,11 @@ import 'package:isar/isar.dart';
 import '../../core/services/sync_service.dart';
 import '../../data/repositories/node_repository.dart';
 import '../../domain/models/knowledge_node.dart';
-import 'node_detail_screen.dart';
+import '../widgets/graph_controls_widget.dart';
+import '../widgets/knowledge_node_card.dart';
 
 /// Schermata principale con visualizzazione ad albero/grafo delle conoscenze (Knowledge Graph).
-/// Permette navigazione, zoom, pan e selezione dei singoli nodi per accedere al dettaglio.
+/// Supporta collegamenti interdisciplinari (DAG), navigazione, zoom calibrato, pan e controlli di visualizzazione.
 class HomeScreen extends StatefulWidget {
   final Isar? isar;
 
@@ -19,11 +20,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Graph _graph = Graph()..isTree = true;
+  // Supporta grafi orientati aciclici (DAG) con nodi a padri multipli / interdisciplinari
+  final Graph _graph = Graph()..isTree = false;
   final Map<String, KnowledgeNode> _nodeLookup = {};
 
-  late final BuchheimWalkerConfiguration _config;
-  late final BuchheimWalkerAlgorithm _algorithm;
+  late final SugiyamaConfiguration _config;
+  late final SugiyamaAlgorithm _algorithm;
+
+  final TransformationController _transformationController = TransformationController();
+  double _currentScale = 1.0;
+
+  static const double _minScale = 0.45;
+  static const double _maxScale = 1.60;
 
   bool _isLoading = true;
   bool _isSyncing = false;
@@ -33,16 +41,40 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    // Configurazione dell'algoritmo di layout direzionale (Top-Down)
-    _config = BuchheimWalkerConfiguration()
-      ..orientation = BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM
-      ..siblingSeparation = 36
-      ..levelSeparation = 56
-      ..subtreeSeparation = 36;
+    // Configurazione Sugiyama per grafi diretti stratificati (DAG)
+    _config = SugiyamaConfiguration()
+      ..orientation = SugiyamaConfiguration.ORIENTATION_TOP_BOTTOM
+      ..nodeSeparation = 32
+      ..levelSeparation = 64;
 
-    _algorithm = BuchheimWalkerAlgorithm(_config, TreeEdgeRenderer(_config));
+    _algorithm = SugiyamaAlgorithm(_config);
+
+    _transformationController.addListener(_onTransformationChanged);
 
     _loadKnowledgeGraph();
+  }
+
+  @override
+  void dispose() {
+    _transformationController.removeListener(_onTransformationChanged);
+    _transformationController.dispose();
+    super.dispose();
+  }
+
+  void _onTransformationChanged() {
+    final scale = _transformationController.value.getMaxScaleOnAxis();
+    if ((scale - _currentScale).abs() > 0.01) {
+      setState(() {
+        _currentScale = scale;
+      });
+    }
+  }
+
+  void _resetView() {
+    setState(() {
+      _transformationController.value = Matrix4.identity();
+      _currentScale = 1.0;
+    });
   }
 
   /// Forza la sincronizzazione HTTP con il server Python e ricarica il grafo
@@ -105,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _graph.addNode(gNode);
       }
 
-      // 2. Aggiunge gli archi direzionati: Prerequisito -> Nodo Dipendente
+      // 2. Aggiunge gli archi direzionati: Prerequisito -> Nodo Dipendente (anche cross-subject)
       for (final kNode in nodes) {
         final targetGNode = graphNodes[kNode.serverId];
         if (targetGNode == null) continue;
@@ -140,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
         scrolledUnderElevation: 1,
         title: const Row(
           children: [
-            Icon(Icons.account_tree_outlined, color: Color(0xFF2563EB), size: 22),
+            Icon(Icons.hub_outlined, color: Color(0xFF2563EB), size: 22),
             SizedBox(width: 8),
             Text(
               'Brilliant OS',
@@ -153,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         actions: [
-          // Pulsante manuale di sincronizzazione
+          // Pulsante di sincronizzazione con server
           TextButton.icon(
             onPressed: _isSyncing ? null : _syncWithServer,
             icon: _isSyncing
@@ -247,18 +279,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Stack(
       children: [
-        // Visualizzazione interattiva del Grafo con pan e zoom
+        // Visualizzazione interattiva del Grafo con limiti calibrati di zoom e pan
         InteractiveViewer(
+          transformationController: _transformationController,
           constrained: false,
-          boundaryMargin: const EdgeInsets.all(120),
-          minScale: 0.3,
-          maxScale: 2.2,
+          boundaryMargin: const EdgeInsets.all(280),
+          minScale: _minScale,
+          maxScale: _maxScale,
           child: GraphView(
             graph: _graph,
             algorithm: _algorithm,
             paint: Paint()
-              ..color = const Color(0xFFCBD5E1)
-              ..strokeWidth = 2.5
+              ..color = const Color(0xFF94A3B8)
+              ..strokeWidth = 2.0
               ..style = PaintingStyle.stroke,
             builder: (Node node) {
               final serverId = node.key!.value as String;
@@ -266,8 +299,21 @@ class _HomeScreenState extends State<HomeScreen> {
               if (kNode == null) {
                 return const SizedBox.shrink();
               }
-              return _buildKnowledgeNodeCard(kNode);
+              return KnowledgeNodeCard(node: kNode);
             },
+          ),
+        ),
+
+        // Barra di controllo fluttuante per Zoom e Ripristino Vista (in alto a destra)
+        Positioned(
+          top: 16,
+          right: 16,
+          child: GraphControlsWidget(
+            transformationController: _transformationController,
+            currentScale: _currentScale,
+            minScale: _minScale,
+            maxScale: _maxScale,
+            onReset: _resetView,
           ),
         ),
 
@@ -296,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icon(Icons.touch_app_outlined, color: Colors.white70, size: 16),
                   SizedBox(width: 8),
                   Text(
-                    'Trascina per esplorare • Tocca un nodo per aprirlo',
+                    'Pizzica per zoomare • Trascina per esplorare • Tocca un nodo per aprirlo',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -309,109 +355,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  /// Costruisce la scheda visiva del nodo con estetica in stile "Brilliant"
-  Widget _buildKnowledgeNodeCard(KnowledgeNode node) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => NodeDetailScreen(node: node),
-            ),
-          );
-        },
-        borderRadius: BorderRadius.circular(18),
-        child: Container(
-          width: 220,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x0A000000),
-                blurRadius: 10,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Categoria badge
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEFF6FF),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      node.category.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.5,
-                        color: Color(0xFF2563EB),
-                      ),
-                    ),
-                  ),
-                  const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 12,
-                    color: Color(0xFF94A3B8),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              // Titolo del nodo
-              Text(
-                node.title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
-                ),
-              ),
-              const SizedBox(height: 6),
-
-              // Dettagli sintetici (passaggi dimostrativi / laboratorio)
-              Row(
-                children: [
-                  Icon(
-                    node.interactiveData != null
-                        ? Icons.tune_rounded
-                        : Icons.menu_book_outlined,
-                    size: 13,
-                    color: const Color(0xFF64748B),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    node.interactiveData != null
-                        ? 'Formule + Lab Live'
-                        : '${node.algebraicProof.length} passaggi',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF64748B),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
