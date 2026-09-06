@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'core/services/mock_data_service.dart';
+import 'core/services/sync_service.dart';
 import 'domain/models/knowledge_node.dart';
 import 'presentation/pages/home_screen.dart';
 
@@ -15,7 +15,8 @@ void main() async {
     directory: dir.path,
   );
 
-  await MockDataService.populateDatabase(isar);
+  // Sincronizzazione Offline-First con il server Python locale
+  await SyncService().syncWithServer(isar);
 
   runApp(LaurentiusApp(isar: isar));
 }

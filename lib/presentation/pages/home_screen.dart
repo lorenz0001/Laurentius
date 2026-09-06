@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:isar/isar.dart';
 
+import '../../core/services/sync_service.dart';
 import '../../data/repositories/node_repository.dart';
 import '../../domain/models/knowledge_node.dart';
 import 'node_detail_screen.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final BuchheimWalkerAlgorithm _algorithm;
 
   bool _isLoading = true;
+  bool _isSyncing = false;
   String? _errorMessage;
 
   @override
@@ -43,6 +45,39 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadKnowledgeGraph();
   }
 
+  /// Forza la sincronizzazione HTTP con il server Python e ricarica il grafo
+  Future<void> _syncWithServer() async {
+    if (widget.isar == null || _isSyncing) return;
+
+    setState(() {
+      _isSyncing = true;
+    });
+
+    final success = await SyncService().syncWithServer(widget.isar!);
+    await _loadKnowledgeGraph();
+
+    if (mounted) {
+      setState(() {
+        _isSyncing = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            success
+                ? 'Sincronizzazione completata! Nodi aggiornati.'
+                : 'Modalità offline: server non raggiungibile. Dati locali preservati.',
+          ),
+          backgroundColor:
+              success ? const Color(0xFF16A34A) : const Color(0xFF475569),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
   /// Recupera tutti i nodi e relative dipendenze dal database locale Isar
   Future<void> _loadKnowledgeGraph() async {
     if (widget.isar == null) {
@@ -58,6 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final nodes = await repository.getAllNodes();
 
       _nodeLookup.clear();
+      _graph.nodes.clear();
+      _graph.edges.clear();
       final Map<String, Node> graphNodes = {};
 
       // 1. Aggiunge tutti i nodi al grafo
@@ -116,9 +153,31 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         actions: [
+          // Pulsante manuale di sincronizzazione
+          TextButton.icon(
+            onPressed: _isSyncing ? null : _syncWithServer,
+            icon: _isSyncing
+                ? const SizedBox(
+                    width: 14,
+                    height: 14,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Color(0xFF2563EB),
+                    ),
+                  )
+                : const Icon(Icons.sync_rounded, size: 16, color: Color(0xFF2563EB)),
+            label: const Text(
+              'Sincronizza',
+              style: TextStyle(
+                color: Color(0xFF2563EB),
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+              ),
+            ),
+          ),
           if (!_isLoading && _nodeLookup.isNotEmpty)
             Container(
-              margin: const EdgeInsets.only(right: 16),
+              margin: const EdgeInsets.only(right: 14, left: 4),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: const Color(0xFFEFF6FF),
