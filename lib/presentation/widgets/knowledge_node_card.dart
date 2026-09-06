@@ -21,7 +21,7 @@ class KnowledgeNodeCard extends StatelessWidget {
 
     // Determina il tipo di laboratorio / interattività
     final templateType = node.interactiveData?.templateType;
-    final isSimulation = templateType == 'circuit_simulation' || templateType == 'ohm_simulation';
+    final isSimulation = templateType != null && templateType != 'live_equation';
     final isLiveEquation = templateType == 'live_equation';
 
     return Material(
@@ -59,29 +59,36 @@ class KnowledgeNodeCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: catStyle.background,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(catStyle.icon, size: 12, color: catStyle.primary),
-                        const SizedBox(width: 4),
-                        Text(
-                          node.category.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 0.5,
-                            color: catStyle.primary,
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: catStyle.background,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(catStyle.icon, size: 12, color: catStyle.primary),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              node.category.toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 0.5,
+                                color: catStyle.primary,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 4),
                   const Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 11,
@@ -156,20 +163,24 @@ class KnowledgeNodeCard extends StatelessWidget {
                             : const Color(0xFF64748B),
                   ),
                   const SizedBox(width: 5),
-                  Text(
-                    isSimulation
-                        ? 'Simulazione Fisica'
-                        : isLiveEquation
-                            ? 'Lab Interattivo'
-                            : '${node.algebraicProof.length} passaggi algebrici',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: isSimulation
-                          ? const Color(0xFF2563EB)
+                  Expanded(
+                    child: Text(
+                      isSimulation
+                          ? 'Simulatore Interattivo'
                           : isLiveEquation
-                              ? const Color(0xFF059669)
-                              : const Color(0xFF64748B),
-                      fontWeight: FontWeight.w600,
+                              ? 'Lab Interattivo'
+                              : '${node.algebraicProof.length} passaggi algebrici',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isSimulation
+                            ? const Color(0xFF2563EB)
+                            : isLiveEquation
+                                ? const Color(0xFF059669)
+                                : const Color(0xFF64748B),
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

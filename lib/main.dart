@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:isar/isar.dart';
@@ -17,14 +18,21 @@ void main() async {
     debugPrint('Nota: file .env non caricato ($e). Uso fallback didattico.');
   }
 
-  final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.open(
-    [KnowledgeNodeSchema],
-    directory: dir.path,
-  );
+  Isar? isar;
+  if (!kIsWeb) {
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      isar = await Isar.open(
+        [KnowledgeNodeSchema],
+        directory: dir.path,
+      );
 
-  // Inizializzazione autonoma e offline-first del catalogo locale STEM (nodi, animazioni, corollari)
-  await MockDataService.populateDatabase(isar);
+      // Inizializzazione autonoma e offline-first del catalogo locale STEM (nodi, animazioni, corollari)
+      await MockDataService.populateDatabase(isar);
+    } catch (e) {
+      debugPrint('Nota Isar: $e. Uso fallback didattico in memoria.');
+    }
+  }
 
   runApp(LaurentiusApp(isar: isar));
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:isar/isar.dart';
 
+import '../../data/catalog/curriculum_registry.dart';
 import '../../core/services/mock_data_service.dart';
 import '../../data/repositories/node_repository.dart';
 import '../../domain/models/knowledge_node.dart';
@@ -79,13 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Ricarica e sincronizza il catalogo delle conoscenze dal servizio locale
   Future<void> _refreshCatalog() async {
-    if (widget.isar == null || _isSyncing) return;
+    if (_isSyncing) return;
 
     setState(() {
       _isSyncing = true;
     });
 
-    await MockDataService.populateDatabase(widget.isar!);
+    if (widget.isar != null) {
+      await MockDataService.populateDatabase(widget.isar!);
+    }
     await _loadKnowledgeGraph();
 
     if (mounted) {
@@ -105,19 +108,34 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Recupera tutti i nodi e relative dipendenze dal database locale Isar
+  /// Recupera tutti i nodi e relative dipendenze (da Isar o in memoria per browser web)
   Future<void> _loadKnowledgeGraph() async {
-    if (widget.isar == null) {
-      setState(() {
-        _isLoading = false;
-        _errorMessage = 'Database locale non inizializzato.';
-      });
-      return;
-    }
-
     try {
-      final repository = NodeRepository(widget.isar!);
-      final nodes = await repository.getAllNodes();
+      final List<KnowledgeNode> nodes;
+      if (widget.isar != null) {
+        final repository = NodeRepository(widget.isar!);
+        nodes = await repository.getAllNodes();
+      } else {
+        // Modalità Browser Web o anteprima rapida in memoria da CurriculumRegistry
+        nodes = CurriculumRegistry.getAllNodes();
+        final Map<String, KnowledgeNode> inMemoryMap = {
+          for (final n in nodes) n.serverId: n,
+        };
+        for (final entry in CurriculumRegistry.prerequisiteMap.entries) {
+          final target = inMemoryMap[entry.key];
+          if (target != null) {
+            target.tempPrerequisiteIds = List.from(entry.value);
+            for (final prereqId in entry.value) {
+              final prereq = inMemoryMap[prereqId];
+              if (prereq != null) {
+                try {
+                  target.prerequisites.add(prereq);
+                } catch (_) {}
+              }
+            }
+          }
+        }
+      }
 
       _nodeLookup.clear();
       _graph.nodes.clear();
@@ -137,8 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
         final targetGNode = graphNodes[kNode.serverId];
         if (targetGNode == null) continue;
 
-        for (final prereq in kNode.prerequisites) {
-          final sourceGNode = graphNodes[prereq.serverId];
+        final prereqIds = kNode.prerequisites.isNotEmpty
+            ? kNode.prerequisites.map((p) => p.serverId).toList()
+            : kNode.tempPrerequisiteIds;
+
+        for (final prereqId in prereqIds) {
+          final sourceGNode = graphNodes[prereqId];
           if (sourceGNode != null) {
             _graph.addEdge(sourceGNode, targetGNode);
           }
@@ -336,12 +358,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Icon(Icons.touch_app_outlined, color: Colors.white70, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    'Pizzica per zoomare • Trascina per esplorare • Tocca un nodo per aprirlo',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                  Flexible(
+                    child: Text(
+                      'Pizzica per zoomare • Trascina per esplorare • Tocca un nodo per aprirlo',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

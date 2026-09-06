@@ -15,6 +15,7 @@ analyzer:
     - android/**
     - ios/**
     - "**/*.g.dart"
+    - web/**
   errors:
     experimental_member_use: ignore
 

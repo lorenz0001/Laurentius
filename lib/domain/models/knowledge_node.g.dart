@@ -15,7 +15,7 @@ extension GetKnowledgeNodeCollection on Isar {
 
 const KnowledgeNodeSchema = CollectionSchema(
   name: r'KnowledgeNode',
-  id: 3048272821976668502,
+  id: 30482728219766,
   properties: {
     r'algebraicProof': PropertySchema(
       id: 0,
@@ -57,7 +57,7 @@ const KnowledgeNodeSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'serverId': IndexSchema(
-      id: -7950187970872907662,
+      id: -79501879708729,
       name: r'serverId',
       unique: true,
       replace: true,
@@ -72,7 +72,7 @@ const KnowledgeNodeSchema = CollectionSchema(
   },
   links: {
     r'prerequisites': LinkSchema(
-      id: -3176454873111640483,
+      id: -31764548731116,
       name: r'prerequisites',
       target: r'KnowledgeNode',
       single: false,
@@ -1315,7 +1315,7 @@ extension KnowledgeNodeQueryProperty
 
 const ProofStepSchema = Schema(
   name: r'ProofStep',
-  id: -5201550155890828476,
+  id: -52015501558908,
   properties: {
     r'description': PropertySchema(
       id: 0,
@@ -1872,7 +1872,7 @@ extension ProofStepQueryObject
 
 const InteractiveDataSchema = Schema(
   name: r'InteractiveData',
-  id: 7987400407099009970,
+  id: 79874004070990,
   properties: {
     r'equations': PropertySchema(
       id: 0,
@@ -2517,7 +2517,7 @@ extension InteractiveDataQueryObject
 
 const InteractiveParameterSchema = Schema(
   name: r'InteractiveParameter',
-  id: 3547068895815187121,
+  id: 35470688958151,
   properties: {
     r'defaultValue': PropertySchema(
       id: 0,
