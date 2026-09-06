@@ -8,10 +8,7 @@ import '../../../domain/models/knowledge_node.dart';
 class LiveEquationWidget extends StatefulWidget {
   final InteractiveData data;
 
-  const LiveEquationWidget({
-    super.key,
-    required this.data,
-  });
+  const LiveEquationWidget({super.key, required this.data});
 
   @override
   State<LiveEquationWidget> createState() => _LiveEquationWidgetState();
@@ -145,10 +142,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                     SizedBox(height: 2),
                     Text(
                       'Muovi gli slider per osservare il comportamento in tempo reale',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF64748B),
-                      ),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
                     ),
                   ],
                 ),
@@ -201,8 +195,8 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
 
     final formattedResult = _computedResult != null
         ? (_computedResult! % 1 == 0
-            ? _computedResult!.toStringAsFixed(0)
-            : _computedResult!.toStringAsFixed(2))
+              ? _computedResult!.toStringAsFixed(0)
+              : _computedResult!.toStringAsFixed(2))
         : '--';
 
     return Container(
@@ -315,7 +309,10 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 3,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),

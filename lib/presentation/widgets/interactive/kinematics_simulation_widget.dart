@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/knowledge_node.dart';
@@ -9,13 +10,11 @@ import '../../../domain/models/knowledge_node.dart';
 class KinematicsSimulationWidget extends StatefulWidget {
   final InteractiveData? data;
 
-  const KinematicsSimulationWidget({
-    super.key,
-    this.data,
-  });
+  const KinematicsSimulationWidget({super.key, this.data});
 
   @override
-  State<KinematicsSimulationWidget> createState() => _KinematicsSimulationWidgetState();
+  State<KinematicsSimulationWidget> createState() =>
+      _KinematicsSimulationWidgetState();
 }
 
 class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
@@ -79,7 +78,11 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
   }
 
   // Calcolo posizione istantanea x(t) = v0*t + 0.5*a*t^2
-  double get _position => (_v0 * _elapsedTime + 0.5 * _a * _elapsedTime * _elapsedTime).clamp(0.0, 1000.0);
+  double get _position =>
+      (_v0 * _elapsedTime + 0.5 * _a * _elapsedTime * _elapsedTime).clamp(
+        0.0,
+        1000.0,
+      );
 
   // Calcolo velocità istantanea v(t) = v0 + a*t
   double get _velocity => (_v0 + _a * _elapsedTime).clamp(0.0, 150.0);
@@ -157,7 +160,11 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
               ),
               // Controlli Play/Pausa e Reset
               IconButton(
-                icon: Icon(_isPlaying ? Icons.pause_circle_filled_rounded : Icons.play_circle_fill_rounded),
+                icon: Icon(
+                  _isPlaying
+                      ? Icons.pause_circle_filled_rounded
+                      : Icons.play_circle_fill_rounded,
+                ),
                 color: const Color(0xFF2563EB),
                 iconSize: 28,
                 tooltip: _isPlaying ? 'Pausa' : 'Avvia',
@@ -286,7 +293,11 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.star_rounded, color: Color(0xFFD97706), size: 18),
+                const Icon(
+                  Icons.star_rounded,
+                  color: Color(0xFFD97706),
+                  size: 18,
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
@@ -384,11 +395,19 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
             children: [
               Text(
                 label,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF1E293B)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Text(
                 '${value.toStringAsFixed(1)} $unit',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: color),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: color,
+                ),
               ),
             ],
           ),
@@ -479,7 +498,11 @@ class _RoadPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: const TextStyle(fontSize: 10, color: Color(0xFF64748B), fontWeight: FontWeight.w600),
+        style: const TextStyle(
+          fontSize: 10,
+          color: Color(0xFF64748B),
+          fontWeight: FontWeight.w600,
+        ),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -494,10 +517,7 @@ class _RoadPainter extends CustomPainter {
     if (v > 10.0) {
       final trailPaint = Paint()
         ..shader = LinearGradient(
-          colors: [
-            const Color(0x6638BDF8),
-            Colors.transparent,
-          ],
+          colors: [const Color(0x6638BDF8), Colors.transparent],
         ).createShader(Rect.fromLTWH(x - 30, y + 4, 30, 10));
       canvas.drawRect(Rect.fromLTWH(x - 30, y + 4, 30, 10), trailPaint);
     }
@@ -552,7 +572,10 @@ class _RoadPainter extends CustomPainter {
       ..strokeWidth = 1.0;
     canvas.drawLine(
       center,
-      Offset(center.dx + 3.5 * math.cos(angle), center.dy + 3.5 * math.sin(angle)),
+      Offset(
+        center.dx + 3.5 * math.cos(angle),
+        center.dy + 3.5 * math.sin(angle),
+      ),
       spokePaint,
     );
   }
@@ -564,7 +587,8 @@ class _RoadPainter extends CustomPainter {
     final arrowLength = (v * 1.6).clamp(12.0, 50.0);
 
     final arrowPaint = Paint()
-      ..color = const Color(0xFF22C55E) // Verde vivace per la velocità
+      ..color =
+          const Color(0xFF22C55E) // Verde vivace per la velocità
       ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round;
 

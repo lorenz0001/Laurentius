@@ -9,18 +9,28 @@ import '../../domain/models/knowledge_node.dart';
 import '../widgets/graph_controls_widget.dart';
 import '../widgets/knowledge_node_card.dart';
 
-/// Schermata principale con visualizzazione ad albero/grafo delle conoscenze (Knowledge Graph).
+/// Schermata con visualizzazione ad albero/grafo delle conoscenze (Knowledge Graph).
 /// Supporta collegamenti interdisciplinari (DAG), navigazione, zoom calibrato, pan e controlli di visualizzazione.
-class HomeScreen extends StatefulWidget {
+class GraphViewScreen extends StatefulWidget {
   final Isar? isar;
+  final bool showAppBar;
+  final VoidCallback? onRefresh;
 
-  const HomeScreen({super.key, this.isar});
+  const GraphViewScreen({
+    super.key,
+    this.isar,
+    this.showAppBar = true,
+    this.onRefresh,
+  });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<GraphViewScreen> createState() => _GraphViewScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+/// Alias per compatibilità con codice pregresso
+typedef HomeScreen = GraphViewScreen;
+
+class _GraphViewScreenState extends State<GraphViewScreen> {
   // Supporta grafi orientati aciclici (DAG) con nodi a padri multipli / interdisciplinari
   final Graph _graph = Graph()..isTree = false;
   final Map<String, KnowledgeNode> _nodeLookup = {};
@@ -28,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late final SugiyamaConfiguration _config;
   late final SugiyamaAlgorithm _algorithm;
 
-  final TransformationController _transformationController = TransformationController();
+  final TransformationController _transformationController =
+      TransformationController();
   double _currentScale = 1.0;
 
   static const double _minScale = 0.45;
@@ -98,10 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Catalogo delle conoscenze aggiornato con successo!'),
+          content: const Text(
+            'Catalogo delle conoscenze aggiornato con successo!',
+          ),
           backgroundColor: const Color(0xFF16A34A),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -179,71 +194,83 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  /// Metodo pubblico per ricaricare il grafo dall'esterno (es. MainLayoutScreen)
+  Future<void> reloadGraph() => _refreshCatalog();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        title: const Row(
-          children: [
-            Icon(Icons.hub_outlined, color: Color(0xFF2563EB), size: 22),
-            SizedBox(width: 8),
-            Text(
-              'Brilliant OS',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                letterSpacing: -0.3,
-                color: Color(0xFF0F172A),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          // Pulsante di ricarica catalogo locale
-          TextButton.icon(
-            onPressed: _isSyncing ? null : _refreshCatalog,
-            icon: _isSyncing
-                ? const SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Color(0xFF2563EB),
+      appBar: widget.showAppBar
+          ? AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              scrolledUnderElevation: 1,
+              title: const Row(
+                children: [
+                  Icon(Icons.hub_outlined, color: Color(0xFF2563EB), size: 22),
+                  SizedBox(width: 8),
+                  Text(
+                    'Brilliant OS',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.3,
+                      color: Color(0xFF0F172A),
                     ),
-                  )
-                : const Icon(Icons.refresh_rounded, size: 16, color: Color(0xFF2563EB)),
-            label: const Text(
-              'Ricarica',
-              style: TextStyle(
-                color: Color(0xFF2563EB),
-                fontWeight: FontWeight.w600,
-                fontSize: 13,
+                  ),
+                ],
               ),
-            ),
-          ),
-          if (!_isLoading && _nodeLookup.isNotEmpty)
-            Container(
-              margin: const EdgeInsets.only(right: 14, left: 4),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFFEFF6FF),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFBFDBFE)),
-              ),
-              child: Text(
-                '${_nodeLookup.length} Nodi',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF1D4ED8),
+              actions: [
+                // Pulsante di ricarica catalogo locale
+                TextButton.icon(
+                  onPressed: _isSyncing ? null : _refreshCatalog,
+                  icon: _isSyncing
+                      ? const SizedBox(
+                          width: 14,
+                          height: 14,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Color(0xFF2563EB),
+                          ),
+                        )
+                      : const Icon(
+                          Icons.refresh_rounded,
+                          size: 16,
+                          color: Color(0xFF2563EB),
+                        ),
+                  label: const Text(
+                    'Ricarica',
+                    style: TextStyle(
+                      color: Color(0xFF2563EB),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-        ],
-      ),
+                if (!_isLoading && _nodeLookup.isNotEmpty)
+                  Container(
+                    margin: const EdgeInsets.only(right: 14, left: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFF6FF),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFBFDBFE)),
+                    ),
+                    child: Text(
+                      '${_nodeLookup.length} Nodi',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1D4ED8),
+                      ),
+                    ),
+                  ),
+              ],
+            )
+          : null,
       body: _buildBody(),
     );
   }
@@ -272,7 +299,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Color(0xFFDC2626)),
+              const Icon(
+                Icons.error_outline,
+                size: 48,
+                color: Color(0xFFDC2626),
+              ),
               const SizedBox(height: 12),
               Text(
                 _errorMessage!,
@@ -356,7 +387,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.touch_app_outlined, color: Colors.white70, size: 16),
+                  Icon(
+                    Icons.touch_app_outlined,
+                    color: Colors.white70,
+                    size: 16,
+                  ),
                   SizedBox(width: 8),
                   Flexible(
                     child: Text(

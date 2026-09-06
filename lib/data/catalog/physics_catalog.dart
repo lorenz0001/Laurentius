@@ -19,15 +19,35 @@ class PhysicsCatalog {
       ..serverId = 'phys_kin_01'
       ..title = 'Cinematica: Moto Rettilineo e Corollario di Torricelli'
       ..category = 'Fisica'
+      ..subCategory = 'Cinematica e Dinamica'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Il Moto Rettilineo Uniformemente Accelerato
+
+Nel moto rettilineo con accelerazione costante $a$, la variazione temporale della velocità è costante:
+- La velocità è una retta nel piano $(t, v)$: $v(t) = v_0 + at$
+- La posizione $x(t)$ è una parabola nel tempo, ottenuta per **integrazione definita** della velocità:
+
+$$x(t) = x_0 + v_0 t + \frac{1}{2} a t^2$$""",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""La celebre **Formula di Torricelli** elimina il tempo $t$ dal sistema, collegando direttamente velocità e spostamento: $v^2 = v_0^2 + 2a\Delta x$.""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r'v^2 = v_0^2 + 2 a \Delta x',
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Definizione di accelerazione costante come derivata temporale della velocità.'
-          ..latexEquation = r'a = \frac{dv}{dt} = \text{costante} \implies v(t) = v_0 + a t'
+          ..latexEquation =
+              r'a = \frac{dv}{dt} = \text{costante} \implies v(t) = v_0 + a t'
           ..insight = 'La velocità cresce in modo direttamente proporzionale al tempo trascorso.',
         ProofStep()
           ..description = 'Integrazione della velocità nel tempo per ottenere la legge oraria dello spostamento.'
-          ..latexEquation = r'x(t) = x_0 + \int_0^t v(t) dt = x_0 + v_0 t + \frac{1}{2} a t^2'
+          ..latexEquation =
+              r'x(t) = x_0 + \int_0^t v(t) dt = x_0 + v_0 t + \frac{1}{2} a t^2'
           ..insight = 'L\'area sotto la retta delle velocità nel piano (t, v) genera il termine parabolico quadratico.',
         ProofStep()
           ..description = 'Isolamento del tempo t dalla relazione della velocità: t = (v - v₀) / a.'
@@ -69,7 +89,21 @@ class PhysicsCatalog {
       ..serverId = 'ele_ohm_01'
       ..title = 'Legge di Ohm e Resistenza Elettrica'
       ..category = 'Elettrotecnica'
+      ..subCategory = 'Circuiti in Corrente Continua'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### La Conduzione Elettrica e la Legge di Ohm
+
+La prima legge fondamentale dell'elettrotecnica stabilisce che, a temperatura costante, la differenza di potenziale $V$ applicata ai capi di un conduttore ohmico è direttamente proporzionale all'intensità della corrente $I$ che lo attraversa.""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r'V = R \cdot I \iff I = \frac{V}{R}',
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""La costante di proporzionalità $R$ è la **resistenza elettrica**, misurata in Ohm ($\Omega$). Essa dipende geometricamente dalla lunghezza $L$ del conduttore e dalla sezione trasversale $A$ tramite la resistività del materiale ($R = \rho \frac{L}{A}$).""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Formulazione microscopica: campo elettrico interno e velocità di deriva degli elettroni.'
@@ -81,7 +115,8 @@ class PhysicsCatalog {
           ..insight = 'La resistenza aumenta con la lunghezza del filo e diminuisce con la sezione trasversale.',
         ProofStep()
           ..description = 'Corollario: Prima Legge di Ohm e Formule Inverse.'
-          ..latexEquation = r'V = R \cdot I \iff I = \frac{V}{R} \iff R = \frac{V}{I}'
+          ..latexEquation =
+              r'V = R \cdot I \iff I = \frac{V}{R} \iff R = \frac{V}{I}'
           ..insight = 'Regola il rapporto lineare tra potenziale e intensità di corrente nei bipoli resistivi ideali.',
       ]
       ..interactiveData = (InteractiveData()
@@ -111,6 +146,7 @@ class PhysicsCatalog {
       ..serverId = 'ele_power_01'
       ..title = 'Potenza Elettrica nei Circuiti'
       ..category = 'Elettrotecnica'
+      ..subCategory = 'Circuiti in Corrente Continua'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -118,11 +154,13 @@ class PhysicsCatalog {
           ..latexEquation = r'P = \frac{dL}{dt} = \frac{V \cdot dq}{dt}'
           ..insight = 'Quantifica il tasso di trasferimento di energia potenziale per unità di tempo.',
         ProofStep()
-          ..description = 'Sostituzione dell\'intensità di corrente: I = dq / dt.'
+          ..description =
+              'Sostituzione dell\'intensità di corrente: I = dq / dt.'
           ..latexEquation = r'P = V \cdot I'
           ..insight = 'Relazione universale per la potenza assorbita o erogata da qualsiasi bipolo elettrico.',
         ProofStep()
-          ..description = 'Corollario: Formule di Potenza per Carichi Resistivi.'
+          ..description =
+              'Corollario: Formule di Potenza per Carichi Resistivi.'
           ..latexEquation = r'P = R \cdot I^2 = \frac{V^2}{R}'
           ..insight = 'Ottenute sostituendo la Legge di Ohm V = R*I; governano il dimensionamento dei componenti.',
       ]
@@ -153,6 +191,7 @@ class PhysicsCatalog {
       ..serverId = 'ele_joule_01'
       ..title = 'Effetto Joule e Dissipazione Termica'
       ..category = 'Elettrotecnica'
+      ..subCategory = 'Termodinamica & Circuiti'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -165,7 +204,8 @@ class PhysicsCatalog {
           ..insight = 'La dissipazione cresce con il quadrato dell\'intensità di corrente.',
         ProofStep()
           ..description = 'Corollario: Equivalente Meccanico del Calore e Calcolo in Calorie.'
-          ..latexEquation = r'Q_{\text{cal}} = \frac{R \cdot I^2 \cdot \Delta t}{4.186}'
+          ..latexEquation =
+              r'Q_{\text{cal}} = \frac{R \cdot I^2 \cdot \Delta t}{4.186}'
           ..insight = 'Consente il calcolo dell\'innalzamento termico e il dimensionamento dei dissipatori termici.',
       ]
       ..interactiveData = (InteractiveData()
@@ -202,6 +242,7 @@ class PhysicsCatalog {
       ..serverId = 'chem_ph_01'
       ..title = 'Chimica: Soluzioni Acido-Base e Calcolo del pH'
       ..category = 'Chimica'
+      ..subCategory = 'Equilibri in Soluzione'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -218,7 +259,8 @@ class PhysicsCatalog {
           ..insight = 'La moltiplicazione delle concentrazioni si traduce nella somma delle grandezze p.',
         ProofStep()
           ..description = 'Corollario: Relazione Fondamentale pH + pOH = 14.'
-          ..latexEquation = r'\text{pH} + \text{pOH} = 14.00 \iff \text{pH} = 14 - \text{pOH}'
+          ..latexEquation =
+              r'\text{pH} + \text{pOH} = 14.00 \iff \text{pH} = 14 - \text{pOH}'
           ..insight = 'Permette di determinare istantaneamente il pH di soluzioni fortemente basiche conoscendo la concentrazione di OH-.',
       ]
       ..interactiveData = (InteractiveData()

@@ -21,6 +21,7 @@ class CalculusCatalog {
       ..serverId = 'mat_limits_01'
       ..title = 'Limiti di Funzione e Limiti Notevoli'
       ..category = 'Analisi Matematica'
+      ..subCategory = 'Limiti e Continuità'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -36,7 +37,8 @@ class CalculusCatalog {
           ..latexEquation = r"\lim_{x \to 0} \cos x = 1 \implies \lim_{x \to 0} \frac{\sin x}{x} = 1"
           ..insight = 'Poiché entrambi gli estremi tendono a 1, la funzione centrale converge necessariamente a 1.',
         ProofStep()
-          ..description = 'Corollario: Limiti Notevoli Goniometrici ed Esponenziali.'
+          ..description =
+              'Corollario: Limiti Notevoli Goniometrici ed Esponenziali.'
           ..latexEquation = r"\lim_{x \to 0} \frac{1 - \cos x}{x^2} = \frac{1}{2} \quad \land \quad \lim_{x \to 0} \frac{e^x - 1}{x} = 1"
           ..insight = 'Derivati per sostituzione e moltiplicazione per (1+cos x); fondamentali per calcolare le derivate prime.',
       ]
@@ -52,11 +54,28 @@ class CalculusCatalog {
       ..serverId = 'mat_deriv_def_01'
       ..title = 'Rapporto Incrementale e Definizione di Derivata'
       ..category = 'Analisi Matematica'
+      ..subCategory = 'Calcolo Differenziale'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Il Concetto di Derivata
+
+La **derivata** esprime il tasso di variazione istantaneo di una grandezza. Geometricamente, corrisponde al coefficiente angolare della **retta tangente** al grafico della funzione in un punto fissato $x_0$.
+
+Si costruisce considerando il limite del rapporto incrementale al tendere a zero dell'incremento $h$:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r"f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""La derivabilità è una proprietà locale più forte della semplice continuità: se una funzione ammette derivata finita in $x_0$, allora è garantita anche la sua continuità in tale punto.""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Definizione di rapporto incrementale: pendenza della retta secante passante per P(x₀, f(x₀)) e Q(x₀+h, f(x₀+h)).'
-          ..latexEquation = r"\frac{\Delta y}{\Delta x} = \frac{f(x_0 + h) - f(x_0)}{h}"
+          ..latexEquation =
+              r"\frac{\Delta y}{\Delta x} = \frac{f(x_0 + h) - f(x_0)}{h}"
           ..insight = 'Misura la velocità di variazione media della grandezza nell\'intervallo [x₀, x₀+h].',
         ProofStep()
           ..description = 'Passaggio al limite per incremento h -> 0: pendenza istantanea della retta tangente.'
@@ -82,6 +101,7 @@ class CalculusCatalog {
       ..serverId = 'mat_deriv_rules_01'
       ..title = 'Regole di Derivazione: Prodotto, Quoziente e Catena'
       ..category = 'Analisi Matematica'
+      ..subCategory = 'Calcolo Differenziale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -112,6 +132,7 @@ class CalculusCatalog {
       ..serverId = 'mat_deriv_theorems_01'
       ..title = 'Teoremi di Rolle, Lagrange e Criterio di Monotonia'
       ..category = 'Analisi Matematica'
+      ..subCategory = 'Teoremi Differenziali'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -120,11 +141,13 @@ class CalculusCatalog {
           ..insight = 'Nei punti di massimo o minimo la retta tangente alla funzione deve essere orizzontale.',
         ProofStep()
           ..description = 'Teorema di Rolle: funzione continua in [a, b], derivabile in (a, b) con f(a) = f(b).'
-          ..latexEquation = r"f(a) = f(b) \implies \exists c \in (a, b) : f'(c) = 0"
+          ..latexEquation =
+              r"f(a) = f(b) \implies \exists c \in (a, b) : f'(c) = 0"
           ..insight = 'Se gli estremi coincidono, la funzione deve avere almeno un punto a derivata nulla.',
         ProofStep()
           ..description = 'Teorema del Valor Medio di Lagrange: applicazione di Rolle alla retta secante g(x) = f(x) - [(f(b)-f(a))/(b-a)](x-a).'
-          ..latexEquation = r"\exists c \in (a, b) : f'(c) = \frac{f(b) - f(a)}{b - a}"
+          ..latexEquation =
+              r"\exists c \in (a, b) : f'(c) = \frac{f(b) - f(a)}{b - a}"
           ..insight = 'Esiste almeno un punto interno c in cui la retta tangente è perfettamente parallela alla retta secante passante per gli estremi.',
         ProofStep()
           ..description = 'Corollario: Criterio di Monotonia e Caratterizzazione delle Costanti.'
@@ -143,6 +166,7 @@ class CalculusCatalog {
       ..serverId = 'mat_riemann_01'
       ..title = 'Integrale di Riemann e Somme di Rettangoli'
       ..category = 'Analisi Matematica'
+      ..subCategory = 'Calcolo Integrale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -150,7 +174,8 @@ class CalculusCatalog {
           ..latexEquation = r"a = x_0 < x_1 < x_2 < \dots < x_N = b, \quad \Delta x_i = x_i - x_{i-1}"
           ..insight = 'Discretizza il dominio per approssimare l\'area con strisce rettangolari verticali.',
         ProofStep()
-          ..description = 'Somma inferiore s(P) e somma superiore S(P) di Darboux-Riemann.'
+          ..description =
+              'Somma inferiore s(P) e somma superiore S(P) di Darboux-Riemann.'
           ..latexEquation = r"s(P) = \sum_{i=1}^N \inf_{[x_{i-1}, x_i]} f(x) \Delta x_i, \quad S(P) = \sum_{i=1}^N \sup_{[x_{i-1}, x_i]} f(x) \Delta x_i"
           ..insight = 'L\'area esatta è sempre racchiusa tra l\'area a gradini per difetto e quella per eccesso.',
         ProofStep()
@@ -173,7 +198,26 @@ class CalculusCatalog {
       ..serverId = 'mat_fund_calc_01'
       ..title = 'Teorema Fondamentale del Calcolo (Torricelli-Barrow)'
       ..category = 'Analisi Matematica'
+      ..subCategory = 'Calcolo Integrale'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Il Ponte tra Differenziazione e Integrazione
+
+Il **Teorema Fondamentale del Calcolo Integrale** (noto anche come Teorema di Torricelli-Barrow) stabilisce l'incredibile connessione biunivoca tra due branche apparentemente distinte:
+- Il problema della **tangente** (velocità e derivate)
+- Il problema dell'**area** (accumulazione e integrali)
+
+Se $f(t)$ è continua in $[a, b]$, allora la funzione integrale definita da $F(x) = \int_a^x f(t) dt$ è derivabile e la sua derivata è la funzione integranda stessa:""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content =
+              r"F'(x) = \frac{d}{dx} \left[ \int_a^x f(t) dt \right] = f(x)",
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""Grazie alla **Formula di Barrow**, ogni integrale definito può essere calcolato tramite una qualsiasi primitiva $G(x)$: $\int_a^b f(x)dx = G(b) - G(a)$. Non è più necessario calcolare somme infinite di rettangoli!""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Definizione della funzione integrale F(x) con punto iniziale a fissato.'
@@ -188,7 +232,8 @@ class CalculusCatalog {
           ..latexEquation = r"F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = \lim_{h \to 0} f(c_h) = f(x)"
           ..insight = 'La derivata della funzione integrale è esattamente la funzione integranda: F\'(x) = f(x)!',
         ProofStep()
-          ..description = 'Corollario: Formula di Barrow e Integrazione per Parti.'
+          ..description =
+              'Corollario: Formula di Barrow e Integrazione per Parti.'
           ..latexEquation = r"\int_a^b f(x) dx = G(b) - G(a) \quad \land \quad \int u v' dx = u v - \int u' v dx"
           ..insight = 'Unifica differenziazione e integrazione come operazioni inverse; calcola qualsiasi area tramite le primitive.',
       ]

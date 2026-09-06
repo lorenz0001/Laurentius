@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:isar/isar.dart';
@@ -26,7 +27,9 @@ class SyncService {
         // 2. Decodifica UTF-8 sicura dell'array JSON
         final decoded = jsonDecode(utf8.decode(response.bodyBytes));
         if (decoded is! List) {
-          debugPrint('SyncService: payload non conforme (prevista una lista JSON)');
+          debugPrint(
+            'SyncService: payload non conforme (prevista una lista JSON)',
+          );
           return false;
         }
 
@@ -82,10 +85,14 @@ class SyncService {
           }
         });
 
-        debugPrint('SyncService: sincronizzati con successo ${newNodes.length} nodi da $uri');
+        debugPrint(
+          'SyncService: sincronizzati con successo ${newNodes.length} nodi da $uri',
+        );
         return true;
       } else {
-        debugPrint('Offline mode: server ha risposto con codice ${response.statusCode}');
+        debugPrint(
+          'Offline mode: server ha risposto con codice ${response.statusCode}',
+        );
         return false;
       }
     } catch (e) {

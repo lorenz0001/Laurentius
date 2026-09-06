@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../domain/models/knowledge_node.dart';
 
 /// Widget interattivo per la dimostrazione visiva dell'Integrale di Riemann e Somme di Rettangoli.
@@ -66,7 +67,11 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
             children: [
               const Row(
                 children: [
-                  Icon(Icons.view_column_rounded, color: Color(0xFF2563EB), size: 22),
+                  Icon(
+                    Icons.view_column_rounded,
+                    color: Color(0xFF2563EB),
+                    size: 22,
+                  ),
                   SizedBox(width: 8),
                   Text(
                     'Integrale di Riemann',
@@ -79,7 +84,10 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFEFF6FF),
                   borderRadius: BorderRadius.circular(10),
@@ -144,7 +152,9 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
                 child: _buildMetricCard(
                   label: 'Errore |Σ - ∫|',
                   value: _error.toStringAsFixed(4),
-                  color: _error < 0.05 ? const Color(0xFF10B981) : const Color(0xFFF59E0B),
+                  color: _error < 0.05
+                      ? const Color(0xFF10B981)
+                      : const Color(0xFFF59E0B),
                   subtitle: 'Convergenza',
                 ),
               ),
@@ -163,9 +173,13 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  _nRectangles >= 20 ? Icons.check_circle_rounded : Icons.insights_rounded,
+                  _nRectangles >= 20
+                      ? Icons.check_circle_rounded
+                      : Icons.insights_rounded,
                   size: 16,
-                  color: _nRectangles >= 20 ? const Color(0xFF16A34A) : const Color(0xFF475569),
+                  color: _nRectangles >= 20
+                      ? const Color(0xFF16A34A)
+                      : const Color(0xFF475569),
                 ),
                 const SizedBox(width: 6),
                 Expanded(
@@ -176,7 +190,9 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: _nRectangles >= 20 ? const Color(0xFF16A34A) : const Color(0xFF334155),
+                      color: _nRectangles >= 20
+                          ? const Color(0xFF16A34A)
+                          : const Color(0xFF334155),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -192,11 +208,19 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
             children: [
               const Text(
                 'Partizione intervallo (N rettangoli):',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF334155)),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF334155),
+                ),
               ),
               Text(
                 'N = $_nRectangles (Δx = ${((_b - _a) / _nRectangles).toStringAsFixed(3)})',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF2563EB),
+                ),
               ),
             ],
           ),
@@ -229,11 +253,28 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget> {
       ),
       child: Column(
         children: [
-          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: color)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF0F172A))),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(subtitle, style: const TextStyle(fontSize: 9, color: Color(0xFF64748B))),
+          Text(
+            subtitle,
+            style: const TextStyle(fontSize: 9, color: Color(0xFF64748B)),
+          ),
         ],
       ),
     );
@@ -266,9 +307,19 @@ class _RiemannPainter extends CustomPainter {
         Offset(origin.dx + x * scaleX, origin.dy - y * scaleY);
 
     // Griglia e assi
-    final axisPaint = Paint()..color = const Color(0xFF334155)..strokeWidth = 1.0;
-    canvas.drawLine(Offset(10, origin.dy), Offset(size.width - 10, origin.dy), axisPaint);
-    canvas.drawLine(Offset(origin.dx, 10), Offset(origin.dx, size.height - 10), axisPaint);
+    final axisPaint = Paint()
+      ..color = const Color(0xFF334155)
+      ..strokeWidth = 1.0;
+    canvas.drawLine(
+      Offset(10, origin.dy),
+      Offset(size.width - 10, origin.dy),
+      axisPaint,
+    );
+    canvas.drawLine(
+      Offset(origin.dx, 10),
+      Offset(origin.dx, size.height - 10),
+      axisPaint,
+    );
 
     final dx = (b - a) / nRectangles;
 

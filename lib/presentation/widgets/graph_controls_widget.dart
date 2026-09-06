@@ -51,7 +51,11 @@ class GraphControlsWidget extends StatelessWidget {
         children: [
           // Zoom Out
           IconButton(
-            icon: const Icon(Icons.remove_rounded, size: 18, color: Color(0xFF334155)),
+            icon: const Icon(
+              Icons.remove_rounded,
+              size: 18,
+              color: Color(0xFF334155),
+            ),
             onPressed: currentScale <= minScale ? null : () => _zoom(0.85),
             tooltip: 'Rimpicciolisci (Zoom -)',
             splashRadius: 18,
@@ -74,7 +78,11 @@ class GraphControlsWidget extends StatelessWidget {
 
           // Zoom In
           IconButton(
-            icon: const Icon(Icons.add_rounded, size: 18, color: Color(0xFF334155)),
+            icon: const Icon(
+              Icons.add_rounded,
+              size: 18,
+              color: Color(0xFF334155),
+            ),
             onPressed: currentScale >= maxScale ? null : () => _zoom(1.18),
             tooltip: 'Ingrandisci (Zoom +)',
             splashRadius: 18,
@@ -88,7 +96,11 @@ class GraphControlsWidget extends StatelessWidget {
 
           // Reset / Centra Vista
           IconButton(
-            icon: const Icon(Icons.center_focus_strong_rounded, size: 18, color: Color(0xFF2563EB)),
+            icon: const Icon(
+              Icons.center_focus_strong_rounded,
+              size: 18,
+              color: Color(0xFF2563EB),
+            ),
             onPressed: onReset,
             tooltip: 'Ripristina e centra vista',
             splashRadius: 18,

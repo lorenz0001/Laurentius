@@ -9,10 +9,7 @@ import '../../../domain/models/knowledge_node.dart';
 class CartesianGraphWidget extends StatefulWidget {
   final InteractiveData? data;
 
-  const CartesianGraphWidget({
-    super.key,
-    this.data,
-  });
+  const CartesianGraphWidget({super.key, this.data});
 
   @override
   State<CartesianGraphWidget> createState() => _CartesianGraphWidgetState();
@@ -79,7 +76,8 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final params = widget.data?.parameters ??
+    final params =
+        widget.data?.parameters ??
         [
           InteractiveParameter()
             ..variableName = 'a'
@@ -203,7 +201,11 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
               children: [
                 const Text(
                   'EQUAZIONE CORRENTE:',
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: Color(0xFF64748B)),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF64748B),
+                  ),
                 ),
                 Text(
                   formulaText,
@@ -265,7 +267,11 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
             children: [
               Text(
                 label,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF1E293B)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -276,7 +282,11 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget> {
                 ),
                 child: Text(
                   currentValue.toStringAsFixed(1),
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF6366F1)),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF6366F1),
+                  ),
                 ),
               ),
             ],
@@ -399,7 +409,8 @@ class _CartesianPainter extends CustomPainter {
 
     // Curva principale ad alta visibilità
     final curvePaint = Paint()
-      ..color = const Color(0xFF818CF8) // Viola / Indaco luminoso
+      ..color =
+          const Color(0xFF818CF8) // Viola / Indaco luminoso
       ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
@@ -440,11 +451,20 @@ class _CartesianPainter extends CustomPainter {
     canvas.drawPath(path, arrowPaint);
   }
 
-  void _drawText(Canvas canvas, String text, Offset offset, {Color color = const Color(0xFF94A3B8)}) {
+  void _drawText(
+    Canvas canvas,
+    String text,
+    Offset offset, {
+    Color color = const Color(0xFF94A3B8),
+  }) {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: color),
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          color: color,
+        ),
       ),
       textDirection: TextDirection.ltr,
     )..layout();

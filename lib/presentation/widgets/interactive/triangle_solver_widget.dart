@@ -1,5 +1,7 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+
 import '../../../domain/models/knowledge_node.dart';
 
 /// Widget interattivo per la Geometria del Triangolo e Teoremi di Pitagora / Carnot.
@@ -24,7 +26,9 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
 
   // Teorema del Coseno (Carnot): c² = a² + b² - 2ab cos(γ)
   double get _sideCSquared =>
-      _sideA * _sideA + _sideB * _sideB - 2 * _sideA * _sideB * math.cos(_gammaRad);
+      _sideA * _sideA +
+      _sideB * _sideB -
+      2 * _sideA * _sideB * math.cos(_gammaRad);
 
   double get _sideC => math.sqrt(math.max(0.001, _sideCSquared));
 
@@ -59,7 +63,11 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
               const Expanded(
                 child: Row(
                   children: [
-                    Icon(Icons.change_history_rounded, color: Color(0xFFE11D48), size: 20),
+                    Icon(
+                      Icons.change_history_rounded,
+                      color: Color(0xFFE11D48),
+                      size: 20,
+                    ),
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -77,12 +85,19 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
-                  color: _isRightTriangle ? const Color(0xFFEFF6FF) : const Color(0xFFFFF1F2),
+                  color: _isRightTriangle
+                      ? const Color(0xFFEFF6FF)
+                      : const Color(0xFFFFF1F2),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: _isRightTriangle ? const Color(0xFFBFDBFE) : const Color(0xFFFECDD3),
+                    color: _isRightTriangle
+                        ? const Color(0xFFBFDBFE)
+                        : const Color(0xFFFECDD3),
                   ),
                 ),
                 child: Text(
@@ -90,7 +105,9 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: _isRightTriangle ? const Color(0xFF1D4ED8) : const Color(0xFFE11D48),
+                    color: _isRightTriangle
+                        ? const Color(0xFF1D4ED8)
+                        : const Color(0xFFE11D48),
                   ),
                 ),
               ),
@@ -170,9 +187,13 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      _isRightTriangle ? Icons.check_circle_rounded : Icons.calculate_rounded,
+                      _isRightTriangle
+                          ? Icons.check_circle_rounded
+                          : Icons.calculate_rounded,
                       size: 16,
-                      color: _isRightTriangle ? const Color(0xFF16A34A) : const Color(0xFF475569),
+                      color: _isRightTriangle
+                          ? const Color(0xFF16A34A)
+                          : const Color(0xFF475569),
                     ),
                     const SizedBox(width: 6),
                     Flexible(
@@ -195,7 +216,11 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                     padding: EdgeInsets.only(top: 4),
                     child: Text(
                       'Pitagora è il corollario di Carnot quando cos(90°) = 0',
-                      style: TextStyle(fontSize: 11, color: Color(0xFF16A34A), fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFF16A34A),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
               ],
@@ -209,7 +234,11 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
             children: [
               Text(
                 'Angolo γ compreso: ${_angleGammaDeg.toStringAsFixed(0)}°',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF334155)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF334155),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -218,10 +247,16 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                   });
                 },
                 style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
                   visualDensity: VisualDensity.compact,
                 ),
-                child: const Text('Imposta 90° (Pitagora)', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+                child: const Text(
+                  'Imposta 90° (Pitagora)',
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+                ),
               ),
             ],
           ),
@@ -245,7 +280,13 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Lato a: ${_sideA.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                    Text(
+                      'Lato a: ${_sideA.toStringAsFixed(1)}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     Slider(
                       value: _sideA,
                       min: 1.5,
@@ -261,7 +302,13 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Lato b: ${_sideB.toStringAsFixed(1)}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                    Text(
+                      'Lato b: ${_sideB.toStringAsFixed(1)}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     Slider(
                       value: _sideB,
                       min: 1.5,
@@ -279,7 +326,11 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
     );
   }
 
-  Widget _buildMetricCard({required String label, required String value, required Color color}) {
+  Widget _buildMetricCard({
+    required String label,
+    required String value,
+    required Color color,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
       decoration: BoxDecoration(
@@ -289,9 +340,23 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget> {
       ),
       child: Column(
         children: [
-          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: color)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Color(0xFF0F172A))),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
+            ),
+          ),
         ],
       ),
     );
@@ -341,21 +406,27 @@ class _TrianglePainter extends CustomPainter {
     canvas.drawLine(
       originC,
       vertexA,
-      Paint()..color = const Color(0xFF4ADE80)..strokeWidth = 3.5,
+      Paint()
+        ..color = const Color(0xFF4ADE80)
+        ..strokeWidth = 3.5,
     );
 
     // Lato a (da C a B): azzurro
     canvas.drawLine(
       originC,
       vertexB,
-      Paint()..color = const Color(0xFF38BDF8)..strokeWidth = 3.5,
+      Paint()
+        ..color = const Color(0xFF38BDF8)
+        ..strokeWidth = 3.5,
     );
 
     // Lato c (da B ad A): fucsia
     canvas.drawLine(
       vertexB,
       vertexA,
-      Paint()..color = const Color(0xFFF43F5E)..strokeWidth = 3.5,
+      Paint()
+        ..color = const Color(0xFFF43F5E)
+        ..strokeWidth = 3.5,
     );
 
     // Arco per l'angolo gamma in C

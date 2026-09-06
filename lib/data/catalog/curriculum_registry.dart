@@ -53,7 +53,11 @@ class CurriculumRegistry {
     'mat_fund_calc_01': ['mat_riemann_01', 'mat_deriv_def_01'],
 
     // Scienze Applicate Interconnesse
-    'phys_kin_01': ['mat_parabola_01', 'mat_deriv_rules_01', 'mat_fund_calc_01'],
+    'phys_kin_01': [
+      'mat_parabola_01',
+      'mat_deriv_rules_01',
+      'mat_fund_calc_01',
+    ],
     'ele_ohm_01': ['mat_frac_01'],
     'ele_power_01': ['ele_ohm_01'],
     'ele_joule_01': ['ele_power_01', 'mat_fund_calc_01'],

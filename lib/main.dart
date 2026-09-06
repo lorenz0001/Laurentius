@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'core/services/mock_data_service.dart';
 import 'domain/models/knowledge_node.dart';
-import 'presentation/pages/home_screen.dart';
+import 'presentation/pages/main_layout_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,10 +22,7 @@ void main() async {
   if (!kIsWeb) {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      isar = await Isar.open(
-        [KnowledgeNodeSchema],
-        directory: dir.path,
-      );
+      isar = await Isar.open([KnowledgeNodeSchema], directory: dir.path);
 
       // Inizializzazione autonoma e offline-first del catalogo locale STEM (nodi, animazioni, corollari)
       await MockDataService.populateDatabase(isar);
@@ -51,7 +48,7 @@ class LaurentiusApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
         useMaterial3: true,
       ),
-      home: HomeScreen(isar: isar),
+      home: MainLayoutScreen(isar: isar),
     );
   }
 }

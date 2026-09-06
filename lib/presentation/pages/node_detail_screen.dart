@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/models/knowledge_node.dart';
 import '../widgets/algebraic_proof_widget.dart';
 import '../widgets/category_style.dart';
+import '../widgets/content_block_factory.dart';
 import '../widgets/interactive/interactive_template_factory.dart';
 import '../widgets/prerequisites_section_widget.dart';
 import 'exercise_screen.dart';
@@ -13,10 +14,7 @@ import 'exercise_screen.dart';
 class NodeDetailScreen extends StatefulWidget {
   final KnowledgeNode node;
 
-  const NodeDetailScreen({
-    super.key,
-    required this.node,
-  });
+  const NodeDetailScreen({super.key, required this.node});
 
   @override
   State<NodeDetailScreen> createState() => _NodeDetailScreenState();
@@ -27,7 +25,9 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
   Widget build(BuildContext context) {
     final node = widget.node;
     final catStyle = CategoryStyle.forCategory(node.category);
-    final interactiveWidget = InteractiveTemplateFactory.buildWidget(node.interactiveData);
+    final interactiveWidget = InteractiveTemplateFactory.buildWidget(
+      node.interactiveData,
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
@@ -59,9 +59,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => ExerciseScreen(node: node),
-                ),
+                MaterialPageRoute(builder: (_) => ExerciseScreen(node: node)),
               );
             },
           ),
@@ -74,30 +72,60 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Badge Categoria stilizzato con colore semantico
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: catStyle.background,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: catStyle.border),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(catStyle.icon, size: 12, color: catStyle.primary),
-                    const SizedBox(width: 6),
-                    Text(
-                      node.category.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.8,
-                        color: catStyle.primary,
+              // Badge Categoria e Sottocategoria stilizzati
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: catStyle.background,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: catStyle.border),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(catStyle.icon, size: 12, color: catStyle.primary),
+                        const SizedBox(width: 6),
+                        Text(
+                          node.category.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.8,
+                            color: catStyle.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (node.subCategory != null &&
+                      node.subCategory!.isNotEmpty) ...[
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF1F5F9),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Text(
+                        node.subCategory!,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF475569),
+                        ),
                       ),
                     ),
                   ],
-                ),
+                ],
               ),
               const SizedBox(height: 12),
 
@@ -116,7 +144,11 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               // Server ID
               Row(
                 children: [
-                  const Icon(Icons.hub_outlined, size: 15, color: Color(0xFF94A3B8)),
+                  const Icon(
+                    Icons.hub_outlined,
+                    size: 15,
+                    color: Color(0xFF94A3B8),
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     'ID Nodo: ${node.serverId}',
@@ -137,11 +169,43 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               const Divider(color: Color(0xFFE2E8F0), height: 1),
               const SizedBox(height: 24),
 
-              // Sezione Dimostrazione Algebrica (se presente)
-              if (node.algebraicProof.isNotEmpty) ...[
+              // Sezione Blocchi Contenuto Ricco (Markdown, LaTeX, Info Box)
+              if (node.effectiveBlocks.isNotEmpty) ...[
                 const Row(
                   children: [
-                    Icon(Icons.menu_book_rounded, size: 18, color: Color(0xFF334155)),
+                    Icon(
+                      Icons.auto_stories_rounded,
+                      size: 18,
+                      color: Color(0xFF334155),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'APPROFONDIMENTO TEORICO & FORMULAZIONE',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.6,
+                        color: Color(0xFF334155),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                ...node.effectiveBlocks.map(
+                  (block) => ContentBlockFactory.buildBlock(block, context),
+                ),
+                const SizedBox(height: 16),
+              ],
+
+              // Sezione Dimostrazione Algebrica a passaggi separati (se definita esplicitamente e non vuota)
+              if (node.blocks.isNotEmpty && node.algebraicProof.isNotEmpty) ...[
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.menu_book_rounded,
+                      size: 18,
+                      color: Color(0xFF334155),
+                    ),
                     SizedBox(width: 8),
                     Text(
                       'DIMOSTRAZIONE LOGICO-ALGEBRICA',
@@ -159,8 +223,9 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
                 const SizedBox(height: 28),
               ],
 
-              // Sezione Laboratorio / Simulazione Interattiva (se presente)
+              // Sezione Laboratorio / Simulazione Interattiva (in fondo come culmine pratico)
               if (interactiveWidget != null) ...[
+                const SizedBox(height: 12),
                 interactiveWidget,
                 const SizedBox(height: 28),
               ],
@@ -177,9 +242,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => ExerciseScreen(node: node),
-            ),
+            MaterialPageRoute(builder: (_) => ExerciseScreen(node: node)),
           );
         },
         backgroundColor: const Color(0xFF0F172A),
@@ -231,10 +294,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
                 const SizedBox(height: 4),
                 const Text(
                   'L\'AI genererà un quesito su misura basato su questo concetto e i suoi prerequisiti.',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF64748B),
-                  ),
+                  style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
                 ),
                 const SizedBox(height: 12),
                 ElevatedButton.icon(

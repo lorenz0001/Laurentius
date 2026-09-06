@@ -20,6 +20,7 @@ class GeometryTrigCatalog {
       ..serverId = 'mat_triang_01'
       ..title = 'Geometria del Triangolo e Angoli Interni'
       ..category = 'Geometria'
+      ..subCategory = 'Geometria Euclidea Piana'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -36,7 +37,8 @@ class GeometryTrigCatalog {
           ..insight = 'Teorema fondamentale della geometria euclidea piana.',
         ProofStep()
           ..description = 'Corollario: Teorema dell\'Angolo Esterno.'
-          ..latexEquation = r"\delta_{\text{ext}} = 180^\circ - \gamma = \alpha + \beta"
+          ..latexEquation =
+              r"\delta_{\text{ext}} = 180^\circ - \gamma = \alpha + \beta"
           ..insight = 'In qualunque triangolo, ogni angolo esterno ha ampiezza esattamente pari alla somma dei due interni non adiacenti.',
       ]
       ..interactiveData = (InteractiveData()
@@ -50,23 +52,42 @@ class GeometryTrigCatalog {
       ..serverId = 'mat_pythagoras_01'
       ..title = 'Teorema di Pitagora ed Euclide'
       ..category = 'Geometria'
+      ..subCategory = 'Geometria Euclidea Piana'
       ..lastUpdated = DateTime.now()
+      ..blocks = [
+        ContentBlock()
+          ..type = 'text_markdown'
+          ..content = r"""### Il Teorema di Pitagora
+
+In ogni triangolo rettangolo, il quadrato costruito sull'ipotenusa è equivalente alla somma dei quadrati costruiti sui cateti.
+
+Questo principio geometrico è alla base di tutta la **metrica euclidea** nello spazio a due e tre dimensioni.""",
+        ContentBlock()
+          ..type = 'math_latex'
+          ..content = r'a^2 + b^2 = c^2 \implies c = \sqrt{a^2 + b^2}',
+        ContentBlock()
+          ..type = 'info_box'
+          ..content = r"""Dal Teorema di Pitagora discendono direttamente i **Teoremi di Euclide**: l'altezza relativa all'ipotenusa è medio proporzionale tra le proiezioni dei cateti ($h^2 = p_1 \cdot p_2$).""",
+      ]
       ..algebraicProof = [
         ProofStep()
           ..description = 'Costruzione di un grande quadrato di lato (a+b) contenente 4 triangoli rettangoli e un quadrato interno di lato c.'
           ..latexEquation = r"\text{Area}_{\text{tot}} = (a + b)^2 = 4 \cdot \left(\frac{1}{2} a b\right) + c^2"
           ..insight = 'Dimostrazione algebrico-geometrica intuitiva basata sulla conservazione dell\'area.',
         ProofStep()
-          ..description = 'Espansione del binomio (a+b)^2 ed eguaglianza delle aree.'
+          ..description =
+              'Espansione del binomio (a+b)^2 ed eguaglianza delle aree.'
           ..latexEquation = r"a^2 + 2 a b + b^2 = 2 a b + c^2"
-          ..insight = 'I 4 triangoli rettangoli occupano insieme un\'area pari a 2ab.',
+          ..insight =
+              'I 4 triangoli rettangoli occupano insieme un\'area pari a 2ab.',
         ProofStep()
           ..description = 'Semplificazione algebrica del termine misto 2ab.'
           ..latexEquation = r"a^2 + b^2 = c^2 \implies c = \sqrt{a^2 + b^2}"
           ..insight = 'In ogni triangolo rettangolo la somma delle aree dei quadrati sui cateti è uguale all\'area del quadrato sull\'ipotenusa.',
         ProofStep()
           ..description = 'Corollario: Primo e Secondo Teorema di Euclide.'
-          ..latexEquation = r"c_1^2 = i \cdot p_1 \quad \land \quad h^2 = p_1 \cdot p_2"
+          ..latexEquation =
+              r"c_1^2 = i \cdot p_1 \quad \land \quad h^2 = p_1 \cdot p_2"
           ..insight = 'L\'altezza relativa all\'ipotenusa è medio proporzionale tra le proiezioni dei cateti (Euclide II).',
       ]
       ..interactiveData = (InteractiveData()
@@ -80,6 +101,7 @@ class GeometryTrigCatalog {
       ..serverId = 'mat_trig_circ_01'
       ..title = 'Circonferenza Goniometrica e Relazione Fondamentale'
       ..category = 'Goniometria'
+      ..subCategory = 'Goniometria Fondamentale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -88,7 +110,8 @@ class GeometryTrigCatalog {
           ..insight = 'Ogni semiretta uscente dall\'origine forma un angolo θ con il semiasse positivo delle x.',
         ProofStep()
           ..description = 'Definizione analitica di Coseno e Seno come coordinate del punto di intersezione P(x, y).'
-          ..latexEquation = r"x_P \equiv \cos(\theta), \quad y_P \equiv \sin(\theta)"
+          ..latexEquation =
+              r"x_P \equiv \cos(\theta), \quad y_P \equiv \sin(\theta)"
           ..insight = 'Il coseno è l\'ascissa e il seno è l\'ordinata del punto P sulla circonferenza unitaria.',
         ProofStep()
           ..description = 'Sostituzione nell\'equazione della circonferenza (applicazione di Pitagora al triangolo rettangolo interno).'
@@ -110,6 +133,7 @@ class GeometryTrigCatalog {
       ..serverId = 'mat_trig_add_01'
       ..title = 'Formule Goniometriche: Addizione, Duplicazione e Bisezione'
       ..category = 'Goniometria'
+      ..subCategory = 'Goniometria Fondamentale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -125,7 +149,8 @@ class GeometryTrigCatalog {
           ..latexEquation = r"\cos(\alpha + \beta) = \cos\alpha \cos\beta - \sin\alpha \sin\beta, \quad \sin(\alpha \pm \beta) = \sin\alpha \cos\beta \pm \cos\alpha \sin\beta"
           ..insight = 'Formule di addizione complete per seno e coseno.',
         ProofStep()
-          ..description = 'Corollario: Formule di Duplicazione e Formule di Bisezione.'
+          ..description =
+              'Corollario: Formule di Duplicazione e Formule di Bisezione.'
           ..latexEquation = r"\sin(2\alpha) = 2\sin\alpha\cos\alpha, \quad \cos(2\alpha) = \cos^2\alpha - \sin^2\alpha \implies \sin^2\left(\frac{\alpha}{2}\right) = \frac{1 - \cos\alpha}{2}"
           ..insight = 'Indispensabili per il calcolo degli integrali trigonometrici e l\'analisi delle armoniche.',
       ]
@@ -140,6 +165,7 @@ class GeometryTrigCatalog {
       ..serverId = 'mat_trig_triang_01'
       ..title = 'Teoremi dei Triangoli: Carnot, Seni e Formula dell\'Area'
       ..category = 'Geometria'
+      ..subCategory = 'Trigonometria dei Triangoli'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -155,7 +181,8 @@ class GeometryTrigCatalog {
           ..latexEquation = r"c^2 = a^2 + b^2 - 2 a b \cos\gamma"
           ..insight = 'Se γ = 90°, cos(90°) = 0 e la formula restituisce esattamente il Teorema di Pitagora c² = a² + b².',
         ProofStep()
-          ..description = 'Corollario: Teorema dei Seni e Formula Goniometrica dell\'Area.'
+          ..description =
+              'Corollario: Teorema dei Seni e Formula Goniometrica dell\'Area.'
           ..latexEquation = r"\frac{a}{\sin\alpha} = \frac{b}{\sin\beta} = \frac{c}{\sin\gamma} = 2 R \quad \land \quad \text{Area} = \frac{1}{2} a b \sin\gamma"
           ..insight = 'Il Teorema dei Seni lega i lati al raggio R della circonferenza circoscritta; l\'area si calcola con due lati e il seno dell\'angolo compreso.',
       ]

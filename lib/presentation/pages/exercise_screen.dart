@@ -8,10 +8,7 @@ import '../../domain/models/knowledge_node.dart';
 class ExerciseScreen extends StatefulWidget {
   final KnowledgeNode node;
 
-  const ExerciseScreen({
-    super.key,
-    required this.node,
-  });
+  const ExerciseScreen({super.key, required this.node});
 
   @override
   State<ExerciseScreen> createState() => _ExerciseScreenState();
@@ -132,7 +129,11 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error_outline, color: Color(0xFFDC2626), size: 48),
+                    const Icon(
+                      Icons.error_outline,
+                      color: Color(0xFFDC2626),
+                      size: 48,
+                    ),
                     const SizedBox(height: 12),
                     Text(
                       'Impossibile caricare l\'esercizio: ${snapshot.error}',
@@ -169,7 +170,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFEFF6FF),
                     borderRadius: BorderRadius.circular(8),
@@ -185,13 +189,18 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF1F5F9),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    exercise.type == 'numeric' ? 'CALCOLO NUMERICO' : 'SCELTA MULTIPLA',
+                    exercise.type == 'numeric'
+                        ? 'CALCOLO NUMERICO'
+                        : 'SCELTA MULTIPLA',
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
@@ -314,7 +323,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       children: options.map((opt) {
         final isSelected = _selectedOption == opt;
         final isCorrectOption =
-            opt.trim().toLowerCase() == exercise.correctAnswer.trim().toLowerCase();
+            opt.trim().toLowerCase() ==
+            exercise.correctAnswer.trim().toLowerCase();
 
         Color bgColor = Colors.white;
         Color borderColor = const Color(0xFFE2E8F0);
@@ -326,12 +336,20 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             bgColor = const Color(0xFFDCFCE7);
             borderColor = const Color(0xFF86EFAC);
             textColor = const Color(0xFF15803D);
-            trailingIcon = const Icon(Icons.check_circle_rounded, color: Color(0xFF16A34A), size: 20);
+            trailingIcon = const Icon(
+              Icons.check_circle_rounded,
+              color: Color(0xFF16A34A),
+              size: 20,
+            );
           } else if (isSelected && !_isCorrect) {
             bgColor = const Color(0xFFFEE2E2);
             borderColor = const Color(0xFFFCA5A5);
             textColor = const Color(0xFFB91C1C);
-            trailingIcon = const Icon(Icons.cancel_rounded, color: Color(0xFFDC2626), size: 20);
+            trailingIcon = const Icon(
+              Icons.cancel_rounded,
+              color: Color(0xFFDC2626),
+              size: 20,
+            );
           }
         } else if (isSelected) {
           bgColor = const Color(0xFFEFF6FF);
@@ -354,7 +372,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               borderRadius: BorderRadius.circular(16),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 16,
+                ),
                 decoration: BoxDecoration(
                   color: bgColor,
                   borderRadius: BorderRadius.circular(16),
@@ -367,7 +388,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                         opt,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                          fontWeight: isSelected
+                              ? FontWeight.w700
+                              : FontWeight.w500,
                           color: textColor,
                         ),
                       ),
@@ -398,13 +421,20 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         children: [
           const Text(
             'Inserisci il valore numerico:',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF64748B)),
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF64748B),
+            ),
           ),
           const SizedBox(height: 10),
           TextField(
             controller: _numericController,
             enabled: !_hasChecked,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+            keyboardType: const TextInputType.numberWithOptions(
+              decimal: true,
+              signed: true,
+            ),
             decoration: InputDecoration(
               hintText: 'Es. 42',
               filled: true,
@@ -413,7 +443,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
             ),
           ),
         ],
@@ -438,17 +471,23 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             children: [
               Icon(
                 _isCorrect ? Icons.check_circle_rounded : Icons.cancel_rounded,
-                color: _isCorrect ? const Color(0xFF16A34A) : const Color(0xFFDC2626),
+                color: _isCorrect
+                    ? const Color(0xFF16A34A)
+                    : const Color(0xFFDC2626),
                 size: 24,
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  _isCorrect ? 'Ottimo lavoro, risposta esatta!' : 'Risposta non corretta.',
+                  _isCorrect
+                      ? 'Ottimo lavoro, risposta esatta!'
+                      : 'Risposta non corretta.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: _isCorrect ? const Color(0xFF15803D) : const Color(0xFF991B1B),
+                    color: _isCorrect
+                        ? const Color(0xFF15803D)
+                        : const Color(0xFF991B1B),
                   ),
                 ),
               ),
@@ -469,7 +508,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: const Color(0xFF0F172A),
                       side: const BorderSide(color: Color(0xFFCBD5E1)),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     child: const Text('Riprova'),
                   ),
@@ -486,7 +527,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       backgroundColor: const Color(0xFFDC2626),
                       foregroundColor: Colors.white,
                       elevation: 0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     child: const Text('Mostra Soluzione'),
                   ),
@@ -513,7 +556,11 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         children: [
           const Row(
             children: [
-              Icon(Icons.lightbulb_outline_rounded, color: Color(0xFFCA8A04), size: 20),
+              Icon(
+                Icons.lightbulb_outline_rounded,
+                color: Color(0xFFCA8A04),
+                size: 20,
+              ),
               SizedBox(width: 8),
               Text(
                 'Spiegazione e Intuizione',
@@ -547,11 +594,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               children: [
                 const Text(
                   'Risposta Corretta: ',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF64748B)),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF64748B),
+                  ),
                 ),
                 Text(
                   exercise.correctAnswer,
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF16A34A)),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF16A34A),
+                  ),
                 ),
               ],
             ),

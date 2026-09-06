@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../domain/models/knowledge_node.dart';
 
 /// Widget interattivo per la visualizzazione geometrica della Derivata e del Rapporto Incrementale.
@@ -10,7 +11,8 @@ class DerivativeTangentWidget extends StatefulWidget {
   const DerivativeTangentWidget({super.key, this.data});
 
   @override
-  State<DerivativeTangentWidget> createState() => _DerivativeTangentWidgetState();
+  State<DerivativeTangentWidget> createState() =>
+      _DerivativeTangentWidgetState();
 }
 
 class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
@@ -60,7 +62,11 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
             children: [
               const Row(
                 children: [
-                  Icon(Icons.show_chart_rounded, color: Color(0xFF4F46E5), size: 22),
+                  Icon(
+                    Icons.show_chart_rounded,
+                    color: Color(0xFF4F46E5),
+                    size: 22,
+                  ),
                   SizedBox(width: 8),
                   Text(
                     'Rapporto Incrementale & Tangente',
@@ -73,7 +79,10 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFEEF2FF),
                   borderRadius: BorderRadius.circular(10),
@@ -138,7 +147,9 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
                 child: _buildMetricCard(
                   label: 'Scostamento',
                   value: _error.toStringAsFixed(3),
-                  color: _error < 0.1 ? const Color(0xFF10B981) : const Color(0xFFEF4444),
+                  color: _error < 0.1
+                      ? const Color(0xFF10B981)
+                      : const Color(0xFFEF4444),
                   subtitle: 'Errore residuo',
                 ),
               ),
@@ -157,9 +168,13 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  _h < 0.2 ? Icons.check_circle_rounded : Icons.info_outline_rounded,
+                  _h < 0.2
+                      ? Icons.check_circle_rounded
+                      : Icons.info_outline_rounded,
                   size: 16,
-                  color: _h < 0.2 ? const Color(0xFF16A34A) : const Color(0xFF475569),
+                  color: _h < 0.2
+                      ? const Color(0xFF16A34A)
+                      : const Color(0xFF475569),
                 ),
                 const SizedBox(width: 6),
                 Expanded(
@@ -170,7 +185,9 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: _h < 0.2 ? const Color(0xFF16A34A) : const Color(0xFF334155),
+                      color: _h < 0.2
+                          ? const Color(0xFF16A34A)
+                          : const Color(0xFF334155),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -186,11 +203,19 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
             children: [
               const Text(
                 'Incremento h (tende a 0):',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF334155)),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF334155),
+                ),
               ),
               Text(
                 'h = ${_h.toStringAsFixed(2)}',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF4F46E5)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF4F46E5),
+                ),
               ),
             ],
           ),
@@ -209,11 +234,19 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
             children: [
               const Text(
                 'Punto base x₀:',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF334155)),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF334155),
+                ),
               ),
               Text(
                 'x₀ = ${_x0.toStringAsFixed(1)}',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF0F172A)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF0F172A),
+                ),
               ),
             ],
           ),
@@ -245,11 +278,28 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget> {
       ),
       child: Column(
         children: [
-          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: color)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF0F172A))),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(subtitle, style: const TextStyle(fontSize: 9, color: Color(0xFF64748B))),
+          Text(
+            subtitle,
+            style: const TextStyle(fontSize: 9, color: Color(0xFF64748B)),
+          ),
         ],
       ),
     );
@@ -279,9 +329,19 @@ class _DerivativeTangentPainter extends CustomPainter {
         Offset(origin.dx + x * scaleX, origin.dy - y * scaleY);
 
     // Griglia assi
-    final axisPaint = Paint()..color = const Color(0xFF334155)..strokeWidth = 1.0;
-    canvas.drawLine(Offset(10, origin.dy), Offset(size.width - 10, origin.dy), axisPaint);
-    canvas.drawLine(Offset(origin.dx, 10), Offset(origin.dx, size.height - 10), axisPaint);
+    final axisPaint = Paint()
+      ..color = const Color(0xFF334155)
+      ..strokeWidth = 1.0;
+    canvas.drawLine(
+      Offset(10, origin.dy),
+      Offset(size.width - 10, origin.dy),
+      axisPaint,
+    );
+    canvas.drawLine(
+      Offset(origin.dx, 10),
+      Offset(origin.dx, size.height - 10),
+      axisPaint,
+    );
 
     // Curva f(x)
     final curvePath = Path();

@@ -1,5 +1,7 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+
 import '../../../domain/models/knowledge_node.dart';
 
 /// Widget interattivo a 60fps per l'esplorazione della Circonferenza Goniometrica.
@@ -61,7 +63,10 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFDF4FF),
                   borderRadius: BorderRadius.circular(10),
@@ -118,7 +123,9 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget> {
               Expanded(
                 child: _buildMetricCard(
                   label: 'tan(θ)',
-                  value: _cosVal.abs() < 0.001 ? '∞' : _tanVal.toStringAsFixed(3),
+                  value: _cosVal.abs() < 0.001
+                      ? '∞'
+                      : _tanVal.toStringAsFixed(3),
                   color: const Color(0xFFFBBF24),
                 ),
               ),
@@ -136,7 +143,11 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.check_circle_outline_rounded, size: 16, color: Color(0xFF16A34A)),
+                const Icon(
+                  Icons.check_circle_outline_rounded,
+                  size: 16,
+                  color: Color(0xFF16A34A),
+                ),
                 const SizedBox(width: 6),
                 Text(
                   'sin²(θ) + cos²(θ) = ${(_sinVal * _sinVal + _cosVal * _cosVal).toStringAsFixed(3)} = 1 (Identità Fondamentale)',
@@ -199,7 +210,11 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget> {
     );
   }
 
-  Widget _buildMetricCard({required String label, required String value, required Color color}) {
+  Widget _buildMetricCard({
+    required String label,
+    required String value,
+    required Color color,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       decoration: BoxDecoration(
@@ -211,12 +226,20 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget> {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: color),
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
           ),
           const SizedBox(height: 2),
           Text(
             value,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF0F172A)),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
+            ),
           ),
         ],
       ),
@@ -228,7 +251,13 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget> {
     return Padding(
       padding: const EdgeInsets.only(right: 6),
       child: ChoiceChip(
-        label: Text(label, style: TextStyle(fontSize: 11, color: isSelected ? Colors.white : const Color(0xFF475569))),
+        label: Text(
+          label,
+          style: TextStyle(
+            fontSize: 11,
+            color: isSelected ? Colors.white : const Color(0xFF475569),
+          ),
+        ),
         selected: isSelected,
         selectedColor: const Color(0xFFD946EF),
         backgroundColor: const Color(0xFFF1F5F9),
@@ -262,8 +291,16 @@ class _TrigCirclePainter extends CustomPainter {
       ..strokeWidth = 1.5;
 
     // Assi cartesiani
-    canvas.drawLine(Offset(10, center.dy), Offset(size.width - 10, center.dy), axisPaint);
-    canvas.drawLine(Offset(center.dx, 10), Offset(center.dx, size.height - 10), axisPaint);
+    canvas.drawLine(
+      Offset(10, center.dy),
+      Offset(size.width - 10, center.dy),
+      axisPaint,
+    );
+    canvas.drawLine(
+      Offset(center.dx, 10),
+      Offset(center.dx, size.height - 10),
+      axisPaint,
+    );
 
     // Cerchio unitario
     canvas.drawCircle(center, radius, circlePaint);
@@ -271,7 +308,10 @@ class _TrigCirclePainter extends CustomPainter {
     // Coordinate punto P
     final cosVal = math.cos(angleRad);
     final sinVal = math.sin(angleRad);
-    final pPoint = Offset(center.dx + cosVal * radius, center.dy - sinVal * radius);
+    final pPoint = Offset(
+      center.dx + cosVal * radius,
+      center.dy - sinVal * radius,
+    );
     final cosPoint = Offset(center.dx + cosVal * radius, center.dy);
 
     // Vettore coseno (orizzontale azzurro)
@@ -304,8 +344,18 @@ class _TrigCirclePainter extends CustomPainter {
 
     // Disegna la tangente solo se non spara fuori scala
     if (tanY >= 0 && tanY <= size.height && cosVal > 0) {
-      canvas.drawLine(Offset(tanLineX, center.dy), Offset(tanLineX, tanY), tanPaint);
-      canvas.drawLine(center, Offset(tanLineX, tanY), Paint()..color = const Color(0x66FBBF24)..strokeWidth = 1.0);
+      canvas.drawLine(
+        Offset(tanLineX, center.dy),
+        Offset(tanLineX, tanY),
+        tanPaint,
+      );
+      canvas.drawLine(
+        center,
+        Offset(tanLineX, tanY),
+        Paint()
+          ..color = const Color(0x66FBBF24)
+          ..strokeWidth = 1.0,
+      );
     }
 
     // Arco angolo θ

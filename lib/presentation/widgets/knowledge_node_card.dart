@@ -9,10 +9,7 @@ import 'category_style.dart';
 class KnowledgeNodeCard extends StatelessWidget {
   final KnowledgeNode node;
 
-  const KnowledgeNodeCard({
-    super.key,
-    required this.node,
-  });
+  const KnowledgeNodeCard({super.key, required this.node});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,8 @@ class KnowledgeNodeCard extends StatelessWidget {
 
     // Determina il tipo di laboratorio / interattività
     final templateType = node.interactiveData?.templateType;
-    final isSimulation = templateType != null && templateType != 'live_equation';
+    final isSimulation =
+        templateType != null && templateType != 'live_equation';
     final isLiveEquation = templateType == 'live_equation';
 
     return Material(
@@ -30,9 +28,7 @@ class KnowledgeNodeCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => NodeDetailScreen(node: node),
-            ),
+            MaterialPageRoute(builder: (_) => NodeDetailScreen(node: node)),
           );
         },
         borderRadius: BorderRadius.circular(18),
@@ -61,7 +57,10 @@ class KnowledgeNodeCard extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: catStyle.background,
                         borderRadius: BorderRadius.circular(6),
@@ -69,7 +68,11 @@ class KnowledgeNodeCard extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(catStyle.icon, size: 12, color: catStyle.primary),
+                          Icon(
+                            catStyle.icon,
+                            size: 12,
+                            color: catStyle.primary,
+                          ),
                           const SizedBox(width: 4),
                           Flexible(
                             child: Text(
@@ -119,14 +122,22 @@ class KnowledgeNodeCard extends StatelessWidget {
                   runSpacing: 4,
                   children: prereqs.take(2).map((p) {
                     final pStyle = CategoryStyle.forCategory(p.category);
-                    final isCross = p.category.toLowerCase() != node.category.toLowerCase();
+                    final isCross =
+                        p.category.toLowerCase() != node.category.toLowerCase();
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
-                        color: isCross ? pStyle.background : const Color(0xFFF1F5F9),
+                        color: isCross
+                            ? pStyle.background
+                            : const Color(0xFFF1F5F9),
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(
-                          color: isCross ? pStyle.border : const Color(0xFFE2E8F0),
+                          color: isCross
+                              ? pStyle.border
+                              : const Color(0xFFE2E8F0),
                           width: 0.8,
                         ),
                       ),
@@ -134,8 +145,12 @@ class KnowledgeNodeCard extends StatelessWidget {
                         'req: ${p.title}',
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: isCross ? FontWeight.w700 : FontWeight.w500,
-                          color: isCross ? pStyle.primary : const Color(0xFF475569),
+                          fontWeight: isCross
+                              ? FontWeight.w700
+                              : FontWeight.w500,
+                          color: isCross
+                              ? pStyle.primary
+                              : const Color(0xFF475569),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -153,14 +168,14 @@ class KnowledgeNodeCard extends StatelessWidget {
                     isSimulation
                         ? Icons.electric_bolt_rounded
                         : isLiveEquation
-                            ? Icons.tune_rounded
-                            : Icons.menu_book_outlined,
+                        ? Icons.tune_rounded
+                        : Icons.menu_book_outlined,
                     size: 13,
                     color: isSimulation
                         ? const Color(0xFF2563EB)
                         : isLiveEquation
-                            ? const Color(0xFF059669)
-                            : const Color(0xFF64748B),
+                        ? const Color(0xFF059669)
+                        : const Color(0xFF64748B),
                   ),
                   const SizedBox(width: 5),
                   Expanded(
@@ -168,15 +183,15 @@ class KnowledgeNodeCard extends StatelessWidget {
                       isSimulation
                           ? 'Simulatore Interattivo'
                           : isLiveEquation
-                              ? 'Lab Interattivo'
-                              : '${node.algebraicProof.length} passaggi algebrici',
+                          ? 'Lab Interattivo'
+                          : '${node.algebraicProof.length} passaggi algebrici',
                       style: TextStyle(
                         fontSize: 11,
                         color: isSimulation
                             ? const Color(0xFF2563EB)
                             : isLiveEquation
-                                ? const Color(0xFF059669)
-                                : const Color(0xFF64748B),
+                            ? const Color(0xFF059669)
+                            : const Color(0xFF64748B),
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,

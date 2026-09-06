@@ -19,8 +19,12 @@ void main() {
       final data = InteractiveData()
         ..templateType = 'circuit_simulation'
         ..parameters = [
-          InteractiveParameter()..variableName = 'V'..defaultValue = 12.0,
-          InteractiveParameter()..variableName = 'R'..defaultValue = 6.0,
+          InteractiveParameter()
+            ..variableName = 'V'
+            ..defaultValue = 12.0,
+          InteractiveParameter()
+            ..variableName = 'R'
+            ..defaultValue = 6.0,
         ];
       final widget = InteractiveTemplateFactory.buildWidget(data);
       expect(widget, isA<OhmCircuitSimulationWidget>());
@@ -30,8 +34,12 @@ void main() {
       final data = InteractiveData()
         ..templateType = 'kinematics_simulation'
         ..parameters = [
-          InteractiveParameter()..variableName = 'v0'..defaultValue = 5.0,
-          InteractiveParameter()..variableName = 'a'..defaultValue = 2.0,
+          InteractiveParameter()
+            ..variableName = 'v0'
+            ..defaultValue = 5.0,
+          InteractiveParameter()
+            ..variableName = 'a'
+            ..defaultValue = 2.0,
         ];
       final widget = InteractiveTemplateFactory.buildWidget(data);
       expect(widget, isA<KinematicsSimulationWidget>());
@@ -89,7 +97,9 @@ void main() {
   });
 
   group('PrerequisitesSectionWidget Tests', () {
-    testWidgets('Renders cross-disciplinary badge when subjects differ', (tester) async {
+    testWidgets('Renders cross-disciplinary badge when subjects differ', (
+      tester,
+    ) async {
       final mathNode = KnowledgeNode()
         ..serverId = 'mat_log_01'
         ..title = 'Logaritmi ed Esponenziali'
@@ -146,12 +156,18 @@ void main() {
   });
 
   group('KinematicsSimulationWidget Tests', () {
-    testWidgets('Renders car simulation, telemetry and sliders', (tester) async {
+    testWidgets('Renders car simulation, telemetry and sliders', (
+      tester,
+    ) async {
       final data = InteractiveData()
         ..templateType = 'kinematics_simulation'
         ..parameters = [
-          InteractiveParameter()..variableName = 'v0'..defaultValue = 5.0,
-          InteractiveParameter()..variableName = 'a'..defaultValue = 2.0,
+          InteractiveParameter()
+            ..variableName = 'v0'
+            ..defaultValue = 5.0,
+          InteractiveParameter()
+            ..variableName = 'a'
+            ..defaultValue = 2.0,
         ];
 
       await tester.pumpWidget(
@@ -167,7 +183,10 @@ void main() {
       expect(find.text('Simulatore Cinematica (MRUA)'), findsOneWidget);
       expect(find.text('SPAZIO (x)'), findsOneWidget);
       expect(find.text('VELOCITÀ (v)'), findsOneWidget);
-      expect(find.textContaining('Torricelli', skipOffstage: false), findsWidgets);
+      expect(
+        find.textContaining('Torricelli', skipOffstage: false),
+        findsWidgets,
+      );
     });
   });
 
@@ -197,9 +216,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: SingleChildScrollView(
-              child: TrigCircleWidget(),
-            ),
+            body: SingleChildScrollView(child: TrigCircleWidget()),
           ),
         ),
       );
@@ -213,13 +230,13 @@ void main() {
   });
 
   group('TriangleSolverWidget Tests', () {
-    testWidgets('Renders triangle solver and Pythagorean / Carnot checks', (tester) async {
+    testWidgets('Renders triangle solver and Pythagorean / Carnot checks', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: SingleChildScrollView(
-              child: TriangleSolverWidget(),
-            ),
+            body: SingleChildScrollView(child: TriangleSolverWidget()),
           ),
         ),
       );
@@ -233,13 +250,13 @@ void main() {
   });
 
   group('DerivativeTangentWidget Tests', () {
-    testWidgets('Renders difference quotient and tangent limit', (tester) async {
+    testWidgets('Renders difference quotient and tangent limit', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: SingleChildScrollView(
-              child: DerivativeTangentWidget(),
-            ),
+            body: SingleChildScrollView(child: DerivativeTangentWidget()),
           ),
         ),
       );
@@ -251,13 +268,13 @@ void main() {
   });
 
   group('RiemannSumWidget Tests', () {
-    testWidgets('Renders Riemann sum rectangles and convergence telemetry', (tester) async {
+    testWidgets('Renders Riemann sum rectangles and convergence telemetry', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: SingleChildScrollView(
-              child: RiemannSumWidget(),
-            ),
+            body: SingleChildScrollView(child: RiemannSumWidget()),
           ),
         ),
       );

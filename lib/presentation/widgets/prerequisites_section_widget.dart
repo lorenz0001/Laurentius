@@ -28,7 +28,11 @@ class PrerequisitesSectionWidget extends StatelessWidget {
         ),
         child: const Row(
           children: [
-            Icon(Icons.flag_circle_outlined, size: 16, color: Color(0xFF64748B)),
+            Icon(
+              Icons.flag_circle_outlined,
+              size: 16,
+              color: Color(0xFF64748B),
+            ),
             SizedBox(width: 8),
             Text(
               'Concetto fondamentale di partenza (nessun prerequisito)',
@@ -48,7 +52,11 @@ class PrerequisitesSectionWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.account_tree_outlined, size: 16, color: Color(0xFF64748B)),
+            const Icon(
+              Icons.account_tree_outlined,
+              size: 16,
+              color: Color(0xFF64748B),
+            ),
             const SizedBox(width: 8),
             Text(
               'PREREQUISITI & COLLEGAMENTI (${prereqs.length})',
@@ -68,7 +76,8 @@ class PrerequisitesSectionWidget extends StatelessWidget {
   }
 
   Widget _buildPrereqCard(BuildContext context, KnowledgeNode prereq) {
-    final isCrossSubject = prereq.category.trim().toLowerCase() !=
+    final isCrossSubject =
+        prereq.category.trim().toLowerCase() !=
         currentNode.category.trim().toLowerCase();
     final catStyle = CategoryStyle.forCategory(prereq.category);
 
@@ -82,9 +91,7 @@ class PrerequisitesSectionWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => NodeDetailScreen(node: prereq),
-              ),
+              MaterialPageRoute(builder: (_) => NodeDetailScreen(node: prereq)),
             );
           },
           child: Container(
@@ -92,10 +99,14 @@ class PrerequisitesSectionWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: isCrossSubject ? catStyle.border : const Color(0xFFE2E8F0),
+                color: isCrossSubject
+                    ? catStyle.border
+                    : const Color(0xFFE2E8F0),
                 width: isCrossSubject ? 1.5 : 1.0,
               ),
-              color: isCrossSubject ? catStyle.background.withValues(alpha: 0.35) : Colors.white,
+              color: isCrossSubject
+                  ? catStyle.background.withValues(alpha: 0.35)
+                  : Colors.white,
             ),
             child: Row(
               children: [
@@ -115,7 +126,10 @@ class PrerequisitesSectionWidget extends StatelessWidget {
                       if (isCrossSubject)
                         Container(
                           margin: const EdgeInsets.only(bottom: 3),
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: catStyle.primary.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(4),

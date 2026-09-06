@@ -8,13 +8,11 @@ import '../../../domain/models/knowledge_node.dart';
 class OhmCircuitSimulationWidget extends StatefulWidget {
   final InteractiveData? data;
 
-  const OhmCircuitSimulationWidget({
-    super.key,
-    this.data,
-  });
+  const OhmCircuitSimulationWidget({super.key, this.data});
 
   @override
-  State<OhmCircuitSimulationWidget> createState() => _OhmCircuitSimulationWidgetState();
+  State<OhmCircuitSimulationWidget> createState() =>
+      _OhmCircuitSimulationWidgetState();
 }
 
 class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
@@ -137,10 +135,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                     SizedBox(height: 2),
                     Text(
                       'Flusso di cariche ed effetto termico in tempo reale',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF64748B),
-                      ),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
                     ),
                   ],
                 ),
@@ -152,9 +147,14 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                     : 'Modalità: Verso convenzionale della corrente (da + a -)',
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     backgroundColor: const Color(0xFFF1F5F9),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   onPressed: () {
                     setState(() {
@@ -162,7 +162,9 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                     });
                   },
                   icon: Icon(
-                    _showElectronFlow ? Icons.scatter_plot_rounded : Icons.swap_horiz_rounded,
+                    _showElectronFlow
+                        ? Icons.scatter_plot_rounded
+                        : Icons.swap_horiz_rounded,
                     size: 14,
                     color: const Color(0xFF334155),
                   ),
@@ -185,7 +187,9 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
           Container(
             height: 230,
             decoration: BoxDecoration(
-              color: const Color(0xFF090D16), // Dark canvas ad alto contrasto educational
+              color: const Color(
+                0xFF090D16,
+              ), // Dark canvas ad alto contrasto educational
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFF1E293B)),
             ),
@@ -516,7 +520,10 @@ class _CircuitPainter extends CustomPainter {
 
     // Cancella il filo sottostante
     final clearPaint = Paint()..color = const Color(0xFF090D16);
-    canvas.drawRect(Rect.fromCenter(center: center, width: 20, height: batHeight + 8), clearPaint);
+    canvas.drawRect(
+      Rect.fromCenter(center: center, width: 20, height: batHeight + 8),
+      clearPaint,
+    );
 
     final linePaint = Paint()
       ..strokeCap = StrokeCap.round
@@ -535,9 +542,30 @@ class _CircuitPainter extends CustomPainter {
     canvas.drawLine(Offset(x - 9, y + 8), Offset(x + 9, y + 8), linePaint);
 
     // Simboli + e -
-    _drawText(canvas, '+', Offset(x - 26, y - 16), const Color(0xFFEF4444), 14, FontWeight.w800);
-    _drawText(canvas, '-', Offset(x - 24, y + 2), const Color(0xFF38BDF8), 16, FontWeight.w800);
-    _drawText(canvas, '${v.toStringAsFixed(0)}V', Offset(x + 22, y - 6), Colors.white70, 11, FontWeight.w700);
+    _drawText(
+      canvas,
+      '+',
+      Offset(x - 26, y - 16),
+      const Color(0xFFEF4444),
+      14,
+      FontWeight.w800,
+    );
+    _drawText(
+      canvas,
+      '-',
+      Offset(x - 24, y + 2),
+      const Color(0xFF38BDF8),
+      16,
+      FontWeight.w800,
+    );
+    _drawText(
+      canvas,
+      '${v.toStringAsFixed(0)}V',
+      Offset(x + 22, y - 6),
+      Colors.white70,
+      11,
+      FontWeight.w700,
+    );
   }
 
   /// Disegna il resistore con rettangolo a spirale ed effetto termico proporzionale alla potenza dissipata
@@ -549,7 +577,10 @@ class _CircuitPainter extends CustomPainter {
 
     // Cancella il filo sottostante
     final clearPaint = Paint()..color = const Color(0xFF090D16);
-    canvas.drawRect(Rect.fromCenter(center: center, width: resW + 12, height: resH + 6), clearPaint);
+    canvas.drawRect(
+      Rect.fromCenter(center: center, width: resW + 12, height: resH + 6),
+      clearPaint,
+    );
 
     // Fattore di surriscaldamento (0.0 -> 1.0)
     final heatFactor = (p / 250.0).clamp(0.0, 1.0);
@@ -594,7 +625,11 @@ class _CircuitPainter extends CustomPainter {
 
     // Bordo del resistore
     final borderPaint = Paint()
-      ..color = Color.lerp(const Color(0xFF64748B), const Color(0xFFF97316), heatFactor)!
+      ..color = Color.lerp(
+        const Color(0xFF64748B),
+        const Color(0xFFF97316),
+        heatFactor,
+      )!
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
     canvas.drawRRect(
@@ -615,11 +650,22 @@ class _CircuitPainter extends CustomPainter {
     for (int i = 0; i < 3; i++) {
       final sy = y - 14 + (i * 14.0);
       stripePaint.color = stripeColors[i];
-      canvas.drawLine(Offset(x - (resW / 2) + 2, sy), Offset(x + (resW / 2) - 2, sy), stripePaint);
+      canvas.drawLine(
+        Offset(x - (resW / 2) + 2, sy),
+        Offset(x + (resW / 2) - 2, sy),
+        stripePaint,
+      );
     }
 
     // Etichetta del valore di resistenza
-    _drawText(canvas, '${r.toStringAsFixed(0)}Ω', Offset(x + 18, y - 6), const Color(0xFFE2E8F0), 11, FontWeight.w700);
+    _drawText(
+      canvas,
+      '${r.toStringAsFixed(0)}Ω',
+      Offset(x + 18, y - 6),
+      const Color(0xFFE2E8F0),
+      11,
+      FontWeight.w700,
+    );
   }
 
   /// Disegna l'amperometro circolare inline sul filo
@@ -645,11 +691,24 @@ class _CircuitPainter extends CustomPainter {
     canvas.drawCircle(center, 16, borderPaint);
 
     // Testo "A" e valore
-    _drawText(canvas, 'A', Offset(x - 5, y - 7), const Color(0xFF38BDF8), 11, FontWeight.w900);
+    _drawText(
+      canvas,
+      'A',
+      Offset(x - 5, y - 7),
+      const Color(0xFF38BDF8),
+      11,
+      FontWeight.w900,
+    );
   }
 
   /// Disegna le particelle animate distribuite uniformemente lungo il perimetro rettangolare
-  void _drawParticles(Canvas canvas, double left, double right, double top, double bottom) {
+  void _drawParticles(
+    Canvas canvas,
+    double left,
+    double right,
+    double top,
+    double bottom,
+  ) {
     final perimeter = 2 * (right - left) + 2 * (bottom - top);
     if (perimeter <= 0) return;
 
@@ -657,7 +716,8 @@ class _CircuitPainter extends CustomPainter {
     const int particleCount = 28;
 
     final particlePaint = Paint()
-      ..color = const Color(0xFF00F0FF) // Cyan brillante ad alta visibilità
+      ..color =
+          const Color(0xFF00F0FF) // Cyan brillante ad alta visibilità
       ..style = PaintingStyle.fill;
 
     final glowPaint = Paint()
@@ -687,7 +747,14 @@ class _CircuitPainter extends CustomPainter {
   }
 
   /// Calcola le coordinate X, Y lungo il perimetro rettangolare per un valore t in [0.0, 1.0]
-  Offset _getPointOnPerimeter(double t, double left, double right, double top, double bottom, double perimeter) {
+  Offset _getPointOnPerimeter(
+    double t,
+    double left,
+    double right,
+    double top,
+    double bottom,
+    double perimeter,
+  ) {
     final dist = t * perimeter;
 
     final segTop = right - left;
@@ -718,7 +785,14 @@ class _CircuitPainter extends CustomPainter {
     return false;
   }
 
-  void _drawText(Canvas canvas, String text, Offset offset, Color color, double fontSize, FontWeight weight) {
+  void _drawText(
+    Canvas canvas,
+    String text,
+    Offset offset,
+    Color color,
+    double fontSize,
+    FontWeight weight,
+  ) {
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,

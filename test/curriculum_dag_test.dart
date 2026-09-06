@@ -9,13 +9,33 @@ void main() {
 
       final ids = <String>{};
       for (final n in nodes) {
-        expect(n.serverId.isNotEmpty, true, reason: 'Node must have non-empty serverId');
-        expect(ids.contains(n.serverId), false, reason: 'Duplicate serverId found: ${n.serverId}');
+        expect(
+          n.serverId.isNotEmpty,
+          true,
+          reason: 'Node must have non-empty serverId',
+        );
+        expect(
+          ids.contains(n.serverId),
+          false,
+          reason: 'Duplicate serverId found: ${n.serverId}',
+        );
         ids.add(n.serverId);
 
-        expect(n.title.isNotEmpty, true, reason: 'Node ${n.serverId} has empty title');
-        expect(n.category.isNotEmpty, true, reason: 'Node ${n.serverId} has empty category');
-        expect(n.algebraicProof.isNotEmpty, true, reason: 'Node ${n.serverId} must have algebraic proof');
+        expect(
+          n.title.isNotEmpty,
+          true,
+          reason: 'Node ${n.serverId} has empty title',
+        );
+        expect(
+          n.category.isNotEmpty,
+          true,
+          reason: 'Node ${n.serverId} has empty category',
+        );
+        expect(
+          n.algebraicProof.isNotEmpty,
+          true,
+          reason: 'Node ${n.serverId} must have algebraic proof',
+        );
       }
     });
 
@@ -45,15 +65,25 @@ void main() {
     });
 
     test('Every prerequisite in prerequisiteMap points to a valid serverId', () {
-      final validIds = CurriculumRegistry.getAllNodes().map((n) => n.serverId).toSet();
+      final validIds = CurriculumRegistry.getAllNodes()
+          .map((n) => n.serverId)
+          .toSet();
 
       for (final entry in CurriculumRegistry.prerequisiteMap.entries) {
         final targetId = entry.key;
-        expect(validIds.contains(targetId), true, reason: 'prerequisiteMap key $targetId does not exist');
+        expect(
+          validIds.contains(targetId),
+          true,
+          reason: 'prerequisiteMap key $targetId does not exist',
+        );
 
         for (final prereqId in entry.value) {
-          expect(validIds.contains(prereqId), true,
-              reason: 'Node $targetId references non-existent prerequisite $prereqId');
+          expect(
+            validIds.contains(prereqId),
+            true,
+            reason:
+                'Node $targetId references non-existent prerequisite $prereqId',
+          );
         }
       }
     });
@@ -104,8 +134,11 @@ void main() {
         }
       }
 
-      expect(visitedCount, graph.length,
-          reason: 'Ciclo rilevato nel grafo dei prerequisiti! Non è un DAG aciclico valido.');
+      expect(
+        visitedCount,
+        graph.length,
+        reason: 'Ciclo rilevato nel grafo dei prerequisiti! Non è un DAG aciclico valido.',
+      );
     });
 
     test('Every knowledge node contains clearly identified corollaries', () {
@@ -113,12 +146,18 @@ void main() {
 
       for (final node in nodes) {
         final hasCorollary = node.algebraicProof.any(
-          (step) => (step.description?.toLowerCase().contains('corollario') ?? false) ||
+          (step) =>
+              (step.description?.toLowerCase().contains('corollario') ??
+                  false) ||
               (step.insight?.toLowerCase().contains('corollario') ?? false),
         );
 
-        expect(hasCorollary, true,
-            reason: 'Nodo ${node.serverId} ("${node.title}") non ha corollari esplicitamente enunciati.');
+        expect(
+          hasCorollary,
+          true,
+          reason:
+              'Nodo ${node.serverId} ("${node.title}") non ha corollari esplicitamente enunciati.',
+        );
       }
     });
   });
