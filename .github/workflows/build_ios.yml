@@ -33,31 +33,20 @@ jobs:
           pod install
           cd ..
 
-      - name: Strip Code Signing from Xcode Project
-        run: |
-          # 1. Passa il provisioning da Automatico a Manuale per evitare che Xcode cerchi i certificati Apple
-          sed -i '' 's/ProvisioningStyle = Automatic;/ProvisioningStyle = Manual;/g' ios/Runner.xcodeproj/project.pbxproj
-          
-          # 2. Rimuove forzatamente le direttive di firma dal progetto principale
-          sed -i '' '/DEVELOPMENT_TEAM/d' ios/Runner.xcodeproj/project.pbxproj
-          sed -i '' '/PROVISIONING_PROFILE_SPECIFIER/d' ios/Runner.xcodeproj/project.pbxproj
-          sed -i '' '/CODE_SIGN_STYLE/d' ios/Runner.xcodeproj/project.pbxproj
-          sed -i '' '/CODE_SIGN_IDENTITY/d' ios/Runner.xcodeproj/project.pbxproj
-          
-          # 3. Disattiva la firma nei file di configurazione base di Flutter
-          echo "CODE_SIGNING_ALLOWED=NO" >> ios/Flutter/Release.xcconfig
-          echo "CODE_SIGNING_REQUIRED=NO" >> ios/Flutter/Release.xcconfig
-          
-          # 4. Disattiva la firma per tutte le dipendenze esterne (CocoaPods)
-          find ios/Pods -name "*.xcconfig" -exec sh -c 'echo "CODE_SIGNING_ALLOWED=NO" >> "{}"' \;
-
-      - name: Build iOS Application (unsigned)
-        run: flutter build ios --release --no-codesign
+      - name: Build iOS Application (Simulator workaround)
+        # Compiliamo per simulatore. Il simulatore non richiede MAI code signing.
+        # Rimuoviamo --release perché il simulatore usa --debug per default
+        run: flutter build ios --simulator --no-codesign
 
       - name: Package IPA
         run: |
+          # Creiamo la struttura standard dell'IPA
           mkdir -p build/ios/ipa/Payload
-          cp -r build/ios/iphoneos/Runner.app build/ios/ipa/Payload/
+          
+          # Copiamo la build del simulatore nella cartella Payload
+          cp -r build/ios/iphonesimulator/Runner.app build/ios/ipa/Payload/
+          
+          # Navighiamo e zippiamo il contenuto
           cd build/ios/ipa
           zip -r Laurentius.ipa Payload
 
