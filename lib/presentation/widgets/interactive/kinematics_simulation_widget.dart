@@ -54,6 +54,8 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     }
   }
 
+  double? _finishedTime;
+
   void _onTick() {
     final now = DateTime.now();
     final dt = now.difference(_lastTick).inMicroseconds / 1000000.0;
@@ -62,9 +64,16 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     if (_isPlaying) {
       setState(() {
         _elapsedTime += dt;
-        // Resetta automaticamente dopo 12 secondi per ripetere il ciclo
-        if (_elapsedTime > 12.0) {
+        // Traguardo a 100m o arresto per decelerazione: pausa di 1.2s e riavvio fluido
+        if (_position >= 100.0 || (_a < 0 && _velocity <= 0 && _elapsedTime > 0.5)) {
+          _finishedTime ??= _elapsedTime;
+          if (_elapsedTime - _finishedTime! > 1.2) {
+            _elapsedTime = 0.0;
+            _finishedTime = null;
+          }
+        } else if (_elapsedTime > 15.0) {
           _elapsedTime = 0.0;
+          _finishedTime = null;
         }
       });
     }
@@ -96,6 +105,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
   void _resetSimulation() {
     setState(() {
       _elapsedTime = 0.0;
+      _finishedTime = null;
       _lastTick = DateTime.now();
     });
   }
@@ -475,16 +485,29 @@ class _RoadPainter extends CustomPainter {
       startX += dashWidth + dashSpace;
     }
 
-    // 3. Indicatori metrici lungo la corsia (0m, 25m, 50m, 75m, 100m)
+    // 3. Indicatori metrici lungo la corsia (0m, 25m, 50m, 100m)
     _drawDistanceMarker(canvas, 20.0, roadY + roadHeight + 4, '0m');
     _drawDistanceMarker(canvas, w * 0.35, roadY + roadHeight + 4, '25m');
     _drawDistanceMarker(canvas, w * 0.65, roadY + roadHeight + 4, '50m');
-    _drawDistanceMarker(canvas, w - 30.0, roadY + roadHeight + 4, '100m');
+    _drawDistanceMarker(canvas, w - 40.0, roadY + roadHeight + 4, '100m');
 
-    // 4. Posizione normalizzata della vettura su schermo
-    // Scala: 100m corrisponde alla larghezza disponibile
-    final normPos = (position % 100.0) / 100.0;
-    final carX = 20.0 + normPos * (w - 70.0);
+    // Linea del traguardo a scacchi (Checkered finish line a 100m)
+    final finishX = w - 36.0;
+    const checkSize = 4.0;
+    for (double cy = roadY; cy < roadY + roadHeight; cy += checkSize) {
+      for (double cx = finishX; cx < finishX + 8.0; cx += checkSize) {
+        final isWhite = ((cx - finishX) / checkSize).floor() % 2 ==
+            ((cy - roadY) / checkSize).floor() % 2;
+        canvas.drawRect(
+          Rect.fromLTWH(cx, cy, checkSize, checkSize),
+          Paint()..color = isWhite ? Colors.white : Colors.black,
+        );
+      }
+    }
+
+    // 4. Posizione normalizzata della vettura su schermo (0 - 100m) senza salti/teletrasporti
+    final normPos = (position.clamp(0.0, 100.0)) / 100.0;
+    final carX = 20.0 + normPos * (w - 74.0);
     final carY = roadY - 14.0;
 
     // 5. Disegno della vettura
@@ -492,6 +515,23 @@ class _RoadPainter extends CustomPainter {
 
     // 6. Disegno del Vettore Velocità (Freccia verde dinamica)
     _drawVelocityVector(canvas, Offset(carX + 28, carY + 8), velocity);
+
+    // Se il traguardo è stato raggiunto, mostra banner di arrivo
+    if (position >= 100.0) {
+      final finishBanner = TextPainter(
+        text: const TextSpan(
+          text: '🏁 TRAGUARDO 100m',
+          style: TextStyle(
+            fontSize: 10,
+            color: Color(0xFFFBBF24),
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.5,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      finishBanner.paint(canvas, Offset(w - finishBanner.width - 16, roadY - 24));
+    }
   }
 
   void _drawDistanceMarker(Canvas canvas, double x, double y, String text) {

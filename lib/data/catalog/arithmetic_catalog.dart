@@ -17,8 +17,8 @@ class ArithmeticCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_add_01'
       ..title = 'Addizione e Struttura Algebrica'
-      ..category = 'Aritmetica'
-      ..subCategory = 'Fondamenti di Calcolo'
+      ..category = 'Matematica'
+      ..subCategory = 'Aritmetica e Fondamenti'
       ..lastUpdated = DateTime.now()
       ..blocks = [
         ContentBlock()
@@ -86,8 +86,8 @@ Gode di proprietà strutturali cardine:
     return KnowledgeNode()
       ..serverId = 'mat_mul_01'
       ..title = 'Moltiplicazione e Proprietà Distributiva'
-      ..category = 'Aritmetica'
-      ..subCategory = 'Fondamenti di Calcolo'
+      ..category = 'Matematica'
+      ..subCategory = 'Aritmetica e Fondamenti'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()
@@ -134,7 +134,7 @@ Gode di proprietà strutturali cardine:
     return KnowledgeNode()
       ..serverId = 'mat_frac_01'
       ..title = 'Frazioni, Rapporti e Numeri Razionali'
-      ..category = 'Aritmetica'
+      ..category = 'Matematica'
       ..subCategory = 'Frazioni e Rapporti'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -183,7 +183,7 @@ Gode di proprietà strutturali cardine:
     return KnowledgeNode()
       ..serverId = 'mat_pow_01'
       ..title = 'Potenze, Radici ed Esponenti Reali'
-      ..category = 'Aritmetica'
+      ..category = 'Matematica'
       ..subCategory = 'Potenze e Radicali'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [

@@ -19,7 +19,7 @@ class GeometryTrigCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_triang_01'
       ..title = 'Geometria del Triangolo e Angoli Interni'
-      ..category = 'Geometria'
+      ..category = 'Matematica'
       ..subCategory = 'Geometria Euclidea Piana'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -51,7 +51,7 @@ class GeometryTrigCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_pythagoras_01'
       ..title = 'Teorema di Pitagora ed Euclide'
-      ..category = 'Geometria'
+      ..category = 'Matematica'
       ..subCategory = 'Geometria Euclidea Piana'
       ..lastUpdated = DateTime.now()
       ..blocks = [
@@ -100,7 +100,7 @@ Questo principio geometrico è alla base di tutta la **metrica euclidea** nello 
     return KnowledgeNode()
       ..serverId = 'mat_trig_circ_01'
       ..title = 'Circonferenza Goniometrica e Relazione Fondamentale'
-      ..category = 'Goniometria'
+      ..category = 'Matematica'
       ..subCategory = 'Goniometria Fondamentale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -132,7 +132,7 @@ Questo principio geometrico è alla base di tutta la **metrica euclidea** nello 
     return KnowledgeNode()
       ..serverId = 'mat_trig_add_01'
       ..title = 'Formule Goniometriche: Addizione, Duplicazione e Bisezione'
-      ..category = 'Goniometria'
+      ..category = 'Matematica'
       ..subCategory = 'Goniometria Fondamentale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -164,7 +164,7 @@ Questo principio geometrico è alla base di tutta la **metrica euclidea** nello 
     return KnowledgeNode()
       ..serverId = 'mat_trig_triang_01'
       ..title = 'Teoremi dei Triangoli: Carnot, Seni e Formula dell\'Area'
-      ..category = 'Geometria'
+      ..category = 'Matematica'
       ..subCategory = 'Trigonometria dei Triangoli'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [

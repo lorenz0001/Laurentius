@@ -240,9 +240,9 @@ La prima legge fondamentale dell'elettrotecnica stabilisce che, a temperatura co
   static KnowledgeNode _createPhNode() {
     return KnowledgeNode()
       ..serverId = 'chem_ph_01'
-      ..title = 'Chimica: Soluzioni Acido-Base e Calcolo del pH'
-      ..category = 'Chimica'
-      ..subCategory = 'Equilibri in Soluzione'
+      ..title = 'Chimica Fisica: Soluzioni Acido-Base e Calcolo del pH'
+      ..category = 'Fisica'
+      ..subCategory = 'Chimica Fisica'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
         ProofStep()

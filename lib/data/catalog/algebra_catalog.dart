@@ -17,7 +17,7 @@ class AlgebraCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_binom_01'
       ..title = 'Prodotti Notevoli e Scomposizioni'
-      ..category = 'Algebra'
+      ..category = 'Matematica'
       ..subCategory = 'Polinomi e Prodotti Notevoli'
       ..lastUpdated = DateTime.now()
       ..blocks = [
@@ -88,7 +88,7 @@ class AlgebraCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_quad_eq_01'
       ..title = 'Equazioni di Secondo Grado e Discriminante'
-      ..category = 'Algebra'
+      ..category = 'Matematica'
       ..subCategory = 'Equazioni di Secondo Grado'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -144,7 +144,7 @@ class AlgebraCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_parabola_01'
       ..title = 'Funzione Quadratica e Parabola'
-      ..category = 'Algebra'
+      ..category = 'Matematica'
       ..subCategory = 'Funzioni e Geometria Analitica'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -196,7 +196,7 @@ class AlgebraCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_log_01'
       ..title = 'Logaritmi ed Esponenziali'
-      ..category = 'Algebra'
+      ..category = 'Matematica'
       ..subCategory = 'Funzioni Esponenziali e Logaritmiche'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [

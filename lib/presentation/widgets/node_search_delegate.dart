@@ -274,6 +274,9 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
             spacing: 8,
             runSpacing: 8,
             children: [
+              _buildQueryChip('Matematica'),
+              _buildQueryChip('Fisica'),
+              _buildQueryChip('Elettrotecnica'),
               _buildQueryChip('Teorema di Pitagora'),
               _buildQueryChip('Legge di Ohm'),
               _buildQueryChip('Derivate'),
@@ -281,7 +284,6 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
               _buildQueryChip('Cinematica'),
               _buildQueryChip('Logaritmi'),
               _buildQueryChip('Trigonometria'),
-              _buildQueryChip('Aritmetica'),
             ],
           ),
         ],

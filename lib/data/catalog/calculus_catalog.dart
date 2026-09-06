@@ -20,7 +20,7 @@ class CalculusCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_limits_01'
       ..title = 'Limiti di Funzione e Limiti Notevoli'
-      ..category = 'Analisi Matematica'
+      ..category = 'Matematica'
       ..subCategory = 'Limiti e Continuità'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -53,7 +53,7 @@ class CalculusCatalog {
     return KnowledgeNode()
       ..serverId = 'mat_deriv_def_01'
       ..title = 'Rapporto Incrementale e Definizione di Derivata'
-      ..category = 'Analisi Matematica'
+      ..category = 'Matematica'
       ..subCategory = 'Calcolo Differenziale'
       ..lastUpdated = DateTime.now()
       ..blocks = [
@@ -100,7 +100,7 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
     return KnowledgeNode()
       ..serverId = 'mat_deriv_rules_01'
       ..title = 'Regole di Derivazione: Prodotto, Quoziente e Catena'
-      ..category = 'Analisi Matematica'
+      ..category = 'Matematica'
       ..subCategory = 'Calcolo Differenziale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -131,7 +131,7 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
     return KnowledgeNode()
       ..serverId = 'mat_deriv_theorems_01'
       ..title = 'Teoremi di Rolle, Lagrange e Criterio di Monotonia'
-      ..category = 'Analisi Matematica'
+      ..category = 'Matematica'
       ..subCategory = 'Teoremi Differenziali'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -165,7 +165,7 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
     return KnowledgeNode()
       ..serverId = 'mat_riemann_01'
       ..title = 'Integrale di Riemann e Somme di Rettangoli'
-      ..category = 'Analisi Matematica'
+      ..category = 'Matematica'
       ..subCategory = 'Calcolo Integrale'
       ..lastUpdated = DateTime.now()
       ..algebraicProof = [
@@ -197,7 +197,7 @@ Si costruisce considerando il limite del rapporto incrementale al tendere a zero
     return KnowledgeNode()
       ..serverId = 'mat_fund_calc_01'
       ..title = 'Teorema Fondamentale del Calcolo (Torricelli-Barrow)'
-      ..category = 'Analisi Matematica'
+      ..category = 'Matematica'
       ..subCategory = 'Calcolo Integrale'
       ..lastUpdated = DateTime.now()
       ..blocks = [
