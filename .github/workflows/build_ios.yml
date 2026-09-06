@@ -1,10 +1,11 @@
 name: Build iOS IPA
 
 on:
-  workflow_dispatch:
   push:
-    tags:
-      - 'v*'
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-ipa:
@@ -33,20 +34,19 @@ jobs:
           pod install
           cd ..
 
-      - name: Build iOS Application (Simulator workaround)
-        # Compiliamo per simulatore. Il simulatore non richiede MAI code signing.
-        # Rimuoviamo --release perché il simulatore usa --debug per default
-        run: flutter build ios --simulator --no-codesign
+      - name: Build iOS Application (unsigned)
+        # Passiamo le variabili d'ambiente direttamente al comando Flutter
+        env:
+          CODE_SIGNING_ALLOWED: "NO"
+          CODE_SIGNING_REQUIRED: "NO"
+          CODE_SIGN_IDENTITY: "-"
+          EXPANDED_CODE_SIGN_IDENTITY: "-"
+        run: flutter build ios --release --no-codesign
 
       - name: Package IPA
         run: |
-          # Creiamo la struttura standard dell'IPA
           mkdir -p build/ios/ipa/Payload
-          
-          # Copiamo la build del simulatore nella cartella Payload
-          cp -r build/ios/iphonesimulator/Runner.app build/ios/ipa/Payload/
-          
-          # Navighiamo e zippiamo il contenuto
+          cp -r build/ios/iphoneos/Runner.app build/ios/ipa/Payload/
           cd build/ios/ipa
           zip -r Laurentius.ipa Payload
 
