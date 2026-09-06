@@ -33,12 +33,23 @@ jobs:
           pod install
           cd ..
 
-      - name: Disable Code Signing in Xcode
+      - name: Strip Code Signing from Xcode Project
         run: |
-          echo 'CODE_SIGNING_ALLOWED=NO' >> ios/Flutter/Release.xcconfig
-          echo 'CODE_SIGNING_REQUIRED=NO' >> ios/Flutter/Release.xcconfig
-          echo 'CODE_SIGN_IDENTITY=-' >> ios/Flutter/Release.xcconfig
-          echo 'EXPANDED_CODE_SIGN_IDENTITY=-' >> ios/Flutter/Release.xcconfig
+          # 1. Passa il provisioning da Automatico a Manuale per evitare che Xcode cerchi i certificati Apple
+          sed -i '' 's/ProvisioningStyle = Automatic;/ProvisioningStyle = Manual;/g' ios/Runner.xcodeproj/project.pbxproj
+          
+          # 2. Rimuove forzatamente le direttive di firma dal progetto principale
+          sed -i '' '/DEVELOPMENT_TEAM/d' ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' '/PROVISIONING_PROFILE_SPECIFIER/d' ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' '/CODE_SIGN_STYLE/d' ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' '/CODE_SIGN_IDENTITY/d' ios/Runner.xcodeproj/project.pbxproj
+          
+          # 3. Disattiva la firma nei file di configurazione base di Flutter
+          echo "CODE_SIGNING_ALLOWED=NO" >> ios/Flutter/Release.xcconfig
+          echo "CODE_SIGNING_REQUIRED=NO" >> ios/Flutter/Release.xcconfig
+          
+          # 4. Disattiva la firma per tutte le dipendenze esterne (CocoaPods)
+          find ios/Pods -name "*.xcconfig" -exec sh -c 'echo "CODE_SIGNING_ALLOWED=NO" >> "{}"' \;
 
       - name: Build iOS Application (unsigned)
         run: flutter build ios --release --no-codesign
@@ -56,4 +67,3 @@ jobs:
           name: Laurentius-iOS-IPA
           path: build/ios/ipa/Laurentius.ipa
           retention-days: 14
-          
