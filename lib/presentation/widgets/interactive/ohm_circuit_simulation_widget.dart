@@ -44,7 +44,17 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
     _animController.repeat();
   }
 
+  @override
+  void didUpdateWidget(covariant OhmCircuitSimulationWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.data != widget.data) {
+      _loadInitialParameters();
+    }
+  }
+
   void _loadInitialParameters() {
+    _voltage = 12.0;
+    _resistance = 6.0;
     final params = widget.data?.parameters;
     if (params != null) {
       for (final p in params) {
@@ -105,6 +115,15 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
   Widget build(BuildContext context) {
     final current = _current;
     final power = _power;
+
+    final vParam = widget.data?.parameters
+        ?.where((p) => p.variableName == 'V')
+        .firstOrNull;
+    final rParam = widget.data?.parameters
+        ?.where((p) => p.variableName == 'R')
+        .firstOrNull;
+    final vUnit = vParam?.unit ?? 'V';
+    final rUnit = rParam?.unit ?? 'Ω';
 
     return Container(
       decoration: BoxDecoration(
@@ -283,12 +302,18 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
 
           // Slider Tensione V
           _buildParamSlider(
-            label: 'Tensione del Generatore (V)',
+            label: vParam?.label ?? 'Tensione del Generatore (V)',
             value: _voltage,
-            unit: 'V',
-            min: 1.0,
-            max: 48.0,
-            divisions: 47,
+            unit: vUnit,
+            min: vParam?.minValue ?? 1.0,
+            max: vParam?.maxValue ?? 48.0,
+            divisions: (vParam?.stepSize != null &&
+                    vParam!.stepSize! > 0 &&
+                    (vParam.maxValue ?? 48.0) > (vParam.minValue ?? 1.0))
+                ? (((vParam.maxValue ?? 48.0) - (vParam.minValue ?? 1.0)) /
+                        vParam.stepSize!)
+                    .round()
+                : 47,
             accentColor: const Color(0xFF2563EB),
             onChanged: (val) {
               setState(() {
@@ -301,12 +326,18 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
 
           // Slider Resistenza R
           _buildParamSlider(
-            label: 'Resistenza del Carico (R)',
+            label: rParam?.label ?? 'Resistenza del Carico (R)',
             value: _resistance,
-            unit: 'Ω',
-            min: 1.0,
-            max: 48.0,
-            divisions: 47,
+            unit: rUnit,
+            min: rParam?.minValue ?? 1.0,
+            max: rParam?.maxValue ?? 48.0,
+            divisions: (rParam?.stepSize != null &&
+                    rParam!.stepSize! > 0 &&
+                    (rParam.maxValue ?? 48.0) > (rParam.minValue ?? 1.0))
+                ? (((rParam.maxValue ?? 48.0) - (rParam.minValue ?? 1.0)) /
+                        rParam.stepSize!)
+                    .round()
+                : 47,
             accentColor: const Color(0xFF7C3AED),
             onChanged: (val) {
               setState(() {
@@ -448,7 +479,9 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                   border: Border.all(color: const Color(0xFFCBD5E1)),
                 ),
                 child: Text(
-                  '${value.toStringAsFixed(0)} $unit',
+                  unit.trim().isNotEmpty
+                      ? '${value.toStringAsFixed(0)} ${unit.trim()}'.trim()
+                      : value.toStringAsFixed(0),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -468,7 +501,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
             ),
             child: Slider(
-              value: value,
+              value: value.clamp(min, max),
               min: min,
               max: max,
               divisions: divisions,

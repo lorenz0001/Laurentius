@@ -139,6 +139,7 @@ class ProofStep {
 @embedded
 class InteractiveData {
   String? templateType;
+  String? unit;
   List<String>? equations;
   List<InteractiveParameter>? parameters;
 
@@ -147,6 +148,7 @@ class InteractiveData {
   factory InteractiveData.fromJson(Map<String, dynamic> json) {
     return InteractiveData()
       ..templateType = json['templateType'] as String?
+      ..unit = json['unit'] as String?
       ..equations = (json['equations'] as List?)
           ?.map((e) => e.toString())
           .toList()
@@ -160,6 +162,7 @@ class InteractiveData {
 class InteractiveParameter {
   String? variableName;
   String? label;
+  String? unit;
   double? minValue;
   double? maxValue;
   double? defaultValue;
@@ -171,6 +174,7 @@ class InteractiveParameter {
     return InteractiveParameter()
       ..variableName = json['variableName'] as String?
       ..label = json['label'] as String?
+      ..unit = json['unit'] as String?
       ..minValue = (json['minValue'] as num?)?.toDouble()
       ..maxValue = (json['maxValue'] as num?)?.toDouble()
       ..defaultValue = (json['defaultValue'] as num?)?.toDouble()

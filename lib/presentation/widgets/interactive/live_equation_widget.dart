@@ -199,6 +199,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
               : _computedResult!.toStringAsFixed(2))
         : '--';
 
+    final resultUnit = widget.data.unit?.trim();
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
       decoration: BoxDecoration(
@@ -252,15 +253,17 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                   letterSpacing: -1,
                 ),
               ),
-              const SizedBox(width: 8),
-              const Text(
-                'V',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF2563EB),
+              if (resultUnit != null && resultUnit.isNotEmpty) ...[
+                const SizedBox(width: 8),
+                Text(
+                  resultUnit,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF2563EB),
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ],
@@ -285,6 +288,10 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
     final formattedValue = currentValue % 1 == 0
         ? currentValue.toStringAsFixed(0)
         : currentValue.toStringAsFixed(1);
+
+    final badgeText = (param.unit != null && param.unit!.trim().isNotEmpty)
+        ? '$formattedValue ${param.unit!.trim()}'.trim()
+        : formattedValue;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -319,7 +326,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                   border: Border.all(color: const Color(0xFFCBD5E1)),
                 ),
                 child: Text(
-                  formattedValue,
+                  badgeText,
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,

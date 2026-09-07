@@ -42,7 +42,17 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     _animController.repeat();
   }
 
+  @override
+  void didUpdateWidget(covariant KinematicsSimulationWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.data != widget.data) {
+      _loadInitialParameters();
+    }
+  }
+
   void _loadInitialParameters() {
+    _v0 = 5.0;
+    _a = 2.0;
     final params = widget.data?.parameters;
     if (params != null) {
       for (final p in params) {
@@ -133,6 +143,15 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
   Widget build(BuildContext context) {
     final position = _position;
     final velocity = _velocity;
+
+    final v0Param = widget.data?.parameters
+        ?.where((p) => p.variableName == 'v0')
+        .firstOrNull;
+    final aParam = widget.data?.parameters
+        ?.where((p) => p.variableName == 'a')
+        .firstOrNull;
+    final v0Unit = v0Param?.unit ?? 'm/s';
+    final aUnit = aParam?.unit ?? 'm/s²';
 
     return Container(
       decoration: BoxDecoration(
@@ -247,7 +266,9 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
               Expanded(
                 child: _buildTelemetryPill(
                   title: 'VELOCITÀ (v)',
-                  value: '${velocity.toStringAsFixed(1)} m/s',
+                  value: (v0Unit.trim().isNotEmpty)
+                      ? '${velocity.toStringAsFixed(1)} ${v0Unit.trim()}'.trim()
+                      : velocity.toStringAsFixed(1),
                   formula: 'v = v₀ + at',
                   color: const Color(0xFF16A34A),
                   icon: Icons.speed_rounded,
@@ -280,12 +301,18 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
           const SizedBox(height: 10),
 
           _buildSlider(
-            label: 'Velocità Iniziale (v₀)',
+            label: v0Param?.label ?? 'Velocità Iniziale (v₀)',
             value: _v0,
-            unit: 'm/s',
-            min: 0.0,
-            max: 30.0,
-            divisions: 30,
+            unit: v0Unit,
+            min: v0Param?.minValue ?? 0.0,
+            max: v0Param?.maxValue ?? 30.0,
+            divisions: (v0Param?.stepSize != null &&
+                    v0Param!.stepSize! > 0 &&
+                    (v0Param.maxValue ?? 30.0) > (v0Param.minValue ?? 0.0))
+                ? (((v0Param.maxValue ?? 30.0) - (v0Param.minValue ?? 0.0)) /
+                        v0Param.stepSize!)
+                    .round()
+                : 30,
             color: const Color(0xFF0284C7),
             onChanged: (val) {
               setState(() {
@@ -296,12 +323,18 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
           const SizedBox(height: 8),
 
           _buildSlider(
-            label: 'Accelerazione (a)',
+            label: aParam?.label ?? 'Accelerazione (a)',
             value: _a,
-            unit: 'm/s²',
-            min: -5.0,
-            max: 10.0,
-            divisions: 30,
+            unit: aUnit,
+            min: aParam?.minValue ?? -5.0,
+            max: aParam?.maxValue ?? 10.0,
+            divisions: (aParam?.stepSize != null &&
+                    aParam!.stepSize! > 0 &&
+                    (aParam.maxValue ?? 10.0) > (aParam.minValue ?? -5.0))
+                ? (((aParam.maxValue ?? 10.0) - (aParam.minValue ?? -5.0)) /
+                        aParam.stepSize!)
+                    .round()
+                : 30,
             color: const Color(0xFF16A34A),
             onChanged: (val) {
               setState(() {
@@ -431,7 +464,9 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                 ),
               ),
               Text(
-                '${value.toStringAsFixed(1)} $unit',
+                unit.trim().isNotEmpty
+                    ? '${value.toStringAsFixed(1)} ${unit.trim()}'.trim()
+                    : value.toStringAsFixed(1),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,

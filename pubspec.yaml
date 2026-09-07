@@ -71,6 +71,11 @@ flutter:
 
   assets:
     - .env
+    - assets/content/arithmetic/
+    - assets/content/algebra/
+    - assets/content/geometry_trig/
+    - assets/content/calculus/
+    - assets/content/physics/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
