@@ -281,7 +281,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               ],
 
               // Sezione Dimostrazione Algebrica a passaggi separati (se definita esplicitamente e non vuota)
-              if (node.blocks.isNotEmpty && node.algebraicProof.isNotEmpty) ...[
+              if (node.algebraicProof.isNotEmpty) ...[
                 const Row(
                   children: [
                     Icon(

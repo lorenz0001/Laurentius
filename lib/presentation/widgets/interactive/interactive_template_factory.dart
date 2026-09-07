@@ -6,8 +6,10 @@ import 'derivative_tangent_widget.dart';
 import 'kinematics_simulation_widget.dart';
 import 'live_equation_widget.dart';
 import 'ohm_circuit_simulation_widget.dart';
+import 'quadratic_visual_proof_widget.dart';
 import 'riemann_sum_widget.dart';
 import 'rolle_lagrange_widget.dart';
+import 'squeeze_theorem_widget.dart';
 import 'triangle_solver_widget.dart';
 import 'trig_circle_widget.dart';
 
@@ -31,12 +33,20 @@ class InteractiveTemplateFactory {
       case 'rolle':
       case 'lagrange':
         return RolleLagrangeWidget(data: data);
+      case 'squeeze_theorem':
+      case 'carabinieri_theorem':
+      case 'teorema_carabinieri':
+        return SqueezeTheoremWidget(data: data);
       case 'function_graph':
       case 'cartesian_plot':
         // Se la formula è la cubica dei teoremi di Rolle/Lagrange, usa il simulatore specifico
         if (data.equations != null &&
             data.equations!.any((eq) => eq.contains('x * x * x / 3') || eq.contains('rolle'))) {
           return RolleLagrangeWidget(data: data);
+        }
+        if (data.equations != null &&
+            data.equations!.any((eq) => eq.contains('carabinieri') || eq.contains('squeeze'))) {
+          return SqueezeTheoremWidget(data: data);
         }
         return CartesianGraphWidget(data: data);
       case 'trig_circle':
@@ -51,6 +61,11 @@ class InteractiveTemplateFactory {
       case 'riemann_sum':
       case 'riemann_integral':
         return RiemannSumWidget(data: data);
+      case 'completing_square':
+      case 'quadratic_visual':
+      case 'quadratic_proof':
+      case 'dimostrazione_quadratica':
+        return QuadraticVisualProofWidget(data: data);
       case 'live_equation':
         return LiveEquationWidget(data: data);
       default:

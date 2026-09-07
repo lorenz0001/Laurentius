@@ -1,0 +1,11 @@
+diff --git a/test/simulations_autoplay_and_geometry_stress_test.dart b/test/simulations_autoplay_and_geometry_stress_test.dart
+--- a/test/simulations_autoplay_and_geometry_stress_test.dart
++++ b/test/simulations_autoplay_and_geometry_stress_test.dart
+@@ -610,7 +610,7 @@ void main() {
+       final cSquaredCarnot = 4.0 * 4.0 + 3.0 * 3.0 - 2 * 4.0 * 3.0 * math.cos(gammaRad);
+ 
+       expect(p, lessThan(0.0), reason: 'Projection p must be negative for obtuse angle');
+-      expect(bMinusP, equals(5.0));
++      expect(bMinusP, closeTo(5.0, 1e-6));
+       expect(cSquaredPythagoras, closeTo(cSquaredCarnot, 1e-6));
+       expect(cSquaredCarnot, closeTo(37.0, 1e-6));

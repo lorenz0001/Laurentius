@@ -9,7 +9,7 @@ interactive:
   template: live_equation
   unit: ""
   equations:
-    - "log(x) / log(b)"
+    - "ln(x) / ln(b)"
   parameters:
     - variable: x
       label: "Argomento (x > 0)"

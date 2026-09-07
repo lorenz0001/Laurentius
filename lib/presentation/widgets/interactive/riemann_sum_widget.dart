@@ -20,7 +20,7 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
   int _nRectangles = 6;
   final double _a = 0.0;
   final double _b = 2.0;
-  bool _isAutoPartitioning = true; // Animazione attiva di default: dimostra la convergenza
+  bool _isAutoPartitioning = false;
 
   late final AnimationController _partitionAnimController;
 
@@ -31,8 +31,6 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
       vsync: this,
       duration: const Duration(seconds: 5),
     )..addListener(_onPartitionTick);
-
-    _partitionAnimController.repeat(reverse: true);
   }
 
   void _onPartitionTick() {

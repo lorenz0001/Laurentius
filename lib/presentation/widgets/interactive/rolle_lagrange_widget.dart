@@ -23,7 +23,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
   TheoremMode _mode = TheoremMode.lagrange;
   double _a = -1.8;
   double _b = 1.4;
-  bool _isAutoAnimating = true;
+  bool _isAutoAnimating = false;
 
   late final AnimationController _animController;
 
@@ -40,8 +40,6 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
       vsync: this,
       duration: const Duration(seconds: 6),
     )..addListener(_onAnimTick);
-
-    _animController.repeat(reverse: true);
   }
 
   void _onAnimTick() {
@@ -139,24 +137,30 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
-                children: [
-                  Icon(
-                    Icons.insights_rounded,
-                    color: Color(0xFF2563EB),
-                    size: 22,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    'Teoremi del Valor Medio & Rolle',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
+              const Expanded(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.insights_rounded,
+                      color: Color(0xFF2563EB),
+                      size: 22,
                     ),
-                  ),
-                ],
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Teoremi del Valor Medio & Rolle',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF0F172A),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               Row(
                 children: [
                   IconButton(
@@ -268,9 +272,9 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
               const SizedBox(width: 8),
               Expanded(
                 child: _buildTelemetryBox(
-                  title: 'DERIVATA TANGENTE',
-                  value: fPrimeC.toStringAsFixed(3),
-                  formula: "f'(c) = c² - 1",
+                  title: isRolle ? "DERIVATE f'(c)" : 'DERIVATA TANGENTE',
+                  value: isRolle ? '0.000' : fPrimeC.toStringAsFixed(3),
+                  formula: isRolle ? "f'(±1) = 0" : "f'(c) = c² - 1",
                   color: const Color(0xFF10B981),
                   icon: Icons.trending_up_rounded,
                 ),
@@ -278,9 +282,9 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
               const SizedBox(width: 8),
               Expanded(
                 child: _buildTelemetryBox(
-                  title: 'PUNTO INTERNO c',
-                  value: c.toStringAsFixed(2),
-                  formula: 'c ∈ (a, b)',
+                  title: isRolle ? 'STAZIONARI c₁, c₂' : 'PUNTO INTERNO c',
+                  value: isRolle ? 'c₁=-1, c₂=+1' : c.toStringAsFixed(2),
+                  formula: isRolle ? 'y = ±2/3' : 'c ∈ (a, b)',
                   color: const Color(0xFF6366F1),
                   icon: Icons.gps_fixed_rounded,
                 ),
@@ -313,8 +317,8 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                   child: Text(
                     isRolle
                         ? (_isRolleConditionMet
-                            ? 'Condizione di Rolle verificata: f(a) ≈ f(b) = ${_f(_a).toStringAsFixed(2)}. La tangente nel punto c = ${c.toStringAsFixed(2)} è perfettamente orizzontale (f\'(c) = 0)!'
-                            : 'Regola a e b affinché f(a) = f(b) per visualizzare la tangente orizzontale.')
+                            ? 'Condizione di Rolle verificata: f(a) ≈ f(b) = ${_f(_a).toStringAsFixed(2)}. Entrambi i punti stazionari c₁ = -1 (y = +2/3) e c₂ = +1 (y = -2/3) hanno tangente orizzontale parallela alla secante!'
+                            : 'Regola a e b affinché f(a) = f(b) per visualizzare le tangenti orizzontali.')
                         : 'La retta tangente verde nel punto c = ${c.toStringAsFixed(2)} è parallela alla corda secante arancione: le due pendenze coincidono (m = ${m.toStringAsFixed(3)})!',
                     style: TextStyle(
                       fontSize: 12,
@@ -629,14 +633,13 @@ class _RolleLagrangePainter extends CustomPainter {
     final ptB = toPixel(b, fb);
     final ptC = toPixel(c, fc);
 
-    // Linee guida tratteggiate verticali verso l'asse X
+    // Linee guida tratteggiate verticali verso l'asse X per A e B
     final dashPaint = Paint()
       ..color = const Color(0xFF64748B)
       ..strokeWidth = 1.0;
 
     _drawDashedLine(canvas, toPixel(a, 0), ptA, dashPaint);
     _drawDashedLine(canvas, toPixel(b, 0), ptB, dashPaint);
-    _drawDashedLine(canvas, toPixel(c, 0), ptC, dashPaint..color = const Color(0xFF10B981));
 
     // 2. Retta Secante AB prolungata (Arancione)
     final secantPaint = Paint()
@@ -649,31 +652,80 @@ class _RolleLagrangePainter extends CustomPainter {
     final secantRight = toPixel(xMax, fa + secantSlope * (xMax - a));
     canvas.drawLine(secantLeft, secantRight, secantPaint);
 
-    // 3. Retta Tangente in c parallela alla secante (Smeraldo)
-    final tangentPaint = Paint()
-      ..color = const Color(0xFF10B981)
-      ..strokeWidth = 2.4
-      ..strokeCap = StrokeCap.round;
-
-    // Equazione tangente prolungata: y - fc = m * (x - c)
-    final tangentLeft = toPixel(xMin, fc + secantSlope * (xMin - c));
-    final tangentRight = toPixel(xMax, fc + secantSlope * (xMax - c));
-    canvas.drawLine(tangentLeft, tangentRight, tangentPaint);
-
     // Punti A e B evidenziati
     final endPointPaint = Paint()..color = const Color(0xFFF59E0B);
     canvas.drawCircle(ptA, 5.5, endPointPaint);
     canvas.drawCircle(ptB, 5.5, endPointPaint);
 
-    // Punto di tangenza C evidenziato con doppio cerchio luminoso
-    final centerPaint = Paint()..color = const Color(0xFF10B981);
-    canvas.drawCircle(ptC, 7.0, Paint()..color = const Color(0x6610B981));
-    canvas.drawCircle(ptC, 4.5, centerPaint);
-
-    // Etichette A, B, C sui punti
+    // Etichette A e B
     _drawLabel(canvas, 'A(a, f(a))', Offset(ptA.dx - 12, ptA.dy - 18), const Color(0xFFFDE68A));
     _drawLabel(canvas, 'B(b, f(b))', Offset(ptB.dx - 12, ptB.dy - 18), const Color(0xFFFDE68A));
-    _drawLabel(canvas, 'C(c, f(c))', Offset(ptC.dx - 14, ptC.dy + 10), const Color(0xFF6EE7B7));
+
+    // 3. Retta/e Tangente/i parallela/e alla secante (Smeraldo)
+    final tangentPaint = Paint()
+      ..color = const Color(0xFF10B981)
+      ..strokeWidth = 2.4
+      ..strokeCap = StrokeCap.round;
+
+    final centerPaint = Paint()..color = const Color(0xFF10B981);
+
+    if (isRolle) {
+      // In modalità Rolle: mostra entrambi i punti stazionari c₁ = -1, c₂ = +1
+      // e le tangenti orizzontali y = +2/3 e y = -2/3 se contenuti nell'intervallo [a, b]
+      const c1 = -1.0;
+      const fc1 = 2.0 / 3.0;
+      final hasC1 = c1 >= a && c1 <= b;
+
+      const c2 = 1.0;
+      const fc2 = -2.0 / 3.0;
+      final hasC2 = c2 >= a && c2 <= b;
+
+      if (hasC1) {
+        final ptC1 = toPixel(c1, fc1);
+        _drawDashedLine(canvas, toPixel(c1, 0), ptC1, dashPaint..color = const Color(0xFF10B981));
+        // Tangente orizzontale y = +2/3
+        canvas.drawLine(toPixel(xMin, fc1), toPixel(xMax, fc1), tangentPaint);
+        // Punto C1 con alone luminoso
+        canvas.drawCircle(ptC1, 7.0, Paint()..color = const Color(0x6610B981));
+        canvas.drawCircle(ptC1, 4.5, centerPaint);
+        _drawLabel(canvas, 'C₁(-1, ⅔)', Offset(ptC1.dx - 22, ptC1.dy - 18), const Color(0xFF6EE7B7));
+        _drawLabel(canvas, 'y = +⅔', Offset(toPixel(xMax - 0.7, fc1).dx, toPixel(xMax, fc1).dy - 14), const Color(0xAA10B981));
+      }
+
+      if (hasC2) {
+        final ptC2 = toPixel(c2, fc2);
+        _drawDashedLine(canvas, toPixel(c2, 0), ptC2, dashPaint..color = const Color(0xFF10B981));
+        // Tangente orizzontale y = -2/3
+        canvas.drawLine(toPixel(xMin, fc2), toPixel(xMax, fc2), tangentPaint);
+        // Punto C2 con alone luminoso
+        canvas.drawCircle(ptC2, 7.0, Paint()..color = const Color(0x6610B981));
+        canvas.drawCircle(ptC2, 4.5, centerPaint);
+        _drawLabel(canvas, 'C₂(1, -⅔)', Offset(ptC2.dx - 22, ptC2.dy + 10), const Color(0xFF6EE7B7));
+        _drawLabel(canvas, 'y = -⅔', Offset(toPixel(xMax - 0.7, fc2).dx, toPixel(xMax, fc2).dy + 4), const Color(0xAA10B981));
+      }
+
+      if (!hasC1 && !hasC2) {
+        // Fallback sul punto interno calcolato
+        _drawDashedLine(canvas, toPixel(c, 0), ptC, dashPaint..color = const Color(0xFF10B981));
+        final tangentLeft = toPixel(xMin, fc + secantSlope * (xMin - c));
+        final tangentRight = toPixel(xMax, fc + secantSlope * (xMax - c));
+        canvas.drawLine(tangentLeft, tangentRight, tangentPaint);
+        canvas.drawCircle(ptC, 7.0, Paint()..color = const Color(0x6610B981));
+        canvas.drawCircle(ptC, 4.5, centerPaint);
+        _drawLabel(canvas, 'C(c, f(c))', Offset(ptC.dx - 14, ptC.dy + 10), const Color(0xFF6EE7B7));
+      }
+    } else {
+      // In modalità Lagrange: punto c interno e retta tangente parallela alla corda secante
+      _drawDashedLine(canvas, toPixel(c, 0), ptC, dashPaint..color = const Color(0xFF10B981));
+      final tangentLeft = toPixel(xMin, fc + secantSlope * (xMin - c));
+      final tangentRight = toPixel(xMax, fc + secantSlope * (xMax - c));
+      canvas.drawLine(tangentLeft, tangentRight, tangentPaint);
+
+      // Punto di tangenza C evidenziato con doppio cerchio luminoso
+      canvas.drawCircle(ptC, 7.0, Paint()..color = const Color(0x6610B981));
+      canvas.drawCircle(ptC, 4.5, centerPaint);
+      _drawLabel(canvas, 'C(c, f(c))', Offset(ptC.dx - 14, ptC.dy + 10), const Color(0xFF6EE7B7));
+    }
   }
 
   void _drawDashedLine(Canvas canvas, Offset p1, Offset p2, Paint paint) {

@@ -17,7 +17,16 @@ class LiveEquationWidget extends StatefulWidget {
 class _LiveEquationWidgetState extends State<LiveEquationWidget> {
   // Mappa che memorizza i valori correnti associati al nome di ciascuna variabile
   final Map<String, double> _parameterValues = {};
+  final List<InteractiveParameter> _effectiveParameters = [];
   final GrammarParser _parser = GrammarParser();
+
+  static const Set<String> _reservedKeywords = {
+    'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
+    'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+    'log', 'ln', 'exp', 'sqrt', 'cbrt', 'root', 'pow',
+    'abs', 'sgn', 'ceil', 'floor', 'round', 'trunc',
+    'min', 'max', 'fact', 'e', 'pi', 'E', 'PI', 'inf', 'infinity',
+  };
 
   double? _computedResult;
   String? _calculationError;
@@ -38,19 +47,81 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
     }
   }
 
-  /// Inizializza i parametri con i valori di default o minimi forniti dal modello
+  /// Normalizza la sintassi delle equazioni per il GrammarParser (es. pow(a, b) -> a ^ b, log(x) -> ln(x))
+  static String _normalizeEquation(String raw) {
+    var eq = raw.trim();
+    eq = eq.replaceAllMapped(
+      RegExp(r'pow\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)'),
+      (m) => '((${m[1]}) ^ (${m[2]}))',
+    );
+    eq = eq.replaceAllMapped(
+      RegExp(r'\blog\s*\('),
+      (m) => 'ln(',
+    );
+    return eq;
+  }
+
+  /// Estrae i nomi delle variabili matematiche ignorando funzioni e costanti riservate
+  static Set<String> _extractVariables(String rawEquation) {
+    final normalized = _normalizeEquation(rawEquation);
+    final regex = RegExp(r'\b[a-zA-Z_][a-zA-Z0-9_]*\b');
+    final matches = regex.allMatches(normalized);
+    final vars = <String>{};
+    for (final m in matches) {
+      final word = m.group(0)!;
+      if (!_reservedKeywords.contains(word)) {
+        vars.add(word);
+      }
+    }
+    return vars;
+  }
+
+  /// Inizializza i parametri con i valori di default o minimi forniti dal modello,
+  /// integrando automaticamente eventuali variabili presenti nelle formule ma omesse nei metadati.
   void _initializeParameters() {
     _parameterValues.clear();
-    final parameters = widget.data.parameters ?? [];
-    for (final param in parameters) {
+    _effectiveParameters.clear();
+
+    final providedParams = widget.data.parameters ?? [];
+    final knownNames = <String>{};
+
+    for (final param in providedParams) {
       final name = param.variableName;
       if (name != null && name.isNotEmpty) {
-        _parameterValues[name] = param.defaultValue ?? param.minValue ?? 0.0;
+        _effectiveParameters.add(param);
+        knownNames.add(name);
+        _parameterValues[name] = param.defaultValue ?? param.minValue ?? 1.0;
+      }
+    }
+
+    // Auto-discovery di variabili presenti nell'equazione non censite nei parametri espliciti
+    final equations = widget.data.equations;
+    if (equations != null && equations.isNotEmpty) {
+      for (final eq in equations) {
+        final discoveredVars = _extractVariables(eq);
+        for (final v in discoveredVars) {
+          if (!knownNames.contains(v)) {
+            knownNames.add(v);
+            final isDenominatorOrBase = (v == 'b' && eq.contains('/')) || (v == 'b' && eq.contains('log'));
+            final defVal = isDenominatorOrBase ? 2.0 : 2.0;
+            final minVal = isDenominatorOrBase ? 1.0 : -10.0;
+            final syntheticParam = InteractiveParameter()
+              ..variableName = v
+              ..label = 'Variabile ($v)'
+              ..unit = ''
+              ..minValue = minVal
+              ..maxValue = 10.0
+              ..defaultValue = defVal
+              ..stepSize = 0.5;
+            _effectiveParameters.add(syntheticParam);
+            _parameterValues[v] = defVal;
+          }
+        }
       }
     }
   }
 
-  /// Ricalcola l'equazione a runtime usando la libreria math_expressions
+  /// Ricalcola l'equazione a runtime usando la libreria math_expressions con binding sicuro
   void _recalculate() {
     final equations = widget.data.equations;
     if (equations == null || equations.isEmpty) {
@@ -61,12 +132,18 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
       return;
     }
 
-    final rawEquation = equations.first;
+    final rawEquation = _normalizeEquation(equations.first);
 
     try {
       // Parsing della stringa matematica tramite GrammarParser
       final expression = _parser.parse(rawEquation);
       final contextModel = ContextModel();
+
+      // Garantisce che ogni variabile presente nell'equazione sia vincolata
+      final varsInEq = _extractVariables(rawEquation);
+      for (final v in varsInEq) {
+        _parameterValues.putIfAbsent(v, () => 1.0);
+      }
 
       // Binding delle variabili con i valori correnti degli slider
       _parameterValues.forEach((varName, value) {
@@ -82,6 +159,31 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
         _calculationError = null;
       });
     } catch (e) {
+      // Tentativo di auto-recovery se math_expressions segnala una variabile non vincolata
+      if (e.toString().contains('Variable not bound:')) {
+        final match = RegExp(r'Variable not bound:\s*([a-zA-Z0-9_]+)').firstMatch(e.toString());
+        if (match != null) {
+          final missingVar = match.group(1)!;
+          _parameterValues[missingVar] = 1.0;
+          try {
+            final expression = _parser.parse(rawEquation);
+            final contextModel = ContextModel();
+            _parameterValues.forEach((varName, value) {
+              contextModel.bindVariable(Variable(varName), Number(value));
+            });
+            final evaluator = RealEvaluator(contextModel);
+            final evalResult = evaluator.evaluate(expression);
+            setState(() {
+              _computedResult = evalResult.toDouble();
+              _calculationError = null;
+            });
+            return;
+          } catch (_) {
+            // Continua al catch finale se il recovery non ha esito positivo
+          }
+        }
+      }
+
       setState(() {
         _computedResult = null;
         _calculationError = 'Impossibile calcolare l\'espressione: $e';
@@ -91,7 +193,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final parameters = widget.data.parameters ?? [];
+    final parameters = _effectiveParameters;
     final equation = widget.data.equations?.firstOrNull ?? '';
 
     return Container(

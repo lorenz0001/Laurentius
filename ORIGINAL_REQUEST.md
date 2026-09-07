@@ -1,4 +1,4 @@
-﻿# Original User Request
+# Original User Request
 
 ## 2026-09-07T11:53:43Z
 
@@ -43,5 +43,60 @@ Allow any Markdown article to link to any supported animated simulation widget (
 ### Slider Units & Parameterization
 - [ ] The hardcoded `'V'` unit in `LiveEquationWidget` is removed; it renders the configured unit from parameters or nothing if no unit is set.
 - [ ] `InteractiveParameter` and interactive templates support an optional `unit` field (e.g. `unit: "V"`, `unit: "m/s"`, `unit: ""`).
-- [ ] Automated tests verify that an equation with a custom unit (e.g. `unit: "N"`) displays `"N"` and an equation with no unit displays no suffix.
 - [ ] Automated tests verify that sliders with custom units display their respective unit labels.
+
+## 2026-09-07T18:34:50Z
+
+# Complete Visual & Curriculum Overhaul for Laurentius (Brilliant-OS)
+
+Overhaul interactive animations (disable default autoplay, fix trigonometric circle tangent, replace confusing animations with clear Wikipedia-style diagrams for Rolle, Lagrange, Carabinieri, and Carnot) and expand the mathematical curriculum into organized sub-folders with deep, step-by-step proofs and unbroken prerequisite chains.
+
+Working directory: c:\Users\catte\Desktop\Laurentius
+Integrity mode: development
+
+## Requirements
+
+### R1. Animation Autoplay & Control Refactor
+- Simulation widgets (`KinematicsSimulationWidget`, `RolleLagrangeWidget`, `TrigCircleWidget`, `RiemannSumWidget`, etc.) must NEVER start animating automatically on initial render.
+- All simulation widgets must initialize in a paused/static state, displaying clean, clear default geometry and readouts.
+- Users must have explicit control over animations via play/pause buttons, step buttons, or parameter sliders/gestures.
+
+### R2. Interactive Simulation & Diagram Fixes
+- **Trigonometric Circle (`trig_circle_widget.dart`)**:
+  - Fix the tangent line and projection rendering so that it remains mathematically stable and visually coherent across all quadrants.
+  - Gracefully handle asymptotes ($\theta \to \pi/2, 3\pi/2$) without flickering, visual glitches, or unexpected disappearances.
+- **Theorems & Limit Visualizations (Wikipedia-Style Clarity)**:
+  - Replace confusing dynamic animations for Rolle, Lagrange, and the Squeeze Theorem (Teorema dei Carabinieri) with clean, high-readability visual representations (geometric diagrams or interactive static-by-default plots).
+  - Explicitly illustrate key geometric intuitions: secants parallel to tangents at interior points ($c$), and bounding upper/lower curves squeezing the central limit.
+- **Carnot's Theorem / Triangle Geometry (`triangle_solver_widget.dart`)**:
+  - Transform the visualization into an intuitive geometrical explanation of the Law of Cosines (Carnot as generalized Pythagorean theorem with dynamic projections $b \cos \gamma$ and side-length relationships).
+
+### R3. Curriculum Modularization & Encyclopedic Expansion
+- Reorganize and expand large topic areas into dedicated sub-folders (e.g. `assets/content/calculus/limits/` for Limits), updating `pubspec.yaml` assets accordingly.
+- Create comprehensive, self-contained articles in Wikipedia/Brilliant style for:
+  - Definition of limit (intuitive, formal $\epsilon$-$\delta$, and geometric meaning).
+  - Individual fundamental/remarkable limits (e.g., $\lim_{x \to 0} \frac{\sin x}{x} = 1$, $\lim_{x \to 0} \frac{1 - \cos x}{x^2} = \frac{1}{2}$, $\lim_{x \to \pm\infty} (1 + \frac{1}{x})^x = e$, $\lim_{x \to 0} \frac{e^x - 1}{x} = 1$, $\lim_{x \to 0} \frac{\ln(1+x)}{x} = 1$).
+  - For each topic: complete algebraic derivation step-by-step (`### Dimostrazione`), geometric intuition callouts (`> Intuizione:`), corollaries (`> Corollario:`), and linked visual widgets/diagrams.
+
+### R4. Strict Prerequisite Chain & Knowledge Graph Integrity
+- Construct an unbroken, logical prerequisite DAG: foundational concepts -> intermediate topics -> advanced theorems (e.g., Euclidean geometry / unit circle -> trigonometric limits; limit definition -> remarkable limits -> derivatives).
+- Every newly created or modified topic must have valid, existing IDs in `prerequisites`.
+
+## Acceptance Criteria
+
+### Simulation & Visual Polish
+- [ ] Every simulation widget starts in a stopped/paused state upon initial view rendering; no automated motion occurs without user action.
+- [ ] The tangent line in `trig_circle_widget.dart` renders correctly in all 4 quadrants with appropriate clamping/asymptote protection and no flickering.
+- [ ] Rolle, Lagrange, Carabinieri, and Carnot theorem widgets provide crisp, self-explanatory geometric diagrams with clear labels and intuitive visual cues.
+
+### Curriculum Structure & Content Quality
+- [ ] Sub-topic folders (such as `assets/content/calculus/limits/`) are created and registered in `pubspec.yaml`.
+- [ ] Detailed Markdown articles are created for limit definition and each major remarkable limit with full algebraic steps and intuitive explanations.
+- [ ] The full curriculum DAG is strictly acyclic and all referenced prerequisite IDs resolve cleanly.
+
+### Build & Test Verification
+- [ ] `flutter analyze` passes with 0 errors and 0 warnings.
+- [ ] `flutter test test/markdown_content_loader_test.dart` passes.
+- [ ] `flutter test test/curriculum_dag_test.dart` passes.
+- [ ] The full test suite (`flutter test`) passes without regressions.
+

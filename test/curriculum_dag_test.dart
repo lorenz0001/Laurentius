@@ -56,6 +56,11 @@ void main() {
       expect(ids.contains('mat_trig_add_01'), true);
       expect(ids.contains('mat_trig_triang_01'), true);
       expect(ids.contains('mat_limits_01'), true);
+      expect(ids.contains('mat_lim_sinc_01'), true);
+      expect(ids.contains('mat_lim_cos_01'), true);
+      expect(ids.contains('mat_lim_e_01'), true);
+      expect(ids.contains('mat_lim_exp_01'), true);
+      expect(ids.contains('mat_lim_log_01'), true);
       expect(ids.contains('mat_deriv_def_01'), true);
       expect(ids.contains('mat_deriv_rules_01'), true);
       expect(ids.contains('mat_deriv_theorems_01'), true);

@@ -251,15 +251,15 @@ void main() {
       );
       await tester.pump();
 
-      // Initial state is playing; find pause icon button
-      final pauseButton = find.byIcon(Icons.pause_circle_filled_rounded);
-      expect(pauseButton, findsOneWidget);
+      // Initial state is paused; find play icon button
+      final playButton = find.byIcon(Icons.play_circle_fill_rounded);
+      expect(playButton, findsOneWidget);
 
-      await tester.tap(pauseButton);
+      await tester.tap(playButton);
       await tester.pump();
 
-      // After tap, icon changes to play_circle_fill_rounded
-      expect(find.byIcon(Icons.play_circle_fill_rounded), findsOneWidget);
+      // After tap, icon changes to pause_circle_filled_rounded
+      expect(find.byIcon(Icons.pause_circle_filled_rounded), findsOneWidget);
 
       // Toggle electron flow mode button
       expect(find.text('e⁻ Reale'), findsOneWidget);
@@ -464,13 +464,13 @@ void main() {
       );
       await tester.pump();
 
-      // Find pause button
-      final pauseButton = find.byIcon(Icons.pause_circle_filled_rounded);
-      expect(pauseButton, findsOneWidget);
+      // Initial state is paused; find play button
+      final playButton = find.byIcon(Icons.play_circle_fill_rounded);
+      expect(playButton, findsOneWidget);
 
-      await tester.tap(pauseButton);
+      await tester.tap(playButton);
       await tester.pump();
-      expect(find.byIcon(Icons.play_circle_fill_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.pause_circle_filled_rounded), findsOneWidget);
 
       // Find reset button
       final resetButton = find.byIcon(Icons.replay_rounded);

@@ -92,7 +92,11 @@ class CurriculumRegistry {
 
     // Algebra
     'mat_binom_01': ['mat_pow_01'],
-    'mat_quad_eq_01': ['mat_binom_01', 'mat_frac_01'],
+    'mat_quad_monomia_01': ['mat_mul_01', 'mat_pow_01'],
+    'mat_quad_pura_01': ['mat_quad_monomia_01', 'mat_frac_01'],
+    'mat_quad_spuria_01': ['mat_quad_monomia_01', 'mat_binom_01'],
+    'mat_quad_eq_01': ['mat_quad_pura_01', 'mat_quad_spuria_01'],
+    'mat_quad_viete_01': ['mat_quad_eq_01'],
     'mat_parabola_01': ['mat_quad_eq_01'],
     'mat_log_01': ['mat_pow_01'],
 
@@ -103,13 +107,20 @@ class CurriculumRegistry {
     'mat_trig_add_01': ['mat_trig_circ_01'],
     'mat_trig_triang_01': ['mat_trig_add_01', 'mat_pythagoras_01'],
 
-    // Analisi Matematica (Limiti -> Derivate -> Teoremi -> Riemann -> Teorema Fondamentale)
-    'mat_limits_01': ['mat_trig_circ_01', 'mat_frac_01'],
+    // Analisi Matematica (Limiti -> Derivate -> Teoremi -> Riemann -> Teorema Fondamentale -> Metodi di Integrazione)
+    'mat_limits_01': ['mat_frac_01', 'mat_parabola_01'],
+    'mat_lim_sinc_01': ['mat_limits_01', 'mat_trig_circ_01'],
+    'mat_lim_cos_01': ['mat_lim_sinc_01'],
+    'mat_lim_e_01': ['mat_limits_01', 'mat_binom_01'],
+    'mat_lim_exp_01': ['mat_lim_e_01'],
+    'mat_lim_log_01': ['mat_lim_e_01', 'mat_log_01'],
     'mat_deriv_def_01': ['mat_limits_01'],
     'mat_deriv_rules_01': ['mat_deriv_def_01', 'mat_binom_01'],
     'mat_deriv_theorems_01': ['mat_deriv_rules_01'],
     'mat_riemann_01': ['mat_deriv_theorems_01', 'mat_limits_01'],
     'mat_fund_calc_01': ['mat_riemann_01', 'mat_deriv_def_01'],
+    'mat_integ_parts_01': ['mat_fund_calc_01', 'mat_deriv_rules_01'],
+    'mat_integ_subst_01': ['mat_fund_calc_01', 'mat_deriv_rules_01'],
 
     // Scienze Applicate Interconnesse
     'phys_kin_01': [

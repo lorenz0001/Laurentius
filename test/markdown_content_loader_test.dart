@@ -327,6 +327,42 @@ prerequisites: []
       expect(node.algebraicProof, isEmpty);
     });
 
+    test('Correctly parses multi-demonstration sections with named groups and corollaries', () {
+      const md = r'''
+---
+id: test_multi_demo_01
+title: "Multi-Demo Test"
+category: "Matematica"
+subCategory: "Test"
+---
+
+Corpo teorico introduttivo.
+
+## Dimostrazione: Formule di Addizione
+### 1. Primo passaggio addizione
+$$x + y = z$$
+> **Insight:** Spiegazione addizione.
+
+### 2. Corollario: Proprietà Additiva
+$$z - y = x$$
+
+## Dimostrazione: Formule di Bisezione
+### 1. Primo passaggio bisezione
+$$\sin(\alpha / 2) = \sqrt{(1-\cos\alpha)/2}$$
+> **Intuizione:** Spiegazione bisezione.
+
+### 2. Corollario: Segno della Bisezione
+$$\text{Segno da } \alpha/2$$
+''';
+
+      final node = MarkdownContentParserContract.parse(md);
+      expect(node.algebraicProof.length, 4);
+      expect(node.algebraicProof[0].description, '[Formule di Addizione] 1. Primo passaggio addizione');
+      expect(node.algebraicProof[1].description, '[Formule di Addizione] 2. Corollario: Proprietà Additiva');
+      expect(node.algebraicProof[2].description, '[Formule di Bisezione] 1. Primo passaggio bisezione');
+      expect(node.algebraicProof[3].description, '[Formule di Bisezione] 2. Corollario: Segno della Bisezione');
+    });
+
     test('Preserves complex LaTeX formatting and Greek symbols accurately', () {
       const md = r'''
 ---
@@ -516,13 +552,13 @@ category: "Matematica"
     },
   );
 
-  group('Tier 4: Real-World & Topological Curriculum Integrity (All 24 Topics)', () {
-    test('Curriculum contains exactly 24 topics with valid unique serverIds and categories', () {
+  group('Tier 4: Real-World & Topological Curriculum Integrity (All 35 Topics)', () {
+    test('Curriculum contains exactly 35 topics with valid unique serverIds and categories', () {
       final allNodes = CurriculumRegistry.getAllNodes();
       expect(
         allNodes.length,
-        24,
-        reason: 'Curriculum must contain exactly 24 knowledge topics',
+        35,
+        reason: 'Curriculum must contain exactly 35 knowledge topics',
       );
 
       final ids = <String>{};
@@ -570,7 +606,7 @@ category: "Matematica"
       expect(subCategories.length, greaterThanOrEqualTo(6));
     });
 
-    test('Every single one of the 24 topics defines at least one identifiable Corollary step', () {
+    test('Every single one of the 35 topics defines at least one identifiable Corollary step', () {
       final allNodes = CurriculumRegistry.getAllNodes();
 
       for (final node in allNodes) {
@@ -595,7 +631,7 @@ category: "Matematica"
       }
     });
 
-    test('Prerequisite graph over all 24 topics is strictly acyclic (Topological Sort / DAG)', () {
+    test('Prerequisite graph over all 35 topics is strictly acyclic (Topological Sort / DAG)', () {
       final allNodes = CurriculumRegistry.getAllNodes();
       final nodeIds = allNodes.map((n) => n.serverId).toSet();
       final graph = CurriculumRegistry.prerequisiteMap;
@@ -668,12 +704,12 @@ category: "Matematica"
         }
       }
 
-      // Acyclicity Assertion: all 24 nodes must be topologically ordered
+      // Acyclicity Assertion: all 35 nodes must be topologically ordered
       expect(
         topologicalOrder.length,
-        24,
+        35,
         reason:
-            'Prerequisite graph contains a cycle! Topologically ordered only ${topologicalOrder.length} of 24 nodes',
+            'Prerequisite graph contains a cycle! Topologically ordered only ${topologicalOrder.length} of 35 nodes',
       );
 
       // Verify that advanced topics appear after their foundational dependencies
@@ -730,7 +766,7 @@ category: "Matematica"
   });
 
   group('ContentLoaderService & Physical Markdown Files Ingestion', () {
-    test('All 24 physical Markdown files exist on disk and parse successfully', () {
+    test('All 35 physical Markdown files exist on disk and parse successfully', () {
       final loadedNodes = <KnowledgeNode>[];
       for (final assetPath in ContentLoaderService.knownAssetPaths) {
         final file = File(assetPath);
@@ -784,11 +820,11 @@ category: "Matematica"
         loadedNodes.add(node);
       }
 
-      expect(loadedNodes.length, 24);
+      expect(loadedNodes.length, 35);
 
       // Verify serverId uniqueness
       final idSet = loadedNodes.map((n) => n.serverId).toSet();
-      expect(idSet.length, 24);
+      expect(idSet.length, 35);
 
       // Verify DAG acyclicity over the loaded Markdown files
       final inDegree = <String, int>{for (final id in idSet) id: 0};
@@ -823,8 +859,8 @@ category: "Matematica"
 
       expect(
         visited.length,
-        24,
-        reason: 'All 24 loaded Markdown articles must form an acyclic DAG',
+        35,
+        reason: 'All 35 loaded Markdown articles must form an acyclic DAG',
       );
     });
 
@@ -840,7 +876,7 @@ category: "Matematica"
 
         // Populate cache
         ContentLoaderService.setCachedNodes(loadedNodes);
-        expect(CurriculumRegistry.getAllNodes().length, 24);
+        expect(CurriculumRegistry.getAllNodes().length, 35);
         expect(
           CurriculumRegistry.prerequisiteMap.containsKey('phys_kin_01'),
           isTrue,
@@ -852,7 +888,7 @@ category: "Matematica"
 
         // Clear cache and verify fallback behavior
         ContentLoaderService.clearCache();
-        expect(CurriculumRegistry.getAllNodes().length, 24);
+        expect(CurriculumRegistry.getAllNodes().length, 35);
         expect(
           CurriculumRegistry.prerequisiteMap.containsKey('phys_kin_01'),
           isTrue,
@@ -864,10 +900,10 @@ category: "Matematica"
       'ContentLoaderService.loadAllFromBundle loads and parses articles from bundle',
       (tester) async {
         final nodes = await ContentLoaderService.loadAllFromBundle();
-        expect(nodes.length, 24);
+        expect(nodes.length, 35);
         expect(ContentLoaderService.cachedNodes, isNotNull);
-        expect(ContentLoaderService.cachedNodes!.length, 24);
-        expect(CurriculumRegistry.getAllNodes().length, 24);
+        expect(ContentLoaderService.cachedNodes!.length, 35);
+        expect(CurriculumRegistry.getAllNodes().length, 35);
       },
     );
   });

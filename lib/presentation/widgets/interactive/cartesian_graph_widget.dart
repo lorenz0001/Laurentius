@@ -21,7 +21,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
   final GrammarParser _parser = GrammarParser();
 
   String _equationString = 'a * x * x + b * x + c';
-  bool _isAutoMorphing = true;
+  bool _isAutoMorphing = false;
   late final AnimationController _graphAnimController;
 
   @override
@@ -32,8 +32,6 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
       vsync: this,
       duration: const Duration(seconds: 4),
     )..addListener(_onGraphAnimTick);
-
-    _graphAnimController.repeat(reverse: true);
   }
 
   void _onGraphAnimTick() {

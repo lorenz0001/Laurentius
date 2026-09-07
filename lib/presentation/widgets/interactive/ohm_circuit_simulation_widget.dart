@@ -23,7 +23,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
   double _voltage = 12.0; // Volt
   double _resistance = 6.0; // Ohm
   bool _showElectronFlow = true; // True = moto reale elettroni (- a +), False = corrente convenzionale (+ a -)
-  bool _isPlaying = true;
+  bool _isPlaying = false;
 
   // Accumulatore di fase per variare la velocità in modo continuo e fluido
   double _phase = 0.0;
@@ -41,7 +41,6 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
     )..addListener(_onTick);
 
     _lastAnimValue = _animController.value;
-    _animController.repeat();
   }
 
   @override

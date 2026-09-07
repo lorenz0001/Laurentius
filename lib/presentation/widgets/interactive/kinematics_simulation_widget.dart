@@ -24,7 +24,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
   double _v0 = 5.0; // Velocità iniziale (m/s)
   double _a = 2.0; // Accelerazione (m/s²)
   double _elapsedTime = 0.0; // Tempo simulato in secondi
-  bool _isPlaying = true;
+  bool _isPlaying = false;
 
   double _lastAnimValue = 0.0;
 
@@ -39,7 +39,6 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     )..addListener(_onTick);
 
     _lastAnimValue = _animController.value;
-    _animController.repeat();
   }
 
   @override

@@ -225,7 +225,16 @@ Conclusione geometrica.""";
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
 
-      // Inizialmente l'animazione è in corso, quindi troviamo il pulsante di pausa
+      // Inizialmente l'animazione è ferma di default, quindi troviamo il pulsante di avvio
+      final playBtn = find.byTooltip('Avvia animazione a 60 FPS');
+      expect(playBtn, findsOneWidget);
+
+      // Avvia animazione
+      await tester.tap(playBtn);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+
+      // Ora il pulsante deve consentire di mettere in pausa
       final pauseBtn = find.byTooltip('Pausa simulazione');
       expect(pauseBtn, findsOneWidget);
 
@@ -233,16 +242,7 @@ Conclusione geometrica.""";
       await tester.tap(pauseBtn);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
-
-      // Ora il pulsante deve consentire di riavviare l'animazione
-      final playBtn = find.byTooltip('Avvia animazione a 60 FPS');
-      expect(playBtn, findsOneWidget);
-
-      // Riavvia l'animazione
-      await tester.tap(playBtn);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 50));
-      expect(find.byTooltip('Pausa simulazione'), findsOneWidget);
+      expect(find.byTooltip('Avvia animazione a 60 FPS'), findsOneWidget);
     });
   });
 }

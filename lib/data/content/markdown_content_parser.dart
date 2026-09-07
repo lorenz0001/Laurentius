@@ -210,12 +210,14 @@ class MarkdownContentParser {
   }
 
   static void _parseBody(String body, KnowledgeNode node) {
-    final demoSplitIdx = body.toLowerCase().indexOf('## dimostrazione');
-    final preProof = demoSplitIdx != -1
-        ? body.substring(0, demoSplitIdx).trim()
+    final demoRegex = RegExp(r'^##\s+Dimostrazione.*$', caseSensitive: false, multiLine: true);
+    final firstDemoMatch = demoRegex.firstMatch(body);
+
+    final preProof = firstDemoMatch != null
+        ? body.substring(0, firstDemoMatch.start).trim()
         : body.trim();
-    final proofPart = demoSplitIdx != -1
-        ? body.substring(demoSplitIdx).trim()
+    final proofPart = firstDemoMatch != null
+        ? body.substring(firstDemoMatch.start).trim()
         : '';
 
     // 1. Parse Pre-Proof Blocks
@@ -236,7 +238,7 @@ class MarkdownContentParser {
         } else if (b.startsWith('>')) {
           final callout = b
               .replaceAll(
-                RegExp(r'^>\s*(\*\*Insight:\*\*)?', multiLine: true),
+                RegExp(r'^>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?', multiLine: true),
                 '',
               )
               .trim();
@@ -256,48 +258,75 @@ class MarkdownContentParser {
     }
     node.blocks = blocks;
 
-    // 2. Parse Proof Steps in ## Dimostrazione
+    // 2. Parse Proof Steps across one or multiple ## Dimostrazione sections
     if (proofPart.isNotEmpty) {
       final steps = <ProofStep>[];
-      final stepChunks = proofPart.split(
-        RegExp(r'(?=^###\s+)', multiLine: true),
+      final sectionChunks = proofPart.split(
+        RegExp(r'(?=^##\s+Dimostrazione)', caseSensitive: false, multiLine: true),
       );
 
-      for (final chunk in stepChunks) {
-        final trimmedChunk = chunk.trim();
-        if (!trimmedChunk.startsWith('###')) continue;
+      for (final section in sectionChunks) {
+        final trimmedSection = section.trim();
+        if (trimmedSection.isEmpty) continue;
 
-        final lines = trimmedChunk.split('\n');
-        final headerLine = lines.first
-            .replaceFirst(RegExp(r'^###\s+'), '')
-            .trim();
-        final remaining = lines.skip(1).join('\n').trim();
+        final lines = trimmedSection.split('\n');
+        final firstLine = lines.first.trim();
+        String? groupName;
 
-        String? latex;
-        String? insight;
-
-        final mathMatch = RegExp(
-          r'\$\$(.*?)\$\$',
-          dotAll: true,
-        ).firstMatch(remaining);
-        if (mathMatch != null) {
-          latex = mathMatch.group(1)?.trim();
+        // Check if a specific sub-demonstration title is provided after colon or dash
+        final colonIdx = firstLine.indexOf(':');
+        final dashIdx = firstLine.indexOf(' - ');
+        if (colonIdx != -1) {
+          final name = firstLine.substring(colonIdx + 1).trim();
+          if (name.isNotEmpty) groupName = name;
+        } else if (dashIdx != -1) {
+          final name = firstLine.substring(dashIdx + 3).trim();
+          if (name.isNotEmpty) groupName = name;
         }
 
-        final insightMatch = RegExp(
-          r'>\s*(\*\*Insight:\*\*)?\s*(.*?)(?=(\n|$))',
-          dotAll: true,
-        ).firstMatch(remaining);
-        if (insightMatch != null) {
-          insight = insightMatch.group(2)?.trim();
-        }
-
-        steps.add(
-          ProofStep()
-            ..description = headerLine
-            ..latexEquation = latex
-            ..insight = insight,
+        final sectionBody = lines.skip(1).join('\n').trim();
+        final stepChunks = sectionBody.split(
+          RegExp(r'(?=^###\s+)', multiLine: true),
         );
+
+        for (final chunk in stepChunks) {
+          final trimmedChunk = chunk.trim();
+          if (!trimmedChunk.startsWith('###')) continue;
+
+          final stepLines = trimmedChunk.split('\n');
+          final headerLine = stepLines.first
+              .replaceFirst(RegExp(r'^###\s+'), '')
+              .trim();
+          final remaining = stepLines.skip(1).join('\n').trim();
+
+          String? latex;
+          String? insight;
+
+          final mathMatch = RegExp(
+            r'\$\$(.*?)\$\$',
+            dotAll: true,
+          ).firstMatch(remaining);
+          if (mathMatch != null) {
+            latex = mathMatch.group(1)?.trim();
+          }
+
+          final insightMatch = RegExp(
+            r'>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?\s*(.*?)(?=(\n|$))',
+            dotAll: true,
+          ).firstMatch(remaining);
+          if (insightMatch != null) {
+            insight = insightMatch.group(2)?.trim();
+          }
+
+          final finalDesc = groupName != null ? '[$groupName] $headerLine' : headerLine;
+
+          steps.add(
+            ProofStep()
+              ..description = finalDesc
+              ..latexEquation = latex
+              ..insight = insight,
+          );
+        }
       }
       node.algebraicProof = steps;
     }

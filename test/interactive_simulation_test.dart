@@ -9,6 +9,8 @@ import 'package:laurentius/presentation/widgets/interactive/interactive_template
 import 'package:laurentius/presentation/widgets/interactive/kinematics_simulation_widget.dart';
 import 'package:laurentius/presentation/widgets/interactive/ohm_circuit_simulation_widget.dart';
 import 'package:laurentius/presentation/widgets/interactive/riemann_sum_widget.dart';
+import 'package:laurentius/presentation/widgets/interactive/rolle_lagrange_widget.dart';
+import 'package:laurentius/presentation/widgets/interactive/squeeze_theorem_widget.dart';
 import 'package:laurentius/presentation/widgets/interactive/triangle_solver_widget.dart';
 import 'package:laurentius/presentation/widgets/interactive/trig_circle_widget.dart';
 import 'package:laurentius/presentation/widgets/prerequisites_section_widget.dart';
@@ -75,6 +77,22 @@ void main() {
       final data = InteractiveData()..templateType = 'riemann_sum';
       final widget = InteractiveTemplateFactory.buildWidget(data);
       expect(widget, isA<RiemannSumWidget>());
+    });
+
+    test('Returns SqueezeTheoremWidget for squeeze_theorem aliases', () {
+      for (final alias in ['squeeze_theorem', 'carabinieri_theorem', 'teorema_carabinieri']) {
+        final data = InteractiveData()..templateType = alias;
+        final widget = InteractiveTemplateFactory.buildWidget(data);
+        expect(widget, isA<SqueezeTheoremWidget>());
+      }
+    });
+
+    test('Returns RolleLagrangeWidget for rolle_lagrange aliases', () {
+      for (final alias in ['rolle_lagrange', 'rolle', 'lagrange']) {
+        final data = InteractiveData()..templateType = alias;
+        final widget = InteractiveTemplateFactory.buildWidget(data);
+        expect(widget, isA<RolleLagrangeWidget>());
+      }
     });
 
     test('Returns null for null interactive data (pure math nodes)', () {
@@ -227,10 +245,58 @@ void main() {
       expect(find.text('tan(θ)'), findsOneWidget);
       expect(find.textContaining('Identità Fondamentale'), findsOneWidget);
     });
+
+    testWidgets('Handles exact asymptotes at 90 deg and 270 deg without crash or NaN', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(child: TrigCircleWidget()),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      // Tap on 90° (π/2) preset chip
+      final chip90 = find.text('90° (π/2)');
+      expect(chip90, findsOneWidget);
+      await tester.tap(chip90);
+      await tester.pumpAndSettle();
+
+      // Assert asymptotic stability and parallel lines indicator
+      expect(find.text('tan(θ)'), findsOneWidget);
+
+      // Tap on 270° (3π/2) preset chip
+      final chip270 = find.text('270° (3π/2)');
+      expect(chip270, findsOneWidget);
+      await tester.tap(chip270, warnIfMissed: false);
+      await tester.pumpAndSettle();
+
+      expect(find.text('tan(θ)'), findsOneWidget);
+    });
+
+    testWidgets('Renders properly across all 4 quadrants (45 deg, 135 deg, 225 deg, 315 deg)', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(child: TrigCircleWidget()),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      for (final label in ['0°', '45° (π/4)', '90° (π/2)', '135° (3π/4)']) {
+        final chip = find.text(label);
+        expect(chip, findsOneWidget);
+        await tester.tap(chip, warnIfMissed: false);
+        await tester.pumpAndSettle();
+      }
+    });
   });
 
   group('TriangleSolverWidget Tests', () {
-    testWidgets('Renders triangle solver and Pythagorean / Carnot checks', (
+    testWidgets('Renders triangle solver and Pythagorean / Carnot checks with altitude and projection', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -246,6 +312,54 @@ void main() {
       expect(find.text('Lato b'), findsOneWidget);
       expect(find.text('Terzo Lato c'), findsOneWidget);
       expect(find.text('Area'), findsOneWidget);
+      expect(find.textContaining('Dimostrazione via Pitagora su △BHA'), findsOneWidget);
+      expect(find.textContaining('Pitagora è il corollario di Carnot'), findsOneWidget);
+    });
+  });
+
+  group('RolleLagrangeWidget Tests', () {
+    testWidgets('Renders Rolle mode with dual stationary points and horizontal tangents', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(child: RolleLagrangeWidget()),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      // Switch to Rolle mode
+      final rolleTab = find.text('Teorema di Rolle');
+      expect(rolleTab, findsOneWidget);
+      await tester.tap(rolleTab);
+      await tester.pumpAndSettle();
+
+      // Verifies both stationary points telemetry
+      expect(find.text('STAZIONARI c₁, c₂'), findsOneWidget);
+      expect(find.text('c₁=-1, c₂=+1'), findsOneWidget);
+      expect(find.textContaining('f(a) ≈ f(b)'), findsOneWidget);
+    });
+  });
+
+  group('SqueezeTheoremWidget Tests', () {
+    testWidgets('Renders sandwich functions g(x), f(x), h(x) and convergence controls', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(child: SqueezeTheoremWidget()),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      expect(find.text('Teorema del Confronto (Carabinieri)'), findsOneWidget);
+      expect(find.text('INF: g(x) = cos(x)'), findsOneWidget);
+      expect(find.text('TRAPPOLA: sin(x)/x'), findsOneWidget);
+      expect(find.text('SUP: h(x) = 1'), findsOneWidget);
+      expect(find.text('SPAZIO BANDA |h - g|'), findsOneWidget);
+      expect(find.textContaining('cos(x) ≤ sin(x)/x ≤ 1'), findsOneWidget);
     });
   });
 

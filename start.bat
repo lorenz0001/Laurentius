@@ -29,33 +29,36 @@ if "%choice%"=="5" goto run_backend
 
 :run_edge
 echo.
-echo [AVVIO] Lancio su Microsoft Edge con Flutter Dev Server...
-flutter run -d edge
+echo ===============================================================
+echo [AVVIO] Lancio dell'app didattica su Microsoft Edge...
+echo ===============================================================
+echo [1/2] Avvio del server web su porta 8085...
+start http://localhost:8085
+echo [2/2] Inizializzazione Flutter Web Server (Hot Reload abilitato)...
+flutter run -d web-server --web-port 8085
 goto end
 
 :run_chrome
 echo.
-echo [AVVIO] Lancio su Google Chrome con Flutter Dev Server...
-flutter run -d chrome
+echo ===============================================================
+echo [AVVIO] Lancio su Browser...
+echo ===============================================================
+start http://localhost:8085
+flutter run -d web-server --web-port 8085
 goto end
 
 :run_webserver
 echo.
-echo [AVVIO] Lancio Web Server Flutter su porta 8080...
-echo [INFO] Apri il browser su http://localhost:8080 se non si apre automaticamente.
-start http://localhost:8080
-flutter run -d web-server --web-port 8080
+echo [AVVIO] Web Server su porta 8085...
+start http://localhost:8085
+flutter run -d web-server --web-port 8085
 goto end
 
 :run_static
 echo.
-echo [AVVIO] Avvio server statico su http://localhost:8080...
-if not exist "build\web\index.html" (
-    echo Compilazione iniziale build web...
-    call flutter build web
-)
-start http://localhost:8080
-python -m http.server 8080 -d build\web
+echo [AVVIO] Anteprima rapida su http://localhost:8085...
+start http://localhost:8085
+python -m http.server 8085 -d build\web
 goto end
 
 :run_backend

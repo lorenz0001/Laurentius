@@ -152,14 +152,14 @@ void main() {
       expect(find.text('tan(θ)'), findsOneWidget);
       expect(find.text('Trascina sul cerchio'), findsOneWidget);
 
-      // Inizialmente l'auto-rotazione 60 FPS è attiva di default
-      final stopBtn = find.byTooltip('Ferma rotazione');
-      expect(stopBtn, findsOneWidget);
-      await tester.tap(stopBtn);
+      // Inizialmente la rotazione è ferma di default
+      final startBtn = find.byTooltip('Auto-rotazione continua 60 FPS');
+      expect(startBtn, findsOneWidget);
+      await tester.tap(startBtn);
       await tester.pump(const Duration(milliseconds: 50));
 
-      // Dopo il tap, la rotazione è ferma e il tooltip permette di riattivarla
-      expect(find.byTooltip('Auto-rotazione continua 60 FPS'), findsOneWidget);
+      // Dopo il tap, la rotazione è attiva e il tooltip permette di fermarla
+      expect(find.byTooltip('Ferma rotazione'), findsOneWidget);
     });
 
     testWidgets('KinematicsSimulationWidget includes checkered finish line at 100m', (tester) async {

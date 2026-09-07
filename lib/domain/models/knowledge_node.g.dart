@@ -15,7 +15,7 @@ extension GetKnowledgeNodeCollection on Isar {
 
 const KnowledgeNodeSchema = CollectionSchema(
   name: r'KnowledgeNode',
-  id: 3048272821976668502,
+  id: 3048272821976668672,
   properties: {
     r'algebraicProof': PropertySchema(
       id: 0,
@@ -68,7 +68,7 @@ const KnowledgeNodeSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'serverId': IndexSchema(
-      id: -7950187970872907662,
+      id: -7950187970872907776,
       name: r'serverId',
       unique: true,
       replace: true,
@@ -83,7 +83,7 @@ const KnowledgeNodeSchema = CollectionSchema(
   },
   links: {
     r'prerequisites': LinkSchema(
-      id: -3176454873111640483,
+      id: -3176454873111640576,
       name: r'prerequisites',
       target: r'KnowledgeNode',
       single: false,
@@ -1662,7 +1662,7 @@ extension KnowledgeNodeQueryProperty
 
 const ContentBlockSchema = Schema(
   name: r'ContentBlock',
-  id: 4517901226766659997,
+  id: 4517901226766660096,
   properties: {
     r'content': PropertySchema(
       id: 0,
@@ -2056,7 +2056,7 @@ extension ContentBlockQueryObject
 
 const ProofStepSchema = Schema(
   name: r'ProofStep',
-  id: -5201550155890828476,
+  id: -5201550155890828288,
   properties: {
     r'description': PropertySchema(
       id: 0,
@@ -2613,7 +2613,7 @@ extension ProofStepQueryObject
 
 const InteractiveDataSchema = Schema(
   name: r'InteractiveData',
-  id: 7987400407099009970,
+  id: 7987400407099010048,
   properties: {
     r'equations': PropertySchema(
       id: 0,
@@ -3427,7 +3427,7 @@ extension InteractiveDataQueryObject
 
 const InteractiveParameterSchema = Schema(
   name: r'InteractiveParameter',
-  id: 3547068895815187121,
+  id: 3547068895815186944,
   properties: {
     r'defaultValue': PropertySchema(
       id: 0,

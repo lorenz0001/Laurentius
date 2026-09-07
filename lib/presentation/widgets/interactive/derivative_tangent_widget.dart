@@ -19,7 +19,7 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
     with SingleTickerProviderStateMixin {
   double _x0 = 1.0;
   double _h = 1.2;
-  bool _isAutoAnimating = true; // Animazione attiva di default: dimostra h -> 0
+  bool _isAutoAnimating = false;
 
   late final AnimationController _limitAnimController;
 
@@ -36,8 +36,6 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
       vsync: this,
       duration: const Duration(seconds: 4),
     )..addListener(_onLimitAnimTick);
-
-    _limitAnimController.repeat(reverse: true);
   }
 
   void _onLimitAnimTick() {

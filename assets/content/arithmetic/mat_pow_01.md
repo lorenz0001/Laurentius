@@ -9,7 +9,7 @@ interactive:
   template: live_equation
   unit: ""
   equations:
-    - "pow(a, b)"
+    - "a ^ b"
   parameters:
     - variable: a
       label: "Base (a)"

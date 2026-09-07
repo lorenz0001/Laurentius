@@ -22,7 +22,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
   double _sideA = 3.0;
   double _sideB = 4.0;
   double _angleGammaDeg = 90.0;
-  bool _isAutoTransforming = true; // Attivo di default per mostrare la deformazione geometrica
+  bool _isAutoTransforming = false;
 
   late final AnimationController _triangleAnimController;
 
@@ -33,8 +33,6 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
       vsync: this,
       duration: const Duration(seconds: 4),
     )..addListener(_onTriangleAnimTick);
-
-    _triangleAnimController.repeat(reverse: true);
   }
 
   void _onTriangleAnimTick() {
@@ -79,6 +77,15 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
   double get _area => 0.5 * _sideA * _sideB * math.sin(_gammaRad);
 
   bool get _isRightTriangle => (_angleGammaDeg - 90.0).abs() < 1.0;
+
+  // Altezza h del triangolo rispetto alla base b: h = a * sin(γ)
+  double get _altitudeH => _sideA * math.sin(_gammaRad);
+
+  // Proiezione ortogonale p del lato a sulla base b: p = a * cos(γ)
+  double get _projectionP => _sideA * math.cos(_gammaRad);
+
+  // Base residua del triangolo rettangolo con ipotenusa c: |b - a·cos(γ)|
+  double get _baseMinusP => (_sideB - _projectionP).abs();
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +242,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
           ),
           const SizedBox(height: 12),
 
-          // Riquadro Corollario / Verifica Formula
+          // Riquadro Corollario / Verifica Formula & Dimostrazione Geometrica
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
@@ -272,6 +279,39 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 6),
+                // Dimostrazione geometrica di Carnot: scomposizione con altezza e proiezione
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEFF6FF),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFDBEAFE)),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Dimostrazione via Pitagora su △BHA:  h = a·sin(γ) = ${_altitudeH.toStringAsFixed(2)},  p = a·cos(γ) = ${_projectionP.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF1E40AF),
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'c² = h² + (b - a·cos γ)² = ${_altitudeH.toStringAsFixed(2)}² + ${_baseMinusP.toStringAsFixed(2)}² = ${_sideCSquared.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFFBE123C),
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
                 if (_isRightTriangle)
                   const Padding(
@@ -450,8 +490,8 @@ class _TrianglePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Vertice C (angolo gamma) posto in basso al centro
-    final originC = Offset(size.width * 0.35, size.height * 0.75);
+    // Vertice C (angolo gamma) posto in basso al centro-sinistra
+    final originC = Offset(size.width * 0.35, size.height * 0.70);
     final scale = size.height * 0.11;
 
     // Vertice A lungo l'asse orizzontale (lato b)
@@ -463,7 +503,10 @@ class _TrianglePainter extends CustomPainter {
       originC.dy + sideA * scale * math.sin(-gammaRad),
     );
 
-    // Triangolo riempimento
+    // Piede dell'altezza H perpendicolare alla retta contenente la base CA
+    final footH = Offset(vertexB.dx, originC.dy);
+
+    // 1. Riempimento del triangolo principale △ABC
     final trianglePath = Path()
       ..moveTo(originC.dx, originC.dy)
       ..lineTo(vertexA.dx, vertexA.dy)
@@ -471,18 +514,62 @@ class _TrianglePainter extends CustomPainter {
       ..close();
 
     final fillPaint = Paint()
-      ..color = const Color(0x33E11D48)
+      ..color = const Color(0x22E11D48)
       ..style = PaintingStyle.fill;
     canvas.drawPath(trianglePath, fillPaint);
 
-    // Bordi colorati per ciascun lato
+    // 2. Prolungamento tratteggiato della base se γ > 90° (H cade a sinistra di C)
+    if (footH.dx < originC.dx) {
+      final extPaint = Paint()
+        ..color = const Color(0x664ADE80)
+        ..strokeWidth = 2.0;
+      _drawDashedLine(canvas, originC, footH, extPaint);
+    }
+
+    // 3. Altezza tratteggiata BH
+    final altitudePaint = Paint()
+      ..color = const Color(0xFFF59E0B)
+      ..strokeWidth = 2.0;
+    _drawDashedLine(canvas, vertexB, footH, altitudePaint);
+
+    // 4. Marcatore angolo retto a 90° nel punto H
+    const markerSize = 8.0;
+    final isRightOfH = vertexA.dx >= footH.dx;
+    final squarePath = Path()
+      ..moveTo(footH.dx, footH.dy - markerSize)
+      ..lineTo(
+        footH.dx + (isRightOfH ? markerSize : -markerSize),
+        footH.dy - markerSize,
+      )
+      ..lineTo(
+        footH.dx + (isRightOfH ? markerSize : -markerSize),
+        footH.dy,
+      );
+    canvas.drawPath(
+      squarePath,
+      Paint()
+        ..color = const Color(0xFFF59E0B)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
+    canvas.drawCircle(
+      Offset(
+        footH.dx + (isRightOfH ? markerSize / 2 : -markerSize / 2),
+        footH.dy - markerSize / 2,
+      ),
+      1.2,
+      Paint()..color = const Color(0xFFF59E0B),
+    );
+
+    // 5. Bordi del triangolo △ABC
     // Lato b (da C ad A): verde
     canvas.drawLine(
       originC,
       vertexA,
       Paint()
         ..color = const Color(0xFF4ADE80)
-        ..strokeWidth = 3.5,
+        ..strokeWidth = 3.5
+        ..strokeCap = StrokeCap.round,
     );
 
     // Lato a (da C a B): azzurro
@@ -491,7 +578,8 @@ class _TrianglePainter extends CustomPainter {
       vertexB,
       Paint()
         ..color = const Color(0xFF38BDF8)
-        ..strokeWidth = 3.5,
+        ..strokeWidth = 3.5
+        ..strokeCap = StrokeCap.round,
     );
 
     // Lato c (da B ad A): fucsia
@@ -500,10 +588,11 @@ class _TrianglePainter extends CustomPainter {
       vertexA,
       Paint()
         ..color = const Color(0xFFF43F5E)
-        ..strokeWidth = 3.5,
+        ..strokeWidth = 3.5
+        ..strokeCap = StrokeCap.round,
     );
 
-    // Arco per l'angolo gamma in C
+    // 6. Arco per l'angolo gamma in C
     final arcPaint = Paint()
       ..color = const Color(0xFFFBBF24)
       ..style = PaintingStyle.stroke
@@ -516,11 +605,101 @@ class _TrianglePainter extends CustomPainter {
       arcPaint,
     );
 
+    // 7. Evidenziazione proiezione p = a·cos(γ) lungo la base
+    if ((originC.dx - footH.dx).abs() > 4.0) {
+      final pLinePaint = Paint()
+        ..color = const Color(0xFF38BDF8)
+        ..strokeWidth = 2.5
+        ..strokeCap = StrokeCap.round;
+      canvas.drawLine(
+        Offset(originC.dx, originC.dy + 8),
+        Offset(footH.dx, footH.dy + 8),
+        pLinePaint,
+      );
+      final pMidX = (originC.dx + footH.dx) / 2 - 18;
+      _drawLabel(
+        canvas,
+        'p = a·cos γ',
+        Offset(pMidX, originC.dy + 11),
+        const Color(0xFF38BDF8),
+        fontSize: 9,
+      );
+    }
+
+    // 8. Etichette e vertici
     // Vertici
     final vertexPaint = Paint()..color = Colors.white;
     canvas.drawCircle(originC, 4, vertexPaint);
     canvas.drawCircle(vertexA, 4, vertexPaint);
     canvas.drawCircle(vertexB, 4, vertexPaint);
+
+    // Vertice H
+    canvas.drawCircle(
+      footH,
+      3.5,
+      Paint()..color = const Color(0xFFF59E0B),
+    );
+
+    // Etichette vertici
+    _drawLabel(canvas, 'C', Offset(originC.dx - 14, originC.dy + 2), const Color(0xFFFBBF24));
+    _drawLabel(canvas, 'A', Offset(vertexA.dx + 6, vertexA.dy - 4), const Color(0xFF4ADE80));
+    _drawLabel(canvas, 'B', Offset(vertexB.dx - 6, vertexB.dy - 16), const Color(0xFF38BDF8));
+    _drawLabel(canvas, 'H', Offset(footH.dx - 4, footH.dy + 4), const Color(0xFFF59E0B));
+
+    // Etichetta altezza h = a·sin(γ)
+    final altLabelX = vertexB.dx < originC.dx ? vertexB.dx - 54 : vertexB.dx + 6;
+    final altLabelY = (vertexB.dy + footH.dy) / 2 - 6;
+    _drawLabel(
+      canvas,
+      'h = a·sin γ',
+      Offset(altLabelX, altLabelY),
+      const Color(0xFFF59E0B),
+      fontSize: 9,
+      fontWeight: FontWeight.w700,
+    );
+  }
+
+  void _drawDashedLine(Canvas canvas, Offset p1, Offset p2, Paint paint) {
+    const dashWidth = 4.0;
+    const dashSpace = 3.0;
+    final dx = p2.dx - p1.dx;
+    final dy = p2.dy - p1.dy;
+    final distance = math.sqrt(dx * dx + dy * dy);
+    if (distance <= 0) return;
+
+    final unitX = dx / distance;
+    final unitY = dy / distance;
+    double current = 0.0;
+
+    while (current < distance) {
+      final start = Offset(p1.dx + unitX * current, p1.dy + unitY * current);
+      final endDistance = math.min(current + dashWidth, distance);
+      final end = Offset(p1.dx + unitX * endDistance, p1.dy + unitY * endDistance);
+      canvas.drawLine(start, end, paint);
+      current += dashWidth + dashSpace;
+    }
+  }
+
+  void _drawLabel(
+    Canvas canvas,
+    String text,
+    Offset offset,
+    Color color, {
+    double fontSize = 10,
+    FontWeight fontWeight = FontWeight.w600,
+  }) {
+    final tp = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    tp.paint(canvas, offset);
   }
 
   @override

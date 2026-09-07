@@ -17,6 +17,44 @@ class AlgebraicProofWidget extends StatefulWidget {
 class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
   int currentStepIndex = 0;
   bool _showAllSteps = false;
+  String? _selectedGroup;
+
+  List<String> get _groups {
+    final groups = <String>[];
+    for (final step in widget.proofSteps) {
+      final desc = step.description ?? '';
+      final match = RegExp(r'^\[(.*?)\]').firstMatch(desc);
+      if (match != null) {
+        final g = match.group(1)!.trim();
+        if (g.isNotEmpty && !groups.contains(g)) {
+          groups.add(g);
+        }
+      }
+    }
+    return groups;
+  }
+
+  List<ProofStep> get _currentSteps {
+    final allGroups = _groups;
+    if (allGroups.isEmpty) {
+      return widget.proofSteps;
+    }
+    final activeGroup = _selectedGroup ?? allGroups.first;
+    final filtered = widget.proofSteps.where((s) {
+      final desc = s.description ?? '';
+      return desc.startsWith('[$activeGroup]');
+    }).toList();
+    return filtered.isNotEmpty ? filtered : widget.proofSteps;
+  }
+
+  @override
+  void didUpdateWidget(covariant AlgebraicProofWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.proofSteps != widget.proofSteps) {
+      currentStepIndex = 0;
+      _selectedGroup = null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +74,8 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
       );
     }
 
-    final totalSteps = widget.proofSteps.length;
+    final steps = _currentSteps;
+    final totalSteps = steps.length;
     final displayedCount = _showAllSteps
         ? totalSteps
         : (currentStepIndex + 1).clamp(1, totalSteps);
@@ -114,6 +153,55 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
             ),
           ],
         ),
+
+        // Selettore a Chip/Tasti per dimostrazioni multiple
+        if (_groups.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            child: Row(
+              children: _groups.map((group) {
+                final isSelected = (_selectedGroup ?? _groups.first) == group;
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: FilterChip(
+                    label: Text(group),
+                    selected: isSelected,
+                    onSelected: (_) {
+                      setState(() {
+                        _selectedGroup = group;
+                        currentStepIndex = 0;
+                        _showAllSteps = false;
+                      });
+                    },
+                    selectedColor: const Color(0xFFEFF6FF),
+                    checkmarkColor: const Color(0xFF2563EB),
+                    backgroundColor: Colors.white,
+                    side: BorderSide(
+                      color: isSelected
+                          ? const Color(0xFF2563EB)
+                          : const Color(0xFFE2E8F0),
+                      width: isSelected ? 1.5 : 1.0,
+                    ),
+                    labelStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight:
+                          isSelected ? FontWeight.w700 : FontWeight.w500,
+                      color: isSelected
+                          ? const Color(0xFF1D4ED8)
+                          : const Color(0xFF475569),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+
         const SizedBox(height: 14),
 
         // Lista dei passaggi visualizzati
@@ -123,7 +211,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
           itemCount: displayedCount,
           separatorBuilder: (context, index) => const SizedBox(height: 14),
           itemBuilder: (context, index) {
-            final step = widget.proofSteps[index];
+            final step = steps[index];
             return _buildProofStepCard(index + 1, step);
           },
         ),
@@ -188,10 +276,11 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
   }
 
   Widget _buildProofStepCard(int stepNumber, ProofStep step) {
-    final desc = step.description ?? '';
+    final rawDesc = step.description ?? '';
+    final cleanDesc = rawDesc.replaceFirst(RegExp(r'^\[.*?\]\s*'), '');
     final isCorollary =
-        desc.trim().toLowerCase().startsWith('corollario') ||
-        desc.toLowerCase().contains('corollario:');
+        cleanDesc.trim().toLowerCase().startsWith('corollario') ||
+        cleanDesc.toLowerCase().contains('corollario:');
 
     final borderColor = isCorollary
         ? const Color(0xFFF59E0B)
@@ -274,10 +363,10 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
           ),
 
           // Descrizione del passaggio algebrico
-          if (desc.isNotEmpty) ...[
+          if (cleanDesc.isNotEmpty) ...[
             const SizedBox(height: 10),
             Text(
-              desc,
+              cleanDesc,
               style: TextStyle(
                 fontSize: 14,
                 height: 1.45,

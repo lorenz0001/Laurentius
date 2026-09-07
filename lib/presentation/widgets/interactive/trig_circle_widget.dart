@@ -21,7 +21,7 @@ class TrigCircleWidget extends StatefulWidget {
 class _TrigCircleWidgetState extends State<TrigCircleWidget>
     with TickerProviderStateMixin {
   double _angleRad = math.pi / 4; // 45° default
-  bool _isAutoRotating = true; // Attivo di default per mostrare subito l'animazione dinamica
+  bool _isAutoRotating = false;
 
   late final AnimationController _autoRotateController;
   AnimationController? _chipAnimController;
@@ -39,8 +39,6 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
       vsync: this,
       duration: const Duration(seconds: 12),
     )..addListener(_onAutoRotateTick);
-    _autoRotateController.forward(from: (_angleRad / (2 * math.pi)));
-    _autoRotateController.repeat();
   }
 
   void _onAutoRotateTick() {
@@ -203,7 +201,7 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
           // Canvas Cerchio Goniometrico con Touch/Drag Diretto
           LayoutBuilder(
             builder: (context, constraints) {
-              final canvasSize = Size(constraints.maxWidth, 260);
+              final canvasSize = Size(constraints.maxWidth, 280);
               return Stack(
                 children: [
                   GestureDetector(
@@ -214,7 +212,7 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
                     onTapDown: (details) =>
                         _updateAngleFromOffset(details.localPosition, canvasSize),
                     child: SizedBox(
-                      height: 260,
+                      height: 280,
                       width: constraints.maxWidth,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
@@ -288,7 +286,7 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
               Expanded(
                 child: _buildMetricCard(
                   label: 'tan(θ)',
-                  value: _cosVal.abs() < 0.005
+                  value: _cosVal.abs() < 0.015
                       ? '±∞ (non def)'
                       : _tanVal.toStringAsFixed(3),
                   color: const Color(0xFFFBBF24),
@@ -465,7 +463,7 @@ class _TrigCirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = math.min(size.width, size.height) * 0.36;
+    final radius = math.min(size.width * 0.35, size.height * 0.26).clamp(65.0, 75.0);
 
     final axisPaint = Paint()
       ..color = const Color(0xFF334155)
@@ -542,22 +540,30 @@ class _TrigCirclePainter extends CustomPainter {
     );
 
     // 3. Calcolo e disegno della Tangente su tutti e 4 i quadranti
-    final isAsymptote = cosVal.abs() < 0.02;
+    // L'asintoto si verifica ESCLUSIVAMENTE a θ = π/2 o 3π/2 (|cos θ| < 0.015, circa entro 1° da 90° e 270°)
+    final isExactAsymptote = cosVal.abs() < 0.015;
 
-    if (isAsymptote) {
-      // Se siamo nei pressi di π/2 o 3π/2: linea asintotica rossa tratteggiata
+    if (isExactAsymptote) {
+      // All'asintoto (cos θ ~ 0, θ ~ π/2 o 3π/2):
+      // Il raggio vettore è verticale e parallelo alla retta x = 1 (nessuna intersezione, tan θ non definita)
       final asympPaint = Paint()
         ..color = const Color(0xFFF43F5E)
-        ..strokeWidth = 2.0;
-      canvas.drawLine(
-        Offset(tanLineX - 1, 10),
-        Offset(tanLineX - 1, size.height - 10),
+        ..strokeWidth = 2.0
+        ..style = PaintingStyle.stroke;
+      _drawDashedLine(
+        canvas,
+        Offset(tanLineX, 6),
+        Offset(tanLineX, size.height - 6),
         asympPaint,
+        dashWidth: 6.0,
+        dashSpace: 4.0,
       );
+
+      final deg = (angleRad * 180 / math.pi).round();
       final textP = TextPainter(
-        text: const TextSpan(
-          text: 'Asintoto (tan θ ➔ ±∞)',
-          style: TextStyle(
+        text: TextSpan(
+          text: 'θ ≈ $deg°: retta parallela a x = 1 (nessuna intersezione, tan θ non definita)',
+          style: const TextStyle(
             color: Color(0xFFF43F5E),
             fontSize: 10,
             fontWeight: FontWeight.w700,
@@ -565,33 +571,48 @@ class _TrigCirclePainter extends CustomPainter {
         ),
         textDirection: TextDirection.ltr,
       )..layout();
-      textP.paint(canvas, Offset(center.dx - textP.width / 2, 20));
+      textP.paint(canvas, Offset(center.dx - textP.width / 2, 14));
     } else {
-      // Tangente calcolata
+      // Per TUTTI gli angoli non all'asintoto (es. 30°, 45°, 60°, 120°, 135°, ecc.):
+      // Calcola l'esatto punto di intersezione T(1, tan θ) sulla retta x = 1
       final tanVal = math.tan(angleRad);
       final rawTanY = center.dy - tanVal * radius;
 
-      // Limiti visivi del canvas con margini
-      const topMargin = 16.0;
-      final bottomMargin = size.height - 16.0;
-      final isClampedTop = rawTanY < topMargin;
-      final isClampedBottom = rawTanY > bottomMargin;
+      // Verifica se il punto T è all'interno della finestra visibile
+      final isPointInside = rawTanY >= 8.0 && rawTanY <= size.height - 8.0;
+      final clampedTanY = rawTanY.clamp(0.0, size.height);
 
-      final double clampedTanY = rawTanY.clamp(topMargin, bottomMargin);
+      // Calcolo del punto target della secante
+      Offset secantTarget;
+      if (isPointInside) {
+        secantTarget = Offset(tanLineX, rawTanY);
+      } else {
+        final exitY = rawTanY < 8.0 ? 0.0 : size.height;
+        final exitX = center.dx - (exitY - center.dy) / tanVal;
+        secantTarget = Offset(exitX, exitY);
+      }
 
-      // Prolungamento secante dall'origine o attraverso il punto P
       final secantPaint = Paint()
-        ..color = const Color(0x55FBBF24)
-        ..strokeWidth = 1.2;
+        ..color = const Color(0x77FBBF24)
+        ..strokeWidth = 1.5;
 
-      // Disegna la retta passante per l'origine e P fino alla retta x = 1
-      canvas.drawLine(
-        center,
-        Offset(tanLineX, clampedTanY),
-        secantPaint,
-      );
+      // Collinearità su tutti e 4 i quadranti:
+      // Se cos(θ) >= 0 (Q1 e Q4): il raggio secante esce direttamente verso il semipiano destro (x = 1)
+      // Se cos(θ) < 0 (Q2 e Q3): prolungamento all'indietro tratteggiato attraverso l'origine verso x = 1
+      if (cosVal >= 0) {
+        canvas.drawLine(center, secantTarget, secantPaint);
+      } else {
+        _drawDashedLine(
+          canvas,
+          center,
+          secantTarget,
+          secantPaint,
+          dashWidth: 4.0,
+          dashSpace: 3.0,
+        );
+      }
 
-      // Segmento della tangente lungo la retta x = 1 (da (1,0) a (1, tan θ))
+      // Segmento della tangente lungo la retta x = 1 da (1, 0) a T(1, tan θ)
       final tanSegPaint = Paint()
         ..color = const Color(0xFFFBBF24)
         ..strokeWidth = 3.5
@@ -603,66 +624,41 @@ class _TrigCirclePainter extends CustomPainter {
         tanSegPaint,
       );
 
-      // Se non è clippata, disegna il punto di intersezione T(1, tan θ)
-      if (!isClampedTop && !isClampedBottom) {
-        // Punto T
+      if (isPointInside) {
+        // Disegna il punto T(1, tan θ) reale
         canvas.drawCircle(
-          Offset(tanLineX, clampedTanY),
-          5.0,
+          Offset(tanLineX, rawTanY),
+          5.5,
           Paint()..color = const Color(0xFFFBBF24),
         );
         canvas.drawCircle(
-          Offset(tanLineX, clampedTanY),
+          Offset(tanLineX, rawTanY),
           2.0,
           Paint()..color = Colors.white,
         );
+
+        // Etichetta coordinata T
+        final tLabel = TextPainter(
+          text: TextSpan(
+            text: 'T(1, ${tanVal.toStringAsFixed(2)})',
+            style: const TextStyle(
+              color: Color(0xFFFBBF24),
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout();
+        final labelY = (rawTanY - tLabel.height / 2).clamp(10.0, size.height - 20.0);
+        tLabel.paint(canvas, Offset(tanLineX + 8, labelY));
       } else {
-        // Disegna freccia direzionale verso ±∞
-        final arrowPaint = Paint()
-          ..color = const Color(0xFFFBBF24)
-          ..style = PaintingStyle.fill;
-
-        final arrowPath = Path();
-        if (isClampedTop) {
-          // Freccia verso l'alto +∞
-          arrowPath.moveTo(tanLineX, topMargin - 4);
-          arrowPath.lineTo(tanLineX - 5, topMargin + 6);
-          arrowPath.lineTo(tanLineX + 5, topMargin + 6);
-          arrowPath.close();
-
-          final tp = TextPainter(
-            text: const TextSpan(
-              text: 'tan θ ➔ +∞',
-              style: TextStyle(
-                color: Color(0xFFFBBF24),
-                fontSize: 9,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            textDirection: TextDirection.ltr,
-          )..layout();
-          tp.paint(canvas, Offset(tanLineX - tp.width - 6, topMargin - 2));
-        } else {
-          // Freccia verso il basso -∞
-          arrowPath.moveTo(tanLineX, bottomMargin + 4);
-          arrowPath.lineTo(tanLineX - 5, bottomMargin - 6);
-          arrowPath.lineTo(tanLineX + 5, bottomMargin - 6);
-          arrowPath.close();
-
-          final tp = TextPainter(
-            text: const TextSpan(
-              text: 'tan θ ➔ -∞',
-              style: TextStyle(
-                color: Color(0xFFFBBF24),
-                fontSize: 9,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            textDirection: TextDirection.ltr,
-          )..layout();
-          tp.paint(canvas, Offset(tanLineX - tp.width - 6, bottomMargin - 8));
-        }
-        canvas.drawPath(arrowPath, arrowPaint);
+        // Se il punto T supera la finestra visiva ma non siamo all'asintoto,
+        // disegna un piccolo marcatore sul bordo senza frecce o diciture di infinito fuorvianti
+        canvas.drawCircle(
+          Offset(tanLineX, clampedTanY),
+          3.0,
+          Paint()..color = const Color(0xFFFBBF24),
+        );
       }
     }
 
@@ -709,6 +705,32 @@ class _TrigCirclePainter extends CustomPainter {
     final pointPaint = Paint()..color = const Color(0xFFF43F5E);
     canvas.drawCircle(pPoint, 5.5, pointPaint);
     canvas.drawCircle(pPoint, 2.0, Paint()..color = Colors.white);
+  }
+
+  void _drawDashedLine(
+    Canvas canvas,
+    Offset p1,
+    Offset p2,
+    Paint paint, {
+    double dashWidth = 4.0,
+    double dashSpace = 3.0,
+  }) {
+    final dx = p2.dx - p1.dx;
+    final dy = p2.dy - p1.dy;
+    final distance = math.sqrt(dx * dx + dy * dy);
+    if (distance <= 0) return;
+
+    final unitX = dx / distance;
+    final unitY = dy / distance;
+    double current = 0.0;
+
+    while (current < distance) {
+      final start = Offset(p1.dx + unitX * current, p1.dy + unitY * current);
+      final endDistance = math.min(current + dashWidth, distance);
+      final end = Offset(p1.dx + unitX * endDistance, p1.dy + unitY * endDistance);
+      canvas.drawLine(start, end, paint);
+      current += dashWidth + dashSpace;
+    }
   }
 
   @override
