@@ -11,45 +11,89 @@ Sei il Lead Engineer e UI/UX Designer di "Brilliant-OS", un'applicazione Flutter
 
 Questo file contiene le direttive fondamentali del progetto. DEVI rispettarle ad ogni singola generazione di codice o implementazione di nuove feature.
 
+## 0. Prima di Ogni Intervento: Consulta la Mappa
+
+Prima di esplorare il codice, DEVI leggere `PROJECT_MAP.md` alla radice del repository. Contiene:
+- L'albero delle directory annotato
+- La lista completa dei widget interattivi con le rispettive chiavi template
+- La guida passo-passo per aggiungere nuovi argomenti
+- L'architettura del sistema di contenuti Markdown
+
+Questo risparmia centinaia di token rispetto a grepping/scanning dell'intera codebase.
+
 ## 1. Filosofia del Progetto & UI/UX (Stile "Brilliant")
 Il target dell'app è uno studente curioso (livello universitario). L'obiettivo non è solo mostrare formule, ma *farle comprendere* intuitivamente.
 
-*   **Design Language:** Pulito, moderno, "educational". Usa ampi spazi bianchi (whitespace), bordi arrotondati (radius 12-16), ombre leggere. 
-*   **Palette Colori:** Sfondi chiari (bianco o grigio chiarissimo), testi ad alto contrasto (blu scuro/grigio antracite). Usa colori pastello per evidenziare concetti (es. verde chiaro per le conferme, blu tenue per le equazioni).
-*   **Interattività al Centro:** Se un concetto può essere animato o modificato tramite slider, DEVE esserlo. Nessuna formula deve essere un blocco statico di testo se contiene variabili indipendenti.
-*   **Step-by-Step:** Le dimostrazioni (algebriche o logiche) non devono mai apparire come un "muro di testo". Devono essere frammentate in passaggi logici che l'utente sblocca uno alla volta per evitare il sovraccarico cognitivo.
+*   **Design Language:** Pulito, moderno, "educational". Usa ampi spazi bianchi (whitespace), bordi arrotondati (radius 12-16), ombre leggere.
+*   **Palette Colori:** Sfondi chiari (bianco o grigio chiarissimo), testi ad alto contrasto (blu scuro/grigio antracite). Usa colori pastello per evidenziare concetti.
+*   **Interattività al Centro:** Se un concetto può essere animato o modificato tramite slider, DEVE esserlo. Nessuna formula deve essere un blocco statico se contiene variabili indipendenti.
+*   **Step-by-Step:** Le dimostrazioni devono essere frammentate in passaggi logici che l'utente sblocca uno alla volta.
 
 ## 2. Architettura Tecnica & Pattern
-*   **Framework:** Flutter (target principale iOS, quindi attenzione alle safe area e allo scrolling fluido `BouncingScrollPhysics`).
-*   **Database:** Isar Database (locale, NoSQL, ultra-veloce). I modelli usano `@collection` per i nodi e `@embedded` per i dati modulari.
-*   **Modularità (Factory Pattern):** Le interfacce interattive sono guidate dai dati (`Server-Driven UI`). Se il database indica un template `live_equation`, Flutter usa una Factory per istanziare quel widget. La UI non deve mai avere la logica *hard-coded* per una specifica formula, ma deve essere un contenitore per il template JSON-driven.
-*   **Offline-First:** L'app deve funzionare al 100% senza internet dopo la sincronizzazione iniziale. Tutte le query avvengono sul database locale Isar.
+*   **Framework:** Flutter (target principale iOS, `BouncingScrollPhysics`).
+*   **Database:** Isar Database (locale, NoSQL). I modelli usano `@collection` per i nodi e `@embedded` per i dati modulari.
+*   **Contenuti Educativi (Markdown Decoupled):**
+    *   Gli argomenti sono file `.md` in `assets/content/{categoria}/` con YAML frontmatter (id, titolo, categoria, prerequisiti, widget interattivo linkato) e corpo in puro Markdown + LaTeX.
+    *   `MarkdownContentParser` esegue il parsing YAML → modelli + corpo → blocchi di contenuto e passaggi algebrici.
+    *   `ContentLoaderService` scopre e carica offline tutti i file `.md` via AssetManifest nel database Isar.
+*   **Widget Interattivi (Factory Pattern):** `InteractiveTemplateFactory` istanzia il widget corretto in base alla chiave `template` del frontmatter YAML. I widget sono hardcoded (CustomPainter a 60/120fps), ma il loro collegamento agli articoli è puramente dichiarativo.
+*   **Unità di Misura Slider:** Ogni `InteractiveParameter` ha un campo opzionale `unit` (es. `'V'`, `'m/s'`, `'Ω'`). Se assente o vuoto, nessuna unità viene mostrata. NON hardcodare mai unità nei widget.
+*   **Offline-First:** L'app funziona al 100% senza internet. Tutte le query avvengono su Isar locale.
 
 ## 3. Gestione del Codice e Versioning (Git)
-*   Sei autorizzato e incoraggiato a gestire il versionamento del codice.
 *   Ogni volta che completi uno Step logico o una feature, DEVI:
-    1. Eseguire un controllo degli errori (es. `flutter analyze` se possibile).
-    2. Effettuare un `git add .`
-    3. Creare un commit con messaggi semantici (es. `feat: aggiunta gestione slider`, `fix: risolto padding nel rendering LaTeX`, `chore: aggiornamento dipendenze`).
-    4. Eseguire il push sulla repository remota (`git push`).
+    1. Eseguire `flutter analyze` (zero errori/warning richiesti).
+    2. Eseguire `flutter test` (tutti i 146+ test devono passare).
+    3. Creare un commit semantico (es. `feat:`, `fix:`, `chore:`).
+    4. Eseguire `git push`.
 
 ## 4. Stack Tecnologico Autorizzato
-Non introdurre nuovi pacchetti senza prima avvisare e giustificare la scelta. I pacchetti core sono:
+Non introdurre nuovi pacchetti senza giustificazione. I pacchetti core sono:
 *   `isar` / `isar_flutter_libs` (Database locale)
 *   `flutter_math_fork` (Rendering equazioni LaTeX)
 *   `math_expressions` (Parsing e calcolo matematico a runtime)
 *   `path_provider` (Gestione directory file)
-*   *(In futuro)* `fl_chart` o simili per i grafici cartesiani.
+*   `yaml` (Parsing frontmatter YAML dei file di contenuto)
 
 ## 5. Come procedere (Metodologia Step-by-Step)
-*   Non anticipare mai il lavoro. Se ti viene chiesto di eseguire lo "Step X", concentrati **esclusivamente** sui requisiti dello Step X.
-*   Se un file diventa troppo grande (sopra le 200 righe), proponi un refactoring estraendo i widget in file separati dentro `lib/presentation/widgets/`.
-*   Commenta le parti complesse del codice (soprattutto i parser matematici e le transazioni sul database) usando la lingua italiana.
+*   Consulta sempre `PROJECT_MAP.md` prima di iniziare.
+*   Non anticipare mai il lavoro oltre lo scope richiesto.
+*   Se un file supera le 200 righe, proponi un refactoring.
+*   Commenta le parti complesse del codice in italiano.
 
-## 6. Creazione Diretta di Argomenti, Animazioni e Corollari (Modalità Autonoma)
-*   L'applicazione è 100% autonoma ed esegue il caricamento offline locale all'avvio da `MockDataService`.
-*   Quando l'utente richiede un nuovo argomento, legge fisica, dimostrazione o corollario:
-    1. Implementa o arricchisci i passaggi matematici dettagliati in `algebraicProof`, contrassegnando i corollari con `"Corollario: [Nome]"`.
-    2. Se l'argomento include un fenomeno fisico o matematico dinamico, crea o registra il widget di simulazione (es. `CustomPainter` vettoriale animato fluido a 60/120fps) nella `InteractiveTemplateFactory`.
-    3. Registra il nuovo nodo e i suoi collegamenti interdisciplinari in `MockDataService.populateDatabase`.
-    4. Verifica con `flutter test` e `flutter analyze` e crea un commit semantico con `git push`.
+## 6. Aggiunta di Nuovi Argomenti (Workflow Senza Codice)
+Per aggiungere un nuovo argomento educativo:
+1.  Crea un file `.md` nella sottocartella appropriata di `assets/content/` (es. `physics/phys_newton_02.md`).
+2.  Scrivi il frontmatter YAML:
+    ```yaml
+    ---
+    id: phys_newton_02
+    title: "Seconda Legge di Newton"
+    category: "Fisica"
+    subCategory: "Dinamica"
+    prerequisites:
+      - phys_kin_01
+    interactive:
+      template: live_equation
+      unit: "N"
+      equations: ["m * a"]
+      parameters:
+        - variable: m
+          label: "Massa (kg)"
+          unit: "kg"
+          min: 0.1
+          max: 100.0
+          default: 10.0
+          step: 0.5
+        - variable: a
+          label: "Accelerazione (m/s²)"
+          unit: "m/s²"
+          min: 0.0
+          max: 20.0
+          default: 9.81
+          step: 0.01
+    ---
+    ```
+3.  Scrivi il corpo dell'articolo in Markdown + LaTeX (passaggi algebrici con `$$...$$`).
+4.  Se è una nuova sottocartella, registrala in `pubspec.yaml` sotto `flutter: assets:`.
+5.  Il `ContentLoaderService` caricherà automaticamente il contenuto al prossimo avvio.
