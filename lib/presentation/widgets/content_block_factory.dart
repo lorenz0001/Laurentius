@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
+import '../../core/theme/app_theme.dart';
 import '../../domain/models/knowledge_node.dart';
 import 'math_markdown_view.dart';
 
 /// Factory e builder per il rendering modulare dei blocchi editoriali e didattici (ContentBlock).
 /// Supporta Markdown arricchito, formule matematiche LaTeX vettoriali sia inline sia display,
-/// Info Box di approfondimento (insight/corollari) e richiami multimediali.
+/// Info Box di approfondimento (insight/corollari) e richiami multimediali in stile Wikipedia Dark Mode.
 class ContentBlockFactory {
   /// Costruisce il widget corrispondente al singolo blocco di contenuto
   static Widget buildBlock(ContentBlock block, BuildContext context) {
@@ -40,16 +41,9 @@ class ContentBlockFactory {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppTheme.surfaceElevated,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x04000000),
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: AppTheme.borderDark),
       ),
       child: Center(
         child: SingleChildScrollView(
@@ -59,7 +53,7 @@ class ContentBlockFactory {
             latex,
             textStyle: const TextStyle(
               fontSize: 18,
-              color: Color(0xFF0F172A),
+              color: AppTheme.textPrimary,
               fontWeight: FontWeight.w500,
             ),
             mathStyle: MathStyle.display,
@@ -68,7 +62,7 @@ class ContentBlockFactory {
               style: const TextStyle(
                 fontFamily: 'monospace',
                 fontSize: 14,
-                color: Color(0xFFDC2626),
+                color: AppTheme.accentRedBright,
               ),
             ),
           ),
@@ -83,9 +77,9 @@ class ContentBlockFactory {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFBEB), // Giallo ambra pastello
+        color: const Color(0xFF261D10), // Ambra profonda dark
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFFDE68A)),
+        border: Border.all(color: const Color(0xFF78350F)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,12 +87,13 @@ class ContentBlockFactory {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: const Color(0xFFFEF3C7),
+              color: const Color(0xFF451A03),
               borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFF92400E), width: 0.8),
             ),
             child: const Icon(
               Icons.lightbulb_rounded,
-              color: Color(0xFFD97706),
+              color: Color(0xFFFBBF24),
               size: 18,
             ),
           ),
@@ -113,7 +108,7 @@ class ContentBlockFactory {
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.6,
-                    color: Color(0xFFB45309),
+                    color: Color(0xFFFBBF24),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -122,7 +117,7 @@ class ContentBlockFactory {
                   baseStyle: const TextStyle(
                     fontSize: 13.5,
                     height: 1.5,
-                    color: Color(0xFF78350F),
+                    color: Color(0xFFFDE68A),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -139,8 +134,9 @@ class ContentBlockFactory {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
+        color: AppTheme.surfaceElevated,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppTheme.borderDark),
       ),
       clipBehavior: Clip.antiAlias,
       child: Image.asset(
@@ -148,11 +144,18 @@ class ContentBlockFactory {
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) => Container(
           padding: const EdgeInsets.all(24),
-          color: const Color(0xFFF1F5F9),
-          child: Center(
-            child: Text(
-              'Immagine non trovata: $imageName',
-              style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+          color: AppTheme.surfaceElevated,
+          child: const Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.broken_image_rounded, color: AppTheme.textMuted, size: 20),
+                SizedBox(width: 8),
+                Text(
+                  'Immagine illustrativa non disponibile offline',
+                  style: TextStyle(fontSize: 12, color: AppTheme.textMuted),
+                ),
+              ],
             ),
           ),
         ),

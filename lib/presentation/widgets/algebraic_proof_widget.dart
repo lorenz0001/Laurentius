@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
+import '../../core/theme/app_theme.dart';
 import '../../domain/models/knowledge_node.dart';
 
 /// Widget per la visualizzazione interattiva step-by-step di dimostrazioni logiche,
-/// passaggi algebrici e derivazione esplicita di corollari.
+/// passaggi algebrici e derivazione esplicita di corollari in stile Wikipedia Dark Mode.
 class AlgebraicProofWidget extends StatefulWidget {
   final List<ProofStep> proofSteps;
   final String? initialGroup;
@@ -62,6 +63,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
 
   List<String> get _groups {
     final groups = <String>[];
+    bool hasUngrouped = false;
     for (final step in widget.proofSteps) {
       final desc = step.description ?? '';
       final match = RegExp(r'^\[(.*?)\]').firstMatch(desc);
@@ -70,7 +72,12 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
         if (g.isNotEmpty && !groups.contains(g)) {
           groups.add(g);
         }
+      } else {
+        hasUngrouped = true;
       }
+    }
+    if (hasUngrouped && groups.isNotEmpty) {
+      groups.insert(0, 'Dimostrazione Principale');
     }
     return groups;
   }
@@ -81,6 +88,13 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
       return widget.proofSteps;
     }
     final activeGroup = _selectedGroup ?? allGroups.first;
+    if (activeGroup == 'Dimostrazione Principale') {
+      final filtered = widget.proofSteps.where((s) {
+        final desc = s.description ?? '';
+        return !desc.startsWith('[');
+      }).toList();
+      return filtered.isNotEmpty ? filtered : widget.proofSteps;
+    }
     final filtered = widget.proofSteps.where((s) {
       final desc = s.description ?? '';
       return desc.startsWith('[$activeGroup]');
@@ -93,7 +107,9 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.proofSteps != widget.proofSteps ||
         oldWidget.initialGroup != widget.initialGroup ||
-        oldWidget.targetCorollary != widget.targetCorollary) {
+        oldWidget.targetCorollary != widget.targetCorollary ||
+        oldWidget.initialStepIndex != widget.initialStepIndex ||
+        oldWidget.initialShowAll != widget.initialShowAll) {
       currentStepIndex = widget.initialStepIndex ?? 0;
       _showAllSteps = widget.initialShowAll;
       _selectedGroup = widget.initialGroup;
@@ -126,13 +142,14 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color(0xFFF1F5F9),
+          color: AppTheme.surfaceElevated,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppTheme.borderDark),
         ),
         child: const Center(
           child: Text(
             'Nessuna dimostrazione algebrica disponibile.',
-            style: TextStyle(color: Color(0xFF64748B)),
+            style: TextStyle(color: AppTheme.textSecondary),
           ),
         ),
       );
@@ -149,28 +166,37 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Intestazione con progresso e toggle "Mostra Tutti"
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 8,
           children: [
-            const Row(
-              children: [
-                Icon(
-                  Icons.auto_stories_rounded,
-                  size: 18,
-                  color: Color(0xFF0F172A),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  'Dimostrazione & Corollari',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF0F172A),
+            const FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.auto_stories_rounded,
+                    size: 16,
+                    color: AppTheme.textSecondary,
                   ),
-                ),
-              ],
+                  SizedBox(width: 8),
+                  Text(
+                    'Dimostrazione & Corollari',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextButton(
                   onPressed: () {
@@ -190,26 +216,26 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF2563EB),
+                      color: AppTheme.accentBlueBright,
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 9,
-                    vertical: 4,
+                    vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEFF6FF),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFBFDBFE)),
+                    color: AppTheme.accentBlueDark,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: const Color(0xFF1D4ED8), width: 0.8),
                   ),
                   child: Text(
                     '$displayedCount / $totalSteps',
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF1D4ED8),
+                      color: AppTheme.accentBlueBright,
                     ),
                   ),
                 ),
@@ -218,7 +244,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
           ],
         ),
 
-        // Selettore a Chip/Tasti per dimostrazioni multiple
+        // Selettore a Chip per dimostrazioni multiple
         if (_groups.isNotEmpty) ...[
           const SizedBox(height: 12),
           SingleChildScrollView(
@@ -250,7 +276,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
           },
         ),
 
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
 
         // Pulsante di avanzamento se non completato
         if (!_showAllSteps && !isCompleted)
@@ -265,10 +291,10 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
             icon: const Icon(Icons.arrow_downward_rounded, size: 18),
             label: Text(
               'Sblocca Passaggio ${currentStepIndex + 2}',
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2563EB),
+              backgroundColor: AppTheme.accentBlue,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
@@ -281,28 +307,31 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             decoration: BoxDecoration(
-              color: const Color(0xFFF0FDF4),
+              color: const Color(0xFF064E3B),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFBBF7D0)),
+              border: Border.all(color: const Color(0xFF059669), width: 0.8),
             ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.verified_rounded,
-                  color: Color(0xFF16A34A),
-                  size: 18,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  'Dimostrazione e corollari verificati',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF15803D),
+            child: const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.verified_rounded,
+                    color: Color(0xFF34D399),
+                    size: 18,
                   ),
-                ),
-              ],
+                  SizedBox(width: 8),
+                  Text(
+                    'Dimostrazione e corollari verificati',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF34D399),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
       ],
@@ -316,7 +345,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
           ? const Icon(
               Icons.star_rounded,
               size: 16,
-              color: Color(0xFFD97706),
+              color: Color(0xFFFBBF24),
             )
           : null,
       label: Text(group),
@@ -329,32 +358,32 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
         });
       },
       selectedColor: isCorollaryGroup
-          ? const Color(0xFFFEF3C7)
-          : const Color(0xFFEFF6FF),
+          ? const Color(0xFF451A03)
+          : const Color(0xFF1E3A8A),
       checkmarkColor: isCorollaryGroup
-          ? const Color(0xFFD97706)
-          : const Color(0xFF2563EB),
-      backgroundColor: Colors.white,
+          ? const Color(0xFFFBBF24)
+          : AppTheme.accentBlueBright,
+      backgroundColor: AppTheme.surfaceElevated,
       side: BorderSide(
         color: isSelected
             ? (isCorollaryGroup
-                ? const Color(0xFFD97706)
-                : const Color(0xFF2563EB))
+                ? const Color(0xFFFBBF24)
+                : AppTheme.accentBlueBright)
             : (isCorollaryGroup
-                ? const Color(0xFFFDE68A)
-                : const Color(0xFFE2E8F0)),
-        width: isSelected ? 1.5 : 1.0,
+                ? const Color(0xFF78350F)
+                : AppTheme.borderDark),
+        width: isSelected ? 1.4 : 0.9,
       ),
       labelStyle: TextStyle(
         fontSize: 12,
         fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
         color: isSelected
             ? (isCorollaryGroup
-                ? const Color(0xFF92400E)
-                : const Color(0xFF1D4ED8))
+                ? const Color(0xFFFEF3C7)
+                : Colors.white)
             : (isCorollaryGroup
-                ? const Color(0xFFB45309)
-                : const Color(0xFF475569)),
+                ? const Color(0xFFFDE68A)
+                : AppTheme.textSecondary),
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -369,42 +398,36 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
         cleanDesc.toLowerCase().contains('corollario:');
 
     final borderColor = isCorollary
-        ? const Color(0xFFF59E0B)
-        : const Color(0xFFE2E8F0);
-    final cardBg = isCorollary ? const Color(0xFFFFFBEB) : Colors.white;
+        ? const Color(0xFFB45309)
+        : AppTheme.borderDark;
+    final cardBg = isCorollary ? const Color(0xFF251C08) : AppTheme.surfaceDark;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: borderColor, width: isCorollary ? 1.5 : 1.0),
-        boxShadow: [
-          BoxShadow(
-            color: isCorollary
-                ? const Color(0x14F59E0B)
-                : const Color(0x08000000),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        border: Border.all(color: borderColor, width: isCorollary ? 1.4 : 1.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Badge del passaggio / Corollario
-          Row(
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              if (isCorollary) ...[
+              if (isCorollary)
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFEF3C7),
+                    color: const Color(0xFF451A03),
                     borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: const Color(0xFFFDE68A)),
+                    border: Border.all(color: const Color(0xFF92400E)),
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
@@ -412,7 +435,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                       Icon(
                         Icons.star_rounded,
                         size: 13,
-                        color: Color(0xFFD97706),
+                        color: Color(0xFFFBBF24),
                       ),
                       SizedBox(width: 4),
                       Text(
@@ -421,27 +444,29 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 0.5,
-                          color: Color(0xFFB45309),
+                          color: Color(0xFFFBBF24),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 8),
-              ],
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: isCorollary ? Colors.white : const Color(0xFFF1F5F9),
+                  color: isCorollary ? const Color(0xFF33230A) : AppTheme.surfaceElevated,
                   borderRadius: BorderRadius.circular(6),
+                  border: Border.all(
+                    color: isCorollary ? const Color(0xFF78350F) : AppTheme.borderDark,
+                    width: 0.8,
+                  ),
                 ),
                 child: Text(
                   'PASSAGGIO $stepNumber',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,
-                    color: Color(0xFF64748B),
+                    color: isCorollary ? const Color(0xFFFDE68A) : AppTheme.textSecondary,
                   ),
                 ),
               ),
@@ -458,25 +483,25 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                 height: 1.45,
                 fontWeight: isCorollary ? FontWeight.w600 : FontWeight.w400,
                 color: isCorollary
-                    ? const Color(0xFF78350F)
-                    : const Color(0xFF334155),
+                    ? const Color(0xFFFDE68A)
+                    : AppTheme.textPrimary,
               ),
             ),
           ],
 
-          // Equazione LaTeX renderizzata
+          // Equazione LaTeX renderizzata ad alto contrasto
           if (step.latexEquation != null && step.latexEquation!.isNotEmpty) ...[
             const SizedBox(height: 12),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isCorollary ? const Color(0xFF181204) : AppTheme.bgDark,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: isCorollary
-                      ? const Color(0xFFFDE68A)
-                      : const Color(0xFFE2E8F0),
+                      ? const Color(0xFF78350F)
+                      : AppTheme.borderDark,
                 ),
               ),
               child: Center(
@@ -485,11 +510,11 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                   child: Math.tex(
                     step.latexEquation!,
                     textStyle: TextStyle(
-                      fontSize: isCorollary ? 22 : 19,
+                      fontSize: isCorollary ? 21 : 18,
                       fontWeight: isCorollary
                           ? FontWeight.w700
                           : FontWeight.w500,
-                      color: const Color(0xFF0F172A),
+                      color: AppTheme.textPrimary,
                     ),
                   ),
                 ),
@@ -505,13 +530,13 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
                 color: isCorollary
-                    ? const Color(0xFFFEF9C3)
-                    : const Color(0xFFF8FAFC),
+                    ? const Color(0xFF33230A)
+                    : AppTheme.surfaceElevated,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: isCorollary
-                      ? const Color(0xFFFEF08A)
-                      : const Color(0xFFE2E8F0),
+                      ? const Color(0xFF78350F)
+                      : AppTheme.borderDark,
                 ),
               ),
               child: Row(
@@ -521,8 +546,8 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                     Icons.lightbulb_outline_rounded,
                     size: 16,
                     color: isCorollary
-                        ? const Color(0xFFB45309)
-                        : const Color(0xFF64748B),
+                        ? const Color(0xFFFBBF24)
+                        : AppTheme.textSecondary,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -533,8 +558,8 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                         fontStyle: FontStyle.italic,
                         height: 1.4,
                         color: isCorollary
-                            ? const Color(0xFF854D0E)
-                            : const Color(0xFF475569),
+                            ? const Color(0xFFFDE68A)
+                            : AppTheme.textSecondary,
                       ),
                     ),
                   ),

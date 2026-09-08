@@ -28,17 +28,17 @@ class SpotlightResultCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: isSelected ? const Color(0xFFF0F7FF) : Colors.white,
+        color: isSelected ? const Color(0xFF1E293B) : const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: isSelected ? const Color(0xFF2563EB) : const Color(0xFFE2E8F0),
+          color: isSelected ? const Color(0xFF3B82F6) : const Color(0xFF2D3238),
           width: isSelected ? 1.8 : 1.0,
         ),
         boxShadow: [
           BoxShadow(
             color: isSelected
-                ? const Color(0x182563EB)
-                : const Color(0x08000000),
+                ? const Color(0x333B82F6)
+                : const Color(0x20000000),
             blurRadius: isSelected ? 8 : 4,
             offset: const Offset(0, 2),
           ),
@@ -67,7 +67,7 @@ class SpotlightResultCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF64748B),
+                          color: Color(0xFF94A3B8),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -83,8 +83,8 @@ class SpotlightResultCard extends StatelessWidget {
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
                             color: isSelected
-                                ? const Color(0xFF1D4ED8)
-                                : const Color(0xFF2563EB),
+                                ? const Color(0xFF93C5FD)
+                                : const Color(0xFF60A5FA),
                           ),
                         ),
                         const SizedBox(width: 2),
@@ -92,8 +92,8 @@ class SpotlightResultCard extends StatelessWidget {
                           Icons.arrow_forward_rounded,
                           size: 13,
                           color: isSelected
-                              ? const Color(0xFF1D4ED8)
-                              : const Color(0xFF2563EB),
+                              ? const Color(0xFF93C5FD)
+                              : const Color(0xFF60A5FA),
                         ),
                       ],
                     ),
@@ -115,9 +115,9 @@ class SpotlightResultCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF8FAFC),
+                      color: const Color(0xFF101214),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFFEDF2F7)),
+                      border: Border.all(color: const Color(0xFF2D3238)),
                     ),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -126,14 +126,14 @@ class SpotlightResultCard extends StatelessWidget {
                         result.latexFormula!,
                         textStyle: const TextStyle(
                           fontSize: 14,
-                          color: Color(0xFF0F172A),
+                          color: Color(0xFFF8FAFC),
                         ),
                         onErrorFallback: (err) => Text(
                           result.latexFormula!,
                           style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'monospace',
-                            color: Color(0xFF475569),
+                            color: Color(0xFF94A3B8),
                           ),
                         ),
                       ),
@@ -151,7 +151,7 @@ class SpotlightResultCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 12,
                       height: 1.35,
-                      color: Color(0xFF475569),
+                      color: Color(0xFF94A3B8),
                     ),
                   ),
                 ],
@@ -194,37 +194,37 @@ class SpotlightResultCard extends StatelessWidget {
 
     switch (type) {
       case SpotlightResultType.corollary:
-        bg = const Color(0xFFFEF3C7);
-        fg = const Color(0xFFB45309);
-        border = const Color(0xFFFDE68A);
+        bg = const Color(0xFF251C08);
+        fg = const Color(0xFFFCD34D);
+        border = const Color(0xFFB45309);
         icon = Icons.star_rounded;
         label = 'COROLLARIO';
         break;
       case SpotlightResultType.theorem:
-        bg = const Color(0xFFEFF6FF);
-        fg = const Color(0xFF1D4ED8);
-        border = const Color(0xFFBFDBFE);
+        bg = const Color(0xFF1E293B);
+        fg = const Color(0xFF60A5FA);
+        border = const Color(0xFF3B82F6);
         icon = Icons.bookmark_added_rounded;
         label = 'TEOREMA';
         break;
       case SpotlightResultType.formula:
-        bg = const Color(0xFFDCFCE7);
-        fg = const Color(0xFF15803D);
-        border = const Color(0xFFBBF7D0);
+        bg = const Color(0xFF0D2818);
+        fg = const Color(0xFF4ADE80);
+        border = const Color(0xFF15803D);
         icon = Icons.functions_rounded;
         label = 'FORMULA';
         break;
       case SpotlightResultType.definition:
-        bg = const Color(0xFFF3E8FF);
-        fg = const Color(0xFF7C3AED);
-        border = const Color(0xFFE9D5FF);
+        bg = const Color(0xFF281845);
+        fg = const Color(0xFFA78BFA);
+        border = const Color(0xFF7C3AED);
         icon = Icons.lightbulb_outline_rounded;
         label = 'DEFINIZIONE';
         break;
       case SpotlightResultType.topic:
-        bg = const Color(0xFFF1F5F9);
-        fg = const Color(0xFF334155);
-        border = const Color(0xFFE2E8F0);
+        bg = const Color(0xFF22262B);
+        fg = const Color(0xFFCBD5E1);
+        border = const Color(0xFF475569);
         icon = Icons.auto_stories_rounded;
         label = 'ARGOMENTO';
         break;
@@ -266,7 +266,7 @@ class SpotlightResultCard extends StatelessWidget {
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w700,
-          color: Color(0xFF0F172A),
+          color: Color(0xFFF8FAFC),
           letterSpacing: -0.2,
         ),
         maxLines: 2,
@@ -291,8 +291,8 @@ class SpotlightResultCard extends StatelessWidget {
         TextSpan(
           text: title.substring(matchIndex, matchIndex + cleanQuery.length),
           style: const TextStyle(
-            backgroundColor: Color(0xFFFEF08A),
-            color: Color(0xFF854D0E),
+            backgroundColor: Color(0xFF854D0E),
+            color: Color(0xFFFEF08A),
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -307,7 +307,7 @@ class SpotlightResultCard extends StatelessWidget {
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w700,
-          color: Color(0xFF0F172A),
+          color: Color(0xFFF8FAFC),
           letterSpacing: -0.2,
         ),
         children: spans,

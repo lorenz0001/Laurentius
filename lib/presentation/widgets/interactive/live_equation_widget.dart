@@ -198,16 +198,9 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 12,
-            offset: Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -219,12 +212,12 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEFF6FF),
+                  color: const Color(0xFF1E3A8A),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
                   Icons.tune_rounded,
-                  color: Color(0xFF2563EB),
+                  color: Color(0xFF60A5FA),
                   size: 20,
                 ),
               ),
@@ -238,13 +231,13 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                        color: Color(0xFFEAECF0),
                       ),
                     ),
                     SizedBox(height: 2),
                     Text(
                       'Muovi gli slider per osservare il comportamento in tempo reale',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                     ),
                   ],
                 ),
@@ -266,7 +259,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
               fontSize: 12,
               fontWeight: FontWeight.w700,
               letterSpacing: 0.6,
-              color: Color(0xFF475569),
+              color: Color(0xFF9CA3AF),
             ),
           ),
           const SizedBox(height: 12),
@@ -284,13 +277,13 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
       return Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFFFEF2F2),
+          color: const Color(0xFF450A0A),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFFECACA)),
+          border: Border.all(color: const Color(0xFFDC2626)),
         ),
         child: Text(
           _calculationError!,
-          style: const TextStyle(color: Color(0xFFDC2626), fontSize: 13),
+          style: const TextStyle(color: Color(0xFFFCA5A5), fontSize: 13),
         ),
       );
     }
@@ -305,9 +298,9 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF101214),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
@@ -319,13 +312,13 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF64748B),
+                  color: Color(0xFF9CA3AF),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFDCFCE7),
+                  color: const Color(0xFF064E3B),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Text(
@@ -333,7 +326,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF15803D),
+                    color: Color(0xFF34D399),
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -351,7 +344,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                 style: const TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: Color(0xFFF8FAFC),
                   letterSpacing: -1,
                 ),
               ),
@@ -362,7 +355,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF2563EB),
+                    color: Color(0xFF60A5FA),
                   ),
                 ),
               ],
@@ -399,9 +392,9 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF22262B),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -414,7 +407,7 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1E293B),
+                  color: Color(0xFFEAECF0),
                 ),
               ),
               Container(
@@ -423,16 +416,16 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
                   vertical: 3,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFF1E3A8A),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color(0xFFCBD5E1)),
+                  border: Border.all(color: const Color(0xFF2563EB)),
                 ),
                 child: Text(
                   badgeText,
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF0F172A),
+                    color: Color(0xFF93C5FD),
                   ),
                 ),
               ),
@@ -441,10 +434,10 @@ class _LiveEquationWidgetState extends State<LiveEquationWidget> {
           const SizedBox(height: 6),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: const Color(0xFF2563EB),
-              inactiveTrackColor: const Color(0xFFE2E8F0),
-              thumbColor: const Color(0xFF2563EB),
-              overlayColor: const Color(0x292563EB),
+              activeTrackColor: const Color(0xFF3B82F6),
+              inactiveTrackColor: const Color(0xFF374151),
+              thumbColor: const Color(0xFF60A5FA),
+              overlayColor: const Color(0x2960A5FA),
               trackHeight: 5,
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 9),
             ),

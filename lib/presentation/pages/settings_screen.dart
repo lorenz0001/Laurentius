@@ -134,9 +134,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: const Color(0xFF101214),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF101214),
         elevation: 0,
         scrolledUnderElevation: 1,
         title: const Text(
@@ -144,7 +144,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           style: TextStyle(
             fontWeight: FontWeight.w800,
             fontSize: 17,
-            color: Color(0xFF0F172A),
+            color: Color(0xFFEAECF0),
           ),
         ),
         centerTitle: true,
@@ -162,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF60A5FA),
                     ),
                   ),
           ),
@@ -171,7 +171,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(color: Color(0xFF2563EB)),
+              child: CircularProgressIndicator(color: Color(0xFF60A5FA)),
             )
           : SingleChildScrollView(
               padding: const EdgeInsets.all(20),
@@ -210,10 +210,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: hasKey ? const Color(0xFFEFF6FF) : const Color(0xFFFFFBEB),
+        color: hasKey ? const Color(0xFF1E293B) : const Color(0xFF3B2805),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: hasKey ? const Color(0xFFBFDBFE) : const Color(0xFFFDE68A),
+          color: hasKey ? const Color(0xFF3B82F6) : const Color(0xFFD97706),
         ),
       ),
       child: Row(
@@ -221,12 +221,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: const Color(0xFF14171A),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               hasKey ? Icons.bolt_rounded : Icons.warning_amber_rounded,
-              color: hasKey ? const Color(0xFF2563EB) : const Color(0xFFD97706),
+              color: hasKey ? const Color(0xFF60A5FA) : const Color(0xFFFBBF24),
               size: 24,
             ),
           ),
@@ -243,8 +243,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
                     color: hasKey
-                        ? const Color(0xFF1E3A8A)
-                        : const Color(0xFF92400E),
+                        ? const Color(0xFF93C5FD)
+                        : const Color(0xFFFCD34D),
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -255,8 +255,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: TextStyle(
                     fontSize: 12,
                     color: hasKey
-                        ? const Color(0xFF3B82F6)
-                        : const Color(0xFFB45309),
+                        ? const Color(0xFF60A5FA)
+                        : const Color(0xFFFDE68A),
                   ),
                 ),
               ],
@@ -271,16 +271,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Row(
             children: [
-              Icon(Icons.key_rounded, size: 18, color: Color(0xFF2563EB)),
+              Icon(Icons.key_rounded, size: 18, color: Color(0xFF60A5FA)),
               SizedBox(width: 8),
               Text(
                 'DEEPSEEK API KEY',
@@ -288,7 +288,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.5,
-                  color: Color(0xFF334155),
+                  color: Color(0xFFF8FAFC),
                 ),
               ),
             ],
@@ -296,7 +296,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 8),
           const Text(
             'La chiave viene salvata localmente sul tuo dispositivo e mai trasmessa a terzi.',
-            style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+            style: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
           ),
           const SizedBox(height: 14),
           TextField(
@@ -305,29 +305,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: const TextStyle(
               fontSize: 14,
               fontFamily: 'monospace',
-              color: Color(0xFF0F172A),
+              color: Color(0xFFF8FAFC),
             ),
             decoration: InputDecoration(
               hintText: 'sk-...',
-              hintStyle: const TextStyle(color: Color(0xFF94A3B8)),
+              hintStyle: const TextStyle(color: Color(0xFF64748B)),
               filled: true,
-              fillColor: const Color(0xFFF8FAFC),
+              fillColor: const Color(0xFF14171A),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 12,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(
-                  color: Color(0xFF2563EB),
+                  color: Color(0xFF3B82F6),
                   width: 1.5,
                 ),
               ),
@@ -336,7 +336,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _obscureApiKey
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: const Color(0xFF64748B),
+                  color: const Color(0xFF94A3B8),
                   size: 20,
                 ),
                 onPressed: () {
@@ -357,9 +357,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -369,7 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Icon(
                 Icons.psychology_outlined,
                 size: 18,
-                color: Color(0xFF2563EB),
+                color: Color(0xFF60A5FA),
               ),
               SizedBox(width: 8),
               Text(
@@ -378,7 +378,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.5,
-                  color: Color(0xFF334155),
+                  color: Color(0xFFF8FAFC),
                 ),
               ),
             ],
@@ -391,7 +391,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF475569),
+              color: Color(0xFF94A3B8),
             ),
           ),
           const SizedBox(height: 8),
@@ -403,19 +403,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return ChoiceChip(
                 label: Text(m),
                 selected: isSelected,
-                selectedColor: const Color(0xFFEFF6FF),
-                backgroundColor: const Color(0xFFF8FAFC),
+                selectedColor: const Color(0xFF1E293B),
+                backgroundColor: const Color(0xFF14171A),
                 labelStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                   color: isSelected
-                      ? const Color(0xFF2563EB)
-                      : const Color(0xFF475569),
+                      ? const Color(0xFF60A5FA)
+                      : const Color(0xFF94A3B8),
                 ),
                 side: BorderSide(
                   color: isSelected
-                      ? const Color(0xFF2563EB)
-                      : const Color(0xFFE2E8F0),
+                      ? const Color(0xFF3B82F6)
+                      : const Color(0xFF2D3238),
                 ),
                 onSelected: (selected) {
                   if (selected) {
@@ -432,22 +432,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // Campo testo modello
           TextField(
             controller: _modelController,
-            style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
+            style: const TextStyle(
+              fontSize: 13,
+              fontFamily: 'monospace',
+              color: Color(0xFFF8FAFC),
+            ),
             decoration: InputDecoration(
               labelText: 'Nome Modello',
               labelStyle: const TextStyle(
-                color: Color(0xFF64748B),
+                color: Color(0xFF94A3B8),
                 fontSize: 13,
               ),
               filled: true,
-              fillColor: const Color(0xFFF8FAFC),
+              fillColor: const Color(0xFF14171A),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 12,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF3B82F6)),
               ),
             ),
           ),
@@ -456,22 +468,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // Campo Base URL
           TextField(
             controller: _baseUrlController,
-            style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
+            style: const TextStyle(
+              fontSize: 13,
+              fontFamily: 'monospace',
+              color: Color(0xFFF8FAFC),
+            ),
             decoration: InputDecoration(
               labelText: 'Base URL API',
               labelStyle: const TextStyle(
-                color: Color(0xFF64748B),
+                color: Color(0xFF94A3B8),
                 fontSize: 13,
               ),
               filled: true,
-              fillColor: const Color(0xFFF8FAFC),
+              fillColor: const Color(0xFF14171A),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 12,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF3B82F6)),
               ),
             ),
           ),
@@ -484,9 +508,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -496,7 +520,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Icon(
                 Icons.network_check_rounded,
                 size: 18,
-                color: Color(0xFF2563EB),
+                color: Color(0xFF60A5FA),
               ),
               SizedBox(width: 8),
               Text(
@@ -505,7 +529,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.5,
-                  color: Color(0xFF334155),
+                  color: Color(0xFFF8FAFC),
                 ),
               ),
             ],
@@ -513,7 +537,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 8),
           const Text(
             'Invia una richiesta minima di test ai server DeepSeek per verificare la validità della chiave.',
-            style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+            style: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
           ),
           const SizedBox(height: 14),
           OutlinedButton.icon(
@@ -529,8 +553,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               _isTesting ? 'Verifica in corso...' : 'Testa Chiave API',
             ),
             style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF2563EB),
-              side: const BorderSide(color: Color(0xFFBFDBFE)),
+              foregroundColor: const Color(0xFF60A5FA),
+              side: const BorderSide(color: Color(0xFF3B82F6)),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -543,13 +567,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: _testResult!.isSuccess
-                    ? const Color(0xFFF0FDF4)
-                    : const Color(0xFFFEF2F2),
+                    ? const Color(0xFF143820)
+                    : const Color(0xFF3B1219),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: _testResult!.isSuccess
-                      ? const Color(0xFFBBF7D0)
-                      : const Color(0xFFFECACA),
+                      ? const Color(0xFF15803D)
+                      : const Color(0xFFB91C1C),
                 ),
               ),
               child: Row(
@@ -559,8 +583,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ? Icons.check_circle_rounded
                         : Icons.error_outline_rounded,
                     color: _testResult!.isSuccess
-                        ? const Color(0xFF16A34A)
-                        : const Color(0xFFDC2626),
+                        ? const Color(0xFF4ADE80)
+                        : const Color(0xFFEF4444),
                     size: 18,
                   ),
                   const SizedBox(width: 10),
@@ -571,8 +595,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         fontSize: 12.5,
                         fontWeight: FontWeight.w600,
                         color: _testResult!.isSuccess
-                            ? const Color(0xFF15803D)
-                            : const Color(0xFFB91C1C),
+                            ? const Color(0xFF4ADE80)
+                            : const Color(0xFFFB7185),
                       ),
                     ),
                   ),
@@ -589,9 +613,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -601,7 +625,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Icon(
                 Icons.info_outline_rounded,
                 size: 18,
-                color: Color(0xFF64748B),
+                color: Color(0xFF94A3B8),
               ),
               SizedBox(width: 8),
               Text(
@@ -610,7 +634,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   fontSize: 11,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.6,
-                  color: Color(0xFF64748B),
+                  color: Color(0xFF94A3B8),
                 ),
               ),
             ],
@@ -624,7 +648,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: TextStyle(
               fontSize: 12.5,
               height: 1.6,
-              color: Color(0xFF475569),
+              color: Color(0xFFCBD5E1),
             ),
           ),
         ],

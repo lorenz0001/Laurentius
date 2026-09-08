@@ -202,14 +202,14 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
   (Color, Color) _getDifficultyColors(String difficulty) {
     switch (difficulty) {
       case 'Fondamenti':
-        return (const Color(0xFF16A34A), const Color(0xFFDCFCE7));
+        return (const Color(0xFF4ADE80), const Color(0xFF143820));
       case 'Intermedio':
-        return (const Color(0xFF0284C7), const Color(0xFFE0F2FE));
+        return (const Color(0xFF38BDF8), const Color(0xFF0C2A40));
       case 'Avanzato':
-        return (const Color(0xFFD97706), const Color(0xFFFEF3C7));
+        return (const Color(0xFFFBBF24), const Color(0xFF3B2805));
       case 'Superiore':
       default:
-        return (const Color(0xFF7C3AED), const Color(0xFFF3E8FF));
+        return (const Color(0xFFA78BFA), const Color(0xFF281845));
     }
   }
 
@@ -225,11 +225,11 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(color: Color(0xFF2563EB)),
+            CircularProgressIndicator(color: Color(0xFF60A5FA)),
             SizedBox(height: 16),
             Text(
               'Organizzazione catalogo didattico...',
-              style: TextStyle(color: Color(0xFF64748B), fontSize: 14),
+              style: TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
             ),
           ],
         ),
@@ -246,13 +246,13 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
               const Icon(
                 Icons.error_outline,
                 size: 44,
-                color: Color(0xFFDC2626),
+                color: Color(0xFFEF4444),
               ),
               const SizedBox(height: 12),
               Text(
                 _errorMessage!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF475569), fontSize: 14),
+                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
               ),
               const SizedBox(height: 16),
               ElevatedButton.icon(
@@ -270,13 +270,13 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
       return const Center(
         child: Text(
           'Nessun contenuto disponibile nel catalogo.',
-          style: TextStyle(color: Color(0xFF64748B)),
+          style: TextStyle(color: Color(0xFF94A3B8)),
         ),
       );
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: const Color(0xFF101214),
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
@@ -288,9 +288,9 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                   controller: _tabController,
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
-                  labelColor: const Color(0xFF2563EB),
-                  unselectedLabelColor: const Color(0xFF64748B),
-                  indicatorColor: const Color(0xFF2563EB),
+                  labelColor: const Color(0xFF60A5FA),
+                  unselectedLabelColor: const Color(0xFF94A3B8),
+                  indicatorColor: const Color(0xFF60A5FA),
                   indicatorWeight: 3,
                   indicatorSize: TabBarIndicatorSize.tab,
                   labelStyle: const TextStyle(
@@ -318,7 +318,7 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                               vertical: 1,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEFF6FF),
+                              color: const Color(0xFF1E293B),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
@@ -385,19 +385,19 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                 _selectedDifficulty = diff;
               });
             },
-            backgroundColor: Colors.white,
+            backgroundColor: const Color(0xFF191C20),
             selectedColor: activeBg,
             checkmarkColor: Colors.white,
             labelStyle: TextStyle(
               fontSize: 12,
               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-              color: isSelected ? activeTextColor : const Color(0xFF475569),
+              color: isSelected ? activeTextColor : const Color(0xFF94A3B8),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(
-                color: isSelected ? activeBg : const Color(0xFFCBD5E1),
+                color: isSelected ? activeBg : const Color(0xFF2D3238),
                 width: isSelected ? 1.5 : 1.0,
               ),
             ),
@@ -524,7 +524,7 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF0F172A),
+                                color: Color(0xFFF8FAFC),
                                 letterSpacing: -0.2,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -537,7 +537,7 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: catStyle.primary.withValues(alpha: 0.10),
+                              color: catStyle.primary.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -606,12 +606,12 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x06000000),
+            color: Color(0x33000000),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -651,7 +651,10 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Riga Superiore: Badge Sottocategoria e Livello
-                      Row(
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -659,7 +662,7 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFF1F5F9),
+                              color: const Color(0xFF22262B),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -667,11 +670,10 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                               style: const TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF475569),
+                                color: Color(0xFF94A3B8),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 6),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 7,
@@ -693,12 +695,16 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                                   ),
                                 ),
                                 const SizedBox(width: 4),
-                                Text(
-                                  difficultyName,
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                    color: difficultyColor,
+                                Flexible(
+                                  child: Text(
+                                    difficultyName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700,
+                                      color: difficultyColor,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -714,14 +720,17 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: Color(0xFFF8FAFC),
                           height: 1.25,
                         ),
                       ),
                       const SizedBox(height: 6),
 
                       // Riga Inferiore: Badge per Laboratorio Interattivo e Teoria
-                      Row(
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           if (hasInteractive) ...[
                             Container(
@@ -730,9 +739,9 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                                 vertical: 3,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFEFF6FF),
+                                color: const Color(0xFF1E293B),
                                 borderRadius: BorderRadius.circular(6),
-                                border: Border.all(color: const Color(0xFFBFDBFE)),
+                                border: Border.all(color: const Color(0xFF3B82F6)),
                               ),
                               child: const Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -740,21 +749,24 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                                   Icon(
                                     Icons.tune_rounded,
                                     size: 13,
-                                    color: Color(0xFF2563EB),
+                                    color: Color(0xFF60A5FA),
                                   ),
                                   SizedBox(width: 4),
-                                  Text(
-                                    'Laboratorio Interattivo',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF2563EB),
+                                  Flexible(
+                                    child: Text(
+                                      'Laboratorio Interattivo',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF60A5FA),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 8),
                           ],
                           if (hasProof) ...[
                             Row(
@@ -763,15 +775,19 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
                                 const Icon(
                                   Icons.menu_book_outlined,
                                   size: 12,
-                                  color: Color(0xFF64748B),
+                                  color: Color(0xFF94A3B8),
                                 ),
                                 const SizedBox(width: 3),
-                                Text(
-                                  '${node.algebraicProof.length} passaggi',
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xFF64748B),
-                                    fontWeight: FontWeight.w500,
+                                Flexible(
+                                  child: Text(
+                                    '${node.algebraicProof.length} passaggi',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: Color(0xFF94A3B8),
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -825,9 +841,9 @@ class _SliverHeaderWithFiltersDelegate extends SliverPersistentHeaderDelegate {
     return Container(
       height: _headerHeight,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFF101214),
         border: Border(
-          bottom: BorderSide(color: Color(0xFFE2E8F0)),
+          bottom: BorderSide(color: Color(0xFF2D3238)),
         ),
       ),
       child: Column(

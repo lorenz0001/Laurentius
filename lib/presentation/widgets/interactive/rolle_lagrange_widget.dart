@@ -118,12 +118,12 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x08000000),
+            color: Color(0x40000000),
             blurRadius: 16,
             offset: Offset(0, 6),
           ),
@@ -142,7 +142,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                   children: [
                     Icon(
                       Icons.insights_rounded,
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF60A5FA),
                       size: 22,
                     ),
                     SizedBox(width: 8),
@@ -152,7 +152,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: Color(0xFFF8FAFC),
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -169,7 +169,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                           ? Icons.pause_circle_rounded
                           : Icons.play_circle_fill_rounded,
                     ),
-                    color: const Color(0xFF2563EB),
+                    color: const Color(0xFF60A5FA),
                     iconSize: 26,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
@@ -186,13 +186,13 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                     ),
                     decoration: BoxDecoration(
                       color: isRolle
-                          ? const Color(0xFFFEF3C7)
-                          : const Color(0xFFEFF6FF),
+                          ? const Color(0xFF3B2D12)
+                          : const Color(0xFF1E293B),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: isRolle
-                            ? const Color(0xFFFDE68A)
-                            : const Color(0xFFBFDBFE),
+                            ? const Color(0xFFB45309)
+                            : const Color(0xFF3B82F6),
                       ),
                     ),
                     child: Text(
@@ -201,8 +201,8 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         color: isRolle
-                            ? const Color(0xFFB45309)
-                            : const Color(0xFF1D4ED8),
+                            ? const Color(0xFFFCD34D)
+                            : const Color(0xFF60A5FA),
                       ),
                     ),
                   ),
@@ -297,9 +297,9 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: const Color(0xFF14171A),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               children: [
@@ -309,8 +309,8 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                       : Icons.lightbulb_rounded,
                   size: 16,
                   color: isRolle && _isRolleConditionMet
-                      ? const Color(0xFF16A34A)
-                      : const Color(0xFFD97706),
+                      ? const Color(0xFF4ADE80)
+                      : const Color(0xFFF59E0B),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -324,8 +324,8 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: isRolle && _isRolleConditionMet
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFF334155),
+                          ? const Color(0xFF4ADE80)
+                          : const Color(0xFFE2E8F0),
                     ),
                   ),
                 ),
@@ -343,7 +343,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: Color(0xFF94A3B8),
                 ),
               ),
               Text(
@@ -351,7 +351,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFFF59E0B),
+                  color: Color(0xFFFBBF24),
                 ),
               ),
             ],
@@ -362,7 +362,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
             max: -0.2,
             divisions: 44,
             activeColor: const Color(0xFFF59E0B),
-            inactiveColor: const Color(0xFFFED7AA),
+            inactiveColor: const Color(0xFF334155),
             onChanged: (val) {
               if (_isAutoAnimating) {
                 setState(() {
@@ -388,7 +388,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: Color(0xFF94A3B8),
                 ),
               ),
               Text(
@@ -396,7 +396,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFFF59E0B),
+                  color: Color(0xFFFBBF24),
                 ),
               ),
             ],
@@ -407,7 +407,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
             max: 2.4,
             divisions: 44,
             activeColor: const Color(0xFFF59E0B),
-            inactiveColor: const Color(0xFFFED7AA),
+            inactiveColor: const Color(0xFF334155),
             onChanged: (val) {
               if (_isAutoAnimating) {
                 setState(() {
@@ -448,12 +448,12 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFEFF6FF) : const Color(0xFFF8FAFC),
+          color: isSelected ? const Color(0xFF1E293B) : const Color(0xFF14171A),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected
-                ? const Color(0xFF2563EB)
-                : const Color(0xFFE2E8F0),
+                ? const Color(0xFF3B82F6)
+                : const Color(0xFF2D3238),
             width: isSelected ? 1.8 : 1.0,
           ),
         ),
@@ -465,8 +465,8 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
                 color: isSelected
-                    ? const Color(0xFF1D4ED8)
-                    : const Color(0xFF334155),
+                    ? const Color(0xFF60A5FA)
+                    : const Color(0xFFCBD5E1),
               ),
             ),
             const SizedBox(height: 2),
@@ -476,7 +476,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
                 color: isSelected
-                    ? const Color(0xFF3B82F6)
+                    ? const Color(0xFF93C5FD)
                     : const Color(0xFF64748B),
               ),
               textAlign: TextAlign.center,
@@ -497,9 +497,9 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -539,7 +539,7 @@ class _RolleLagrangeWidgetState extends State<RolleLagrangeWidget>
             style: const TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF475569),
+              color: Color(0xFF94A3B8),
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

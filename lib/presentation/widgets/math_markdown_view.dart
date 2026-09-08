@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
+import '../../core/theme/app_theme.dart';
+
 /// Widget didattico che effettua il parsing e rendering ibrido di Markdown e formule LaTeX
-/// sia inline ($formula$) sia a blocco display ($$formula$$), con tipografia ad alta risoluzione.
+/// sia inline ($formula$) sia a blocco display ($$formula$$), con tipografia ad alta risoluzione
+/// ottimizzata per Wikipedia Mobile Dark Mode.
 class MathMarkdownView extends StatelessWidget {
   final String text;
   final TextStyle? baseStyle;
@@ -19,7 +22,7 @@ class MathMarkdownView extends StatelessWidget {
         const TextStyle(
           fontSize: 15,
           height: 1.65,
-          color: Color(0xFF334155),
+          color: AppTheme.textPrimary,
           fontWeight: FontWeight.w400,
         );
 
@@ -67,16 +70,9 @@ class MathMarkdownView extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 12),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppTheme.surfaceElevated,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x04000000),
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: AppTheme.borderDark),
       ),
       child: Center(
         child: SingleChildScrollView(
@@ -86,7 +82,7 @@ class MathMarkdownView extends StatelessWidget {
             latex,
             textStyle: const TextStyle(
               fontSize: 17,
-              color: Color(0xFF0F172A),
+              color: AppTheme.textPrimary,
               fontWeight: FontWeight.w500,
             ),
             mathStyle: MathStyle.display,
@@ -95,7 +91,7 @@ class MathMarkdownView extends StatelessWidget {
               style: const TextStyle(
                 fontFamily: 'monospace',
                 fontSize: 14,
-                color: Color(0xFFDC2626),
+                color: AppTheme.accentRedBright,
               ),
             ),
           ),
@@ -130,7 +126,7 @@ class MathMarkdownView extends StatelessWidget {
                 const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: AppTheme.textPrimary,
                   letterSpacing: -0.2,
                 ),
               ),
@@ -147,7 +143,7 @@ class MathMarkdownView extends StatelessWidget {
                 const TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: AppTheme.textPrimary,
                   letterSpacing: -0.3,
                 ),
               ),
@@ -164,7 +160,7 @@ class MathMarkdownView extends StatelessWidget {
                 const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: AppTheme.textPrimary,
                   letterSpacing: -0.4,
                 ),
               ),
@@ -180,11 +176,11 @@ class MathMarkdownView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 6, right: 8),
+                  padding: EdgeInsets.only(top: 7, right: 8),
                   child: Icon(
                     Icons.circle,
                     size: 6,
-                    color: Color(0xFF2563EB),
+                    color: AppTheme.accentBlueBright,
                   ),
                 ),
                 Expanded(
@@ -236,14 +232,14 @@ class MathMarkdownView extends StatelessWidget {
                 mathStyle: MathStyle.text,
                 textStyle: textStyle.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: const Color(0xFF0F172A),
+                  color: AppTheme.textPrimary,
                 ),
                 onErrorFallback: (err) => Text(
                   latexFormula,
                   style: textStyle.copyWith(
                     fontFamily: 'monospace',
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF2563EB),
+                    color: AppTheme.accentBlueBright,
                   ),
                 ),
               ),
@@ -281,14 +277,18 @@ class MathMarkdownView extends StatelessWidget {
       if (token.startsWith('***') && token.endsWith('***') && token.length >= 6) {
         spans.add(TextSpan(
           text: token.substring(3, token.length - 3),
-          style: base.copyWith(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+          style: base.copyWith(
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.white,
+          ),
         ));
       } else if (token.startsWith('**') && token.endsWith('**') && token.length >= 4) {
         spans.add(TextSpan(
           text: token.substring(2, token.length - 2),
           style: base.copyWith(
             fontWeight: FontWeight.bold,
-            color: const Color(0xFF0F172A),
+            color: Colors.white,
           ),
         ));
       } else if (token.startsWith('*') && token.endsWith('*') && token.length >= 2) {
@@ -301,8 +301,8 @@ class MathMarkdownView extends StatelessWidget {
           text: token.substring(1, token.length - 1),
           style: base.copyWith(
             fontFamily: 'monospace',
-            backgroundColor: const Color(0xFFF1F5F9),
-            color: const Color(0xFF0F172A),
+            backgroundColor: AppTheme.surfaceElevated,
+            color: AppTheme.accentBlueBright,
             fontSize: base.fontSize != null ? base.fontSize! * 0.9 : 13,
           ),
         ));

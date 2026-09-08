@@ -19,80 +19,80 @@ class CategoryStyle {
     switch (category.trim().toLowerCase()) {
       case 'aritmetica':
         return const CategoryStyle(
-          primary: Color(0xFF0284C7), // Sky blue
-          background: Color(0xFFF0F9FF),
-          border: Color(0xFFBAE6FD),
+          primary: Color(0xFF38BDF8), // Sky blue brillante
+          background: Color(0xFF082F49),
+          border: Color(0xFF0369A1),
           icon: Icons.calculate_rounded,
         );
       case 'algebra':
         return const CategoryStyle(
-          primary: Color(0xFF7C3AED), // Violetta
-          background: Color(0xFFF5F3FF),
-          border: Color(0xFFDDD6FE),
+          primary: Color(0xFFA78BFA), // Violetta brillante
+          background: Color(0xFF2E1065),
+          border: Color(0xFF6D28D9),
           icon: Icons.superscript_rounded,
         );
       case 'geometria':
         return const CategoryStyle(
-          primary: Color(0xFFE11D48), // Corallo / Rose
-          background: Color(0xFFFFF1F2),
-          border: Color(0xFFFECDD3),
+          primary: Color(0xFFFB7185), // Rosa corallo brillante
+          background: Color(0xFF4C0519),
+          border: Color(0xFFBE123C),
           icon: Icons.change_history_rounded,
         );
       case 'goniometria':
         return const CategoryStyle(
-          primary: Color(0xFFD946EF), // Fucsia
-          background: Color(0xFFFDF4FF),
-          border: Color(0xFFF5D0FE),
+          primary: Color(0xFFE879F9), // Fucsia brillante
+          background: Color(0xFF4A044E),
+          border: Color(0xFFA21CAF),
           icon: Icons.radar_rounded,
         );
       case 'analisi':
       case 'analisi matematica':
         return const CategoryStyle(
-          primary: Color(0xFF4F46E5), // Indaco profondo
-          background: Color(0xFFEEF2FF),
-          border: Color(0xFFC7D2FE),
+          primary: Color(0xFF818CF8), // Indaco brillante
+          background: Color(0xFF1E1B4B),
+          border: Color(0xFF4338CA),
           icon: Icons.functions_rounded,
         );
       case 'matematica':
         return const CategoryStyle(
-          primary: Color(0xFF6366F1), // Indaco brillante
-          background: Color(0xFFEEF2FF),
-          border: Color(0xFFC7D2FE),
+          primary: Color(0xFF818CF8), // Indaco brillante
+          background: Color(0xFF1E1B4B),
+          border: Color(0xFF4338CA),
           icon: Icons.functions_rounded,
         );
       case 'chimica':
         return const CategoryStyle(
-          primary: Color(0xFF059669), // Smeraldo vivace
-          background: Color(0xFFECFDF5),
-          border: Color(0xFFA7F3D0),
+          primary: Color(0xFF34D399), // Smeraldo brillante
+          background: Color(0xFF064E3B),
+          border: Color(0xFF047857),
           icon: Icons.science_rounded,
         );
       case 'elettrotecnica':
         return const CategoryStyle(
-          primary: Color(0xFF2563EB), // Blu elettrico
-          background: Color(0xFFEFF6FF),
-          border: Color(0xFFBFDBFE),
+          primary: Color(0xFF60A5FA), // Blu elettrico brillante
+          background: Color(0xFF172554),
+          border: Color(0xFF1D4ED8),
           icon: Icons.electric_bolt_rounded,
         );
       case 'fisica':
         return const CategoryStyle(
-          primary: Color(0xFFD97706), // Ambra profonda
-          background: Color(0xFFFFFBEB),
-          border: Color(0xFFFDE68A),
+          primary: Color(0xFFFBBF24), // Ambra calda brillante
+          background: Color(0xFF451A03),
+          border: Color(0xFFB45309),
           icon: Icons.blur_on_rounded,
         );
       case 'ingegneria':
         return const CategoryStyle(
-          primary: Color(0xFF0D9488), // Teal
-          background: Color(0xFFF0FDFA),
-          border: Color(0xFF99F6E4),
+          primary: Color(0xFF2DD4BF), // Teal brillante
+          background: Color(0xFF042F2E),
+          border: Color(0xFF0F766E),
           icon: Icons.precision_manufacturing_rounded,
         );
       default:
         return const CategoryStyle(
-          primary: Color(0xFF475569), // Slate
-          background: Color(0xFFF8FAFC),
-          border: Color(0xFFE2E8F0),
+          primary: Color(0xFF94A3B8), // Slate neutro
+          background: Color(0xFF1E293B),
+          border: Color(0xFF334155),
           icon: Icons.school_rounded,
         );
     }

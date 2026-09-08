@@ -154,16 +154,9 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 16,
-            offset: Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -175,12 +168,12 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFBEB),
+                  color: const Color(0xFF451A03),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
                   Icons.directions_car_rounded,
-                  color: Color(0xFFD97706),
+                  color: Color(0xFFFBBF24),
                   size: 20,
                 ),
               ),
@@ -194,13 +187,13 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                        color: Color(0xFFEAECF0),
                       ),
                     ),
                     SizedBox(height: 2),
                     Text(
                       'Moto rettilineo, vettori velocità e spazio percorso',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                     ),
                   ],
                 ),
@@ -212,14 +205,14 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                       ? Icons.pause_circle_filled_rounded
                       : Icons.play_circle_fill_rounded,
                 ),
-                color: const Color(0xFF2563EB),
+                color: const Color(0xFF60A5FA),
                 iconSize: 28,
                 tooltip: _isPlaying ? 'Pausa' : 'Avvia',
                 onPressed: _togglePlayPause,
               ),
               IconButton(
                 icon: const Icon(Icons.replay_rounded),
-                color: const Color(0xFF64748B),
+                color: const Color(0xFF9CA3AF),
                 iconSize: 22,
                 tooltip: 'Ricomincia da t = 0s',
                 onPressed: _resetSimulation,
@@ -257,7 +250,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                   title: 'SPAZIO (x)',
                   value: '${position.toStringAsFixed(1)} m',
                   formula: 'x = v₀t + ½at²',
-                  color: const Color(0xFF0284C7),
+                  color: const Color(0xFF38BDF8),
                   icon: Icons.straighten_rounded,
                 ),
               ),
@@ -269,7 +262,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                       ? '${velocity.toStringAsFixed(1)} ${v0Unit.trim()}'.trim()
                       : velocity.toStringAsFixed(1),
                   formula: 'v = v₀ + at',
-                  color: const Color(0xFF16A34A),
+                  color: const Color(0xFF34D399),
                   icon: Icons.speed_rounded,
                 ),
               ),
@@ -279,7 +272,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                   title: 'TEMPO (t)',
                   value: '${_elapsedTime.toStringAsFixed(1)} s',
                   formula: 'Δt reale',
-                  color: const Color(0xFF7C3AED),
+                  color: const Color(0xFFA78BFA),
                   icon: Icons.timer_outlined,
                 ),
               ),
@@ -294,7 +287,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 0.6,
-              color: Color(0xFF64748B),
+              color: Color(0xFF9CA3AF),
             ),
           ),
           const SizedBox(height: 10),
@@ -312,7 +305,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                         v0Param.stepSize!)
                     .round()
                 : 30,
-            color: const Color(0xFF0284C7),
+            color: const Color(0xFF38BDF8),
             onChanged: (val) {
               setState(() {
                 _v0 = val;
@@ -334,7 +327,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                         aParam.stepSize!)
                     .round()
                 : 30,
-            color: const Color(0xFF16A34A),
+            color: const Color(0xFF34D399),
             onChanged: (val) {
               setState(() {
                 _a = val;
@@ -347,19 +340,19 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFFBEB),
+              color: const Color(0xFF251C08),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFFDE68A)),
+              border: Border.all(color: const Color(0xFFB45309)),
             ),
-            child: Row(
+            child: const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
+                Icon(
                   Icons.star_rounded,
-                  color: Color(0xFFD97706),
+                  color: Color(0xFFFBBF24),
                   size: 18,
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     'Corollario di Torricelli: eliminando il tempo t dal sistema ottieni '
@@ -369,7 +362,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                       fontSize: 12,
                       height: 1.4,
                       fontWeight: FontWeight.w500,
-                      color: Colors.amber.shade900,
+                      color: Color(0xFFFDE68A),
                     ),
                   ),
                 ),
@@ -391,9 +384,9 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.06),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,7 +418,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
           ),
           Text(
             formula,
-            style: const TextStyle(fontSize: 10, color: Color(0xFF64748B)),
+            style: const TextStyle(fontSize: 10, color: Color(0xFF9CA3AF)),
           ),
         ],
       ),
@@ -445,9 +438,9 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF22262B),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
@@ -459,7 +452,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1E293B),
+                  color: Color(0xFFEAECF0),
                 ),
               ),
               Text(
@@ -477,7 +470,7 @@ class _KinematicsSimulationWidgetState extends State<KinematicsSimulationWidget>
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: color,
-              inactiveTrackColor: const Color(0xFFE2E8F0),
+              inactiveTrackColor: const Color(0xFF374151),
               thumbColor: color,
               overlayColor: color.withValues(alpha: 0.15),
               trackHeight: 3,

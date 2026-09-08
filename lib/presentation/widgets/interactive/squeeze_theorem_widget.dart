@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../../../domain/models/knowledge_node.dart';
 
 /// Widget di simulazione interattiva per il Teorema del Confronto (Teorema dei Carabinieri / Squeeze Theorem).
@@ -113,12 +114,12 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppTheme.surfaceDark,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppTheme.borderDark),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x08000000),
+            color: Color(0x40000000),
             blurRadius: 16,
             offset: Offset(0, 6),
           ),
@@ -137,7 +138,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                   children: [
                     Icon(
                       Icons.compress_rounded,
-                      color: Color(0xFF6366F1),
+                      color: Color(0xFF818CF8),
                       size: 22,
                     ),
                     SizedBox(width: 8),
@@ -147,7 +148,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: AppTheme.textPrimary,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -163,7 +164,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                           ? Icons.pause_circle_rounded
                           : Icons.play_circle_fill_rounded,
                     ),
-                    color: const Color(0xFF6366F1),
+                    color: const Color(0xFF818CF8),
                     iconSize: 26,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
@@ -179,16 +180,16 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEF2FF),
+                      color: const Color(0xFF1E1B4B),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xFFC7D2FE)),
+                      border: Border.all(color: const Color(0xFF4338CA)),
                     ),
                     child: Text(
                       'δ = ±${_delta.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF4338CA),
+                        color: Color(0xFFA5B4FC),
                       ),
                     ),
                   ),
@@ -271,9 +272,9 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: AppTheme.surfaceElevated,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppTheme.borderDark),
             ),
             child: Column(
               children: [
@@ -283,7 +284,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                     Icon(
                       Icons.verified_rounded,
                       size: 16,
-                      color: Color(0xFF16A34A),
+                      color: AppTheme.accentGreenBright,
                     ),
                     SizedBox(width: 6),
                     Text(
@@ -291,7 +292,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                        color: AppTheme.textPrimary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -302,7 +303,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                   'Per x ➔ 0: lim cos(x) = 1 e lim 1 = 1  ⇒  per il teorema dei due carabinieri  lim (sin x)/x = 1',
                   style: const TextStyle(
                     fontSize: 11,
-                    color: Color(0xFF475569),
+                    color: AppTheme.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
@@ -321,7 +322,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: AppTheme.textSecondary,
                 ),
               ),
               Text(
@@ -329,7 +330,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF6366F1),
+                  color: Color(0xFF818CF8),
                 ),
               ),
             ],
@@ -339,8 +340,8 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
             min: 0.05,
             max: 1.5,
             divisions: 29,
-            activeColor: const Color(0xFF6366F1),
-            inactiveColor: const Color(0xFFC7D2FE),
+            activeColor: const Color(0xFF818CF8),
+            inactiveColor: const Color(0xFF312E81),
             onChanged: (val) {
               if (_isPlaying) {
                 setState(() {
@@ -364,7 +365,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: AppTheme.textSecondary,
                 ),
               ),
               Text(
@@ -383,7 +384,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
             max: _delta,
             divisions: 40,
             activeColor: const Color(0xFF38BDF8),
-            inactiveColor: const Color(0xFFBAE6FD),
+            inactiveColor: const Color(0xFF0C4A6E),
             onChanged: (val) {
               if (_isPlaying) {
                 setState(() {
@@ -453,7 +454,7 @@ class _SqueezeTheoremWidgetState extends State<SqueezeTheoremWidget>
             style: const TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF475569),
+              color: AppTheme.textSecondary,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

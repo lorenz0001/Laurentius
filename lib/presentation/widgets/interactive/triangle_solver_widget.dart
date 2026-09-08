@@ -91,12 +91,12 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x08000000),
+            color: Color(0x40000000),
             blurRadius: 16,
             offset: Offset(0, 6),
           ),
@@ -107,80 +107,82 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Intestazione
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
             children: [
-              const Expanded(
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       Icons.change_history_rounded,
-                      color: Color(0xFFE11D48),
+                      color: Color(0xFFFB7185),
                       size: 20,
                     ),
                     SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Geometria del Triangolo & Carnot',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                    Text(
+                      'Geometria del Triangolo & Carnot',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFF8FAFC),
                       ),
                     ),
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      _isAutoTransforming
-                          ? Icons.pause_circle_rounded
-                          : Icons.play_circle_fill_rounded,
-                    ),
-                    color: const Color(0xFFE11D48),
-                    iconSize: 26,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    tooltip: _isAutoTransforming
-                        ? 'Pausa deformazione'
-                        : 'Anima trasformazione triangolo',
-                    onPressed: _toggleAutoTransform,
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _isRightTriangle
-                          ? const Color(0xFFEFF6FF)
-                          : const Color(0xFFFFF1F2),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: _isRightTriangle
-                            ? const Color(0xFFBFDBFE)
-                            : const Color(0xFFFECDD3),
-                      ),
-                    ),
-                    child: Text(
-                      _isRightTriangle ? 'Pitagora (γ = 90°)' : 'Carnot Generico',
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        color: _isRightTriangle
-                            ? const Color(0xFF1D4ED8)
-                            : const Color(0xFFE11D48),
-                      ),
-                    ),
-                  ),
-                ],
+              IconButton(
+                icon: Icon(
+                  _isAutoTransforming
+                      ? Icons.pause_circle_rounded
+                      : Icons.play_circle_fill_rounded,
+                ),
+                color: const Color(0xFFFB7185),
+                iconSize: 24,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                tooltip: _isAutoTransforming
+                    ? 'Pausa deformazione'
+                    : 'Anima trasformazione triangolo',
+                onPressed: _toggleAutoTransform,
               ),
             ],
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 4,
+              ),
+              decoration: BoxDecoration(
+                color: _isRightTriangle
+                    ? const Color(0xFF1E293B)
+                    : const Color(0xFF3B1219),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: _isRightTriangle
+                      ? const Color(0xFF3B82F6)
+                      : const Color(0xFFBE123C),
+                ),
+              ),
+              child: Text(
+                _isRightTriangle ? 'Pitagora (γ = 90°)' : 'Carnot Generico',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: _isRightTriangle
+                      ? const Color(0xFF60A5FA)
+                      : const Color(0xFFFB7185),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 16),
 
@@ -246,48 +248,49 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: const Color(0xFF14171A),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      _isRightTriangle
-                          ? Icons.check_circle_rounded
-                          : Icons.calculate_rounded,
-                      size: 16,
-                      color: _isRightTriangle
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFF475569),
-                    ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        _isRightTriangle
+                            ? Icons.check_circle_rounded
+                            : Icons.calculate_rounded,
+                        size: 16,
+                        color: _isRightTriangle
+                            ? const Color(0xFF4ADE80)
+                            : const Color(0xFF94A3B8),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
                         _isRightTriangle
                             ? 'c² = a² + b² = ${_sideA.toStringAsFixed(1)}² + ${_sideB.toStringAsFixed(1)}² = ${_sideCSquared.toStringAsFixed(2)}'
                             : 'c² = a² + b² - 2ab·cos(${_angleGammaDeg.toStringAsFixed(0)}°) = ${_sideCSquared.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: Color(0xFFF8FAFC),
                         ),
                         textAlign: TextAlign.center,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 6),
                 // Dimostrazione geometrica di Carnot: scomposizione con altezza e proiezione
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEFF6FF),
+                    color: const Color(0xFF1E293B),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFDBEAFE)),
+                    border: Border.all(color: const Color(0xFF334155)),
                   ),
                   child: Column(
                     children: [
@@ -295,7 +298,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                         'Dimostrazione via Pitagora su △BHA:  h = a·sin(γ) = ${_altitudeH.toStringAsFixed(2)},  p = a·cos(γ) = ${_projectionP.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF1E40AF),
+                          color: Color(0xFF93C5FD),
                           fontWeight: FontWeight.w600,
                         ),
                         textAlign: TextAlign.center,
@@ -305,7 +308,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                         'c² = h² + (b - a·cos γ)² = ${_altitudeH.toStringAsFixed(2)}² + ${_baseMinusP.toStringAsFixed(2)}² = ${_sideCSquared.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 11,
-                          color: Color(0xFFBE123C),
+                          color: Color(0xFFFB7185),
                           fontWeight: FontWeight.w700,
                         ),
                         textAlign: TextAlign.center,
@@ -320,7 +323,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                       'Pitagora è il corollario di Carnot quando cos(90°) = 0',
                       style: TextStyle(
                         fontSize: 11,
-                        color: Color(0xFF16A34A),
+                        color: Color(0xFF4ADE80),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -331,15 +334,18 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
           const SizedBox(height: 16),
 
           // Slider Angolo γ
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 4,
             children: [
               Text(
                 'Angolo γ compreso: ${_angleGammaDeg.toStringAsFixed(0)}°',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: Color(0xFF94A3B8),
                 ),
               ),
               TextButton(
@@ -360,6 +366,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                     vertical: 2,
                   ),
                   visualDensity: VisualDensity.compact,
+                  foregroundColor: const Color(0xFFFB7185),
                 ),
                 child: const Text(
                   'Imposta 90° (Pitagora)',
@@ -373,7 +380,8 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
             min: 15.0,
             max: 160.0,
             divisions: 145,
-            activeColor: const Color(0xFFE11D48),
+            activeColor: const Color(0xFFFB7185),
+            inactiveColor: const Color(0xFF334155),
             onChanged: (val) {
               if (_isAutoTransforming) {
                 setState(() {
@@ -394,11 +402,15 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Lato a: ${_sideA.toStringAsFixed(1)}',
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Lato a: ${_sideA.toStringAsFixed(1)}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF94A3B8),
+                        ),
                       ),
                     ),
                     Slider(
@@ -406,6 +418,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                       min: 1.5,
                       max: 6.0,
                       activeColor: const Color(0xFF38BDF8),
+                      inactiveColor: const Color(0xFF334155),
                       onChanged: (val) => setState(() => _sideA = val),
                     ),
                   ],
@@ -416,11 +429,15 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Lato b: ${_sideB.toStringAsFixed(1)}',
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Lato b: ${_sideB.toStringAsFixed(1)}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF94A3B8),
+                        ),
                       ),
                     ),
                     Slider(
@@ -428,6 +445,7 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
                       min: 1.5,
                       max: 6.0,
                       activeColor: const Color(0xFF4ADE80),
+                      inactiveColor: const Color(0xFF334155),
                       onChanged: (val) => setState(() => _sideB = val),
                     ),
                   ],
@@ -446,29 +464,35 @@ class _TriangleSolverWidgetState extends State<TriangleSolverWidget>
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF14171A),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: color,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFFF8FAFC),
+              ),
             ),
           ),
         ],

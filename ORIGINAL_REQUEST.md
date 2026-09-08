@@ -100,3 +100,48 @@ Integrity mode: development
 - [ ] `flutter test test/curriculum_dag_test.dart` passes.
 - [ ] The full test suite (`flutter test`) passes without regressions.
 
+## 2026-09-08T11:17:14Z
+
+This is a single self-contained fix; keep it small and focused. Semplificare l'interfaccia utente eliminando la complessità visiva e trasformando l'applicazione Laurentius in un tema scuro (Dark Mode) ispirato all'app mobile di Wikipedia, con particolare focus sulla schermata articolo strutturata a sezioni espandibili/collassabili.
+
+Working directory: c:\Users\catte\Desktop\Laurentius
+Integrity mode: development
+
+## Requirements
+
+### R1. Redesign dell'articolo in stile Wikipedia Mobile (Dark Mode & Sezioni Collassabili)
+Riprogettare la schermata dell'articolo (`NodeDetailScreen`) adottando l'estetica e l'usabilità tipica dell'app di Wikipedia in Dark Mode:
+- Sfondo scuro/nero a contrasto pulito con tipografia nitida e leggibile.
+- App bar ed elementi di navigazione minimalisti senza decorazioni ingombranti.
+- Organizzazione delle macro-sezioni (Approfondimento teorico, Dimostrazione algebrica, Laboratorio/Simulazione interattiva) con sezioni pulite ed espandibili/collassabili (accordion) per favorire la consultazione focalizzata.
+
+### R2. Tema Dark coerente su tutta l'applicazione
+Estendere la palette scura e lo stile minimalista a tutti gli schermi principali:
+- Grafo della conoscenza 2D (`HomeScreen` / `GraphView`), con nodi, etichette e linee di connessione visibili e gradevoli su sfondo scuro.
+- Catalogo argomenti (`CategoryExplorerScreen`), con schede e chip sobrie ad alto contrasto.
+- Schermata preferenze (`SettingsScreen`) e barre di navigazione (`MainLayoutScreen`).
+
+### R3. Contrasto e leggibilità di formule LaTeX e simulazioni interattive
+Assicurare che:
+- Le formule matematiche inline e display renderizzate con `flutter_math_fork` abbiano colori chiari ad alta visibilità su sfondo scuro.
+- I widget di simulazione interattiva (canvas `CustomPainter`, slider parametrici, controlli) mantengano leggibilità, reattività a 60fps e un design coordinato col tema scuro.
+
+### R4. Integrità funzionale e zero regressioni
+Preservare integralmente tutte le funzionalità esistenti dell'applicazione:
+- Risoluzione e navigazione dei prerequisiti DAG.
+- Interazione con i passaggi delle dimostrazioni e navigazione verso i corollari.
+- Dialoghi e bottom sheet con AI tutor e rielaborazione del testo.
+- Lancio degli esercizi di verifica.
+
+## Acceptance Criteria
+
+### Interfaccia e Design
+- [ ] La schermata dell'articolo presenta una palette scura con struttura a sezioni collassabili/espandibili in stile Wikipedia.
+- [ ] Non sono presenti sfondi bianchi residui o elementi di testo illeggibili per mancato contrasto nelle schermate dell'articolo, del grafo, del catalogo o dei componenti principali.
+- [ ] Formule LaTeX (inline e a blocco) e widget interattivi risultano perfettamente contrastati e utilizzabili su sfondo scuro.
+
+### Verifica Programmatica
+- [ ] `flutter analyze` termina con 0 errori e 0 warning.
+- [ ] L'intera suite di test `flutter test` passes con successo senza regressioni.
+
+

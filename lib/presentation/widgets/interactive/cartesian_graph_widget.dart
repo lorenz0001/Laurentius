@@ -151,16 +151,9 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 16,
-            offset: Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -172,12 +165,12 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEEF2FF),
+                  color: const Color(0xFF1E1B4B),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
                   Icons.show_chart_rounded,
-                  color: Color(0xFF6366F1),
+                  color: Color(0xFF818CF8),
                   size: 20,
                 ),
               ),
@@ -191,13 +184,13 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                        color: Color(0xFFEAECF0),
                       ),
                     ),
                     SizedBox(height: 2),
                     Text(
                       'Modifica i coefficienti per osservare la deformazione della curva',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                     ),
                   ],
                 ),
@@ -208,7 +201,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
                       ? Icons.pause_circle_rounded
                       : Icons.play_circle_fill_rounded,
                 ),
-                color: const Color(0xFF6366F1),
+                color: const Color(0xFF818CF8),
                 iconSize: 28,
                 tooltip: _isAutoMorphing
                     ? 'Pausa deformazione'
@@ -245,9 +238,9 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: const Color(0xFF101214),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -257,7 +250,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF64748B),
+                    color: Color(0xFF9CA3AF),
                   ),
                 ),
                 Text(
@@ -265,7 +258,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF6366F1),
+                    color: Color(0xFF818CF8),
                     letterSpacing: -0.3,
                   ),
                 ),
@@ -281,7 +274,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 0.6,
-              color: Color(0xFF64748B),
+              color: Color(0xFF9CA3AF),
             ),
           ),
           const SizedBox(height: 8),
@@ -309,9 +302,9 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF22262B),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
@@ -323,22 +316,22 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1E293B),
+                  color: Color(0xFFEAECF0),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFF1E1B4B),
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: const Color(0xFFCBD5E1)),
+                  border: Border.all(color: const Color(0xFF4338CA)),
                 ),
                 child: Text(
                   currentValue.toStringAsFixed(1),
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF6366F1),
+                    color: Color(0xFFA5B4FC),
                   ),
                 ),
               ),
@@ -346,10 +339,10 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
           ),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: const Color(0xFF6366F1),
-              inactiveTrackColor: const Color(0xFFE2E8F0),
-              thumbColor: const Color(0xFF6366F1),
-              overlayColor: const Color(0xFF6366F1).withValues(alpha: 0.15),
+              activeTrackColor: const Color(0xFF818CF8),
+              inactiveTrackColor: const Color(0xFF374151),
+              thumbColor: const Color(0xFF818CF8),
+              overlayColor: const Color(0xFF818CF8).withValues(alpha: 0.15),
               trackHeight: 3,
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
             ),

@@ -151,17 +151,21 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final maxHeight = mediaQuery.size.height * 0.88;
+    final bottomInset = mediaQuery.viewInsets.bottom;
+    final availableHeight = mediaQuery.size.height - bottomInset;
+    final maxHeight = availableHeight * 0.88;
 
-    return Container(
-      constraints: BoxConstraints(maxHeight: maxHeight),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomInset),
+      child: Container(
+        constraints: BoxConstraints(maxHeight: maxHeight),
+        decoration: const BoxDecoration(
+          color: Color(0xFF191C20),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: SafeArea(
+          top: false,
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // Maniglia di trascinamento
@@ -171,7 +175,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFCBD5E1),
+                  color: const Color(0xFF475569),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -185,12 +189,12 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEFF6FF),
+                      color: const Color(0xFF1E293B),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(
                       Icons.auto_fix_high_rounded,
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF60A5FA),
                       size: 22,
                     ),
                   ),
@@ -204,14 +208,14 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: Color(0xFFEAECF0),
                           ),
                         ),
                         Text(
                           'Argomento: ${widget.node.title}',
                           style: const TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF64748B),
+                            color: Color(0xFF94A3B8),
                             fontWeight: FontWeight.w500,
                           ),
                           maxLines: 1,
@@ -224,7 +228,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                     tooltip: 'Chiudi',
                     icon: const Icon(
                       Icons.close_rounded,
-                      color: Color(0xFF64748B),
+                      color: Color(0xFF94A3B8),
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -232,7 +236,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
               ),
             ),
 
-            const Divider(color: Color(0xFFE2E8F0), height: 1),
+            const Divider(color: Color(0xFF2D3238), height: 1),
 
             // Corpo della BottomSheet
             Expanded(
@@ -245,8 +249,9 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   /// Stato di Caricamento
   Widget _buildLoadingState() {
@@ -257,7 +262,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircularProgressIndicator(
-              color: Color(0xFF2563EB),
+              color: Color(0xFF60A5FA),
               strokeWidth: 3,
             ),
             const SizedBox(height: 20),
@@ -267,7 +272,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF0F172A),
+                color: Color(0xFFEAECF0),
               ),
             ),
             const SizedBox(height: 8),
@@ -276,7 +281,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13,
-                color: Color(0xFF64748B),
+                color: Color(0xFF94A3B8),
                 height: 1.4,
               ),
             ),
@@ -284,7 +289,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
+                color: const Color(0xFF14171A),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Row(
@@ -293,14 +298,14 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                   Icon(
                     Icons.shield_outlined,
                     size: 16,
-                    color: Color(0xFF475569),
+                    color: Color(0xFF94A3B8),
                   ),
                   SizedBox(width: 8),
                   Text(
                     'Le animazioni interattive rimangono inalterate',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF475569),
+                      color: Color(0xFF94A3B8),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -326,15 +331,15 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFFBEB),
+                color: const Color(0xFF3B2805),
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xFFFDE68A)),
+                border: Border.all(color: const Color(0xFFD97706)),
               ),
               child: Row(
                 children: [
                   const Icon(
                     Icons.bolt_rounded,
-                    color: Color(0xFFD97706),
+                    color: Color(0xFFFBBF24),
                     size: 24,
                   ),
                   const SizedBox(width: 12),
@@ -347,7 +352,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF92400E),
+                            color: Color(0xFFFCD34D),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -355,7 +360,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                           'Inserisci la tua API Key nelle Impostazioni per utilizzare la rielaborazione AI.',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xFFB45309),
+                            color: Color(0xFFFDE68A),
                           ),
                         ),
                       ],
@@ -399,15 +404,15 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFEFF6FF),
+              color: const Color(0xFF1E293B),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFBFDBFE)),
+              border: Border.all(color: const Color(0xFF3B82F6)),
             ),
             child: const Row(
               children: [
                 Icon(
                   Icons.info_outline_rounded,
-                  color: Color(0xFF2563EB),
+                  color: Color(0xFF60A5FA),
                   size: 20,
                 ),
                 SizedBox(width: 10),
@@ -416,7 +421,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                     'La rielaborazione modifica esclusivamente la parte esplicativa teorica (testo, formule e note). Eventuali simulazioni e grafici interattivi non vengono intaccati.',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF1E40AF),
+                      color: Color(0xFF93C5FD),
                       height: 1.35,
                     ),
                   ),
@@ -442,10 +447,10 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
             runSpacing: 8,
             children: _quickPrompts.map((prompt) {
               return ActionChip(
-                backgroundColor: const Color(0xFFF8FAFC),
+                backgroundColor: const Color(0xFF14171A),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
-                  side: const BorderSide(color: Color(0xFFE2E8F0)),
+                  side: const BorderSide(color: Color(0xFF2D3238)),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 label: Text(
@@ -453,7 +458,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF334155),
+                    color: Color(0xFFCBD5E1),
                   ),
                 ),
                 onPressed: () {
@@ -480,26 +485,30 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
           TextField(
             controller: _instructionController,
             maxLines: 3,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFFF8FAFC),
+            ),
             decoration: InputDecoration(
               hintText: 'es. Spiega questo concetto evidenziando il legame con la geometria euclidea ed esponi le formule con una notazione molto chiara...',
               hintStyle: const TextStyle(
                 fontSize: 13,
-                color: Color(0xFF94A3B8),
+                color: Color(0xFF64748B),
               ),
               filled: true,
-              fillColor: const Color(0xFFF8FAFC),
+              fillColor: const Color(0xFF14171A),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: const BorderSide(
-                  color: Color(0xFF2563EB),
+                  color: Color(0xFF3B82F6),
                   width: 1.5,
                 ),
               ),
@@ -511,15 +520,15 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFFEF2F2),
+                color: const Color(0xFF3B1219),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: const Color(0xFFFECACA)),
+                border: Border.all(color: const Color(0xFFB91C1C)),
               ),
               child: Row(
                 children: [
                   const Icon(
                     Icons.error_outline_rounded,
-                    color: Color(0xFFDC2626),
+                    color: Color(0xFFEF4444),
                     size: 18,
                   ),
                   const SizedBox(width: 8),
@@ -528,7 +537,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                       _errorMessage!,
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Color(0xFFDC2626),
+                        color: Color(0xFFFB7185),
                       ),
                     ),
                   ),
@@ -575,14 +584,14 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: const BoxDecoration(
-            color: Color(0xFFFFFBEB),
-            border: Border(bottom: BorderSide(color: Color(0xFFFDE68A))),
+            color: Color(0xFF3B2805),
+            border: Border(bottom: BorderSide(color: Color(0xFFB45309))),
           ),
           child: const Row(
             children: [
               Icon(
                 Icons.visibility_rounded,
-                color: Color(0xFFD97706),
+                color: Color(0xFFFBBF24),
                 size: 20,
               ),
               SizedBox(width: 10),
@@ -592,7 +601,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF92400E),
+                    color: Color(0xFFFDE68A),
                   ),
                 ),
               ),
@@ -617,7 +626,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.6,
-                        color: Color(0xFF475569),
+                        color: Color(0xFF94A3B8),
                       ),
                     ),
                     Container(
@@ -626,7 +635,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFDCFCE7),
+                        color: const Color(0xFF143820),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Text(
@@ -634,7 +643,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                         style: TextStyle(
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF166534),
+                          color: Color(0xFF4ADE80),
                         ),
                       ),
                     ),
@@ -651,7 +660,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
+                    color: const Color(0xFF14171A),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Row(
@@ -659,7 +668,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                       Icon(
                         Icons.lock_clock_outlined,
                         size: 16,
-                        color: Color(0xFF64748B),
+                        color: Color(0xFF94A3B8),
                       ),
                       SizedBox(width: 8),
                       Expanded(
@@ -667,7 +676,7 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                           'Simulazioni e animazioni interattive rimangono intatte.',
                           style: TextStyle(
                             fontSize: 11,
-                            color: Color(0xFF64748B),
+                            color: Color(0xFF94A3B8),
                           ),
                         ),
                       ),
@@ -683,8 +692,8 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+            color: Color(0xFF101214),
+            border: Border(top: BorderSide(color: Color(0xFF2D3238))),
           ),
           child: Row(
             children: [
@@ -697,8 +706,8 @@ class _AIRephraseBottomSheetState extends State<AIRephraseBottomSheet> {
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
                   ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFF64748B),
-                    side: const BorderSide(color: Color(0xFFCBD5E1)),
+                    foregroundColor: const Color(0xFFCBD5E1),
+                    side: const BorderSide(color: Color(0xFF475569)),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

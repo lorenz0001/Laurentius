@@ -215,19 +215,19 @@ class _SpotlightSearchBarWidgetState extends State<SpotlightSearchBarWidget> {
         child: Container(
           height: 48,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFF191C20),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _focusNode.hasFocus
-                  ? const Color(0xFF2563EB)
-                  : const Color(0xFFE2E8F0),
+                  ? const Color(0xFF3B82F6)
+                  : const Color(0xFF2D3238),
               width: _focusNode.hasFocus ? 1.5 : 1.2,
             ),
             boxShadow: [
               BoxShadow(
                 color: _focusNode.hasFocus
-                    ? const Color(0x142563EB)
-                    : const Color(0x0A000000),
+                    ? const Color(0x333B82F6)
+                    : const Color(0x20000000),
                 blurRadius: _focusNode.hasFocus ? 12 : 6,
                 offset: const Offset(0, 2),
               ),
@@ -239,7 +239,7 @@ class _SpotlightSearchBarWidgetState extends State<SpotlightSearchBarWidget> {
               // Icona di ricerca
               const Icon(
                 Icons.search_rounded,
-                color: Color(0xFF2563EB),
+                color: Color(0xFF60A5FA),
                 size: 20,
               ),
               const SizedBox(width: 10),
@@ -251,14 +251,14 @@ class _SpotlightSearchBarWidgetState extends State<SpotlightSearchBarWidget> {
                   focusNode: _focusNode,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF0F172A),
+                    color: Color(0xFFF8FAFC),
                     fontWeight: FontWeight.w500,
                   ),
                   decoration: InputDecoration(
                     hintText: widget.hintText,
                     hintStyle: const TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF94A3B8),
+                      color: Color(0xFF64748B),
                       fontWeight: FontWeight.w400,
                     ),
                     border: InputBorder.none,
@@ -274,7 +274,7 @@ class _SpotlightSearchBarWidgetState extends State<SpotlightSearchBarWidget> {
                   tooltip: 'Cancella ricerca',
                   icon: const Icon(
                     Icons.close_rounded,
-                    color: Color(0xFF64748B),
+                    color: Color(0xFF94A3B8),
                     size: 18,
                   ),
                   onPressed: () {
@@ -291,16 +291,16 @@ class _SpotlightSearchBarWidgetState extends State<SpotlightSearchBarWidget> {
                       vertical: 3,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF1F5F9),
+                      color: const Color(0xFF22262B),
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: const Color(0xFF2D3238)),
                     ),
                     child: const Text(
                       '⌘K',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF64748B),
+                        color: Color(0xFF94A3B8),
                         letterSpacing: 0.4,
                       ),
                     ),

@@ -40,12 +40,12 @@ class KnowledgeNodeCard extends StatelessWidget {
           width: 230,
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFF191C20),
             borderRadius: BorderRadius.circular(18),
             border: Border.all(color: catStyle.border, width: 1.5),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x0C000000),
+                color: Color(0x33000000),
                 blurRadius: 12,
                 offset: Offset(0, 4),
               ),
@@ -111,7 +111,7 @@ class KnowledgeNodeCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: Color(0xFFF8FAFC),
                   height: 1.25,
                 ),
                 maxLines: 2,
@@ -136,12 +136,12 @@ class KnowledgeNodeCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isCross
                             ? pStyle.background
-                            : const Color(0xFFF1F5F9),
+                            : const Color(0xFF22262B),
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(
                           color: isCross
                               ? pStyle.border
-                              : const Color(0xFFE2E8F0),
+                              : const Color(0xFF2D3238),
                           width: 0.8,
                         ),
                       ),
@@ -154,7 +154,7 @@ class KnowledgeNodeCard extends StatelessWidget {
                               : FontWeight.w500,
                           color: isCross
                               ? pStyle.primary
-                              : const Color(0xFF475569),
+                              : const Color(0xFF94A3B8),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -176,10 +176,10 @@ class KnowledgeNodeCard extends StatelessWidget {
                         : Icons.menu_book_outlined,
                     size: 13,
                     color: isSimulation
-                        ? const Color(0xFF2563EB)
+                        ? const Color(0xFF60A5FA)
                         : isLiveEquation
-                        ? const Color(0xFF059669)
-                        : const Color(0xFF64748B),
+                        ? const Color(0xFF34D399)
+                        : const Color(0xFF94A3B8),
                   ),
                   const SizedBox(width: 5),
                   Expanded(
@@ -192,10 +192,10 @@ class KnowledgeNodeCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 11,
                         color: isSimulation
-                            ? const Color(0xFF2563EB)
+                            ? const Color(0xFF60A5FA)
                             : isLiveEquation
-                            ? const Color(0xFF059669)
-                            : const Color(0xFF64748B),
+                            ? const Color(0xFF34D399)
+                            : const Color(0xFF94A3B8),
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,

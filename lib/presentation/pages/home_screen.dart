@@ -200,22 +200,22 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: const Color(0xFF101214),
       appBar: widget.showAppBar
           ? AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: const Color(0xFF101214),
               elevation: 0,
               scrolledUnderElevation: 1,
               title: const Row(
                 children: [
-                  Icon(Icons.hub_outlined, color: Color(0xFF2563EB), size: 22),
+                  Icon(Icons.hub_outlined, color: Color(0xFF60A5FA), size: 22),
                   SizedBox(width: 8),
                   Text(
                     'Brilliant OS',
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       letterSpacing: -0.3,
-                      color: Color(0xFF0F172A),
+                      color: Color(0xFFEAECF0),
                     ),
                   ),
                 ],
@@ -230,18 +230,18 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
                           height: 14,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: Color(0xFF2563EB),
+                            color: Color(0xFF60A5FA),
                           ),
                         )
                       : const Icon(
                           Icons.refresh_rounded,
                           size: 16,
-                          color: Color(0xFF2563EB),
+                          color: Color(0xFF60A5FA),
                         ),
                   label: const Text(
                     'Ricarica',
                     style: TextStyle(
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF60A5FA),
                       fontWeight: FontWeight.w600,
                       fontSize: 13,
                     ),
@@ -255,16 +255,16 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEFF6FF),
+                      color: const Color(0xFF1E293B),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFFBFDBFE)),
+                      border: Border.all(color: const Color(0xFF3B82F6)),
                     ),
                     child: Text(
                       '${_nodeLookup.length} Nodi',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF1D4ED8),
+                        color: Color(0xFF60A5FA),
                       ),
                     ),
                   ),
@@ -281,11 +281,11 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(color: Color(0xFF2563EB)),
+            CircularProgressIndicator(color: Color(0xFF60A5FA)),
             SizedBox(height: 16),
             Text(
               'Caricamento albero delle conoscenze...',
-              style: TextStyle(color: Color(0xFF64748B), fontSize: 14),
+              style: TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
             ),
           ],
         ),
@@ -302,13 +302,13 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
               const Icon(
                 Icons.error_outline,
                 size: 48,
-                color: Color(0xFFDC2626),
+                color: Color(0xFFEF4444),
               ),
               const SizedBox(height: 12),
               Text(
                 _errorMessage!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF475569), fontSize: 14),
+                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
               ),
             ],
           ),
@@ -320,7 +320,7 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
       return const Center(
         child: Text(
           'Nessun nodo presente nell\'albero.',
-          style: TextStyle(color: Color(0xFF64748B)),
+          style: TextStyle(color: Color(0xFF94A3B8)),
         ),
       );
     }
@@ -338,7 +338,7 @@ class _GraphViewScreenState extends State<GraphViewScreen> {
             graph: _graph,
             algorithm: _algorithm,
             paint: Paint()
-              ..color = const Color(0xFF94A3B8)
+              ..color = const Color(0xFF475569)
               ..strokeWidth = 2.0
               ..style = PaintingStyle.stroke,
             builder: (Node node) {

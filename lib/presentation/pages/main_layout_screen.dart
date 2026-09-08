@@ -70,14 +70,14 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: const Color(0xFF101214),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: Color(0xFF101214),
             border: Border(
-              bottom: BorderSide(color: Color(0xFFE2E8F0), width: 1.0),
+              bottom: BorderSide(color: Color(0xFF2D3238), width: 1.0),
             ),
           ),
           padding: const EdgeInsets.fromLTRB(16, 8, 10, 8),
@@ -89,12 +89,12 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                 Container(
                   padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEFF6FF),
+                    color: const Color(0xFF1E293B),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.hub_rounded,
-                    color: Color(0xFF2563EB),
+                    color: Color(0xFF60A5FA),
                     size: 20,
                   ),
                 ),
@@ -105,7 +105,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                     fontWeight: FontWeight.w800,
                     letterSpacing: -0.3,
                     fontSize: 16,
-                    color: Color(0xFF0F172A),
+                    color: Color(0xFFEAECF0),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -123,7 +123,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                   tooltip: 'Impostazioni AI & DeepSeek',
                   icon: const Icon(
                     Icons.settings_outlined,
-                    color: Color(0xFF475569),
+                    color: Color(0xFF94A3B8),
                     size: 22,
                   ),
                   onPressed: () {
@@ -151,8 +151,8 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(color: Color(0xFFE2E8F0), width: 1.0)),
+          color: Color(0xFF101214),
+          border: Border(top: BorderSide(color: Color(0xFF2D3238), width: 1.0)),
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
@@ -161,11 +161,11 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
               _currentIndex = index;
             });
           },
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFF101214),
           elevation: 0,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: const Color(0xFF2563EB),
-          unselectedItemColor: const Color(0xFF94A3B8),
+          selectedItemColor: const Color(0xFF60A5FA),
+          unselectedItemColor: const Color(0xFF64748B),
           selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 11,

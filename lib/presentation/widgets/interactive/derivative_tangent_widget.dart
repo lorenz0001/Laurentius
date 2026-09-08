@@ -82,81 +82,87 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 16,
-            offset: Offset(0, 6),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Header con Titolo, Toggle Animazione e Badge
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
             children: [
-              const Row(
-                children: [
-                  Icon(
-                    Icons.show_chart_rounded,
-                    color: Color(0xFF4F46E5),
-                    size: 22,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    'Rapporto Incrementale & Tangente',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.show_chart_rounded,
+                      color: Color(0xFF818CF8),
+                      size: 22,
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      _isAutoAnimating
-                          ? Icons.pause_circle_rounded
-                          : Icons.play_circle_fill_rounded,
-                    ),
-                    color: const Color(0xFF4F46E5),
-                    iconSize: 26,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    tooltip: _isAutoAnimating
-                        ? 'Pausa animazione limite'
-                        : 'Anima limite h ➔ 0 a 60 FPS',
-                    onPressed: _toggleAutoAnimate,
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEEF2FF),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xFFC7D2FE)),
-                    ),
-                    child: Text(
-                      'h = ${_h.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 12,
+                    SizedBox(width: 8),
+                    Text(
+                      'Rapporto Incrementale & Tangente',
+                      style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF4338CA),
+                        color: Color(0xFFEAECF0),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        _isAutoAnimating
+                            ? Icons.pause_circle_rounded
+                            : Icons.play_circle_fill_rounded,
+                      ),
+                      color: const Color(0xFF818CF8),
+                      iconSize: 26,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      tooltip: _isAutoAnimating
+                          ? 'Pausa animazione limite'
+                          : 'Anima limite h ➔ 0 a 60 FPS',
+                      onPressed: _toggleAutoAnimate,
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1E1B4B),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFF4338CA)),
+                      ),
+                      child: Text(
+                        'h = ${_h.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFFA5B4FC),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -190,7 +196,7 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
                 child: _buildMetricCard(
                   label: 'Secante: Δy / h',
                   value: _differenceQuotient.toStringAsFixed(3),
-                  color: const Color(0xFFF59E0B),
+                  color: const Color(0xFFFBBF24),
                   subtitle: 'Pendenza secante',
                 ),
               ),
@@ -209,8 +215,8 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
                   label: 'Scostamento',
                   value: _error.toStringAsFixed(3),
                   color: _error < 0.1
-                      ? const Color(0xFF10B981)
-                      : const Color(0xFFEF4444),
+                      ? const Color(0xFF34D399)
+                      : const Color(0xFFF87171),
                   subtitle: 'Errore residuo',
                 ),
               ),
@@ -222,8 +228,9 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: const Color(0xFF22262B),
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -234,8 +241,8 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
                       : Icons.info_outline_rounded,
                   size: 16,
                   color: _h < 0.2
-                      ? const Color(0xFF16A34A)
-                      : const Color(0xFF475569),
+                      ? const Color(0xFF34D399)
+                      : const Color(0xFF9CA3AF),
                 ),
                 const SizedBox(width: 6),
                 Expanded(
@@ -247,8 +254,8 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: _h < 0.2
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFF334155),
+                          ? const Color(0xFF34D399)
+                          : const Color(0xFF9CA3AF),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -262,20 +269,24 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Incremento h (tende a 0):',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+              const Flexible(
+                child: Text(
+                  'Incremento h (tende a 0):',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF9CA3AF),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(width: 8),
               Text(
                 'h = ${_h.toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF818CF8),
                 ),
               ),
             ],
@@ -284,8 +295,8 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
             value: _h.clamp(0.05, 2.5),
             min: 0.05,
             max: 2.5,
-            activeColor: const Color(0xFF4F46E5),
-            inactiveColor: const Color(0xFFC7D2FE),
+            activeColor: const Color(0xFF818CF8),
+            inactiveColor: const Color(0xFF374151),
             onChanged: (val) {
               if (_isAutoAnimating) {
                 setState(() {
@@ -307,7 +318,7 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: Color(0xFF9CA3AF),
                 ),
               ),
               Text(
@@ -315,7 +326,7 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: Color(0xFF38BDF8),
                 ),
               ),
             ],
@@ -325,7 +336,7 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
             min: -2.0,
             max: 2.0,
             activeColor: const Color(0xFF38BDF8),
-            inactiveColor: const Color(0xFFBAE6FD),
+            inactiveColor: const Color(0xFF374151),
             onChanged: (val) => setState(() => _x0 = val),
           ),
         ],
@@ -340,35 +351,44 @@ class _DerivativeTangentWidgetState extends State<DerivativeTangentWidget>
     required String subtitle,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF101214),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: color,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFFF8FAFC),
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            subtitle,
-            style: const TextStyle(fontSize: 9, color: Color(0xFF64748B)),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              subtitle,
+              style: const TextStyle(fontSize: 9, color: Color(0xFF9CA3AF)),
+            ),
           ),
         ],
       ),

@@ -87,81 +87,87 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 16,
-            offset: Offset(0, 6),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Header con Titolo, Play/Pausa e Badge N
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
             children: [
-              const Row(
-                children: [
-                  Icon(
-                    Icons.view_column_rounded,
-                    color: Color(0xFF2563EB),
-                    size: 22,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    'Integrale di Riemann',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.view_column_rounded,
+                      color: Color(0xFF60A5FA),
+                      size: 22,
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      _isAutoPartitioning
-                          ? Icons.pause_circle_rounded
-                          : Icons.play_circle_fill_rounded,
-                    ),
-                    color: const Color(0xFF2563EB),
-                    iconSize: 26,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    tooltip: _isAutoPartitioning
-                        ? 'Pausa convergenza'
-                        : 'Anima convergenza N ➔ 40',
-                    onPressed: _toggleAutoPartition,
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEFF6FF),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xFFBFDBFE)),
-                    ),
-                    child: Text(
-                      'N = $_nRectangles Rettangoli',
-                      style: const TextStyle(
-                        fontSize: 12,
+                    SizedBox(width: 8),
+                    Text(
+                      'Integrale di Riemann',
+                      style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF1D4ED8),
+                        color: Color(0xFFEAECF0),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        _isAutoPartitioning
+                            ? Icons.pause_circle_rounded
+                            : Icons.play_circle_fill_rounded,
+                      ),
+                      color: const Color(0xFF60A5FA),
+                      iconSize: 26,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      tooltip: _isAutoPartitioning
+                          ? 'Pausa convergenza'
+                          : 'Anima convergenza N ➔ 40',
+                      onPressed: _toggleAutoPartition,
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1E3A8A),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFF1D4ED8)),
+                      ),
+                      child: Text(
+                        'N = $_nRectangles Rettangoli',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF93C5FD),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -227,8 +233,9 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: const Color(0xFF22262B),
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -239,8 +246,8 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
                       : Icons.insights_rounded,
                   size: 16,
                   color: _nRectangles >= 20
-                      ? const Color(0xFF16A34A)
-                      : const Color(0xFF475569),
+                      ? const Color(0xFF34D399)
+                      : const Color(0xFF9CA3AF),
                 ),
                 const SizedBox(width: 6),
                 Expanded(
@@ -252,8 +259,8 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: _nRectangles >= 20
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFF334155),
+                          ? const Color(0xFF34D399)
+                          : const Color(0xFF9CA3AF),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -267,20 +274,24 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Partizione intervallo (N rettangoli):',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+              const Flexible(
+                child: Text(
+                  'Partizione intervallo (N rettangoli):',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF9CA3AF),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(width: 8),
               Text(
                 'N = $_nRectangles (Δx = ${((_b - _a) / _nRectangles).toStringAsFixed(3)})',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF2563EB),
+                  color: Color(0xFF60A5FA),
                 ),
               ),
             ],
@@ -290,8 +301,8 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
             min: 2,
             max: 40,
             divisions: 38,
-            activeColor: const Color(0xFF2563EB),
-            inactiveColor: const Color(0xFFBFDBFE),
+            activeColor: const Color(0xFF60A5FA),
+            inactiveColor: const Color(0xFF374151),
             onChanged: (val) {
               if (_isAutoPartitioning) {
                 setState(() {
@@ -314,35 +325,44 @@ class _RiemannSumWidgetState extends State<RiemannSumWidget>
     required String subtitle,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF101214),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: color,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFFF8FAFC),
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            subtitle,
-            style: const TextStyle(fontSize: 9, color: Color(0xFF64748B)),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              subtitle,
+              style: const TextStyle(fontSize: 9, color: Color(0xFF9CA3AF)),
+            ),
           ),
         ],
       ),

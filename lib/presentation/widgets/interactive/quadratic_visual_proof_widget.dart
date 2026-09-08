@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../../../domain/models/knowledge_node.dart';
 
 /// Widget di simulazione e dimostrazione visiva della formula quadratica.
@@ -135,12 +136,12 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppTheme.surfaceDark,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppTheme.borderDark),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x08000000),
+            color: Color(0x40000000),
             blurRadius: 16,
             offset: Offset(0, 6),
           ),
@@ -175,7 +176,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
             children: [
               Icon(
                 Icons.square_foot_rounded,
-                color: Color(0xFF4F46E5), // Indigo
+                color: Color(0xFF818CF8), // Indigo
                 size: 22,
               ),
               SizedBox(width: 8),
@@ -185,7 +186,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF0F172A),
+                    color: AppTheme.textPrimary,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -198,7 +199,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
             IconButton(
               icon: Icon(
                 _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill,
-                color: const Color(0xFF4F46E5),
+                color: const Color(0xFF818CF8),
                 size: 26,
               ),
               tooltip: _isPlaying ? 'Metti in pausa' : 'Riproduci passaggi',
@@ -234,16 +235,17 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
         visualDensity: VisualDensity.compact,
         backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.selected)) {
-            return const Color(0xFFEEF2FF);
+            return const Color(0xFF1E1B4B);
           }
-          return Colors.white;
+          return AppTheme.surfaceElevated;
         }),
         foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.selected)) {
-            return const Color(0xFF4F46E5);
+            return const Color(0xFFA5B4FC);
           }
-          return const Color(0xFF64748B);
+          return AppTheme.textSecondary;
         }),
+        side: WidgetStateProperty.all(const BorderSide(color: AppTheme.borderDark)),
       ),
     );
   }
@@ -260,9 +262,9 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppTheme.surfaceElevated,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppTheme.borderDark),
       ),
       child: Column(
         children: [
@@ -271,7 +273,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
-                color: const Color(0xFF4F46E5),
+                color: const Color(0xFF818CF8),
                 onPressed: _prevStep,
                 tooltip: 'Passo precedente',
                 visualDensity: VisualDensity.compact,
@@ -283,13 +285,13 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1E293B),
+                    color: AppTheme.textPrimary,
                   ),
                 ),
               ),
               IconButton(
                 icon: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                color: const Color(0xFF4F46E5),
+                color: const Color(0xFF818CF8),
                 onPressed: _nextStep,
                 tooltip: 'Passo successivo',
                 visualDensity: VisualDensity.compact,
@@ -309,7 +311,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   width: isActive ? 24 : 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: isActive ? const Color(0xFF4F46E5) : const Color(0xFFCBD5E1),
+                    color: isActive ? const Color(0xFF818CF8) : AppTheme.surfaceHighlight,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -399,9 +401,9 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppTheme.surfaceElevated,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppTheme.borderDark),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,7 +416,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: AppTheme.textPrimary,
                 ),
               ),
               Container(
@@ -443,7 +445,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   label: 'Discriminante Δ',
                   value: delta.toStringAsFixed(2),
                   formula: 'b² - 4ac',
-                  color: const Color(0xFF4F46E5),
+                  color: const Color(0xFF818CF8),
                 ),
               ),
               const SizedBox(width: 8),
@@ -452,7 +454,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   label: 'Asse di Simmetria',
                   value: 'x = ${axis.toStringAsFixed(2)}',
                   formula: '-b / (2a)',
-                  color: const Color(0xFF0284C7),
+                  color: const Color(0xFF38BDF8),
                 ),
               ),
               const SizedBox(width: 8),
@@ -461,7 +463,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   label: 'Tassello Mancante',
                   value: (_cornerPieceWidth * _cornerPieceWidth).toStringAsFixed(2),
                   formula: 'b² / (4a²)',
-                  color: const Color(0xFF10B981),
+                  color: const Color(0xFF34D399),
                 ),
               ),
             ],
@@ -470,9 +472,9 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppTheme.surfaceDark,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppTheme.borderDark),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -484,10 +486,10 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 12,
-                    color: Color(0xFF0F172A),
+                    color: AppTheme.textPrimary,
                   ),
                 ),
-                Container(width: 1, height: 16, color: const Color(0xFFCBD5E1)),
+                Container(width: 1, height: 16, color: AppTheme.borderDark),
                 Text(
                   r2 != null
                       ? 'x₂ = ${r2.toStringAsFixed(2)}'
@@ -495,16 +497,16 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 12,
-                    color: Color(0xFF0F172A),
+                    color: AppTheme.textPrimary,
                   ),
                 ),
-                Container(width: 1, height: 16, color: const Color(0xFFCBD5E1)),
+                Container(width: 1, height: 16, color: AppTheme.borderDark),
                 Text(
                   'Semidistanza = ${delta >= 0 ? (math.sqrt(delta) / (2 * _a.abs())).toStringAsFixed(2) : "N/D"}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 11,
-                    color: Color(0xFF64748B),
+                    color: AppTheme.textSecondary,
                   ),
                 ),
               ],
@@ -524,16 +526,16 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppTheme.surfaceDark,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppTheme.borderDark),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 10, color: Color(0xFF64748B)),
+            style: const TextStyle(fontSize: 10, color: AppTheme.textSecondary),
           ),
           const SizedBox(height: 2),
           Text(
@@ -622,7 +624,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF334155),
+                color: AppTheme.textSecondary,
               ),
             ),
           ),
@@ -631,7 +633,7 @@ class _QuadraticVisualProofWidgetState extends State<QuadraticVisualProofWidget>
               data: SliderThemeData(
                 trackHeight: 4,
                 activeTrackColor: color,
-                inactiveTrackColor: color.withValues(alpha: 0.15),
+                inactiveTrackColor: color.withValues(alpha: 0.22),
                 thumbColor: color,
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 12),

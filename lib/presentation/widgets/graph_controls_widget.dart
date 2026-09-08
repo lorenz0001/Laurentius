@@ -35,12 +35,12 @@ class GraphControlsWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x14000000),
+            color: Color(0x40000000),
             blurRadius: 12,
             offset: Offset(0, 4),
           ),
@@ -54,7 +54,7 @@ class GraphControlsWidget extends StatelessWidget {
             icon: const Icon(
               Icons.remove_rounded,
               size: 18,
-              color: Color(0xFF334155),
+              color: Color(0xFFCBD5E1),
             ),
             onPressed: currentScale <= minScale ? null : () => _zoom(0.85),
             tooltip: 'Rimpicciolisci (Zoom -)',
@@ -71,7 +71,7 @@ class GraphControlsWidget extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF475569),
+                color: Color(0xFFF8FAFC),
               ),
             ),
           ),
@@ -81,7 +81,7 @@ class GraphControlsWidget extends StatelessWidget {
             icon: const Icon(
               Icons.add_rounded,
               size: 18,
-              color: Color(0xFF334155),
+              color: Color(0xFFCBD5E1),
             ),
             onPressed: currentScale >= maxScale ? null : () => _zoom(1.18),
             tooltip: 'Ingrandisci (Zoom +)',
@@ -91,7 +91,7 @@ class GraphControlsWidget extends StatelessWidget {
           ),
 
           const SizedBox(width: 2),
-          Container(height: 16, width: 1, color: const Color(0xFFCBD5E1)),
+          Container(height: 16, width: 1, color: const Color(0xFF2D3238)),
           const SizedBox(width: 2),
 
           // Reset / Centra Vista
@@ -99,7 +99,7 @@ class GraphControlsWidget extends StatelessWidget {
             icon: const Icon(
               Icons.center_focus_strong_rounded,
               size: 18,
-              color: Color(0xFF2563EB),
+              color: Color(0xFF60A5FA),
             ),
             onPressed: onReset,
             tooltip: 'Ripristina e centra vista',

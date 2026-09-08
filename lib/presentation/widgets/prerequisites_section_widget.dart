@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
+import '../../core/theme/app_theme.dart';
 import '../../domain/models/knowledge_node.dart';
 import '../pages/node_detail_screen.dart';
 import 'category_style.dart';
 
-/// Widget per la visualizzazione e navigazione dei prerequisiti e collegamenti interdisciplinari.
+/// Widget per la visualizzazione e navigazione dei prerequisiti e collegamenti interdisciplinari
+/// in stile Wikipedia Mobile Dark Mode.
 class PrerequisitesSectionWidget extends StatelessWidget {
   final KnowledgeNode currentNode;
   final List<KnowledgeNode>? prerequisites;
@@ -26,23 +28,26 @@ class PrerequisitesSectionWidget extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: const Color(0xFFF1F5F9),
+          color: AppTheme.surfaceDark,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppTheme.borderDark, width: 0.8),
         ),
         child: const Row(
           children: [
             Icon(
               Icons.flag_circle_outlined,
               size: 16,
-              color: Color(0xFF64748B),
+              color: AppTheme.textSecondary,
             ),
             SizedBox(width: 8),
-            Text(
-              'Concetto fondamentale di partenza (nessun prerequisito)',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF475569),
+            Expanded(
+              child: Text(
+                'Concetto fondamentale di partenza (nessun prerequisito)',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: AppTheme.textSecondary,
+                ),
               ),
             ),
           ],
@@ -58,7 +63,7 @@ class PrerequisitesSectionWidget extends StatelessWidget {
             const Icon(
               Icons.account_tree_outlined,
               size: 16,
-              color: Color(0xFF64748B),
+              color: AppTheme.textSecondary,
             ),
             const SizedBox(width: 8),
             Text(
@@ -67,7 +72,7 @@ class PrerequisitesSectionWidget extends StatelessWidget {
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.6,
-                color: Color(0xFF475569),
+                color: AppTheme.textSecondary,
               ),
             ),
           ],
@@ -86,8 +91,16 @@ class PrerequisitesSectionWidget extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceDark,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: isCrossSubject ? catStyle.border : AppTheme.borderDark,
+          width: isCrossSubject ? 1.2 : 0.9,
+        ),
+      ),
       child: Material(
-        color: Colors.white,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(14),
         child: InkWell(
           borderRadius: BorderRadius.circular(14),
@@ -99,71 +112,79 @@ class PrerequisitesSectionWidget extends StatelessWidget {
               ),
             );
           },
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: isCrossSubject
-                    ? catStyle.border
-                    : const Color(0xFFE2E8F0),
-                width: isCrossSubject ? 1.5 : 1.0,
-              ),
-              color: isCrossSubject
-                  ? catStyle.background.withValues(alpha: 0.35)
-                  : Colors.white,
-            ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             child: Row(
               children: [
+                // Icona Materia
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: catStyle.background,
                     borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: catStyle.border, width: 0.8),
                   ),
                   child: Icon(catStyle.icon, size: 16, color: catStyle.primary),
                 ),
                 const SizedBox(width: 12),
+
+                // Testo e Titolo
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (isCrossSubject)
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 3),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: catStyle.primary.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            'INTERDISCIPLINARE • ${prereq.category.toUpperCase()}',
-                            style: TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.4,
-                              color: catStyle.primary,
+                      Row(
+                        children: [
+                          if (isCrossSubject) ...[
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: catStyle.background,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                'INTERDISCIPLINARE • ${prereq.category.toUpperCase()}',
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w800,
+                                  color: catStyle.primary,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                          ],
+                          Text(
+                            prereq.serverId,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: AppTheme.textMuted,
+                              fontFamily: 'monospace',
                             ),
                           ),
-                        ),
+                        ],
+                      ),
+                      const SizedBox(height: 3),
                       Text(
                         prereq.title,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: AppTheme.textPrimary,
                         ),
                       ),
                     ],
                   ),
                 ),
+
+                const SizedBox(width: 8),
                 const Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 13,
-                  color: Color(0xFF94A3B8),
+                  color: AppTheme.textSecondary,
                 ),
               ],
             ),

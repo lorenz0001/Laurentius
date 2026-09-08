@@ -124,17 +124,21 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final maxHeight = mediaQuery.size.height * 0.90;
+    final bottomInset = mediaQuery.viewInsets.bottom;
+    final availableHeight = mediaQuery.size.height - bottomInset;
+    final maxHeight = availableHeight * 0.90;
 
-    return Container(
-      constraints: BoxConstraints(maxHeight: maxHeight),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomInset),
+      child: Container(
+        constraints: BoxConstraints(maxHeight: maxHeight),
+        decoration: const BoxDecoration(
+          color: Color(0xFF191C20),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: SafeArea(
+          top: false,
+          child: Column(
           children: [
             // Maniglia di trascinamento
             Center(
@@ -143,7 +147,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFCBD5E1),
+                  color: const Color(0xFF475569),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -157,12 +161,12 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3E8FF),
+                      color: const Color(0xFF281845),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(
                       Icons.psychology_rounded,
-                      color: Color(0xFF7C3AED),
+                      color: Color(0xFFA78BFA),
                       size: 22,
                     ),
                   ),
@@ -176,14 +180,14 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: Color(0xFFEAECF0),
                           ),
                         ),
                         Text(
                           'Chiarimenti su: ${widget.node.title}',
                           style: const TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF64748B),
+                            color: Color(0xFF94A3B8),
                             fontWeight: FontWeight.w500,
                           ),
                           maxLines: 1,
@@ -196,7 +200,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                     tooltip: 'Chiudi',
                     icon: const Icon(
                       Icons.close_rounded,
-                      color: Color(0xFF64748B),
+                      color: Color(0xFF94A3B8),
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -204,7 +208,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
               ),
             ),
 
-            const Divider(color: Color(0xFFE2E8F0), height: 1),
+            const Divider(color: Color(0xFF2D3238), height: 1),
 
             // Avviso API Key se assente
             if (!_hasApiKey) ...[
@@ -215,15 +219,15 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFBEB),
+                  color: const Color(0xFF3B2805),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFFDE68A)),
+                  border: Border.all(color: const Color(0xFFD97706)),
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.bolt_rounded,
-                      color: Color(0xFFD97706),
+                      color: Color(0xFFFBBF24),
                       size: 20,
                     ),
                     const SizedBox(width: 8),
@@ -232,7 +236,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                         'Configura la chiave API DeepSeek per ricevere risposte interattive su misura.',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Color(0xFF92400E),
+                          color: Color(0xFFFDE68A),
                         ),
                       ),
                     ),
@@ -246,11 +250,21 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                         );
                         _checkApiKey();
                       },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        visualDensity: VisualDensity.compact,
+                      ),
                       child: const Text(
                         'Configura',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFFFBBF24),
                         ),
                       ),
                     ),
@@ -284,15 +298,15 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFEF2F2),
+                  color: const Color(0xFF3B1219),
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xFFFECACA)),
+                  border: Border.all(color: const Color(0xFFB91C1C)),
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.error_outline_rounded,
-                      color: Color(0xFFDC2626),
+                      color: Color(0xFFEF4444),
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -301,7 +315,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                         _errorMessage!,
                         style: const TextStyle(
                           fontSize: 12,
-                          color: Color(0xFFDC2626),
+                          color: Color(0xFFFB7185),
                         ),
                       ),
                     ),
@@ -313,7 +327,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
             // Suggerimenti rapidi (orizzontali)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              color: const Color(0xFFF8FAFC),
+              color: const Color(0xFF14171A),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
@@ -322,10 +336,10 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                     return Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: ActionChip(
-                        backgroundColor: Colors.white,
+                        backgroundColor: const Color(0xFF1E2228),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(color: Color(0xFFE2E8F0)),
+                          side: const BorderSide(color: Color(0xFF2D3238)),
                         ),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -336,7 +350,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF475569),
+                            color: Color(0xFFCBD5E1),
                           ),
                         ),
                         onPressed: _isLoading ? null : () => _sendQuestion(q),
@@ -346,13 +360,12 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                 ),
               ),
             ),
-
             // Input bar inferiore
             Container(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
               decoration: const BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+                color: Color(0xFF191C20),
+                border: Border(top: BorderSide(color: Color(0xFF2D3238))),
               ),
               child: Row(
                 children: [
@@ -363,14 +376,19 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                       maxLines: 3,
                       textInputAction: TextInputAction.send,
                       onSubmitted: _sendQuestion,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFFEAECF0),
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Fai una domanda su ${widget.node.title}...',
                         hintStyle: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF94A3B8),
+                          color: Color(0xFF64748B),
                         ),
+                        isDense: true,
                         filled: true,
-                        fillColor: const Color(0xFFF8FAFC),
+                        fillColor: const Color(0xFF101214),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 14,
                           vertical: 10,
@@ -378,20 +396,20 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
-                            color: Color(0xFFE2E8F0),
+                            color: Color(0xFF2D3238),
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
-                            color: Color(0xFFE2E8F0),
+                            color: Color(0xFF2D3238),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
                             color: Color(0xFF7C3AED),
-                            width: 1.5,
+                            width: 1.0,
                           ),
                         ),
                       ),
@@ -404,9 +422,13 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                       color: Color(0xFF7C3AED),
                     ),
                     child: IconButton(
+                      visualDensity: VisualDensity.compact,
+                      padding: const EdgeInsets.all(8),
+                      constraints: const BoxConstraints(),
                       icon: const Icon(
                         Icons.arrow_upward_rounded,
                         color: Colors.white,
+                        size: 20,
                       ),
                       onPressed: _isLoading
                           ? null
@@ -419,8 +441,9 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildMessageBubble(_ChatMessage msg) {
     if (msg.isUser) {
@@ -453,17 +476,10 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
         margin: const EdgeInsets.only(bottom: 16, right: 32),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF191C20),
           borderRadius: BorderRadius.circular(16)
               .copyWith(bottomLeft: const Radius.circular(4)),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x06000000),
-              blurRadius: 8,
-              offset: Offset(0, 2),
-            ),
-          ],
+          border: Border.all(color: const Color(0xFF2D3238)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -473,22 +489,25 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                 Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3E8FF),
+                    color: const Color(0xFF2A1B4E),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Icon(
                     Icons.school_rounded,
                     size: 14,
-                    color: Color(0xFF7C3AED),
+                    color: Color(0xFFA78BFA),
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'Laurentius AI Tutor',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF7C3AED),
+                const Flexible(
+                  child: Text(
+                    'Laurentius AI Tutor',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFFA78BFA),
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -501,20 +520,20 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
                 p: const TextStyle(
                   fontSize: 14,
                   height: 1.55,
-                  color: Color(0xFF334155),
+                  color: Color(0xFFEAECF0),
                 ),
                 strong: const TextStyle(
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: Colors.white,
                 ),
                 code: const TextStyle(
-                  backgroundColor: Color(0xFFF1F5F9),
+                  backgroundColor: Color(0xFF101214),
                   fontFamily: 'monospace',
                   fontSize: 13,
-                  color: Color(0xFF0F172A),
+                  color: Color(0xFFE2E8F0),
                 ),
                 listBullet: const TextStyle(
-                  color: Color(0xFF7C3AED),
+                  color: Color(0xFFA78BFA),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -532,10 +551,10 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
         margin: const EdgeInsets.only(bottom: 16, right: 48),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF8FAFC),
+          color: const Color(0xFF191C20),
           borderRadius: BorderRadius.circular(16)
               .copyWith(bottomLeft: const Radius.circular(4)),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: const Color(0xFF2D3238)),
         ),
         child: const Row(
           mainAxisSize: MainAxisSize.min,
@@ -545,7 +564,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
               height: 16,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: Color(0xFF7C3AED),
+                color: Color(0xFFA78BFA),
               ),
             ),
             SizedBox(width: 12),
@@ -553,7 +572,7 @@ class _AITutorQnABottomSheetState extends State<AITutorQnABottomSheet> {
               'L\'AI Tutor sta formulando la risposta dai primi principi...',
               style: TextStyle(
                 fontSize: 13,
-                color: Color(0xFF64748B),
+                color: Color(0xFF94A3B8),
                 fontWeight: FontWeight.w500,
               ),
             ),

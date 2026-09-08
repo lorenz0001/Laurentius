@@ -126,16 +126,9 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 16,
-            offset: Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -147,12 +140,12 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEFF6FF),
+                  color: const Color(0xFF1E3A8A),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
                   Icons.electric_bolt_rounded,
-                  color: Color(0xFF2563EB),
+                  color: Color(0xFF60A5FA),
                   size: 20,
                 ),
               ),
@@ -166,13 +159,13 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                        color: Color(0xFFEAECF0),
                       ),
                     ),
                     SizedBox(height: 2),
                     Text(
                       'Flusso di cariche ed effetto termico in tempo reale',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                     ),
                   ],
                 ),
@@ -184,7 +177,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                       ? Icons.pause_circle_filled_rounded
                       : Icons.play_circle_fill_rounded,
                 ),
-                color: const Color(0xFF2563EB),
+                color: const Color(0xFF60A5FA),
                 iconSize: 28,
                 tooltip: _isPlaying ? 'Pausa flusso' : 'Avvia flusso',
                 onPressed: _togglePlayPause,
@@ -201,9 +194,10 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                       horizontal: 10,
                       vertical: 6,
                     ),
-                    backgroundColor: const Color(0xFFF1F5F9),
+                    backgroundColor: const Color(0xFF22262B),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(color: Color(0xFF2D3238)),
                     ),
                   ),
                   onPressed: () {
@@ -216,14 +210,14 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                         ? Icons.scatter_plot_rounded
                         : Icons.swap_horiz_rounded,
                     size: 14,
-                    color: const Color(0xFF334155),
+                    color: const Color(0xFFEAECF0),
                   ),
                   label: Text(
                     _showElectronFlow ? 'e⁻ Reale' : 'I Conv.',
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF334155),
+                      color: Color(0xFFEAECF0),
                     ),
                   ),
                 ),
@@ -260,7 +254,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
 
           const SizedBox(height: 16),
 
-          // Telemetria in Tempo Reale
+          // Telemetria Fisica di precisione (Corrente e Potenza Dissipata)
           Row(
             children: [
               Expanded(
@@ -268,7 +262,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                   title: 'CORRENTE (I)',
                   value: '${current.toStringAsFixed(2)} A',
                   formula: 'I = V / R',
-                  color: const Color(0xFF0284C7),
+                  color: const Color(0xFF38BDF8),
                   icon: Icons.speed_rounded,
                 ),
               ),
@@ -278,7 +272,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                   title: 'POTENZA (P)',
                   value: '${power.toStringAsFixed(1)} W',
                   formula: 'P = V · I',
-                  color: const Color(0xFFEA580C),
+                  color: const Color(0xFFF97316),
                   icon: Icons.local_fire_department_rounded,
                 ),
               ),
@@ -294,7 +288,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 0.6,
-              color: Color(0xFF64748B),
+              color: Color(0xFF9CA3AF),
             ),
           ),
           const SizedBox(height: 12),
@@ -313,7 +307,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                         vParam.stepSize!)
                     .round()
                 : 47,
-            accentColor: const Color(0xFF2563EB),
+            accentColor: const Color(0xFF60A5FA),
             onChanged: (val) {
               setState(() {
                 _voltage = val;
@@ -337,7 +331,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                         rParam.stepSize!)
                     .round()
                 : 47,
-            accentColor: const Color(0xFF7C3AED),
+            accentColor: const Color(0xFFA78BFA),
             onChanged: (val) {
               setState(() {
                 _resistance = val;
@@ -351,16 +345,16 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: const Color(0xFF22262B),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.lightbulb_outline_rounded,
-                  color: Color(0xFFD97706),
+                  color: Color(0xFFFBBF24),
                   size: 18,
                 ),
                 const SizedBox(width: 10),
@@ -369,10 +363,10 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                     'All\'aumentare di V il campo elettrico accelera le cariche (I cresce). '
                     'All\'aumentare di R gli elettroni collidono più frequentemente col reticolo atomico, '
                     'rallentando e dissipando calore per effetto Joule.',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       height: 1.4,
-                      color: Colors.blueGrey.shade800,
+                      color: Color(0xFFD1D5DB),
                     ),
                   ),
                 ),
@@ -394,9 +388,9 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.06),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,7 +426,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF64748B),
+              color: Color(0xFF9CA3AF),
             ),
           ),
         ],
@@ -453,9 +447,9 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF22262B),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
@@ -467,15 +461,15 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1E293B),
+                  color: Color(0xFFEAECF0),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFF101214),
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: const Color(0xFFCBD5E1)),
+                  border: Border.all(color: const Color(0xFF2D3238)),
                 ),
                 child: Text(
                   unit.trim().isNotEmpty
@@ -493,7 +487,7 @@ class _OhmCircuitSimulationWidgetState extends State<OhmCircuitSimulationWidget>
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: accentColor,
-              inactiveTrackColor: const Color(0xFFE2E8F0),
+              inactiveTrackColor: const Color(0xFF374151),
               thumbColor: accentColor,
               overlayColor: accentColor.withValues(alpha: 0.15),
               trackHeight: 4,

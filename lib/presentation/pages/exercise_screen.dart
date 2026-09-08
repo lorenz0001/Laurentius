@@ -85,24 +85,24 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: const Color(0xFF101214),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF101214),
         elevation: 0,
-        scrolledUnderElevation: 1,
-        iconTheme: const IconThemeData(color: Color(0xFF0F172A)),
+        scrolledUnderElevation: 0,
+        iconTheme: const IconThemeData(color: Color(0xFFEAECF0)),
         title: Text(
           widget.node.title,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF0F172A),
+            color: Color(0xFFEAECF0),
           ),
         ),
         actions: [
           IconButton(
             tooltip: 'Impostazioni DeepSeek AI',
-            icon: const Icon(Icons.settings_outlined, color: Color(0xFF64748B)),
+            icon: const Icon(Icons.settings_outlined, color: Color(0xFF94A3B8)),
             onPressed: () async {
               await Navigator.push(
                 context,
@@ -114,7 +114,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
           IconButton(
             tooltip: 'Genera un altro esercizio',
-            icon: const Icon(Icons.refresh_rounded, color: Color(0xFF2563EB)),
+            icon: const Icon(Icons.refresh_rounded, color: Color(0xFF38BDF8)),
             onPressed: _fetchExercise,
           ),
         ],
@@ -132,7 +132,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const CircularProgressIndicator(
-                          color: Color(0xFF2563EB),
+                          color: Color(0xFF38BDF8),
                           strokeWidth: 3,
                         ),
                         const SizedBox(height: 20),
@@ -141,7 +141,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               ? 'Generazione quesito matematico con DeepSeek AI...'
                               : 'Caricamento esercizio didattico...',
                           style: const TextStyle(
-                            color: Color(0xFF1E293B),
+                            color: Color(0xFFEAECF0),
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),
@@ -152,7 +152,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               ? 'Verifica di rigore scientifico e calcolo distrattori concettuali'
                               : 'Adattamento basato sui tuoi prerequisiti',
                           style: const TextStyle(
-                            color: Color(0xFF64748B),
+                            color: Color(0xFF94A3B8),
                             fontSize: 13,
                           ),
                         ),
@@ -170,17 +170,21 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                         children: [
                           const Icon(
                             Icons.error_outline,
-                            color: Color(0xFFDC2626),
+                            color: Color(0xFFEF4444),
                             size: 48,
                           ),
                           const SizedBox(height: 12),
                           Text(
                             'Impossibile caricare l\'esercizio: ${snapshot.error}',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(color: Color(0xFF475569)),
+                            style: const TextStyle(color: Color(0xFFCBD5E1)),
                           ),
                           const SizedBox(height: 16),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1E2228),
+                              foregroundColor: const Color(0xFFEAECF0),
+                            ),
                             onPressed: _fetchExercise,
                             child: const Text('Riprova'),
                           ),
@@ -206,19 +210,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       margin: const EdgeInsets.fromLTRB(16, 12, 16, 4),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFBEB),
+        color: const Color(0xFF251C08),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFDE68A)),
+        border: Border.all(color: const Color(0xFFB45309)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.bolt_rounded, color: Color(0xFFD97706), size: 20),
+          const Icon(Icons.bolt_rounded, color: Color(0xFFFBBF24), size: 20),
           const SizedBox(width: 10),
           const Expanded(
             child: Text(
               'Modalità Offline attiva. Configura la chiave API DeepSeek per generare quesiti rigorosi e personalizzati in tempo reale.',
               style: TextStyle(
-                color: Color(0xFF92400E),
+                color: Color(0xFFFDE68A),
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 height: 1.3,
@@ -229,8 +233,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           TextButton(
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              backgroundColor: const Color(0xFFFDE68A),
-              foregroundColor: const Color(0xFF78350F),
+              backgroundColor: const Color(0xFF3D2C0D),
+              foregroundColor: const Color(0xFFFDE68A),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -270,7 +274,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEFF6FF),
+                    color: const Color(0xFF1E293B),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -278,7 +282,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF60A5FA),
                     ),
                   ),
                 ),
@@ -289,8 +293,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
+                    color: const Color(0xFF191C20),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFF2D3238)),
                   ),
                   child: Text(
                     exercise.type == 'numeric'
@@ -299,7 +304,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF64748B),
+                      color: Color(0xFF94A3B8),
                     ),
                   ),
                 ),
@@ -311,16 +316,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFF191C20),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x08000000),
-                    blurRadius: 12,
-                    offset: Offset(0, 4),
-                  ),
-                ],
+                border: Border.all(color: const Color(0xFF2D3238)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -331,7 +329,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.6,
-                      color: Color(0xFF94A3B8),
+                      color: Color(0xFF64748B),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -341,7 +339,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                       height: 1.45,
-                      color: Color(0xFF0F172A),
+                      color: Color(0xFFF8FAFC),
                     ),
                   ),
                 ],
@@ -393,8 +391,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0F172A),
-                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xFF1E2228),
+                  foregroundColor: const Color(0xFFEAECF0),
+                  side: const BorderSide(color: Color(0xFF2D3238)),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
@@ -410,7 +409,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     );
   }
 
-  /// Opzioni a scelta multipla con feedback visivo a colori pastello
+  /// Opzioni a scelta multipla con feedback visivo a colori scuri
   Widget _buildMultipleChoiceOptions(ExerciseModel exercise) {
     final options = exercise.options ?? [];
 
@@ -421,35 +420,35 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             opt.trim().toLowerCase() ==
             exercise.correctAnswer.trim().toLowerCase();
 
-        Color bgColor = Colors.white;
-        Color borderColor = const Color(0xFFE2E8F0);
-        Color textColor = const Color(0xFF1E293B);
+        Color bgColor = const Color(0xFF191C20);
+        Color borderColor = const Color(0xFF2D3238);
+        Color textColor = const Color(0xFFEAECF0);
         Widget? trailingIcon;
 
         if (_hasChecked) {
           if (isCorrectOption) {
-            bgColor = const Color(0xFFDCFCE7);
-            borderColor = const Color(0xFF86EFAC);
-            textColor = const Color(0xFF15803D);
+            bgColor = const Color(0xFF0F2E1E);
+            borderColor = const Color(0xFF22C55E);
+            textColor = const Color(0xFF86EFAC);
             trailingIcon = const Icon(
               Icons.check_circle_rounded,
-              color: Color(0xFF16A34A),
+              color: Color(0xFF4ADE80),
               size: 20,
             );
           } else if (isSelected && !_isCorrect) {
-            bgColor = const Color(0xFFFEE2E2);
-            borderColor = const Color(0xFFFCA5A5);
-            textColor = const Color(0xFFB91C1C);
+            bgColor = const Color(0xFF3B1219);
+            borderColor = const Color(0xFFEF4444);
+            textColor = const Color(0xFFFCA5A5);
             trailingIcon = const Icon(
               Icons.cancel_rounded,
-              color: Color(0xFFDC2626),
+              color: Color(0xFFF87171),
               size: 20,
             );
           }
         } else if (isSelected) {
-          bgColor = const Color(0xFFEFF6FF);
+          bgColor = const Color(0xFF1E293B);
           borderColor = const Color(0xFF3B82F6);
-          textColor = const Color(0xFF1D4ED8);
+          textColor = const Color(0xFF93C5FD);
         }
 
         return Padding(
@@ -507,9 +506,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,7 +518,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
+              color: Color(0xFF94A3B8),
             ),
           ),
           const SizedBox(height: 10),
@@ -530,13 +529,26 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               decimal: true,
               signed: true,
             ),
+            style: const TextStyle(
+              fontSize: 15,
+              color: Color(0xFFEAECF0),
+            ),
             decoration: InputDecoration(
               hintText: 'Es. 42',
+              hintStyle: const TextStyle(color: Color(0xFF64748B)),
               filled: true,
-              fillColor: const Color(0xFFF8FAFC),
+              fillColor: const Color(0xFF101214),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF2D3238)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF3B82F6), width: 1.5),
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
@@ -554,10 +566,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: _isCorrect ? const Color(0xFFF0FDF4) : const Color(0xFFFEF2F2),
+        color: _isCorrect ? const Color(0xFF0F2E1E) : const Color(0xFF3B1219),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: _isCorrect ? const Color(0xFFBBF7D0) : const Color(0xFFFECACA),
+          color: _isCorrect ? const Color(0xFF22C55E) : const Color(0xFFEF4444),
         ),
       ),
       child: Column(
@@ -567,8 +579,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               Icon(
                 _isCorrect ? Icons.check_circle_rounded : Icons.cancel_rounded,
                 color: _isCorrect
-                    ? const Color(0xFF16A34A)
-                    : const Color(0xFFDC2626),
+                    ? const Color(0xFF4ADE80)
+                    : const Color(0xFFF87171),
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -581,8 +593,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: _isCorrect
-                        ? const Color(0xFF15803D)
-                        : const Color(0xFF991B1B),
+                        ? const Color(0xFF86EFAC)
+                        : const Color(0xFFFCA5A5),
                   ),
                 ),
               ),
@@ -601,8 +613,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       });
                     },
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(0xFF0F172A),
-                      side: const BorderSide(color: Color(0xFFCBD5E1)),
+                      foregroundColor: const Color(0xFFEAECF0),
+                      side: const BorderSide(color: Color(0xFF475569)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -619,7 +631,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFDC2626),
+                      backgroundColor: const Color(0xFFB91C1C),
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -642,9 +654,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -653,7 +665,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             children: [
               Icon(
                 Icons.lightbulb_outline_rounded,
-                color: Color(0xFFCA8A04),
+                color: Color(0xFFFBBF24),
                 size: 20,
               ),
               SizedBox(width: 8),
@@ -662,7 +674,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: Color(0xFFEAECF0),
                 ),
               ),
             ],
@@ -673,16 +685,16 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             style: const TextStyle(
               fontSize: 14,
               height: 1.5,
-              color: Color(0xFF334155),
+              color: Color(0xFFCBD5E1),
             ),
           ),
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: const Color(0xFF101214),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -692,7 +704,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF64748B),
+                    color: Color(0xFF94A3B8),
                   ),
                 ),
                 Text(
@@ -700,7 +712,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF16A34A),
+                    color: Color(0xFF4ADE80),
                   ),
                 ),
               ],

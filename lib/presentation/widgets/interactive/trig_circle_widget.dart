@@ -121,12 +121,12 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF191C20),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x08000000),
+            color: Color(0x40000000),
             blurRadius: 16,
             offset: Offset(0, 6),
           ),
@@ -137,62 +137,75 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Header con Titolo, Badge Angolo e Auto-Rotazione
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
             children: [
-              const Row(
-                children: [
-                  Icon(Icons.radar_rounded, color: Color(0xFFD946EF), size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    'Circonferenza Goniometrica',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  // Auto-rotazione continua
-                  IconButton(
-                    icon: Icon(
-                      _isAutoRotating
-                          ? Icons.pause_circle_rounded
-                          : Icons.play_circle_fill_rounded,
-                    ),
-                    color: const Color(0xFFC026D3),
-                    iconSize: 26,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    tooltip: _isAutoRotating
-                        ? 'Ferma rotazione'
-                        : 'Auto-rotazione continua 60 FPS',
-                    onPressed: _toggleAutoRotate,
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFDF4FF),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xFFF5D0FE)),
-                    ),
-                    child: Text(
-                      'θ = ${_angleDeg.toStringAsFixed(1)}° (${(_angleRad / math.pi).toStringAsFixed(2)}π)',
-                      style: const TextStyle(
-                        fontSize: 12,
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.radar_rounded, color: Color(0xFFD946EF), size: 20),
+                    SizedBox(width: 8),
+                    Text(
+                      'Circonferenza Goniometrica',
+                      style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFFC026D3),
+                        color: Color(0xFFF8FAFC),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Auto-rotazione continua
+                    IconButton(
+                      icon: Icon(
+                        _isAutoRotating
+                            ? Icons.pause_circle_rounded
+                            : Icons.play_circle_fill_rounded,
+                      ),
+                      color: const Color(0xFFE879F9),
+                      iconSize: 26,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      tooltip: _isAutoRotating
+                          ? 'Ferma rotazione'
+                          : 'Auto-rotazione continua 60 FPS',
+                      onPressed: _toggleAutoRotate,
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF3B123B),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFFC026D3)),
+                      ),
+                      child: Text(
+                        'θ = ${_angleDeg.toStringAsFixed(1)}° (${(_angleRad / math.pi).toStringAsFixed(2)}π)',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFFF5D0FE),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -300,8 +313,9 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: const Color(0xFF14171A),
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF2D3238)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -309,7 +323,7 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
                 const Icon(
                   Icons.check_circle_outline_rounded,
                   size: 16,
-                  color: Color(0xFF16A34A),
+                  color: Color(0xFF4ADE80),
                 ),
                 const SizedBox(width: 6),
                 Flexible(
@@ -318,7 +332,7 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF334155),
+                      color: Color(0xFFE2E8F0),
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -332,20 +346,24 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Regola l\'angolo θ (da 0 a 2π):',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey.shade700,
+              const Flexible(
+                child: Text(
+                  'Regola l\'angolo θ (da 0 a 2π):',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF94A3B8),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(width: 8),
               Text(
                 '${_angleDeg.toStringAsFixed(0)}°',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFFC026D3),
+                  color: Color(0xFFE879F9),
                 ),
               ),
             ],
@@ -353,8 +371,8 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: const Color(0xFFD946EF),
-              inactiveTrackColor: const Color(0xFFF5D0FE),
-              thumbColor: const Color(0xFFC026D3),
+              inactiveTrackColor: const Color(0xFF334155),
+              thumbColor: const Color(0xFFE879F9),
               trackHeight: 4,
             ),
             child: Slider(
@@ -401,29 +419,35 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: const Color(0xFF14171A),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Color(0xFF2D3238)),
       ),
       child: Column(
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: color,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFFF8FAFC),
+              ),
             ),
           ),
         ],
@@ -440,13 +464,16 @@ class _TrigCircleWidgetState extends State<TrigCircleWidget>
           label,
           style: TextStyle(
             fontSize: 11,
-            color: isSelected ? Colors.white : const Color(0xFF475569),
+            color: isSelected ? Colors.white : const Color(0xFF94A3B8),
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
           ),
         ),
         selected: isSelected,
-        selectedColor: const Color(0xFFD946EF),
-        backgroundColor: const Color(0xFFF1F5F9),
+        selectedColor: const Color(0xFF86198F),
+        backgroundColor: const Color(0xFF14171A),
+        side: BorderSide(
+          color: isSelected ? const Color(0xFFD946EF) : const Color(0xFF2D3238),
+        ),
         onSelected: (_) {
           _animateToAngle(rad);
         },

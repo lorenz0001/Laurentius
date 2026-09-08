@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
+import '../../core/theme/app_theme.dart';
 import '../../data/catalog/curriculum_registry.dart';
 import '../../domain/models/knowledge_node.dart';
 import '../pages/node_detail_screen.dart';
@@ -19,17 +20,16 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    final theme = Theme.of(context);
-    return theme.copyWith(
+    return AppTheme.darkTheme.copyWith(
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
+        backgroundColor: AppTheme.bgDark,
         elevation: 0,
         scrolledUnderElevation: 1,
-        iconTheme: IconThemeData(color: Color(0xFF0F172A)),
+        iconTheme: IconThemeData(color: AppTheme.textPrimary),
       ),
       inputDecorationTheme: const InputDecorationTheme(
         hintStyle: TextStyle(
-          color: Color(0xFF94A3B8),
+          color: AppTheme.textSecondary,
           fontSize: 15,
           fontWeight: FontWeight.w400,
         ),
@@ -44,7 +44,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
       if (query.isNotEmpty)
         IconButton(
           tooltip: 'Cancella',
-          icon: const Icon(Icons.clear_rounded, color: Color(0xFF64748B)),
+          icon: const Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
           onPressed: () {
             query = '';
             showSuggestions(context);
@@ -60,7 +60,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
       icon: const Icon(
         Icons.arrow_back_ios_new_rounded,
         size: 20,
-        color: Color(0xFF0F172A),
+        color: AppTheme.textPrimary,
       ),
       onPressed: () => close(context, null),
     );
@@ -111,13 +111,13 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF1F5F9),
+                  color: AppTheme.surfaceElevated,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.search_off_rounded,
                   size: 40,
-                  color: Color(0xFF94A3B8),
+                  color: AppTheme.textSecondary,
                 ),
               ),
               const SizedBox(height: 16),
@@ -126,14 +126,14 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF1E293B),
+                  color: AppTheme.textPrimary,
                 ),
               ),
               const SizedBox(height: 6),
               const Text(
                 'Prova a cercare termini come "Derivata", "Pitagora", "Ohm", "Matematica" o "Fisica".',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+                style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
               ),
             ],
           ),
@@ -150,7 +150,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
         final catStyle = CategoryStyle.forCategory(node.category);
 
         return Material(
-          color: Colors.white,
+          color: AppTheme.surfaceDark,
           borderRadius: BorderRadius.circular(14),
           child: InkWell(
             borderRadius: BorderRadius.circular(14),
@@ -166,7 +166,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppTheme.borderDark),
               ),
               child: Row(
                 children: [
@@ -218,7 +218,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
                                   '• ${node.subCategory}',
                                   style: const TextStyle(
                                     fontSize: 11,
-                                    color: Color(0xFF64748B),
+                                    color: AppTheme.textSecondary,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   overflow: TextOverflow.ellipsis,
@@ -233,7 +233,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF0F172A),
+                            color: AppTheme.textPrimary,
                           ),
                         ),
                       ],
@@ -243,7 +243,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
                   const Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 14,
-                    color: Color(0xFF94A3B8),
+                    color: AppTheme.textSecondary,
                   ),
                 ],
               ),
@@ -266,7 +266,7 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
               fontSize: 11,
               fontWeight: FontWeight.w800,
               letterSpacing: 0.8,
-              color: Color(0xFF94A3B8),
+              color: AppTheme.textSecondary,
             ),
           ),
           const SizedBox(height: 12),
@@ -297,10 +297,10 @@ class GlobalNodeSearchDelegate extends SearchDelegate<KnowledgeNode?> {
       labelStyle: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF334155),
+        color: AppTheme.textPrimary,
       ),
-      backgroundColor: const Color(0xFFF1F5F9),
-      side: const BorderSide(color: Color(0xFFE2E8F0)),
+      backgroundColor: AppTheme.surfaceElevated,
+      side: const BorderSide(color: AppTheme.borderDark),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       onPressed: () {
         query = label;

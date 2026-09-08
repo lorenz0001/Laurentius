@@ -99,12 +99,12 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
         constraints: BoxConstraints(maxHeight: maxHeight),
         margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF191C20),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE2E8F0), width: 1.2),
+          border: Border.all(color: const Color(0xFF2D3238), width: 1.2),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x1A0F172A),
+              color: Color(0x66000000),
               blurRadius: 24,
               spreadRadius: -4,
               offset: Offset(0, 12),
@@ -121,9 +121,9 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF8FAFC),
+                  color: Color(0xFF14171A),
                   border: Border(
-                    bottom: BorderSide(color: Color(0xFFE2E8F0), width: 1.0),
+                    bottom: BorderSide(color: Color(0xFF2D3238), width: 1.0),
                   ),
                 ),
                 child: Row(
@@ -131,7 +131,7 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
                     const Icon(
                       Icons.manage_search_rounded,
                       size: 16,
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF60A5FA),
                     ),
                     const SizedBox(width: 8),
                     Text(
@@ -142,7 +142,7 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.6,
-                        color: Color(0xFF475569),
+                        color: Color(0xFF94A3B8),
                       ),
                     ),
                     const Spacer(),
@@ -151,7 +151,7 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF94A3B8),
+                        color: Color(0xFF64748B),
                       ),
                     ),
                   ],
@@ -196,7 +196,7 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFFEF2F2),
+              color: const Color(0xFF3B1219),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
@@ -211,7 +211,7 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF0F172A),
+              color: Color(0xFFF8FAFC),
             ),
             textAlign: TextAlign.center,
           ),
@@ -221,7 +221,7 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF64748B),
+              color: Color(0xFF94A3B8),
             ),
           ),
           const SizedBox(height: 10),
@@ -248,16 +248,16 @@ class _SpotlightDropdownOverlayState extends State<SpotlightDropdownOverlay> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFEFF6FF),
+        color: const Color(0xFF1E293B),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFBFDBFE)),
+        border: Border.all(color: const Color(0xFF3B82F6)),
       ),
       child: Text(
         label,
         style: const TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,
-          color: Color(0xFF1D4ED8),
+          color: Color(0xFF60A5FA),
         ),
       ),
     );
