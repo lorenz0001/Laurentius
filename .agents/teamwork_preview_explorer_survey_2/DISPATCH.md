@@ -1,24 +1,18 @@
-## 2026-09-07T11:56:03Z
-You are Explorer 2 for the survey phase of the Laurentius refactoring project.
-Your identity: teamwork_preview_explorer_survey_2
-Your working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2
-Workspace root: c:\Users\catte\Desktop\Laurentius
+## 2026-09-08T01:40:52Z
+You are the Proof Engine & SDUI Architecture Explorer for Laurentius (Brilliant-OS).
+Your working directory is: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2
+You MUST read c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting work (specifically the section ## 2026-09-07T23:39:08Z).
+Also review:
+- c:\Users\catte\Desktop\Laurentius\PROJECT_MAP.md
+- c:\Users\catte\Desktop\Laurentius\.agents\skills\laurentius-dev\SKILL.md
 
-MANDATORY: Read the full verbatim requirements in c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting.
+Your objective:
+Analyze the code and architecture of the proof engine and content parsing pipeline:
+1. lib/data/content/markdown_content_parser.dart: How does it currently parse Markdown, theorems, proofs (ProofStep), and corollaries? How does it extract > Corollario: [Nome] or #### Dimostrazione del Corollario? Does it capture corollary proofs as distinct ProofSteps or sub-proofs?
+2. lib/domain/models/knowledge_node.dart: How are ProofSteps, corollaries, and metadata structured in the data models? Does ProofStep or KnowledgeNode need enhancement to store corollary names, types, or distinct sub-proofs?
+3. lib/presentation/widgets/algebraic_proof_widget.dart: How does the interactive proof accordion/switcher work? Can it display and switch between main theorem proofs and corollary proofs? How does it handle unlocking, badge display, and scrolling?
+4. lib/presentation/pages/node_detail_screen.dart: How does the detail screen render proofs? How can an external caller (e.g., Spotlight search) deep-link or jump directly to a specific focused theorem or corollary?
+5. Identify all tests covering parsing and proof widgets (test/markdown_content_parser_test.dart, etc.).
 
-Task:
-Investigate and analyze:
-1. The current knowledge/content storage and loading mechanism in `MockDataService`, repositories, data sources, and services.
-2. How hardcoded in-memory catalogs are structured, where duplicate declarations and dead paths exist, and what data needs compaction (R1).
-3. Requirements for R3 (Decoupled Content System): how human-editable Markdown articles under `assets/content/**/*.md` should be organized, formatted (YAML frontmatter + LaTeX math body), registered in `pubspec.yaml`, and parsed/loaded offline into Isar / local knowledge store on startup or synchronization.
-4. What packages or parsers currently exist or are needed for YAML frontmatter parsing and Markdown/LaTeX parsing without introducing unapproved dependencies (check `pubspec.yaml`).
-5. Recommended architecture for the offline Markdown content loader and parser.
-
-Deliverable:
-Write a comprehensive, structured report to `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2\handoff.md` with:
-- Exact file paths and code patterns of current content loading.
-- Inventory of in-memory content to be decoupled into `assets/content/**/*.md`.
-- Recommended YAML frontmatter schema and Markdown/LaTeX article format.
-- Architecture and algorithm for the offline content parser/loader.
-- Recommendations for tests.
-When done, send a message to parent with a brief summary and the path to your handoff.md.
+Write your architectural analysis, code snippets, concrete design proposals, and migration plan to c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2\handoff.md and update progress.md in your working directory.
+When done, notify the caller with a concise summary and the path to your report.

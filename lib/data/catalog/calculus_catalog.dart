@@ -170,7 +170,7 @@ class CalculusCatalog {
         serverId: 'mat_deriv_theorems_01',
         title: 'Teoremi di Rolle, Lagrange e Criterio di Monotonia',
         category: 'Matematica',
-        subCategory: 'Teoremi Differenziali',
+        subCategory: 'Calcolo Differenziale',
         interactiveData: InteractiveData()
           ..templateType = 'rolle_lagrange'
           ..equations = ['x * x * x / 3 - x'],

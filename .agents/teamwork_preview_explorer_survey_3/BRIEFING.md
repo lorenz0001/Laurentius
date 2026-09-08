@@ -1,47 +1,41 @@
-# BRIEFING — 2026-09-07T12:00:00Z
+# BRIEFING — 2026-09-07T23:45:00Z
 
 ## Mission
-Survey Laurentius codebase for interactive simulation widgets, InteractiveTemplateFactory, Declarative Widget Linking (R5), and PROJECT_MAP.md requirements (R2).
+Analyze main screen UI layout, eradicate UI clutter, and architect an omnipresent instant Spotlight Search system with 1-tap focus navigation to theorems/corollaries.
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: explorer
+- Roles: Spotlight Search & UI Architecture Explorer
 - Working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_3
-- Original parent: 1a6ba404-5e53-4553-820e-f33074fed99c
-- Milestone: survey
+- Original parent: e2a6aa4b-4ae5-4307-ae6e-a44540e77d71
+- Milestone: Spotlight Search & UI Architecture Exploration
 
 ## 🔒 Key Constraints
 - Read-only investigation — do NOT implement
-- Only write metadata inside c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_3
-- MANDATORY: Read full verbatim requirements in .agents/ORIGINAL_REQUEST.md
+- Follow Brilliant design language (clean, minimal clutter, interactive, immediate clarity)
+- Design live predictive indexing across theorems, formulas, corollaries, definitions
+- 1-tap direct navigation into NodeDetailScreen with targeted theorem/corollary focus
+- Produce 5-component handoff report (handoff.md)
 
 ## Current Parent
-- Conversation ID: 1a6ba404-5e53-4553-820e-f33074fed99c
-- Updated: 2026-09-07T11:56:20Z
+- Conversation ID: e2a6aa4b-4ae5-4307-ae6e-a44540e77d71
+- Updated: 2026-09-07T23:45:00Z
 
 ## Investigation State
-- **Explored paths**:
-  - `lib/presentation/widgets/interactive/` (all 9 simulation widgets + factory)
-  - `lib/domain/models/knowledge_node.dart`
-  - `lib/data/catalog/` (all 5 catalogs + master registry)
-  - `lib/core/services/` (mock data, sync, tutor, settings)
-  - `lib/presentation/pages/` (node detail, explorer, main layout)
-  - `test/` (interactive simulations, animations, step12, all 62 tests passing)
+- **Explored paths**: `lib/presentation/pages/main_layout_screen.dart`, `lib/presentation/pages/home_screen.dart`, `lib/presentation/pages/category_explorer_screen.dart`, `lib/presentation/pages/node_detail_screen.dart`, `lib/presentation/widgets/node_search_delegate.dart`, `lib/presentation/widgets/algebraic_proof_widget.dart`, `lib/data/repositories/node_repository.dart`, `lib/data/catalog/curriculum_registry.dart`, `lib/data/content/markdown_content_parser.dart`, markdown content files in `assets/content/`, test suite.
 - **Key findings**:
-  - Exactly 9 interactive simulation widgets exist: OhmCircuitSimulation, KinematicsSimulation, CartesianGraph, LiveEquation, RolleLagrange, TriangleSolver, TrigCircle, DerivativeTangent, RiemannSum.
-  - InteractiveTemplateFactory handles 17 alias keys mapping to these 9 widgets.
-  - LiveEquationWidget line 257 has hardcoded `'V'`.
-  - In R5, YAML frontmatter maps directly to `InteractiveData` & `InteractiveParameter` without touching widget source code.
-  - In R2, `PROJECT_MAP.md` can be structured into 6 clear sections and kept strictly under 300 lines (~220-250 lines).
-- **Unexplored areas**: None for survey scope.
+  1. UI clutter: MainLayoutScreen hides search behind a modal AppBar icon and exposes debug sync button; CategoryExplorer has 180px dark hero card and nested folder accordions; HomeScreen has intrusive bottom banner; NodeDetail has duplicate quiz & AI buttons.
+  2. Search limitations: GlobalNodeSearchDelegate queries only 4 metadata fields and completely ignores proofs, formulas, and corollaries; navigation is 0-focused.
+  3. Solution: Omnipresent top Spotlight search bar, live predictive trie across theorems, corollaries, formulas, definitions, with 1-tap direct jump to target proof step with glowing highlight.
+- **Unexplored areas**: None; full analysis completed.
 
 ## Key Decisions Made
-- Fully documented all 9 widgets with their keys, parameters, equations, and behavior.
-- Outlined exact frontmatter syntax and factory mapping pipeline for R5.
-- Drafted complete, line-budgeted blueprint for `PROJECT_MAP.md` under 300 lines.
+- Designed SpotlightIndexService with sub-millisecond in-memory trie and diacritic normalization
+- Defined SpotlightSearchResult schema with 5 result types (topic, theorem, corollary, formula, definition)
+- Designed 1-tap deep jump via NodeDetailScreen parameters + AlgebraicProofWidget step auto-expansion
+- Formulated clutter eradication strategy across all 4 primary screens
 
 ## Artifact Index
-- DISPATCH.md — received task dispatch
-- progress.md — liveness heartbeat
-- BRIEFING.md — working memory
-- handoff.md — final survey report
+- handoff.md — Comprehensive 5-component architectural report
+- progress.md — Liveness heartbeat and completed task list
+- DISPATCH.md — Received instructions

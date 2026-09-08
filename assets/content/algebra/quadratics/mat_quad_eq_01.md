@@ -72,34 +72,68 @@ $$2ax + b = \pm \sqrt{b^2 - 4ac} \iff 2ax = -b \pm \sqrt{\Delta}$$
 $$x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} = \frac{-b \pm \sqrt{\Delta}}{2a}$$
 > **Insight:** Formula universale che fornisce l'insieme completo delle soluzioni esatte di qualsiasi equazione quadratica a coefficienti reali.
 
-## Dimostrazione: Formula Risolutiva Ridotta per b Pari
+## Dimostrazione: Corollario - Formula Risolutiva Ridotta per Coefficiente Lineare Pari
 
 ### 1. Definizione del semi-coefficiente beta
-$$b = 2\beta \quad \text{con } \beta = \frac{b}{2} \in \mathbb{R}$$
-> **Insight:** Quando il coefficiente b e pari o divisibile per 2, la formula si semplifica drasticamente riducendo l'onere computazionale.
+Sia dato il coefficiente lineare pari $b = 2\beta$ con $\beta = \frac{b}{2} \in \mathbb{R}$:
+$$a x^2 + 2\beta x + c = 0$$
+> **Insight:** Quando il termine di primo grado è pari o multiplo di due, la formula si semplifica riducendo la complessità aritmetica.
 
 ### 2. Sostituzione nella formula generale e raccoglimento del fattore 4
-$$x_{1,2} = \frac{-2\beta \pm \sqrt{(2\beta)^2 - 4ac}}{2a} = \frac{-2\beta \pm \sqrt{4(\beta^2 - ac)}}{2a}$$
-> **Insight:** Il fattore 4 puo essere estratto dalla radice quadrata diventando un fattore moltiplicativo 2.
+Sostituendo $b = 2\beta$ nella formula risolutiva generale:
+$$x_{1,2} = \frac{-2\beta \pm \sqrt{(2\beta)^2 - 4ac}}{2a} = \frac{-2\beta \pm \sqrt{4\beta^2 - 4ac}}{2a} = \frac{-2\beta \pm \sqrt{4(\beta^2 - ac)}}{2a}$$
+> **Insight:** Il fattore comune 4 all'interno del radicando può essere fattorizzato ed estratto dal segno di radice.
 
-### 3. Semplificazione del fattore comune 2
-$$x_{1,2} = \frac{-2\beta \pm 2\sqrt{\beta^2 - ac}}{2a} = \frac{2(-\beta \pm \sqrt{\beta^2 - ac})}{2a}$$
-> **Insight:** Il 2 a numeratore e a denominatore si elidono esattamente.
+### 3. Estrazione del fattore moltiplicativo e raccoglimento a numeratore
+Estraendo $\sqrt{4} = 2$ e raccogliendo 2 a fattor comune su entrambi i termini del numeratore:
+$$x_{1,2} = \frac{-2\beta \pm 2\sqrt{\beta^2 - ac}}{2a} = \frac{2\left(-\beta \pm \sqrt{\beta^2 - ac}\right)}{2a}$$
+> **Insight:** Il 2 a fattor comune a numeratore prepara la cancellazione esatta con il 2 a denominatore.
 
-### 4. Corollario: Formula Ridotta e Discriminante Ridotto (Delta/4)
+### 4. Corollario: Semplificazione e Formula Ridotta (Delta/4)
+Semplificando il fattore comune 2 e definendo il discriminante ridotto $\frac{\Delta}{4} \equiv \beta^2 - ac$:
 $$x_{1,2} = \frac{-\beta \pm \sqrt{\frac{\Delta}{4}}}{a} = \frac{-\frac{b}{2} \pm \sqrt{\left(\frac{b}{2}\right)^2 - ac}}{a}$$
 > **Insight:** Elimina la moltiplicazione per 4 nel discriminante e la divisione per 2 a denominatore, velocizzando i calcoli sia manuali sia algoritmici.
 
-## Dimostrazione: Natura Geometrica del Discriminante e Zeri della Parabola
+## Dimostrazione: Corollario - Formula Ridottissima per Trinomio Monico
 
-### 1. Coordinate cartesiane del vertice della parabola
-$$V\left(-\frac{b}{2a}, \; -\frac{\Delta}{4a}\right) \quad \text{con ordinata } y_V = -\frac{b^2 - 4ac}{4a}$$
-> **Insight:** Il punto di massimo o minimo assoluto della parabola riflette direttamente il valore del discriminante scalato per 4a.
+### 1. Ipotesi di trinomio quadratico monico con b pari
+Consideriamo il caso in cui il coefficiente di secondo grado sia unitario ($a = 1$) e il coefficiente lineare sia pari ($b = 2\beta$):
+$$x^2 + 2\beta x + c = 0$$
+> **Insight:** Si verifica in moltissimi problemi di geometria euclidea e fattorizzazione algebrica.
 
-### 2. Riscrittura canonica dell'ordinata in funzione della distanza dall'asse x
-$$y = a\left(x + \frac{b}{2a}\right)^2 - \frac{\Delta}{4a}$$
-> **Insight:** Evidenzia che la parabola tocca l'asse x (y = 0) se e solo se il termine quadratico eguaglia Delta / (4a^2).
+### 2. Sostituzione di a = 1 nella formula ridotta
+Applicando la formula ridotta con $a = 1$:
+$$x_{1,2} = \frac{-\beta \pm \sqrt{\beta^2 - 1 \cdot c}}{1}$$
+> **Insight:** Il denominatore della frazione collassa all'unità.
 
-### 3. Corollario: Posizioni Reciproche tra Parabola e Asse delle Ascisse
-$$\begin{cases} \Delta > 0 \implies \text{2 intersezioni reali distinte } (x_1 \neq x_2) \\ \Delta = 0 \implies \text{1 intersezione reale (vertice tangente } x_1 = x_2) \\ \Delta < 0 \implies \text{0 intersezioni reali (parabola strettamente positiva o negativa)} \end{cases}$$
-> **Insight:** Il segno di Delta governa l'esistenza e la cardinalita degli zeri reali di qualsiasi trinomio di secondo grado.
+### 3. Eliminazione del denominatore
+Poiché qualsiasi quantità divisa per 1 coincide con se stessa:
+$$x_{1,2} = -\beta \pm \sqrt{\beta^2 - c}$$
+> **Insight:** I calcoli si riducono a una sottrazione e all'estrazione di un'unica radice quadrata.
+
+### 4. Corollario: Espressione della Formula Ridottissima
+Sostituendo $\beta = \frac{b}{2}$:
+$$x_{1,2} = -\frac{b}{2} \pm \sqrt{\left(\frac{b}{2}\right)^2 - c}$$
+> **Insight:** Fornisce la via computazionale più rapida in assoluto per risolvere equazioni quadratiche moniche.
+
+## Dimostrazione: Corollario - Posizioni Reciproche tra Parabola e Asse delle Ascisse
+
+### 1. Relazione tra vertice e intersezioni cartesiane
+Riscriviamo la funzione quadratica nella forma con vertice esplicitato $y = a\left(x + \frac{b}{2a}\right)^2 - \frac{\Delta}{4a}$. Le intersezioni con l'asse $x$ corrispondono a $y = 0$:
+$$a\left(x + \frac{b}{2a}\right)^2 - \frac{\Delta}{4a} = 0 \iff a\left(x + \frac{b}{2a}\right)^2 = \frac{\Delta}{4a}$$
+> **Insight:** La ricerca degli zeri equivale a stabilire dove la quota della parabola incrocia l'asse orizzontale.
+
+### 2. Isolamento del termine quadratico puro
+Dividendo per il coefficiente non nullo $a$:
+$$\left(x + \frac{b}{2a}\right)^2 = \frac{\Delta}{4a^2}$$
+> **Insight:** Poiché 4a^2 > 0 per ogni a != 0, il segno del secondo membro è identico al segno del discriminante Delta.
+
+### 3. Discussione dei tre regimi di segno
+Poiché il quadrato al primo membro non può mai essere negativo nel dominio reale:
+$$\begin{cases} \Delta > 0 \implies \left(x + \frac{b}{2a}\right) = \pm \frac{\sqrt{\Delta}}{2a} \implies \text{due radici reali distinte} \\ \Delta = 0 \implies \left(x + \frac{b}{2a}\right) = 0 \implies \text{due radici reali coincidenti} \\ \Delta < 0 \implies \left(x + \frac{b}{2a}\right)^2 < 0 \implies \text{nessuna radice reale} \end{cases}$$
+> **Insight:** Il discriminante quantifica la semidistanza tra l'asse di simmetria e le radici.
+
+### 4. Corollario: Geometria delle Posizioni Reciproche
+Il segno del discriminante $\Delta$ governa interamente la topologia delle intersezioni con l'asse $x$:
+$$\begin{cases} \Delta > 0 \implies \text{2 intersezioni reali distinte (parabola secante)} \\ \Delta = 0 \implies \text{1 intersezione reale con molteplicità 2 (parabola tangente nel vertice)} \\ \Delta < 0 \implies \text{0 intersezioni reali (parabola strettamente esterna all'asse } x) \end{cases}$$
+> **Insight:** Governa le soluzioni delle disequazioni quadratiche e la stabilità dei sistemi dinamici a tempo discreto.

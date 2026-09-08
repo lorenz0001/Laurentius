@@ -29,7 +29,7 @@ Questo straordinario risultato sancisce che l'integrazione e la derivazione sono
 
 ### 1. Teorema di Weierstrass sui compatti
 $$m \le f(x) \le M \quad \forall x \in [a, b] \quad \text{con } m = \min_{[a, b]} f, \; M = \max_{[a, b]} f$$
-> **Insight:** Poiche f e continua su un intervallo chiuso e limitato, assume per Weierstrass il suo valore minimo assoluto m e il suo valore massimo assoluto M.
+> **Insight:** Poiché f è continua su un intervallo chiuso e limitato, assume per Weierstrass il suo valore minimo assoluto m e il suo valore massimo assoluto M.
 
 ### 2. Monotonia dell'integrale definito rispetto all'ordinamento
 $$\int_a^b m \, dt \le \int_a^b f(t) \, dt \le \int_a^b M \, dt \iff m(b - a) \le \int_a^b f(t) \, dt \le M(b - a)$$
@@ -37,7 +37,7 @@ $$\int_a^b m \, dt \le \int_a^b f(t) \, dt \le \int_a^b M \, dt \iff m(b - a) \l
 
 ### 3. Divisione per l'ampiezza dell'intervallo (b - a)
 $$m \le \frac{1}{b - a} \int_a^b f(t) \, dt \le M$$
-> **Insight:** La quantita media μ = 1/(b - a) ∫ f(t)dt e un numero reale rigorosamente compreso tra il minimo e il massimo di f.
+> **Insight:** La quantità media μ = 1/(b - a) ∫ f(t)dt è un numero reale compreso tra il valore minimo e il valore massimo di f.
 
 ### 4. Corollario: Esistenza del Punto Medio Integrale c
 $$\exists c \in [a, b] : \quad f(c) = \frac{1}{b - a} \int_a^b f(t) \, dt \iff \int_a^b f(t) \, dt = f(c)(b - a)$$
@@ -47,7 +47,7 @@ $$\exists c \in [a, b] : \quad f(c) = \frac{1}{b - a} \int_a^b f(t) \, dt \iff \
 
 ### 1. Definizione della funzione integrale e calcolo del rapporto incrementale
 $$\frac{F(x+h) - F(x)}{h} = \frac{1}{h} \left[ \int_a^{x+h} f(t) \, dt - \int_a^x f(t) \, dt \right] = \frac{1}{h} \int_x^{x+h} f(t) \, dt$$
-> **Insight:** Per l'additivita dell'integrale rispetto all'intervallo, la differenza tra le due aree lascia unicamente la striscia di base h compresa tra x e x+h.
+> **Insight:** Per l'additività dell'integrale rispetto all'intervallo, la differenza tra le due aree lascia unicamente la striscia di base h compresa tra x e x+h.
 
 ### 2. Applicazione del Teorema della Media Integrale alla striscia h
 $$\frac{1}{h} \int_x^{x+h} f(t) \, dt = f(c_h) \quad \text{con } c_h \in [x, x+h]$$
@@ -55,11 +55,11 @@ $$\frac{1}{h} \int_x^{x+h} f(t) \, dt = f(c_h) \quad \text{con } c_h \in [x, x+h
 
 ### 3. Passaggio al limite per incremento h tendente a zero
 $$F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = \lim_{h \to 0} f(c_h) = f(x)$$
-> **Insight:** Poiche c_h e intrappolato tra x e x+h, per h -> 0 si ha c_h -> x. Essendo f continua, lim f(c_h) = f(x).
+> **Insight:** Poiché c_h è intrappolato tra x e x+h, per h -> 0 si ha c_h -> x. Essendo f continua, lim f(c_h) = f(x).
 
 ### 4. Corollario: Esistenza Universale della Primitiva per Funzioni Continue
-$$F'(x) = f(x) \quad \forall x \in (a, b) \implies F(x) \text{ e una primitiva di } f(x)$$
-> **Insight:** Qualsiasi funzione reale continua ammette sempre e con certezza assoluta almeno una primitiva: la sua stessa funzione integrale.
+$$F'(x) = f(x) \quad \forall x \in (a, b) \implies F(x) \text{ è una primitiva di } f(x)$$
+> **Insight:** Qualsiasi funzione reale continua ammette sempre almeno una primitiva: la sua stessa funzione integrale F(x).
 
 ## Dimostrazione: Secondo Teorema Fondamentale (Formula di Newton-Leibniz)
 
@@ -69,7 +69,7 @@ $$G'(x) = f(x) \quad \land \quad F'(x) = f(x) \implies [G(x) - F(x)]' = 0 \iff G
 
 ### 2. Valutazione nel punto iniziale a
 $$G(a) = F(a) + C = \int_a^a f(t) \, dt + C = 0 + C = C \implies C = G(a)$$
-> **Insight:** Poiche un integrale con estremi coincidenti e nullo, la costante C e univocamente determinata dal valore della primitiva in a.
+> **Insight:** Poiché un integrale con estremi coincidenti è nullo, la costante C è univocamente determinata dal valore della primitiva in a.
 
 ### 3. Valutazione nel punto finale b
 $$G(b) = F(b) + G(a) = \int_a^b f(t) \, dt + G(a) \iff \int_a^b f(t) \, dt = G(b) - G(a)$$
@@ -77,4 +77,28 @@ $$G(b) = F(b) + G(a) = \int_a^b f(t) \, dt + G(a) \iff \int_a^b f(t) \, dt = G(b
 
 ### 4. Corollario: La Formula Fondamentale del Calcolo Integrale
 $$\int_a^b f(x) \, dx = [G(x)]_a^b = G(b) - G(a)$$
-> **Insight:** Trasforma il calcolo dell'area e di qualsiasi grandezza fisica cumulata (lavoro, carica, energia) nella semplice differenza di potenziale primitivo agli estremi.
+> **Insight:** Trasforma il calcolo dell'area in una semplice valutazione della differenza di potenziale primitivo agli estremi del dominio.
+
+## Dimostrazione: Corollario - Regola di Derivazione di Leibniz per Integrali con Estremi Variabili
+
+### 1. Impostazione della funzione integrale con estremi mobili
+Sia $f$ una funzione continua e siano $a(x)$ e $b(x)$ due funzioni differenziabili. Consideriamo la funzione definita dall'integrale a estremi variabili:
+$$I(x) = \int_{a(x)}^{b(x)} f(t) \, dt$$
+Fissiamo un punto costante arbitrario $x_0 \in \mathbb{R}$.
+> **Insight:** Questa funzione modella sistemi a volume o intervallo variabile nel tempo, come l'espansione dei cilindri termodinamici.
+
+### 2. Decomposizione dell'intervallo tramite la funzione integrale
+Applicando l'additività dell'integrale di Riemann rispetto all'intervallo mediante il polo intermedio $x_0$:
+$$I(x) = \int_{x_0}^{b(x)} f(t) \, dt - \int_{x_0}^{a(x)} f(t) \, dt = F(b(x)) - F(a(x))$$
+dove $F(u) = \int_{x_0}^u f(t) \, dt$ è la funzione integrale fondamentale di $f$.
+> **Insight:** L'integrale a estremi doppiamente mobili viene scomposto nella differenza di due funzioni composte monodimensionali.
+
+### 3. Applicazione della Regola della Catena (Chain Rule)
+Deriviamo entrambi i termini rispetto alla variabile indipendente $x$ applicando la derivata di funzione composta:
+$$\frac{d}{dx}[F(b(x))] = F'(b(x)) \cdot b'(x), \quad \frac{d}{dx}[F(a(x))] = F'(a(x)) \cdot a'(x)$$
+> **Insight:** La derivata della funzione esterna F rispetto all'estremo viene moltiplicata per la velocità istantanea di espansione dell'estremo stesso.
+
+### 4. Sostituzione del Primo Teorema Fondamentale e formula finale
+Poiché per il Teorema di Torricelli-Barrow $F'(u) = f(u)$, sostituendo $F'(b(x)) = f(b(x))$ e $F'(a(x)) = f(a(x))$:
+$$\frac{d}{dx} \left[ \int_{a(x)}^{b(x)} f(t) \, dt \right] = f(b(x)) \cdot b'(x) - f(a(x)) \cdot a'(x)$$
+> **Insight:** Corollario fondamentale (Regola di Leibniz): permette di differenziare istantaneamente integrali a confini mobili senza calcolare esplicitamente alcuna primitiva analitica.

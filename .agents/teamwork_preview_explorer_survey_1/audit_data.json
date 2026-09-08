@@ -1,0 +1,2897 @@
+[
+  {
+    "file": "assets/content/algebra/mat_binom_01.md",
+    "id": "mat_binom_01",
+    "title": "Prodotti Notevoli e Scomposizioni",
+    "category": "Matematica",
+    "subCategory": "Polinomi e Prodotti Notevoli",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 43,
+        "steps": [
+          {
+            "header": "### 1. Sviluppo del quadrato di un binomio applicando la proprietà distributiva",
+            "line": 45,
+            "isCorollary": false,
+            "latex": [
+              "$$(a + b)^2 = (a + b)(a + b) = a^2 + a b + b a + b^2 = a^2 + 2 a b + b^2$$"
+            ],
+            "insight": "> **Insight:** Geometricamente rappresenta l'area di un quadrato di lato (a+b) suddiviso in due quadrati e due rettangoli uguali.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sviluppo della differenza di quadrati",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$(a + b)(a - b) = a^2 - a b + b a - b^2 = a^2 - b^2$$"
+            ],
+            "insight": "> **Insight:** I termini misti (+ab e -ab) si annullano perfettamente per simmetria opposta.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Cubo di binomio ed espansione",
+            "line": 53,
+            "isCorollary": false,
+            "latex": [
+              "$$(a + b)^3 = a^3 + 3 a^2 b + 3 a b^2 + b^3$$"
+            ],
+            "insight": "> **Insight:** I coefficienti (1, 3, 3, 1) corrispondono alla riga 3 del Triangolo di Tartaglia.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Somma e Differenza di Cubi e Binomio di Newton",
+            "line": 57,
+            "isCorollary": true,
+            "latex": [
+              "$$a^3 \\pm b^3 = (a \\pm b)(a^2 \\mp a b + b^2) \\quad \\land \\quad (a+b)^n = \\sum_{k=0}^n \\binom{n}{k} a^{n-k} b^k$$"
+            ],
+            "insight": "> **Insight:** Permette di scomporre istantaneamente polinomi di terzo grado e sviluppare potenze ennesime.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/mat_log_01.md",
+    "id": "mat_log_01",
+    "title": "Logaritmi ed Esponenziali",
+    "category": "Matematica",
+    "subCategory": "Funzioni Esponenziali e Logaritmiche",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 41,
+        "steps": [
+          {
+            "header": "### 1. Definizione fondamentale del logaritmo come inversa dell'esponenziale",
+            "line": 43,
+            "isCorollary": false,
+            "latex": [
+              "$$b^y = x \\iff y = \\log_b(x) \\quad (b > 0, b \\neq 1, x > 0)$$"
+            ],
+            "insight": "> **Insight:** Rappresenta l'operazione inversa della funzione esponenziale per basi positive.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Proprietà del prodotto: trasformazione del prodotto in somma",
+            "line": 47,
+            "isCorollary": false,
+            "latex": [
+              "$$\\log_b(x \\cdot y) = \\log_b(x) + \\log_b(y)$$"
+            ],
+            "insight": "> **Insight:** Alla base del funzionamento dei regoli calcolatori e dell'elaborazione di segnali in decibel.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Proprietà delle potenze: linearizzazione dell'esponente",
+            "line": 51,
+            "isCorollary": false,
+            "latex": [
+              "$$\\log_b(x^k) = k \\cdot \\log_b(x)$$"
+            ],
+            "insight": "> **Insight:** Permette di linearizzare equazioni esponenziali non algebriche.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Formula del Cambiamento di Base",
+            "line": 55,
+            "isCorollary": true,
+            "latex": [
+              "$$\\log_a(x) = \\frac{\\log_b(x)}{\\log_b(a)} = \\frac{\\ln(x)}{\\ln(a)}$$"
+            ],
+            "insight": "> **Insight:** Consente di calcolare qualsiasi logaritmo usando la base naturale (e) o decimale (10), essenziale in chimica e fisica.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/mat_parabola_01.md",
+    "id": "mat_parabola_01",
+    "title": "Funzione Quadratica e Parabola",
+    "category": "Matematica",
+    "subCategory": "Funzioni e Geometria Analitica",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 47,
+        "steps": [
+          {
+            "header": "### 1. Forma canonica polinomiale di secondo grado sul piano cartesiano",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$y = a x^2 + b x + c \\quad (a \\neq 0)$$"
+            ],
+            "insight": "> **Insight:** Il coefficiente quadratico a governa l'apertura e il verso della concavità.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Completamento del quadrato per individuare la traslazione del vertice",
+            "line": 53,
+            "isCorollary": false,
+            "latex": [
+              "$$y = a \\left(x + \\frac{b}{2a}\\right)^2 - \\frac{b^2 - 4 a c}{4 a}$$"
+            ],
+            "insight": "> **Insight:** La forma vertice y - y_V = a(x - x_V)^2 esplicita l'origine traslata.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Coordinate del Vertice, Asse di Simmetria e Fuoco",
+            "line": 57,
+            "isCorollary": true,
+            "latex": [
+              "$$V = \\left(-\\frac{b}{2a}, -\\frac{\\Delta}{4a}\\right), \\quad x = -\\frac{b}{2a}, \\quad F = \\left(-\\frac{b}{2a}, \\frac{1-\\Delta}{4a}\\right)$$"
+            ],
+            "insight": "> **Insight:** Individua l'apice della traiettoria nei moti balistici e la proprietà focale riflettente della parabola.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/quadratics/mat_quad_eq_01.md",
+    "id": "mat_quad_eq_01",
+    "title": "Equazione di Secondo Grado Completa & Formula Risolutiva",
+    "category": "Matematica",
+    "subCategory": "Equazioni di Secondo Grado",
+    "template": "completing_square",
+    "demoCount": 3,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Formula Risolutiva Generale (Completamento del Quadrato)",
+        "line": 57,
+        "steps": [
+          {
+            "header": "### 1. Moltiplicazione per 4a ed eliminazione delle frazioni",
+            "line": 59,
+            "isCorollary": false,
+            "latex": [
+              "$$a x^2 + b x + c = 0 \\iff 4a^2 x^2 + 4abx + 4ac = 0 \\quad (a \\neq 0)$$"
+            ],
+            "insight": "> **Insight:** Moltiplicare per 4a e una tecnica classica che rende 4a^2 x^2 il quadrato perfetto esatto di 2ax, evitando calcoli frazionari intermedi.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Formazione del quadrato di binomio e definizione del Discriminante",
+            "line": 63,
+            "isCorollary": false,
+            "latex": [
+              "$$(2ax)^2 + 2 \\cdot (2ax) \\cdot b + b^2 - b^2 + 4ac = 0 \\iff (2ax + b)^2 = b^2 - 4ac$$"
+            ],
+            "insight": "> **Insight:** Aggiungendo e sottraendo b^2 si completa il quadrato perfetto del binomio (2ax + b)^2, isolando al secondo membro il discriminante Delta = b^2 - 4ac.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Estrazione della radice quadrata e isolamento della variabile x",
+            "line": 67,
+            "isCorollary": false,
+            "latex": [
+              "$$2ax + b = \\pm \\sqrt{b^2 - 4ac} \\iff 2ax = -b \\pm \\sqrt{\\Delta}$$"
+            ],
+            "insight": "> **Insight:** L'estrazione di radice su entrambi i membri conduce all'espressione lineare in x.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: La Celebre Formula Quadratica Risolutiva",
+            "line": 71,
+            "isCorollary": true,
+            "latex": [
+              "$$x_{1,2} = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$$"
+            ],
+            "insight": "> **Insight:** Formula universale che fornisce l'insieme completo delle soluzioni esatte di qualsiasi equazione quadratica a coefficienti reali.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Formula Risolutiva Ridotta per b Pari",
+        "line": 75,
+        "steps": [
+          {
+            "header": "### 1. Definizione del semi-coefficiente beta",
+            "line": 77,
+            "isCorollary": false,
+            "latex": [
+              "$$b = 2\\beta \\quad \\text{con } \\beta = \\frac{b}{2} \\in \\mathbb{R}$$"
+            ],
+            "insight": "> **Insight:** Quando il coefficiente b e pari o divisibile per 2, la formula si semplifica drasticamente riducendo l'onere computazionale.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sostituzione nella formula generale e raccoglimento del fattore 4",
+            "line": 81,
+            "isCorollary": false,
+            "latex": [
+              "$$x_{1,2} = \\frac{-2\\beta \\pm \\sqrt{(2\\beta)^2 - 4ac}}{2a} = \\frac{-2\\beta \\pm \\sqrt{4(\\beta^2 - ac)}}{2a}$$"
+            ],
+            "insight": "> **Insight:** Il fattore 4 puo essere estratto dalla radice quadrata diventando un fattore moltiplicativo 2.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Semplificazione del fattore comune 2",
+            "line": 85,
+            "isCorollary": false,
+            "latex": [
+              "$$x_{1,2} = \\frac{-2\\beta \\pm 2\\sqrt{\\beta^2 - ac}}{2a} = \\frac{2(-\\beta \\pm \\sqrt{\\beta^2 - ac})}{2a}$$"
+            ],
+            "insight": "> **Insight:** Il 2 a numeratore e a denominatore si elidono esattamente.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Formula Ridotta e Discriminante Ridotto (Delta/4)",
+            "line": 89,
+            "isCorollary": true,
+            "latex": [
+              "$$x_{1,2} = \\frac{-\\beta \\pm \\sqrt{\\frac{\\Delta}{4}}}{a} = \\frac{-\\frac{b}{2} \\pm \\sqrt{\\left(\\frac{b}{2}\\right)^2 - ac}}{a}$$"
+            ],
+            "insight": "> **Insight:** Elimina la moltiplicazione per 4 nel discriminante e la divisione per 2 a denominatore, velocizzando i calcoli sia manuali sia algoritmici.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Natura Geometrica del Discriminante e Zeri della Parabola",
+        "line": 93,
+        "steps": [
+          {
+            "header": "### 1. Coordinate cartesiane del vertice della parabola",
+            "line": 95,
+            "isCorollary": false,
+            "latex": [
+              "$$V\\left(-\\frac{b}{2a}, \\; -\\frac{\\Delta}{4a}\\right) \\quad \\text{con ordinata } y_V = -\\frac{b^2 - 4ac}{4a}$$"
+            ],
+            "insight": "> **Insight:** Il punto di massimo o minimo assoluto della parabola riflette direttamente il valore del discriminante scalato per 4a.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Riscrittura canonica dell'ordinata in funzione della distanza dall'asse x",
+            "line": 99,
+            "isCorollary": false,
+            "latex": [
+              "$$y = a\\left(x + \\frac{b}{2a}\\right)^2 - \\frac{\\Delta}{4a}$$"
+            ],
+            "insight": "> **Insight:** Evidenzia che la parabola tocca l'asse x (y = 0) se e solo se il termine quadratico eguaglia Delta / (4a^2).",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Posizioni Reciproche tra Parabola e Asse delle Ascisse",
+            "line": 103,
+            "isCorollary": true,
+            "latex": [
+              "$$\\begin{cases} \\Delta > 0 \\implies \\text{2 intersezioni reali distinte } (x_1 \\neq x_2) \\\\ \\Delta = 0 \\implies \\text{1 intersezione reale (vertice tangente } x_1 = x_2) \\\\ \\Delta < 0 \\implies \\text{0 intersezioni reali (parabola strettamente positiva o negativa)} \\end{cases}$$"
+            ],
+            "insight": "> **Insight:** Il segno di Delta governa l'esistenza e la cardinalita degli zeri reali di qualsiasi trinomio di secondo grado.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/quadratics/mat_quad_monomia_01.md",
+    "id": "mat_quad_monomia_01",
+    "title": "Equazioni di Secondo Grado Monomie",
+    "category": "Matematica",
+    "subCategory": "Equazioni di Secondo Grado",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Risoluzione dell'Equazione Monomia",
+        "line": 33,
+        "steps": [
+          {
+            "header": "### 1. Forma canonica e divisione per il primo coefficiente",
+            "line": 35,
+            "isCorollary": false,
+            "latex": [
+              "$$a x^2 = 0 \\iff x^2 = \\frac{0}{a} = 0 \\quad (a \\neq 0)$$"
+            ],
+            "insight": "> **Insight:** Il primo principio di equivalenza consente di dividere ambo i membri per il coefficiente non nullo a, isolando il monomio quadratico elementare.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Scomposizione per la legge di annullamento del prodotto",
+            "line": 39,
+            "isCorollary": false,
+            "latex": [
+              "$$x^2 = 0 \\iff x \\cdot x = 0 \\implies x_1 = 0 \\quad \\lor \\quad x_2 = 0$$"
+            ],
+            "insight": "> **Insight:** Il quadrato di un numero reale si annulla se e solo se la base è nulla, generando due fattori lineari identici.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Molteplicità Algebrica e Tangenza nell'Origine",
+            "line": 43,
+            "isCorollary": true,
+            "latex": [
+              "$$x_1 = x_2 = 0 \\iff x = 0 \\text{ con molteplicità algebrica } \\mu = 2$$"
+            ],
+            "insight": "> **Insight:** Un'equazione monomia ammette sempre e solo due radici reali coincidenti nell'origine: geometricamente l'asse x è la retta tangente al vertice della parabola.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/quadratics/mat_quad_pura_01.md",
+    "id": "mat_quad_pura_01",
+    "title": "Equazioni di Secondo Grado Pure",
+    "category": "Matematica",
+    "subCategory": "Equazioni di Secondo Grado",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Risoluzione dell'Equazione Pura",
+        "line": 39,
+        "steps": [
+          {
+            "header": "### 1. Trasposizione del termine noto e isolamento quadratico",
+            "line": 41,
+            "isCorollary": false,
+            "latex": [
+              "$$a x^2 + c = 0 \\iff a x^2 = -c \\iff x^2 = -\\frac{c}{a}$$"
+            ],
+            "insight": "> **Insight:** Si applicano i principi di equivalenza delle equazioni algebriche per isolare la potenza x^2 al primo membro.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Discussione algebrica del segno del rapporto",
+            "line": 45,
+            "isCorollary": false,
+            "latex": [
+              "$$\\text{Se } a \\cdot c < 0 \\implies -\\frac{c}{a} > 0; \\quad \\text{Se } a \\cdot c > 0 \\implies -\\frac{c}{a} < 0$$"
+            ],
+            "insight": "> **Insight:** Se i coefficienti a e c sono concordi, il rapporto e negativo e l'equazione e impossibile nel campo reale; se sono discordi, il rapporto e positivo.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Estrazione della radice quadrata e calcolo delle radici",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$x^2 = -\\frac{c}{a} \\implies x = \\pm \\sqrt{-\\frac{c}{a}}$$"
+            ],
+            "insight": "> **Insight:** L'operazione di estrazione di radice quadrata genera due valori opposti di identico modulo.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Simmetria Radici Reali e Traslazione Assiale",
+            "line": 53,
+            "isCorollary": true,
+            "latex": [
+              "$$x_1 = -\\sqrt{-\\frac{c}{a}}, \\quad x_2 = +\\sqrt{-\\frac{c}{a}} \\implies x_1 = -x_2 \\quad (x_1 + x_2 = 0)$$"
+            ],
+            "insight": "> **Insight:** Le due soluzioni reali di un'equazione pura sono sempre opposte: la parabola e perfettamente speculare rispetto all'asse y con vertice V(0, c).",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/quadratics/mat_quad_spuria_01.md",
+    "id": "mat_quad_spuria_01",
+    "title": "Equazioni di Secondo Grado Spurie",
+    "category": "Matematica",
+    "subCategory": "Equazioni di Secondo Grado",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Risoluzione dell'Equazione Spuria",
+        "line": 39,
+        "steps": [
+          {
+            "header": "### 1. Scomposizione analitica per raccoglimento a fattor comune",
+            "line": 41,
+            "isCorollary": false,
+            "latex": [
+              "$$a x^2 + b x = 0 \\iff x \\cdot (a x + b) = 0$$"
+            ],
+            "insight": "> **Insight:** Il fattore comune x viene estratto da entrambi i termini, trasformando un binomio di secondo grado nel prodotto di due monomi/binomi lineari.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Applicazione della legge di annullamento del prodotto",
+            "line": 45,
+            "isCorollary": false,
+            "latex": [
+              "$$x \\cdot (a x + b) = 0 \\iff x = 0 \\quad \\lor \\quad a x + b = 0$$"
+            ],
+            "insight": "> **Insight:** Un prodotto di fattori reali si annulla se e solo se almeno uno dei fattori che lo compongono e uguale a zero.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Risoluzione dell'equazione lineare residua",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$a x + b = 0 \\iff a x = -b \\iff x = -\\frac{b}{a} \\quad (a \\neq 0)$$"
+            ],
+            "insight": "> **Insight:** La seconda soluzione discende direttamente dai principi di equivalenza applicati al binomio lineare di primo grado.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Sempre Due Soluzioni Reali Distinte e Zeri Geometrici",
+            "line": 53,
+            "isCorollary": true,
+            "latex": [
+              "$$x_1 = 0, \\quad x_2 = -\\frac{b}{a} \\quad (x_1 \\neq x_2 \\text{ poiche } b \\neq 0)$$"
+            ],
+            "insight": "> **Insight:** Un'equazione spuria ammette sempre due soluzioni reali distinte: la parabola interseca l'asse x sia nell'origine (0, 0) sia nel punto (-b/a, 0).",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/algebra/quadratics/mat_quad_viete_01.md",
+    "id": "mat_quad_viete_01",
+    "title": "Relazioni di Viète, Scomposizione e Regola di Cartesio",
+    "category": "Matematica",
+    "subCategory": "Equazioni di Secondo Grado",
+    "template": "live_equation",
+    "demoCount": 3,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Formule di Viète (Somma e Prodotto delle Radici)",
+        "line": 44,
+        "steps": [
+          {
+            "header": "### 1. Calcolo esplicito della somma delle radici",
+            "line": 46,
+            "isCorollary": false,
+            "latex": [
+              "$$x_1 + x_2 = \\frac{-b - \\sqrt{\\Delta}}{2a} + \\frac{-b + \\sqrt{\\Delta}}{2a} = \\frac{-2b}{2a} = -\\frac{b}{a}$$"
+            ],
+            "insight": "> **Insight:** I termini irrazionali contenenti la radice di Delta hanno segni opposti e si cancellano perfettamente nell'addizione.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Calcolo algebrico del prodotto delle radici",
+            "line": 50,
+            "isCorollary": false,
+            "latex": [
+              "$$x_1 \\cdot x_2 = \\frac{(-b - \\sqrt{\\Delta})(-b + \\sqrt{\\Delta})}{4a^2} = \\frac{(-b)^2 - (\\sqrt{\\Delta})^2}{4a^2} = \\frac{b^2 - (b^2 - 4ac)}{4a^2} = \\frac{4ac}{4a^2} = \\frac{c}{a}$$"
+            ],
+            "insight": "> **Insight:** Il prodotto algebrico si sviluppa come differenza di quadrati, semplificando il fattore 4a a numeratore e denominatore.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Equazione Parametrica Noti Somma e Prodotto",
+            "line": 54,
+            "isCorollary": true,
+            "latex": [
+              "$$x^2 - s x + p = 0 \\quad \\text{con } s = x_1 + x_2, \\; p = x_1 \\cdot x_2$$"
+            ],
+            "insight": "> **Insight:** Permette di ricostruire all'istante l'equazione quadratica conoscendo unicamente la somma e il prodotto di due numeri incogniti.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Scomposizione in Fattori del Trinomio di Secondo Grado",
+        "line": 58,
+        "steps": [
+          {
+            "header": "### 1. Divisione per il primo coefficiente e sostituzione delle relazioni di Viète",
+            "line": 60,
+            "isCorollary": false,
+            "latex": [
+              "$$ax^2 + bx + c = a\\left(x^2 + \\frac{b}{a}x + \\frac{c}{a}\\right) = a\\left(x^2 - (x_1 + x_2)x + x_1 x_2\\right)$$"
+            ],
+            "insight": "> **Insight:** Il primo coefficiente a viene raccolto a fattor comune, permettendo di sostituire b/a con -(x1 + x2) e c/a con x1*x2.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sviluppo e raggruppamento parziale a fattor comune",
+            "line": 64,
+            "isCorollary": false,
+            "latex": [
+              "$$x^2 - x_1 x - x_2 x + x_1 x_2 = x(x - x_1) - x_2(x - x_1) = (x - x_1)(x - x_2)$$"
+            ],
+            "insight": "> **Insight:** Il binomio (x - x1) emerge come fattore comune evidente tra i primi due e gli ultimi due termini.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Teorema di Scomposizione Lineare del Trinomio",
+            "line": 68,
+            "isCorollary": true,
+            "latex": [
+              "$$a x^2 + b x + c = a (x - x_1)(x - x_2) \\quad (\\text{se } \\Delta \\ge 0)$$"
+            ],
+            "insight": "> **Insight:** Qualsiasi trinomio quadratico con discriminante non negativo si fattorizza nel prodotto del coefficiente a per i binomi lineari delle radici.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Regola dei Segni di Cartesio",
+        "line": 72,
+        "steps": [
+          {
+            "header": "### 1. Definizione di permanenza e variazione di segno",
+            "line": 74,
+            "isCorollary": false,
+            "latex": [
+              "$$\\text{Permanenza: due segni consecutivi concordi } (+, +) \\text{ o } (-, -); \\quad \\text{Variazione: due segni discordi } (+, -) \\text{ o } (-, +)$$"
+            ],
+            "insight": "> **Insight:** L'analisi si effettua sulla terna ordinata dei coefficienti (a, b, c).",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Studio dei segni della somma e del prodotto",
+            "line": 78,
+            "isCorollary": false,
+            "latex": [
+              "$$p = \\frac{c}{a} > 0 \\implies x_1, x_2 \\text{ concordi}; \\quad p = \\frac{c}{a} < 0 \\implies x_1, x_2 \\text{ discordi}$$"
+            ],
+            "insight": "> **Insight:** Il segno del prodotto p stabilisce se le radici hanno lo stesso segno o segno opposto; il segno della somma s stabilisce se prevale la radice positiva o negativa.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Teorema dei Segni di Cartesio per Equazioni di 2° Grado",
+            "line": 82,
+            "isCorollary": true,
+            "latex": [
+              "$$\\text{A ogni variazione corrisponde una radice positiva } (x > 0); \\quad \\text{A ogni permanenza corrisponde una radice negativa } (x < 0)$$"
+            ],
+            "insight": "> **Insight:** Permette di dedurre a priori e con assoluta certezza i segni delle soluzioni reali prima ancora di intraprendere qualsiasi calcolo algebrico.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/arithmetic/mat_frac_01.md",
+    "id": "mat_frac_01",
+    "title": "Frazioni, Rapporti e Numeri Razionali",
+    "category": "Matematica",
+    "subCategory": "Frazioni e Rapporti",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 38,
+        "steps": [
+          {
+            "header": "### 1. Definizione di inverso moltiplicativo (reciproco)",
+            "line": 40,
+            "isCorollary": false,
+            "latex": [
+              "$$\\forall b \\neq 0, \\quad \\exists b^{-1} = \\frac{1}{b} : b \\cdot \\frac{1}{b} = 1$$"
+            ],
+            "insight": "> **Insight:** La divisione a : b equivale alla moltiplicazione di a per l'inverso moltiplicativo di b.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Somma di frazioni mediante comune denominatore",
+            "line": 44,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\cdot d}{b \\cdot d} + \\frac{c \\cdot b}{d \\cdot b} = \\frac{a d + b c}{b d}$$"
+            ],
+            "insight": "> **Insight:** Riconduce due partizioni a una scala metrica comune per consentirne la somma algebrica.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Moltiplicazione e divisione tra frazioni",
+            "line": 48,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a c}{b d}, \\quad \\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\cdot \\frac{d}{c} = \\frac{a d}{b c}$$"
+            ],
+            "insight": "> **Insight:** Dividere per una frazione corrisponde a moltiplicare per la frazione invertita.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Proprietà Invariantiva e Semplificazione di Frazioni",
+            "line": 52,
+            "isCorollary": true,
+            "latex": [
+              "$$\\frac{a \\cdot k}{b \\cdot k} = \\frac{a}{b} \\quad (k \\neq 0)$$"
+            ],
+            "insight": "> **Insight:** Moltiplicando o dividendo numeratore e denominatore per una stessa quantità non nulla il rapporto resta invariato.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/arithmetic/mat_pow_01.md",
+    "id": "mat_pow_01",
+    "title": "Potenze, Radici ed Esponenti Reali",
+    "category": "Matematica",
+    "subCategory": "Potenze e Radicali",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 37,
+        "steps": [
+          {
+            "header": "### 1. Definizione di potenza con esponente intero positivo",
+            "line": 39,
+            "isCorollary": false,
+            "latex": [
+              "$$a^n = \\underbrace{a \\cdot a \\cdot \\dots \\cdot a}_{n \\text{ volte}} \\quad (n \\in \\mathbb{N}^*)$$"
+            ],
+            "insight": "> **Insight:** Esprime la crescita esponenziale e l'iper-volume in n dimensioni.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Prodotto e quoziente di potenze aventi la stessa base",
+            "line": 43,
+            "isCorollary": false,
+            "latex": [
+              "$$a^n \\cdot a^m = a^{n+m}, \\quad \\frac{a^n}{a^m} = a^{n-m}$$"
+            ],
+            "insight": "> **Insight:** Gli esponenti si sommano nel prodotto e si sottraggono nel quoziente.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Deduzione dell'esponente zero e negativo",
+            "line": 47,
+            "isCorollary": false,
+            "latex": [
+              "$$a^0 = 1 \\quad (a \\neq 0), \\quad a^{-n} = \\frac{1}{a^n}$$"
+            ],
+            "insight": "> **Insight:** L'esponente negativo sposta il fattore al denominatore con segno dell'esponente invertito.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Esponenti Frazionari ed Equivalenza con i Radicali",
+            "line": 51,
+            "isCorollary": true,
+            "latex": [
+              "$$a^{\\frac{m}{n}} = \\sqrt[n]{a^m} \\quad (a > 0, n \\in \\mathbb{N}^*)$$"
+            ],
+            "insight": "> **Insight:** Unifica la teoria delle potenze con quella dei radicali, rendendo applicabili le stesse leggi algebriche.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/arithmetic/operations/mat_add_01.md",
+    "id": "mat_add_01",
+    "title": "Addizione e Struttura Algebrica",
+    "category": "Matematica",
+    "subCategory": "Aritmetica e Fondamenti",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 41,
+        "steps": [
+          {
+            "header": "### 1. Definizione assiomatica dell'operazione binaria di addizione",
+            "line": 43,
+            "isCorollary": false,
+            "latex": [
+              "$$a + b = c \\quad \\forall a,b \\in \\mathbb{R}$$"
+            ],
+            "insight": "> **Insight:** L'addizione quantifica l'unione di quantità disgiunte o la traslazione orientata sulla retta reale.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Proprietà commutativa e associativa",
+            "line": 47,
+            "isCorollary": false,
+            "latex": [
+              "$$a + b = b + a \\quad \\land \\quad (a + b) + c = a + (b + c)$$"
+            ],
+            "insight": "> **Insight:** Garantisce che la somma di una sequenza finita di numeri sia indipendente dall'ordine di calcolo.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Esistenza dell'elemento neutro (zero) e dell'opposto",
+            "line": 51,
+            "isCorollary": false,
+            "latex": [
+              "$$a + 0 = a \\quad \\land \\quad a + (-a) = 0$$"
+            ],
+            "insight": "> **Insight:** Rende l'insieme dei numeri reali un gruppo abeliano rispetto all'addizione.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Unicità dell'opposto e definizione di Sottrazione",
+            "line": 55,
+            "isCorollary": true,
+            "latex": [
+              "$$a - b \\equiv a + (-b)$$"
+            ],
+            "insight": "> **Insight:** La sottrazione non è un'operazione primitiva distinta, ma l'addizione con l'elemento opposto.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/arithmetic/operations/mat_mul_01.md",
+    "id": "mat_mul_01",
+    "title": "Moltiplicazione e Proprietà Distributiva",
+    "category": "Matematica",
+    "subCategory": "Aritmetica e Fondamenti",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 37,
+        "steps": [
+          {
+            "header": "### 1. Definizione della moltiplicazione come addizione ripetuta",
+            "line": 39,
+            "isCorollary": false,
+            "latex": [
+              "$$a \\cdot b = \\underbrace{a + a + \\dots + a}_{b \\text{ volte}} \\quad (b \\in \\mathbb{N}^*)$$"
+            ],
+            "insight": "> **Insight:** Rappresenta geometricamente l'area di un rettangolo di dimensioni a e b.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Proprietà distributiva rispetto all'addizione",
+            "line": 43,
+            "isCorollary": false,
+            "latex": [
+              "$$a \\cdot (b + c) = a \\cdot b + a \\cdot c$$"
+            ],
+            "insight": "> **Insight:** Ponte fondamentale tra addizione e moltiplicazione; base di ogni sviluppo di prodotti polinomiali.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Dimostrazione della regola dei segni",
+            "line": 47,
+            "isCorollary": false,
+            "latex": [
+              "$$(-a) \\cdot (-b) + (-a \\cdot b) = (-a) \\cdot (-b + b) = (-a) \\cdot 0 = 0$$"
+            ],
+            "insight": "> **Insight:** Poiché sia (-a)*(-b) sia a*b sommati a (-a*b) danno 0, per unicità dell'opposto coincidono.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Regola dei Segni e Legge di Annullamento del Prodotto",
+            "line": 51,
+            "isCorollary": true,
+            "latex": [
+              "$$(-a) \\cdot (-b) = + (a \\cdot b) \\quad \\land \\quad (a \\cdot b = 0 \\iff a = 0 \\lor b = 0)$$"
+            ],
+            "insight": "> **Insight:** L'annullamento del prodotto è il cardine algebrico per la risoluzione di ogni equazione polinomiale.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/derivatives/mat_deriv_def_01.md",
+    "id": "mat_deriv_def_01",
+    "title": "Rapporto Incrementale e Definizione di Derivata",
+    "category": "Matematica",
+    "subCategory": "Calcolo Differenziale",
+    "template": "derivative_tangent",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 23,
+        "steps": [
+          {
+            "header": "### 1. Definizione di rapporto incrementale",
+            "line": 25,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{\\Delta y}{\\Delta x} = \\frac{f(x_0 + h) - f(x_0)}{h}$$"
+            ],
+            "insight": "> **Insight:** Misura la velocità di variazione media della grandezza nell'intervallo [x₀, x₀+h].",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Passaggio al limite per h -> 0: pendenza istantanea",
+            "line": 29,
+            "isCorollary": false,
+            "latex": [
+              "$$f'(x_0) = \\frac{df}{dx}(x_0) \\equiv \\lim_{h \\to 0} \\frac{f(x_0 + h) - f(x_0)}{h}$$"
+            ],
+            "insight": "> **Insight:** Se il limite esiste finito, la funzione è derivabile in x₀ e la retta secante collassa sulla retta tangente.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Equazione cartesiana della retta tangente",
+            "line": 33,
+            "isCorollary": false,
+            "latex": [
+              "$$y - f(x_0) = f'(x_0) \\cdot (x - x_0)$$"
+            ],
+            "insight": "> **Insight:** La derivata prima f'(x₀) è esattamente il coefficiente angolare m della retta tangente.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Continuità delle Funzioni Derivabili",
+            "line": 37,
+            "isCorollary": true,
+            "latex": [
+              "$$f \\text{ derivabile in } x_0 \\implies \\lim_{h \\to 0} [f(x_0+h) - f(x_0)] = \\lim_{h \\to 0} \\left[ h \\cdot \\frac{f(x_0+h)-f(x_0)}{h} \\right] = 0 \\cdot f'(x_0) = 0$$"
+            ],
+            "insight": "> **Insight:** Ogni funzione derivabile è necessariamente continua nel punto (la derivabilità è una condizione più forte della continuità).",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/derivatives/mat_deriv_rules_01.md",
+    "id": "mat_deriv_rules_01",
+    "title": "Regole di Derivazione: Prodotto, Quoziente e Catena",
+    "category": "Matematica",
+    "subCategory": "Calcolo Differenziale",
+    "template": "derivative_tangent",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 30,
+        "steps": [
+          {
+            "header": "### 1. Rapporto incrementale del prodotto con termine misto",
+            "line": 32,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{f(x+h)g(x+h) - f(x)g(x)}{h} = f(x+h)\\frac{g(x+h)-g(x)}{h} + g(x)\\frac{f(x+h)-f(x)}{h}$$"
+            ],
+            "insight": "> **Insight:** Tecnica algebrica classica per scomporre l'incremento congiunto di due funzioni.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Regola del Prodotto di Leibniz per h -> 0",
+            "line": 36,
+            "isCorollary": false,
+            "latex": [
+              "$$(f \\cdot g)'(x) = f'(x) g(x) + f(x) g'(x)$$"
+            ],
+            "insight": "> **Insight:** La derivata di un prodotto non è il prodotto delle derivate, ma una combinazione bilineare simmetrica.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Derivata del seno mediante limite notevole",
+            "line": 40,
+            "isCorollary": false,
+            "latex": [
+              "$$(\\sin x)' = \\lim_{h \\to 0} \\frac{\\sin(x+h) - \\sin x}{h} = \\lim_{h \\to 0} \\left[ \\sin x \\frac{\\cos h - 1}{h} + \\cos x \\frac{\\sin h}{h} \\right] = \\cos x$$"
+            ],
+            "insight": "> **Insight:** Poiché (cos h - 1)/h -> 0 e (sin h)/h -> 1, la derivata di sin(x) è esattamente cos(x).",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Derivata delle Potenze, Quoziente e Regola della Catena",
+            "line": 44,
+            "isCorollary": true,
+            "latex": [
+              "$$(x^n)' = n x^{n-1}, \\quad \\left(\\frac{f}{g}\\right)' = \\frac{f'g - f g'}{g^2}, \\quad [f(g(x))]' = f'(g(x)) \\cdot g'(x)$$"
+            ],
+            "insight": "> **Insight:** Permette di derivare qualsiasi funzione composta algebrica, trigonometrica ed esponenziale.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/derivatives/mat_deriv_theorems_01.md",
+    "id": "mat_deriv_theorems_01",
+    "title": "Teoremi di Rolle, Lagrange e Criterio di Monotonia",
+    "category": "Matematica",
+    "subCategory": "Calcolo Differenziale",
+    "template": "rolle_lagrange",
+    "demoCount": 5,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Teorema di Fermat sui Punti Estremanti Interni",
+        "line": 42,
+        "steps": [
+          {
+            "header": "### 1. Definizione di massimo relativo interno",
+            "line": 44,
+            "isCorollary": false,
+            "latex": [
+              "$$f(x) \\le f(x_0) \\quad \\forall x \\in (x_0 - \\delta, x_0 + \\delta) \\subseteq (a, b)$$"
+            ],
+            "insight": "> **Insight:** Il punto x_0 e un punto di massimo locale interno all'intervallo aperto.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Studio del rapporto incrementale destro (h > 0)",
+            "line": 48,
+            "isCorollary": false,
+            "latex": [
+              "$$h > 0 \\implies f(x_0 + h) - f(x_0) \\le 0 \\implies \\frac{f(x_0 + h) - f(x_0)}{h} \\le 0 \\implies f'_+(x_0) \\le 0$$"
+            ],
+            "insight": "> **Insight:** Avvicinandosi da destra, il numeratore e non positivo e il denominatore e positivo.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Studio del rapporto incrementale sinistro (h < 0)",
+            "line": 52,
+            "isCorollary": false,
+            "latex": [
+              "$$h < 0 \\implies f(x_0 + h) - f(x_0) \\le 0 \\implies \\frac{f(x_0 + h) - f(x_0)}{h} \\ge 0 \\implies f'_-(x_0) \\ge 0$$"
+            ],
+            "insight": "> **Insight:** Avvicinandosi da sinistra, la divisione tra due quantita negative genera un rapporto incrementale non negativo.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Annullamento della Derivata Istantanea (f'(x_0) = 0)",
+            "line": 56,
+            "isCorollary": true,
+            "latex": [
+              "$$f'(x_0) = f'_+(x_0) = f'_-(x_0) \\implies f'(x_0) \\le 0 \\land f'(x_0) \\ge 0 \\iff f'(x_0) = 0$$"
+            ],
+            "insight": "> **Insight:** L'unica possibilita affinche i limiti destro e sinistro coincidano e che la derivata sia identicamente nulla: la retta tangente nei massimi e minimi interni e rigorosamente orizzontale.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Teorema di Rolle (Quota Coincidente agli Estremi)",
+        "line": 60,
+        "steps": [
+          {
+            "header": "### 1. Teorema di Weierstrass sui compatti e ipotesi di quota",
+            "line": 62,
+            "isCorollary": false,
+            "latex": [
+              "$$f(a) = f(b), \\quad \\exists x_m, x_M \\in [a, b] : f(x_m) = m = \\min_{[a, b]} f, \\; f(x_M) = M = \\max_{[a, b]} f$$"
+            ],
+            "insight": "> **Insight:** Essendo f continua sul chiuso e limitato [a, b], ammette certamente minimo assoluto m e massimo assoluto M.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Caso degenere: funzione costante su tutto l'intervallo",
+            "line": 66,
+            "isCorollary": false,
+            "latex": [
+              "$$m = M \\implies f(x) = C \\quad \\forall x \\in [a, b] \\implies f'(x) = 0 \\quad \\forall x \\in (a, b)$$"
+            ],
+            "insight": "> **Insight:** Se il minimo coincide con il massimo, la curva e una retta orizzontale e qualsiasi punto c interno soddisfa la tesi.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Caso non degenere: esistenza di un estremo all'interno dell'intervallo aperto",
+            "line": 70,
+            "isCorollary": false,
+            "latex": [
+              "$$m < M \\implies \\text{Almeno uno tra } x_m \\text{ o } x_M \\text{ appartiene a } (a, b)$$"
+            ],
+            "insight": "> **Insight:** Poiche f(a) = f(b), entrambi gli estremi non possono trovarsi contemporaneamente su a e b senza che la funzione sia costante.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Esistenza del Punto a Tangente Orizzontale",
+            "line": 74,
+            "isCorollary": true,
+            "latex": [
+              "$$\\exists c \\in (a, b) : f'(c) = 0 \\quad \\text{per il Teorema di Fermat}$$"
+            ],
+            "insight": "> **Insight:** Il punto interno c che realizza il massimo o il minimo relativo soddisfa Fermat e possiede derivata prima nulla.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Teorema del Valor Medio di Lagrange",
+        "line": 78,
+        "steps": [
+          {
+            "header": "### 1. Costruzione della funzione ausiliaria di scarto cordale",
+            "line": 80,
+            "isCorollary": false,
+            "latex": [
+              "$$F(x) = f(x) - \\left[ f(a) + \\frac{f(b) - f(a)}{b - a}(x - a) \\right]$$"
+            ],
+            "insight": "> **Insight:** F(x) misura la distanza verticale tra la curva f(x) e la retta secante passante per i punti (a, f(a)) e (b, f(b)).",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Verifica delle ipotesi del Teorema di Rolle su F(x)",
+            "line": 84,
+            "isCorollary": false,
+            "latex": [
+              "$$F(a) = f(a) - f(a) = 0, \\quad F(b) = f(b) - [f(a) + f(b) - f(a)] = 0 \\implies F(a) = F(b) = 0$$"
+            ],
+            "insight": "> **Insight:** F(x) e continua in [a, b], derivabile in (a, b) e assume lo stesso valore nullo agli estremi: Rolle e applicabile!",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Calcolo della derivata prima di F(x)",
+            "line": 88,
+            "isCorollary": false,
+            "latex": [
+              "$$F'(x) = f'(x) - \\frac{f(b) - f(a)}{b - a}$$"
+            ],
+            "insight": "> **Insight:** La derivata della retta secante e semplicemente il suo coefficiente angolare costante.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Parallelismo tra Tangente e Secante",
+            "line": 92,
+            "isCorollary": true,
+            "latex": [
+              "$$\\exists c \\in (a, b) : F'(c) = 0 \\iff f'(c) = \\frac{f(b) - f(a)}{b - a}$$"
+            ],
+            "insight": "> **Insight:** Esiste almeno un punto interno c in cui la retta tangente ha esattamente la medesima pendenza della corda secante congiungente gli estremi.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Teorema di Cauchy e Regola di De L'Hôpital",
+        "line": 96,
+        "steps": [
+          {
+            "header": "### 1. Funzione ausiliaria di Cauchy su due funzioni f e g",
+            "line": 98,
+            "isCorollary": false,
+            "latex": [
+              "$$H(x) = [f(b) - f(a)]g(x) - [g(b) - g(a)]f(x)$$"
+            ],
+            "insight": "> **Insight:** Generalizzazione a due curve continue f e g con g'(x) non nulla.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Annullamento agli estremi e applicazione di Rolle a H(x)",
+            "line": 102,
+            "isCorollary": false,
+            "latex": [
+              "$$H(a) = f(b)g(a) - g(b)f(a) = H(b) \\implies \\exists c \\in (a, b) : H'(c) = 0 \\iff \\frac{f'(c)}{g'(c)} = \\frac{f(b) - f(a)}{g(b) - g(a)}$$"
+            ],
+            "insight": "> **Insight:** Teorema di Cauchy del valor medio generalizzato.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: La Regola di De L'Hôpital per Forme Indeterminate",
+            "line": 106,
+            "isCorollary": true,
+            "latex": [
+              "$$\\lim_{x \\to x_0} \\frac{f(x)}{g(x)} = \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{g(x) - g(x_0)} = \\lim_{x \\to x_0} \\frac{f'(c_x)}{g'(c_x)} = \\lim_{x \\to x_0} \\frac{f'(x)}{g'(x)}$$"
+            ],
+            "insight": "> **Insight:** Se f(x0) = g(x0) = 0, il rapporto tra le funzioni coincide con il limite del rapporto tra le rispettive derivate prime.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Criterio di Monotonia e Concavità",
+        "line": 110,
+        "steps": [
+          {
+            "header": "### 1. Applicazione di Lagrange a una coppia arbitraria di punti x1 < x2",
+            "line": 112,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{f(x_2) - f(x_1)}{x_2 - x_1} = f'(c) \\quad \\text{con } c \\in (x_1, x_2)$$"
+            ],
+            "insight": "> **Insight:** Il segno del rapporto incrementale globale dipende unicamente dal segno della derivata prima calcolata nel punto intermedio c.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Condizione di crescenza e decrescenza stretta",
+            "line": 116,
+            "isCorollary": false,
+            "latex": [
+              "$$f'(x) > 0 \\implies \\frac{f(x_2) - f(x_1)}{x_2 - x_1} > 0 \\implies f(x_2) > f(x_1) \\quad (\\forall x_1 < x_2)$$"
+            ],
+            "insight": "> **Insight:** Se la derivata prima e positiva, la funzione e strettamente crescente; se e negativa, e strettamente decrescente.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Caratterizzazione delle Funzioni Costanti",
+            "line": 120,
+            "isCorollary": true,
+            "latex": [
+              "$$f'(x) = 0 \\quad \\forall x \\in (a, b) \\implies f(x_2) - f(x_1) = 0 \\iff f(x) = C$$"
+            ],
+            "insight": "> **Insight:** Una funzione ha derivata ovunque nulla se e solo se e identicamente costante su tutto l'intervallo connesso.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/integrals/mat_fund_calc_01.md",
+    "id": "mat_fund_calc_01",
+    "title": "Teorema Fondamentale del Calcolo (Torricelli-Barrow)",
+    "category": "Matematica",
+    "subCategory": "Calcolo Integrale",
+    "template": "riemann_sum",
+    "demoCount": 3,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Teorema della Media Integrale",
+        "line": 28,
+        "steps": [
+          {
+            "header": "### 1. Teorema di Weierstrass sui compatti",
+            "line": 30,
+            "isCorollary": false,
+            "latex": [
+              "$$m \\le f(x) \\le M \\quad \\forall x \\in [a, b] \\quad \\text{con } m = \\min_{[a, b]} f, \\; M = \\max_{[a, b]} f$$"
+            ],
+            "insight": "> **Insight:** Poiche f e continua su un intervallo chiuso e limitato, assume per Weierstrass il suo valore minimo assoluto m e il suo valore massimo assoluto M.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Monotonia dell'integrale definito rispetto all'ordinamento",
+            "line": 34,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int_a^b m \\, dt \\le \\int_a^b f(t) \\, dt \\le \\int_a^b M \\, dt \\iff m(b - a) \\le \\int_a^b f(t) \\, dt \\le M(b - a)$$"
+            ],
+            "insight": "> **Insight:** L'integrale di una costante su [a, b] equivale all'area del rettangolo di base (b - a) e altezza pari alla costante stessa.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Divisione per l'ampiezza dell'intervallo (b - a)",
+            "line": 38,
+            "isCorollary": false,
+            "latex": [
+              "$$m \\le \\frac{1}{b - a} \\int_a^b f(t) \\, dt \\le M$$"
+            ],
+            "insight": "> **Insight:** La quantita media μ = 1/(b - a) ∫ f(t)dt e un numero reale rigorosamente compreso tra il minimo e il massimo di f.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Esistenza del Punto Medio Integrale c",
+            "line": 42,
+            "isCorollary": true,
+            "latex": [
+              "$$\\exists c \\in [a, b] : \\quad f(c) = \\frac{1}{b - a} \\int_a^b f(t) \\, dt \\iff \\int_a^b f(t) \\, dt = f(c)(b - a)$$"
+            ],
+            "insight": "> **Insight:** Per il Teorema dei Valori Intermedi, la funzione continua f assume tutti i valori compresi tra m e M, esistendo almeno un punto c in cui l'altezza f(c) eguaglia il valor medio dell'area.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Primo Teorema Fondamentale (Torricelli-Barrow)",
+        "line": 46,
+        "steps": [
+          {
+            "header": "### 1. Definizione della funzione integrale e calcolo del rapporto incrementale",
+            "line": 48,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{F(x+h) - F(x)}{h} = \\frac{1}{h} \\left[ \\int_a^{x+h} f(t) \\, dt - \\int_a^x f(t) \\, dt \\right] = \\frac{1}{h} \\int_x^{x+h} f(t) \\, dt$$"
+            ],
+            "insight": "> **Insight:** Per l'additivita dell'integrale rispetto all'intervallo, la differenza tra le due aree lascia unicamente la striscia di base h compresa tra x e x+h.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Applicazione del Teorema della Media Integrale alla striscia h",
+            "line": 52,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{1}{h} \\int_x^{x+h} f(t) \\, dt = f(c_h) \\quad \\text{con } c_h \\in [x, x+h]$$"
+            ],
+            "insight": "> **Insight:** Esiste un punto intermedio c_h compreso nell'intorno [x, x+h] tale che l'area esatta coincide con il rettangolo di altezza f(c_h).",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Passaggio al limite per incremento h tendente a zero",
+            "line": 56,
+            "isCorollary": false,
+            "latex": [
+              "$$F'(x) = \\lim_{h \\to 0} \\frac{F(x+h) - F(x)}{h} = \\lim_{h \\to 0} f(c_h) = f(x)$$"
+            ],
+            "insight": "> **Insight:** Poiche c_h e intrappolato tra x e x+h, per h -> 0 si ha c_h -> x. Essendo f continua, lim f(c_h) = f(x).",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Esistenza Universale della Primitiva per Funzioni Continue",
+            "line": 60,
+            "isCorollary": true,
+            "latex": [
+              "$$F'(x) = f(x) \\quad \\forall x \\in (a, b) \\implies F(x) \\text{ e una primitiva di } f(x)$$"
+            ],
+            "insight": "> **Insight:** Qualsiasi funzione reale continua ammette sempre e con certezza assoluta almeno una primitiva: la sua stessa funzione integrale.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Secondo Teorema Fondamentale (Formula di Newton-Leibniz)",
+        "line": 64,
+        "steps": [
+          {
+            "header": "### 1. Relazione tra due primitive arbitrarie della medesima funzione",
+            "line": 66,
+            "isCorollary": false,
+            "latex": [
+              "$$G'(x) = f(x) \\quad \\land \\quad F'(x) = f(x) \\implies [G(x) - F(x)]' = 0 \\iff G(x) = F(x) + C$$"
+            ],
+            "insight": "> **Insight:** Due funzioni aventi la medesima derivata prima su un intervallo connesso differiscono unicamente per una costante additiva reale C.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Valutazione nel punto iniziale a",
+            "line": 70,
+            "isCorollary": false,
+            "latex": [
+              "$$G(a) = F(a) + C = \\int_a^a f(t) \\, dt + C = 0 + C = C \\implies C = G(a)$$"
+            ],
+            "insight": "> **Insight:** Poiche un integrale con estremi coincidenti e nullo, la costante C e univocamente determinata dal valore della primitiva in a.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Valutazione nel punto finale b",
+            "line": 74,
+            "isCorollary": false,
+            "latex": [
+              "$$G(b) = F(b) + G(a) = \\int_a^b f(t) \\, dt + G(a) \\iff \\int_a^b f(t) \\, dt = G(b) - G(a)$$"
+            ],
+            "insight": "> **Insight:** Riorganizzando i termini si isola l'integrale definito sull'intero intervallo [a, b].",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: La Formula Fondamentale del Calcolo Integrale",
+            "line": 78,
+            "isCorollary": true,
+            "latex": [
+              "$$\\int_a^b f(x) \\, dx = [G(x)]_a^b = G(b) - G(a)$$"
+            ],
+            "insight": "> **Insight:** Trasforma il calcolo dell'area e di qualsiasi grandezza fisica cumulata (lavoro, carica, energia) nella semplice differenza di potenziale primitivo agli estremi.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": [
+      {
+        "line": 26,
+        "text": "> **Insight:** Grazie alla formula di Newton-Leibniz che ne discende come corollario immediato, il calcolo dell'area sottesa da una curva $\\int_a^b f(x)dx$ non richiede più la faticosa convergenza di somme infinite di rettangoli, ma si riduce alla semplice differenza dei valori di una sua primitiva agli estremi: $G(b) - G(a)$."
+      }
+    ]
+  },
+  {
+    "file": "assets/content/calculus/integrals/mat_integ_parts_01.md",
+    "id": "mat_integ_parts_01",
+    "title": "Integrazione per Parti",
+    "category": "Matematica",
+    "subCategory": "Calcolo Integrale",
+    "template": "function_graph",
+    "demoCount": 2,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Formula Generale di Integrazione per Parti",
+        "line": 42,
+        "steps": [
+          {
+            "header": "### 1. Regola di derivazione del prodotto di due funzioni derivabili",
+            "line": 44,
+            "isCorollary": false,
+            "latex": [
+              "$$[f(x) \\cdot g(x)]' = f'(x)g(x) + f(x)g'(x)$$"
+            ],
+            "insight": "> **Insight:** Si assume che f e g siano funzioni derivabili con continuita (di classe C^1) sull'intervallo di integrazione.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Integrazione indefinita termine a termine",
+            "line": 48,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int [f(x) g(x)]' \\, dx = \\int f'(x)g(x) \\, dx + \\int f(x)g'(x) \\, dx$$"
+            ],
+            "insight": "> **Insight:** L'integrale della somma di due funzioni equivale alla somma dei rispettivi integrali per la linearita dell'operatore integrale.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Applicazione del Teorema Fondamentale e isolamento del termine desiderato",
+            "line": 52,
+            "isCorollary": false,
+            "latex": [
+              "$$f(x)g(x) = \\int f'(x)g(x) \\, dx + \\int f(x)g'(x) \\, dx \\iff \\int f(x)g'(x) \\, dx = f(x)g(x) - \\int f'(x)g(x) \\, dx$$"
+            ],
+            "insight": "> **Insight:** L'integrale della derivata restituisce la funzione originaria f(x)g(x) a meno di una costante arbitraria inglobata nell'integrale residuo.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Integrazione per Parti negli Integrali Definiti",
+            "line": 56,
+            "isCorollary": true,
+            "latex": [
+              "$$\\int_a^b f(x)g'(x) \\, dx = [f(x)g(x)]_a^b - \\int_a^b f'(x)g(x) \\, dx = [f(b)g(b) - f(a)g(a)] - \\int_a^b f'(x)g(x) \\, dx$$"
+            ],
+            "insight": "> **Insight:** La valutazione agli estremi del termine fuori integrale [uv]_a^b preserva rigorosamente la consistenza con la formula di Newton-Leibniz.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Euristica di Scelta LIATE e Integrali Notevoli",
+        "line": 60,
+        "steps": [
+          {
+            "header": "### 1. Tecnica del fattore unitario nascosto (1 · dx) per il logaritmo",
+            "line": 62,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int \\ln x \\, dx = \\int \\ln x \\cdot 1 \\, dx \\implies u = \\ln x \\; (u' = \\frac{1}{x}), \\quad dv = 1\\,dx \\; (v = x)$$"
+            ],
+            "insight": "> **Insight:** Moltiplicare per 1 trasforma una singola funzione logaritmica o trigonometrica inversa in un prodotto idoneo per l'integrazione per parti.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sviluppo algebrico dell'integrale del logaritmo",
+            "line": 66,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int \\ln x \\, dx = x \\ln x - \\int x \\cdot \\frac{1}{x} \\, dx = x \\ln x - \\int 1 \\, dx = x \\ln x - x + C$$"
+            ],
+            "insight": "> **Insight:** Il prodotto tra la primitiva x e la derivata del logaritmo 1/x si semplifica esattamente a 1, rendendo banale il calcolo del secondo integrale.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Abbassamento del grado polinomiale per prodotti con esponenziale",
+            "line": 70,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int x e^x \\, dx \\implies u = x \\; (u' = 1), \\quad dv = e^x \\, dx \\; (v = e^x) \\implies \\int x e^x \\, dx = x e^x - \\int 1 \\cdot e^x \\, dx = (x - 1)e^x + C$$"
+            ],
+            "insight": "> **Insight:** La derivazione del polinomio x riduce il grado a 0, lasciando unicamente l'integrale immediato dell'esponenziale.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Integrali Ciclici Ricorsivi",
+            "line": 74,
+            "isCorollary": true,
+            "latex": [
+              "$$\\int e^x \\cos x \\, dx = e^x \\sin x - \\int e^x \\sin x \\, dx = e^x \\sin x - [ -e^x \\cos x + \\int e^x \\cos x \\, dx ] \\implies \\int e^x \\cos x \\, dx = \\frac{e^x (\\sin x + \\cos x)}{2} + C$$"
+            ],
+            "insight": "> **Insight:** Integrando per parti due volte consecutive si rigenera l'integrale di partenza con segno opposto, risolvendo l'equazione algebrica per via puramente simbolica senza calcolare ulteriori primitive.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/integrals/mat_integ_subst_01.md",
+    "id": "mat_integ_subst_01",
+    "title": "Integrazione per Sostituzione e Integrali Quasi-Immediati",
+    "category": "Matematica",
+    "subCategory": "Calcolo Integrale",
+    "template": "function_graph",
+    "demoCount": 2,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Teorema del Cambio di Variabile negli Integrali",
+        "line": 37,
+        "steps": [
+          {
+            "header": "### 1. Regola di derivazione di funzione composta (Chain Rule)",
+            "line": 39,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{d}{dt} [F(g(t))] = F'(g(t)) \\cdot g'(t) = f(g(t)) \\cdot g'(t)$$"
+            ],
+            "insight": "> **Insight:** Se F e una primitiva di f (F' = f) e g e derivabile con continuita, la derivata della composizione genera il fattore moltiplicativo g'(t).",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Integrazione indefinita di entrambi i membri",
+            "line": 43,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int \\frac{d}{dt} [F(g(t))] \\, dt = \\int f(g(t)) \\cdot g'(t) \\, dt \\iff F(g(t)) + C = \\int f(g(t)) \\cdot g'(t) \\, dt$$"
+            ],
+            "insight": "> **Insight:** L'integrale della derivata prima restituisce la funzione originaria F(g(t)) a meno di una costante reale arbitraria C.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Sostituzione formale di variabile e differenziale",
+            "line": 47,
+            "isCorollary": false,
+            "latex": [
+              "$$u = g(t) \\implies du = g'(t) \\, dt \\implies \\int f(g(t)) g'(t) \\, dt = \\int f(u) \\, du = F(u) + C$$"
+            ],
+            "insight": "> **Insight:** La notazione differenziale di Leibniz du = g'(t)dt formalizza in modo naturale la sostituzione algebrica della grandezza di raccordo.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Cambio degli Estremi negli Integrali Definiti",
+            "line": 51,
+            "isCorollary": true,
+            "latex": [
+              "$$\\int_a^b f(x) \\, dx = \\int_\\alpha^\\beta f(g(t)) \\cdot g'(t) \\, dt \\quad \\text{con } g(\\alpha) = a, \\; g(\\beta) = b$$"
+            ],
+            "insight": "> **Insight:** Nei problemi definiti non e necessario ritornare alla variabile originaria x: e sufficiente traslare i confini dell'intervallo [a, b] nei rispettivi valori parametrici [α, β], calcolando direttamente il risultato numerico.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Famiglia degli Integrali Quasi-Immediati",
+        "line": 55,
+        "steps": [
+          {
+            "header": "### 1. Integrazione della derivata fratta (Forma Logaritmica)",
+            "line": 57,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int \\frac{f'(x)}{f(x)} \\, dx \\implies u = f(x) \\; (du = f'(x)dx) \\implies \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln|f(x)| + C$$"
+            ],
+            "insight": "> **Insight:** Ogni qualvolta il numeratore e la derivata esatta del denominatore, la primitiva e sempre il logaritmo naturale del valore assoluto del denominatore.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Integrazione della potenza funzionale generalizzata",
+            "line": 61,
+            "isCorollary": false,
+            "latex": [
+              "$$\\int [f(x)]^n \\cdot f'(x) \\, dx \\implies \\int u^n \\, du = \\frac{u^{n+1}}{n+1} + C = \\frac{[f(x)]^{n+1}}{n+1} + C \\quad (n \\neq -1)$$"
+            ],
+            "insight": "> **Insight:** La presenza del fattore differenziale f'(x) consente di applicare la regola elementare della potenza direttamente all'intera funzione f(x).",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Primitive Fondamentali della Tangente e della Cotangente",
+            "line": 65,
+            "isCorollary": true,
+            "latex": [
+              "$$\\int \\tan x \\, dx = \\int \\frac{\\sin x}{\\cos x} \\, dx = - \\int \\frac{-\\sin x}{\\cos x} \\, dx = -\\ln|\\cos x| + C = \\ln|\\sec x| + C$$"
+            ],
+            "insight": "> **Insight:** Risolve l'integrale della funzione tangente interpretando il seno a numeratore come l'opposto della derivata del coseno a denominatore.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/integrals/mat_riemann_01.md",
+    "id": "mat_riemann_01",
+    "title": "Integrale di Riemann e Somme di Rettangoli",
+    "category": "Matematica",
+    "subCategory": "Calcolo Integrale",
+    "template": "riemann_sum",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 32,
+        "steps": [
+          {
+            "header": "### 1. Partizione dell'intervallo [a, b] in N sotto-intervalli",
+            "line": 34,
+            "isCorollary": false,
+            "latex": [
+              "$$a = x_0 < x_1 < x_2 < \\dots < x_N = b, \\quad \\Delta x_i = x_i - x_{i-1}$$"
+            ],
+            "insight": "> **Insight:** Discretizza il dominio per approssimare l'area con strisce rettangolari verticali.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Somma inferiore s(P) e somma superiore S(P) di Darboux-Riemann",
+            "line": 38,
+            "isCorollary": false,
+            "latex": [
+              "$$s(P) = \\sum_{i=1}^N \\inf_{[x_{i-1}, x_i]} f(x) \\Delta x_i, \\quad S(P) = \\sum_{i=1}^N \\sup_{[x_{i-1}, x_i]} f(x) \\Delta x_i$$"
+            ],
+            "insight": "> **Insight:** L'area esatta è sempre racchiusa tra l'area a gradini per difetto e quella per eccesso.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Definizione di funzione Riemann-integrabile",
+            "line": 42,
+            "isCorollary": false,
+            "latex": [
+              "$$\\lim_{N \\to \\infty} \\sum_{i=1}^N f(\\xi_i) \\Delta x = \\int_a^b f(x) dx$$"
+            ],
+            "insight": "> **Insight:** Al tendere di N all'infinito, le somme approssimanti convergono all'integrale definito di Riemann.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Linearità dell'Integrale e Additività rispetto all'Intervallo",
+            "line": 46,
+            "isCorollary": true,
+            "latex": [
+              "$$\\int_a^b [\\alpha f + \\beta g] dx = \\alpha \\int_a^b f dx + \\beta \\int_a^b g dx \\quad \\land \\quad \\int_a^b f dx = \\int_a^c f dx + \\int_c^b f dx$$"
+            ],
+            "insight": "> **Insight:** L'integrazione è un operatore lineare che preserva la sovrapposizione degli effetti fisici.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/limits/mat_lim_cos_01.md",
+    "id": "mat_lim_cos_01",
+    "title": "Limite Notevole del Coseno: (1 - cos x)/x² e Curvatura Locale",
+    "category": "Matematica",
+    "subCategory": "Limiti e Continuità",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 31,
+        "steps": [
+          {
+            "header": "### 1. Razionalizzazione mediante coniugato trigonometrico",
+            "line": 33,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{1 - \\cos x}{x^2} = \\frac{(1 - \\cos x)(1 + \\cos x)}{x^2 (1 + \\cos x)} = \\frac{1 - \\cos^2 x}{x^2 (1 + \\cos x)}$$"
+            ],
+            "insight": "> **Insight:** La moltiplicazione per il fattore coniugato (1 + cos x) trasforma la differenza a numeratore nella differenza di quadrati.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sostituzione con la relazione fondamentale della goniometria",
+            "line": 37,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{\\sin^2 x}{x^2 (1 + \\cos x)} = \\left(\\frac{\\sin x}{x}\\right)^2 \\cdot \\frac{1}{1 + \\cos x}$$"
+            ],
+            "insight": "> **Insight:** Ricorrendo a sin²(x) + cos²(x) = 1 si isola esplicitamente il quadrato del limite notevole fondamentale di sin(x)/x.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Calcolo del limite del prodotto di fattori continui",
+            "line": 41,
+            "isCorollary": false,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\left[ \\left(\\frac{\\sin x}{x}\\right)^2 \\cdot \\frac{1}{1 + \\cos x} \\right] = (1)^2 \\cdot \\frac{1}{1 + \\cos(0)} = 1 \\cdot \\frac{1}{2} = \\frac{1}{2}$$"
+            ],
+            "insight": "> **Insight:** La forma indeterminata [0/0] è risolta: il primo fattore tende a 1 e il secondo a 1/2.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Sviluppo di Taylor del Coseno e Limite del Primo Ordine",
+            "line": 45,
+            "isCorollary": true,
+            "latex": [
+              "$$\\cos x = 1 - \\frac{1}{2}x^2 + o(x^2) \\quad \\land \\quad \\lim_{x \\to 0} \\frac{1 - \\cos x}{x} = 0$$"
+            ],
+            "insight": "> **Insight:** Il numeratore decresce quadraticamente; diviso per la sola x il limite si annulla, dimostrando che la derivata del coseno in zero è nulla.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/limits/mat_lim_e_01.md",
+    "id": "mat_lim_e_01",
+    "title": "Il Limite Fondamentale del Numero di Eulero e la Crescita Esponenziale",
+    "category": "Matematica",
+    "subCategory": "Limiti e Continuità",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 39,
+        "steps": [
+          {
+            "header": "### 1. Espansione della successione tramite il Binomio di Newton",
+            "line": 41,
+            "isCorollary": false,
+            "latex": [
+              "$$a_n = \\left(1 + \\frac{1}{n}\\right)^n = \\sum_{k=0}^n \\binom{n}{k} \\frac{1}{n^k} = 1 + n \\cdot \\frac{1}{n} + \\frac{n(n-1)}{2!} \\frac{1}{n^2} + \\dots + \\frac{n(n-1)\\dots 1}{n!} \\frac{1}{n^n}$$"
+            ],
+            "insight": "> **Insight:** La formula binomiale sviluppa la potenza n-esima in una sommatoria finita di addendi positivi ordinati per grado.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Forma analitica dei singoli termini e dimostrazione di stretta monotonia",
+            "line": 45,
+            "isCorollary": false,
+            "latex": [
+              "$$a_n = 1 + 1 + \\frac{1}{2!}\\left(1 - \\frac{1}{n}\\right) + \\frac{1}{3!}\\left(1 - \\frac{1}{n}\\right)\\left(1 - \\frac{2}{n}\\right) + \\dots + \\frac{1}{n!}\\prod_{j=1}^{n-1}\\left(1 - \\frac{j}{n}\\right)$$"
+            ],
+            "insight": "> **Insight:** Al crescere di n ciascun fattore (1 - j/n) aumenta e si aggiunge un ulteriore termine positivo, provando che an+1 > an.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Limitazione superiore tramite serie geometrica di ragione 1/2",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$a_n < 1 + 1 + \\frac{1}{2} + \\frac{1}{4} + \\dots + \\frac{1}{2^{n-1}} < 1 + \\sum_{k=0}^\\infty \\left(\\frac{1}{2}\\right)^k = 1 + 2 = 3 \\implies \\exists \\lim_{n \\to \\infty} a_n = e \\in (2, 3)$$"
+            ],
+            "insight": "> **Insight:** Una successione monotona crescente e superiormente limitata da 3 converge necessariamente per l'assioma di completezza di Dedekind.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Estensione alla variabile reale x tendente a infinito",
+            "line": 53,
+            "isCorollary": false,
+            "latex": [
+              "$$\\lfloor x \\rfloor \\le x < \\lfloor x \\rfloor + 1 \\implies \\lim_{x \\to +\\infty} \\left(1 + \\frac{1}{x}\\right)^x = \\lim_{x \\to -\\infty} \\left(1 + \\frac{1}{x}\\right)^x = e$$"
+            ],
+            "insight": "> **Insight:** L'intrappolamento tra parti intere consente di applicare il Teorema dei Carabinieri estendendo il limite da n naturale a x reale.",
+            "textLines": []
+          },
+          {
+            "header": "### 5. Corollario: Forma del Limite Notevole nell'Origine e Potenza k",
+            "line": 57,
+            "isCorollary": true,
+            "latex": [
+              "$$t = \\frac{1}{x} \\implies \\lim_{t \\to 0} (1 + t)^{\\frac{1}{t}} = e \\quad \\land \\quad \\lim_{x \\to \\pm\\infty} \\left(1 + \\frac{k}{x}\\right)^x = e^k$$"
+            ],
+            "insight": "> **Insight:** La sostituzione t = 1/x fornisce la versione cardine del limite per t tendente a zero, pilastro delle derivate logaritmiche.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/limits/mat_lim_exp_01.md",
+    "id": "mat_lim_exp_01",
+    "title": "Limite Notevole dell'Esponenziale: (e^x - 1)/x e Derivata Naturale",
+    "category": "Matematica",
+    "subCategory": "Limiti e Continuità",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 33,
+        "steps": [
+          {
+            "header": "### 1. Cambio di variabile esponenziale-logaritmica",
+            "line": 35,
+            "isCorollary": false,
+            "latex": [
+              "$$y = e^x - 1 \\implies e^x = 1 + y \\implies x = \\ln(1 + y)$$"
+            ],
+            "insight": "> **Insight:** Il cambio di variabile converte l'indeterminazione dell'esponenziale in una forma risolvibile con le proprietà del logaritmo.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Verifica della convergenza della nuova variabile per x -> 0",
+            "line": 39,
+            "isCorollary": false,
+            "latex": [
+              "$$x \\to 0 \\implies y = e^0 - 1 = 1 - 1 = 0$$"
+            ],
+            "insight": "> **Insight:** La continuità elementare della funzione esponenziale garantisce che quando x tende a zero anche y tenda a zero.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Riscrittura del limite e inversione frazionaria",
+            "line": 43,
+            "isCorollary": false,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\frac{e^x - 1}{x} = \\lim_{y \\to 0} \\frac{y}{\\ln(1 + y)} = \\lim_{y \\to 0} \\frac{1}{\\frac{1}{y} \\ln(1 + y)}$$"
+            ],
+            "insight": "> **Insight:** Portando y a denominatore di denominatore si prepara l'espressione per l'applicazione delle proprietà dei logaritmi.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Applicazione dell'esponente del logaritmo e convergenza ad e",
+            "line": 47,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{1}{y} \\ln(1 + y) = \\ln\\left((1 + y)^{\\frac{1}{y}}\\right) \\implies \\lim_{y \\to 0} \\ln\\left((1 + y)^{\\frac{1}{y}}\\right) = \\ln(e) = 1 \\implies \\lim_{x \\to 0} \\frac{e^x - 1}{x} = \\frac{1}{1} = 1$$"
+            ],
+            "insight": "> **Insight:** L'argomento converge al numero di Eulero e, per la continuità del logaritmo naturale, ln(e) = 1.",
+            "textLines": []
+          },
+          {
+            "header": "### 5. Corollario: Base Esponenziale Arbitraria e Derivata Prima",
+            "line": 51,
+            "isCorollary": true,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\frac{a^x - 1}{x} = \\lim_{x \\to 0} \\frac{e^{x \\ln a} - 1}{x} = \\ln a \\quad \\land \\quad \\frac{d}{dx}[e^x] = e^x$$"
+            ],
+            "insight": "> **Insight:** Per basi arbitrarie a > 0 compare il fattore di scala ln(a); solo per la base naturale e la derivata coincide esattamente con la funzione stessa.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/limits/mat_lim_log_01.md",
+    "id": "mat_lim_log_01",
+    "title": "Limite Notevole del Logaritmo: ln(1+x)/x e Linearizzazione",
+    "category": "Matematica",
+    "subCategory": "Limiti e Continuità",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 34,
+        "steps": [
+          {
+            "header": "### 1. Riorganizzazione algebrica del coefficiente moltiplicativo",
+            "line": 36,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{\\ln(1 + x)}{x} = \\frac{1}{x} \\cdot \\ln(1 + x)$$"
+            ],
+            "insight": "> **Insight:** La scomposizione isola la frazione 1/x come fattore moltiplicativo esterno al logaritmo.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Proprietà fondamentale dei logaritmi sulle potenze",
+            "line": 40,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{1}{x} \\ln(1 + x) = \\ln\\left( (1 + x)^{\\frac{1}{x}} \\right)$$"
+            ],
+            "insight": "> **Insight:** La proprietà c·ln(w) = ln(w^c) sposta il fattore moltiplicativo 1/x come esponente dell'argomento.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Continuità del logaritmo e scambio con l'operatore limite",
+            "line": 44,
+            "isCorollary": false,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\ln\\left( (1 + x)^{\\frac{1}{x}} \\right) = \\ln\\left( \\lim_{x \\to 0} (1 + x)^{\\frac{1}{x}} \\right) = \\ln(e) = 1$$"
+            ],
+            "insight": "> **Insight:** Essendo il logaritmo naturale una funzione continua nel suo dominio positivo, l'operatore di limite transita all'interno dell'argomento.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Limite con Base Logaritmica Qualsiasi e Derivata Fondamentale",
+            "line": 48,
+            "isCorollary": true,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\frac{\\log_a(1 + x)}{x} = \\frac{1}{\\ln a} = \\log_a e \\quad \\land \\quad \\frac{d}{dx}[\\ln x] = \\lim_{h \\to 0} \\frac{\\ln(x+h) - \\ln x}{h} = \\frac{1}{x}$$"
+            ],
+            "insight": "> **Insight:** In qualsiasi base generica compare il modulo di conversione 1/ln(a); il limite dimostra direttamente la formula per la derivata del logaritmo naturale.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/limits/mat_lim_sinc_01.md",
+    "id": "mat_lim_sinc_01",
+    "title": "Limite Notevole del Seno: sin(x)/x e Teorema dei Carabinieri",
+    "category": "Matematica",
+    "subCategory": "Limiti e Continuità",
+    "template": "squeeze_theorem",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 49,
+        "steps": [
+          {
+            "header": "### 1. Confronto geometrico delle aree sulla circonferenza goniometrica",
+            "line": 51,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{1}{2}\\sin x < \\frac{1}{2}x < \\frac{1}{2}\\tan x \\implies \\sin x < x < \\tan x \\quad \\forall x \\in \\left(0, \\frac{\\pi}{2}\\right)$$"
+            ],
+            "insight": "> **Insight:** L'area del settore circolare è geometricamente stretta tra l'area del triangolo inscritto e quella del triangolo circoscritto.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Divisione per sin(x) e conservazione dell'ordinamento",
+            "line": 55,
+            "isCorollary": false,
+            "latex": [
+              "$$1 < \\frac{x}{\\sin x} < \\frac{1}{\\cos x}$$"
+            ],
+            "insight": "> **Insight:** Poiché sin(x) > 0 nel primo quadrante, dividere ciascun membro per sin(x) preserva rigorosamente il verso delle disuguaglianze.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Inversione dei reciproci e simmetria per parità",
+            "line": 59,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos x < \\frac{\\sin x}{x} < 1 \\quad \\forall x \\in \\left(-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right) \\setminus \\{0\\}$$"
+            ],
+            "insight": "> **Insight:** Il passaggio ai reciproci inverte il verso; la parità di cos(x) e sin(x)/x estende identicamente la validità a tutto l'intorno dell'origine.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Applicazione del Teorema del Confronto (dei Carabinieri)",
+            "line": 63,
+            "isCorollary": false,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\cos x = 1 \\quad \\land \\quad \\lim_{x \\to 0} 1 = 1 \\implies \\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$"
+            ],
+            "insight": "> **Insight:** Le due funzioni sentinella convergono entrambe a 1, costringendo la funzione centrale a convergere allo stesso limite.",
+            "textLines": []
+          },
+          {
+            "header": "### 5. Corollario: Limite Notevole della Tangente e Frequenza k",
+            "line": 67,
+            "isCorollary": true,
+            "latex": [
+              "$$\\lim_{x \\to 0} \\frac{\\tan x}{x} = \\lim_{x \\to 0} \\left(\\frac{\\sin x}{x} \\cdot \\frac{1}{\\cos x}\\right) = 1 \\cdot 1 = 1 \\quad \\land \\quad \\lim_{x \\to 0} \\frac{\\sin(kx)}{x} = k$$"
+            ],
+            "insight": "> **Insight:** Moltiplicando e dividendo per la costante k, la rapidità di variazione dell'angolo scala linearmente il limite nell'origine.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/calculus/limits/mat_limits_01.md",
+    "id": "mat_limits_01",
+    "title": "Definizione Rigorosa di Limite e Continuità (Epsilon-Delta)",
+    "category": "Matematica",
+    "subCategory": "Limiti e Continuità",
+    "template": "function_graph",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 54,
+        "steps": [
+          {
+            "header": "### 1. Impostazione della disuguaglianza di tolleranza",
+            "line": 58,
+            "isCorollary": false,
+            "latex": [
+              "$$|(2x + 1) - 7| < \\varepsilon \\iff |2x - 6| < \\varepsilon$$"
+            ],
+            "insight": "> **Insight:** Si impone che la distanza euclidea tra l'immagine della funzione f(x) e il valore presunto di limite L=7 sia rigidamente inferiore a ε.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Semplificazione algebrica ed estrazione del modulo",
+            "line": 62,
+            "isCorollary": false,
+            "latex": [
+              "$$2|x - 3| < \\varepsilon \\iff |x - 3| < \\frac{\\varepsilon}{2}$$"
+            ],
+            "insight": "> **Insight:** L'operazione isola la distanza |x - x₀| lungo l'asse delle ascisse mediante divisione per la pendenza m=2.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Determinazione esplicita del raggio di controllo delta",
+            "line": 66,
+            "isCorollary": false,
+            "latex": [
+              "$$\\delta(\\varepsilon) = \\frac{\\varepsilon}{2} \\implies 0 < |x - 3| < \\delta \\implies |f(x) - 7| < \\varepsilon$$"
+            ],
+            "insight": "> **Insight:** Il delta trovato dipende unicamente da epsilon e non da x, provando che il limite esiste ed è rigorosamente verificato.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Teorema di Unicità del Limite e Definizione di Continuità",
+            "line": 70,
+            "isCorollary": true,
+            "latex": [
+              "$$\\lim_{x \\to x_0} f(x) = L_1 \\land \\lim_{x \\to x_0} f(x) = L_2 \\implies |L_1 - L_2| \\le |L_1 - f(x)| + |f(x) - L_2| < 2\\varepsilon \\implies L_1 = L_2$$"
+            ],
+            "insight": "> **Insight:** Una funzione non può convergere a due valori distinti; se inoltre L coincide con f(x₀), la funzione è continua in x₀.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/geometry_trig/geometry/mat_pythagoras_01.md",
+    "id": "mat_pythagoras_01",
+    "title": "Teorema di Pitagora ed Euclide",
+    "category": "Matematica",
+    "subCategory": "Geometria Euclidea Piana",
+    "template": "triangle_solver",
+    "demoCount": 3,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Teorema di Pitagora (Equiscomponibilità delle Aree)",
+        "line": 28,
+        "steps": [
+          {
+            "header": "### 1. Costruzione di un quadrato di lato (a + b)",
+            "line": 30,
+            "isCorollary": false,
+            "latex": [
+              "$$\\text{Area}_{\\text{tot}} = (a + b)^2 = 4 \\cdot \\left(\\frac{1}{2} a b\\right) + c^2$$"
+            ],
+            "insight": "> **Insight:** Si dispongono 4 copie identiche del triangolo rettangolo ai quattro angoli di un quadrato di lato (a+b): al centro rimane esattamente un quadrato inclinato di lato c.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Espansione algebrica del quadrato di binomio",
+            "line": 34,
+            "isCorollary": false,
+            "latex": [
+              "$$(a + b)^2 = a^2 + 2ab + b^2 \\iff a^2 + 2ab + b^2 = 2ab + c^2$$"
+            ],
+            "insight": "> **Insight:** I 4 triangoli rettangoli hanno un'area complessiva pari a 4 * (ab/2) = 2ab.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Sottrazione del termine misto 2ab da entrambi i membri",
+            "line": 38,
+            "isCorollary": false,
+            "latex": [
+              "$$a^2 + 2ab + b^2 - 2ab = 2ab + c^2 - 2ab \\iff a^2 + b^2 = c^2$$"
+            ],
+            "insight": "> **Insight:** Sottraendo l'area dei 4 triangoli rimane l'uguaglianza rigorosa tra i quadrati costruiti sui cateti e il quadrato costruito sull'ipotenusa.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Metrica Euclidea e Diagonale del Quadrato",
+            "line": 42,
+            "isCorollary": true,
+            "latex": [
+              "$$c = \\sqrt{a^2 + b^2}, \\qquad d_{\\text{quadrato}} = \\sqrt{l^2 + l^2} = l\\sqrt{2}$$"
+            ],
+            "insight": "> **Insight:** Fornisce la formula universale della distanza cartesiana euclidea e la dimostrazione dell'irrazionalita della diagonale del quadrato unitario.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Primo Teorema di Euclide (Similitudine dei Triangoli)",
+        "line": 46,
+        "steps": [
+          {
+            "header": "### 1. Tracciamento dell'altezza h relativa all'ipotenusa c",
+            "line": 48,
+            "isCorollary": false,
+            "latex": [
+              "$$\\text{Ipotenusa: } c = p_1 + p_2 \\quad \\text{con } p_1 \\text{ proiezione del cateto } a, \\; p_2 \\text{ proiezione del cateto } b$$"
+            ],
+            "insight": "> **Insight:** L'altezza h suddivide il triangolo ABC nei due triangoli rettangoli minori ACH e BCH.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Similitudine tra il triangolo originario ABC e il sottomodulo ACH",
+            "line": 52,
+            "isCorollary": false,
+            "latex": [
+              "$$\\angle A \\text{ in comune}, \\quad \\angle AHC = \\angle ACB = 90^\\circ \\implies \\triangle ABC \\sim \\triangle ACH$$"
+            ],
+            "insight": "> **Insight:** Per il primo criterio di similitudine, due triangoli con gli stessi angoli hanno lati omologhi in proporzione diretta.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Rapporto di proporzionalità tra ipotenuse e cateti",
+            "line": 56,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{\\text{ipotenusa } ABC}{\\text{cateto } AC} = \\frac{\\text{ipotenusa } ACH}{\\text{proiezione } AH} \\iff \\frac{c}{b} = \\frac{b}{p_2} \\iff b^2 = c \\cdot p_2$$"
+            ],
+            "insight": "> **Insight:** Il cateto e medio proporzionale tra l'intera ipotenusa e la propria proiezione su di essa.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Primo Teorema di Euclide e Deduzione Alternativa di Pitagora",
+            "line": 60,
+            "isCorollary": true,
+            "latex": [
+              "$$a^2 = c \\cdot p_1, \\quad b^2 = c \\cdot p_2 \\implies a^2 + b^2 = c(p_1 + p_2) = c \\cdot c = c^2$$"
+            ],
+            "insight": "> **Insight:** Sommando membro a membro i due enunciati di Euclide I si ottiene una dimostrazione elegantissima e istantanea del Teorema di Pitagora.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Secondo Teorema di Euclide (Altezza Medio Proporzionale)",
+        "line": 64,
+        "steps": [
+          {
+            "header": "### 1. Similitudine tra i due triangoli rettangoli adiacenti ACH e BCH",
+            "line": 66,
+            "isCorollary": false,
+            "latex": [
+              "$$\\angle CAH = 90^\\circ - \\angle ACH = \\angle BCH \\implies \\triangle ACH \\sim \\triangle CBH$$"
+            ],
+            "insight": "> **Insight:** I due triangoli minori condividono gli stessi angoli complementari rispetto all'altezza comune h.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Impostazione della proporzione tra i cateti omologhi",
+            "line": 70,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{\\text{cateto lungo } ACH}{\\text{cateto corto } ACH} = \\frac{\\text{cateto lungo } CBH}{\\text{cateto corto } CBH} \\iff \\frac{h}{p_1} = \\frac{p_2}{h}$$"
+            ],
+            "insight": "> **Insight:** L'altezza h funge da cateto maggiore per il primo triangolo e da cateto minore per il secondo.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Prodotto dei medi e dei primi estremi",
+            "line": 74,
+            "isCorollary": false,
+            "latex": [
+              "$$\\frac{h}{p_1} = \\frac{p_2}{h} \\iff h^2 = p_1 \\cdot p_2 \\iff h = \\sqrt{p_1 \\cdot p_2}$$"
+            ],
+            "insight": "> **Insight:** Il quadrato dell'altezza relativa all'ipotenusa e equivalente al rettangolo avente per lati le proiezioni dei due cateti.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Secondo Teorema di Euclide e Media Geometrica",
+            "line": 78,
+            "isCorollary": true,
+            "latex": [
+              "$$h = \\sqrt{p_1 \\cdot p_2} = \\text{Media Geometrica}(p_1, p_2)$$"
+            ],
+            "insight": "> **Insight:** Fornisce la classica costruzione geometrica con riga e compasso per calcolare esattamente la radice quadrata del prodotto di due segmenti.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/geometry_trig/geometry/mat_triang_01.md",
+    "id": "mat_triang_01",
+    "title": "Geometria del Triangolo e Angoli Interni",
+    "category": "Matematica",
+    "subCategory": "Geometria Euclidea Piana",
+    "template": "triangle_solver",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 23,
+        "steps": [
+          {
+            "header": "### 1. Tracciamento della retta parallela alla base passante per il vertice opposto",
+            "line": 25,
+            "isCorollary": false,
+            "latex": [
+              "$$r \\parallel AB \\quad \\text{passante per } C$$"
+            ],
+            "insight": "> **Insight:** Costruzione euclidea classica per applicare le proprietà degli angoli alterni interni.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Eguaglianza degli angoli alterni interni formati dalle trasversali AC e BC",
+            "line": 29,
+            "isCorollary": false,
+            "latex": [
+              "$$\\alpha' = \\alpha \\quad \\land \\quad \\beta' = \\beta$$"
+            ],
+            "insight": "> **Insight:** Gli angoli adiacenti al vertice C formano con gamma un angolo piatto di 180°.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Somma degli angoli sul vertice C che formano l'angolo piatto",
+            "line": 33,
+            "isCorollary": false,
+            "latex": [
+              "$$\\alpha' + \\gamma + \\beta' = 180^\\circ \\implies \\alpha + \\beta + \\gamma = 180^\\circ = \\pi \\text{ rad}$$"
+            ],
+            "insight": "> **Insight:** Teorema fondamentale della geometria euclidea piana.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Teorema dell'Angolo Esterno",
+            "line": 37,
+            "isCorollary": true,
+            "latex": [
+              "$$\\delta_{\\text{ext}} = 180^\\circ - \\gamma = \\alpha + \\beta$$"
+            ],
+            "insight": "> **Insight:** In qualunque triangolo, ogni angolo esterno ha ampiezza esattamente pari alla somma dei due interni non adiacenti.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/geometry_trig/trigonometry/mat_trig_add_01.md",
+    "id": "mat_trig_add_01",
+    "title": "Formule Goniometriche: Addizione, Duplicazione e Bisezione",
+    "category": "Matematica",
+    "subCategory": "Goniometria e Trigonometria",
+    "template": "trig_circle",
+    "demoCount": 5,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Formule di Addizione e Sottrazione",
+        "line": 25,
+        "steps": [
+          {
+            "header": "### 1. Distanza euclidea tra due punti sulla circonferenza unitaria",
+            "line": 27,
+            "isCorollary": false,
+            "latex": [
+              "$$d^2 = (\\cos\\alpha - \\cos\\beta)^2 + (\\sin\\alpha - \\sin\\beta)^2 = 2 - 2(\\cos\\alpha \\cos\\beta + \\sin\\alpha \\sin\\beta)$$"
+            ],
+            "insight": "> **Insight:** Si considerano i punti P(cos α, sin α) e Q(cos β, sin β): la loro distanza al quadrato dipende unicamente dalla differenza angolare tra i due raggi vettori.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Rotazione rigida e formula fondamentale di sottrazione del coseno",
+            "line": 31,
+            "isCorollary": false,
+            "latex": [
+              "$$d^2 = (\\cos(\\alpha - \\beta) - 1)^2 + (\\sin(\\alpha - \\beta) - 0)^2 = 2 - 2\\cos(\\alpha - \\beta) \\implies \\cos(\\alpha - \\beta) = \\cos\\alpha \\cos\\beta + \\sin\\alpha \\sin\\beta$$"
+            ],
+            "insight": "> **Insight:** Ruotando rigidamente l'arco affinche il secondo punto coincida con (1, 0), la distanza tra i punti si conserva per invarianza delle isometrie euclidee.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Angolo opposto e formula di addizione del coseno",
+            "line": 35,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos(\\alpha + \\beta) = \\cos(\\alpha - (-\\beta)) = \\cos\\alpha \\cos(-\\beta) + \\sin\\alpha \\sin(-\\beta) = \\cos\\alpha \\cos\\beta - \\sin\\alpha \\sin\\beta$$"
+            ],
+            "insight": "> **Insight:** Si sfrutta la parita del coseno (cos(-β) = cos β) e la disparita del seno (sin(-β) = -sin β).",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Angoli complementari e formule di addizione del seno",
+            "line": 39,
+            "isCorollary": false,
+            "latex": [
+              "$$\\sin(\\alpha \\pm \\beta) = \\cos\\left(\\frac{\\pi}{2} - (\\alpha \\pm \\beta)\\right) = \\sin\\alpha \\cos\\beta \\pm \\cos\\alpha \\sin\\beta$$"
+            ],
+            "insight": "> **Insight:** Il passaggio tra seno e coseno avviene mediante l'identita degli angoli complementari.",
+            "textLines": []
+          },
+          {
+            "header": "### 5. Corollario: Formule di Addizione e Sottrazione della Tangente",
+            "line": 43,
+            "isCorollary": true,
+            "latex": [
+              "$$\\tan(\\alpha \\pm \\beta) = \\frac{\\sin(\\alpha \\pm \\beta)}{\\cos(\\alpha \\pm \\beta)} = \\frac{\\tan\\alpha \\pm \\tan\\beta}{1 \\mp \\tan\\alpha \\tan\\beta}$$"
+            ],
+            "insight": "> **Insight:** Si divide numeratore e denominatore per cos(α)cos(β), fornendo una formula razionale nelle sole tangenti degli angoli componenti.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Formule di Duplicazione",
+        "line": 47,
+        "steps": [
+          {
+            "header": "### 1. Sovrapposizione angolare nelle formule di addizione (β = α)",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$\\sin(2\\alpha) = \\sin(\\alpha + \\alpha) = \\sin\\alpha \\cos\\alpha + \\cos\\alpha \\sin\\alpha = 2\\sin\\alpha \\cos\\alpha$$"
+            ],
+            "insight": "> **Insight:** Ponendo β = α nella formula di addizione del seno, i due termini si sommano direttamente generando il doppio prodotto.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sviluppo del coseno dell'angolo doppio",
+            "line": 53,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos(2\\alpha) = \\cos(\\alpha + \\alpha) = \\cos\\alpha \\cos\\alpha - \\sin\\alpha \\sin\\alpha = \\cos^2\\alpha - \\sin^2\\alpha$$"
+            ],
+            "insight": "> **Insight:** Il coseno dell'angolo doppio emerge naturalmente come differenza dei quadrati del coseno e del seno.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Riformulazione mediante la relazione fondamentale della goniometria",
+            "line": 57,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos(2\\alpha) = 2\\cos^2\\alpha - 1 = 1 - 2\\sin^2\\alpha$$"
+            ],
+            "insight": "> **Insight:** Sostituendo sin^2(α) = 1 - cos^2(α) o viceversa, il coseno doppio si esprime in funzione di una sola grandezza quadratica.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Duplicazione della Tangente e Abbassamento del Grado",
+            "line": 61,
+            "isCorollary": true,
+            "latex": [
+              "$$\\tan(2\\alpha) = \\frac{2\\tan\\alpha}{1 - \\tan^2\\alpha}, \\qquad \\sin^2\\alpha = \\frac{1 - \\cos(2\\alpha)}{2}, \\qquad \\cos^2\\alpha = \\frac{1 + \\cos(2\\alpha)}{2}$$"
+            ],
+            "insight": "> **Insight:** Le formule per sin^2(α) e cos^2(α) sono il fondamento per il calcolo di integrali trigonometrici indefiniti e per la potenza attiva nei circuiti in corrente alternata.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Formule di Bisezione",
+        "line": 65,
+        "steps": [
+          {
+            "header": "### 1. Inversione della formula del coseno doppio per l'angolo metà",
+            "line": 67,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos(2\\theta) = 1 - 2\\sin^2\\theta \\implies \\text{Ponendo } \\theta = \\frac{\\alpha}{2}, \\quad \\cos\\alpha = 1 - 2\\sin^2\\left(\\frac{\\alpha}{2}\\right)$$"
+            ],
+            "insight": "> **Insight:** Il punto di partenza e la formula di duplicazione del coseno in cui si esegue il cambio di scala temporale/angolare.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Isolamento del seno dell'angolo metà",
+            "line": 71,
+            "isCorollary": false,
+            "latex": [
+              "$$2\\sin^2\\left(\\frac{\\alpha}{2}\\right) = 1 - \\cos\\alpha \\implies \\sin\\left(\\frac{\\alpha}{2}\\right) = \\pm \\sqrt{\\frac{1 - \\cos\\alpha}{2}}$$"
+            ],
+            "insight": "> **Insight:** L'estrazione di radice quadrata richiede l'introduzione del doppio segno ±, determinato dal quadrante di appartenenza di α/2.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Isolamento del coseno dell'angolo metà",
+            "line": 75,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos\\alpha = 2\\cos^2\\left(\\frac{\\alpha}{2}\\right) - 1 \\implies \\cos\\left(\\frac{\\alpha}{2}\\right) = \\pm \\sqrt{\\frac{1 + \\cos\\alpha}{2}}$$"
+            ],
+            "insight": "> **Insight:** Analoga inversione condotta sulla forma pura in coseno.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Rapporto per la tangente e forme razionali prive di radicale",
+            "line": 79,
+            "isCorollary": false,
+            "latex": [
+              "$$\\tan\\left(\\frac{\\alpha}{2}\\right) = \\pm \\sqrt{\\frac{1 - \\cos\\alpha}{1 + \\cos\\alpha}} = \\frac{\\sin\\alpha}{1 + \\cos\\alpha} = \\frac{1 - \\cos\\alpha}{\\sin\\alpha}$$"
+            ],
+            "insight": "> **Insight:** Moltiplicando numeratore e denominatore per il coniugato sotto radice si eliminano i radicali, ottenendo espressioni razionali eleganti e sicure per il calcolo numerico.",
+            "textLines": []
+          },
+          {
+            "header": "### 5. Corollario: Determinazione Univoca del Segno nei Quadranti",
+            "line": 83,
+            "isCorollary": true,
+            "latex": [
+              "$$\\operatorname{sgn}\\left(\\sin\\frac{\\alpha}{2}\\right) = \\operatorname{sgn}\\left(\\sin\\theta\\right), \\quad \\operatorname{sgn}\\left(\\cos\\frac{\\alpha}{2}\\right) = \\operatorname{sgn}\\left(\\cos\\theta\\right) \\quad \\left(\\theta = \\frac{\\alpha}{2}\\right)$$"
+            ],
+            "insight": "> **Insight:** Il segno algebrico delle formule di bisezione non dipende dal quadrante di α, bensi rigorosamente dal quadrante in cui cade l'angolo meta α/2.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Formule Parametriche Razionali (t = tan(α/2))",
+        "line": 87,
+        "steps": [
+          {
+            "header": "### 1. Definizione della variabile ausiliaria t",
+            "line": 89,
+            "isCorollary": false,
+            "latex": [
+              "$$t = \\tan\\left(\\frac{\\alpha}{2}\\right) \\quad \\text{con } \\alpha \\neq \\pi + 2k\\pi$$"
+            ],
+            "insight": "> **Insight:** Si introduce il parametro universale t che esprime la tangente dell'angolo dimezzato.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Riscrittura di sen(α) mediante duplicazione e divisione per l'identità fondamentale",
+            "line": 93,
+            "isCorollary": false,
+            "latex": [
+              "$$\\sin\\alpha = 2\\sin\\left(\\frac{\\alpha}{2}\\right)\\cos\\left(\\frac{\\alpha}{2}\\right) = \\frac{2\\sin\\left(\\frac{\\alpha}{2}\\right)\\cos\\left(\\frac{\\alpha}{2}\\right)}{\\cos^2\\left(\\frac{\\alpha}{2}\\right) + \\sin^2\\left(\\frac{\\alpha}{2}\\right)} = \\frac{2\\tan\\left(\\frac{\\alpha}{2}\\right)}{1 + \\tan^2\\left(\\frac{\\alpha}{2}\\right)} = \\frac{2t}{1 + t^2}$$"
+            ],
+            "insight": "> **Insight:** La divisione di numeratore e denominatore per cos^2(α/2) converte immediatamente l'espressione in una funzione razionale in t.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Riscrittura di cos(α) in funzione di t",
+            "line": 97,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos\\alpha = \\frac{\\cos^2\\left(\\frac{\\alpha}{2}\\right) - \\sin^2\\left(\\frac{\\alpha}{2}\\right)}{\\cos^2\\left(\\frac{\\alpha}{2}\\right) + \\sin^2\\left(\\frac{\\alpha}{2}\\right)} = \\frac{1 - \\tan^2\\left(\\frac{\\alpha}{2}\\right)}{1 + \\tan^2\\left(\\frac{\\alpha}{2}\\right)} = \\frac{1 - t^2}{1 + t^2}$$"
+            ],
+            "insight": "> **Insight:** Il coseno si esprime come quoziente tra (1 - t^2) e (1 + t^2).",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Sostituzione Razionale Universale di Weierstrass negli Integrali",
+            "line": 101,
+            "isCorollary": true,
+            "latex": [
+              "$$\\sin\\alpha = \\frac{2t}{1+t^2}, \\quad \\cos\\alpha = \\frac{1-t^2}{1+t^2}, \\quad \\tan\\alpha = \\frac{2t}{1-t^2}, \\quad d\\alpha = \\frac{2}{1+t^2}dt$$"
+            ],
+            "insight": "> **Insight:** Trasforma qualsiasi integrale di funzioni razionali in seno e coseno in un integrale puramente algebrico razionale in t, risolvibile con il metodo dei fratti semplici.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Formule di Prostaferesi e Werner",
+        "line": 105,
+        "steps": [
+          {
+            "header": "### 1. Somma e differenza delle formule di addizione (Formule di Werner)",
+            "line": 107,
+            "isCorollary": false,
+            "latex": [
+              "$$\\cos\\alpha \\cos\\beta = \\frac{1}{2}\\left[\\cos(\\alpha + \\beta) + \\cos(\\alpha - \\beta)\\right], \\quad \\sin\\alpha \\sin\\beta = \\frac{1}{2}\\left[\\cos(\\alpha - \\beta) - \\cos(\\alpha + \\beta)\\right]$$"
+            ],
+            "insight": "> **Insight:** Le formule di Werner consentono di trasformare prodotti di funzioni trigonometriche in somme algebriche lineari, facilitando l'integrazione immediata.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Cambio di variabili per la trasformazione inversa da somme a prodotti",
+            "line": 111,
+            "isCorollary": false,
+            "latex": [
+              "$$p = \\alpha + \\beta, \\quad q = \\alpha - \\beta \\implies \\alpha = \\frac{p + q}{2}, \\quad \\beta = \\frac{p - q}{2}$$"
+            ],
+            "insight": "> **Insight:** Il sistema lineare invertito permette di passare direttamente dalla somma di due angoli p e q alle formule di prostaferesi.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Sostituzione e deduzione delle formule di Prostaferesi",
+            "line": 115,
+            "isCorollary": false,
+            "latex": [
+              "$$\\sin p + \\sin q = 2\\sin\\left(\\frac{p+q}{2}\\right)\\cos\\left(\\frac{p-q}{2}\\right), \\quad \\cos p + \\cos q = 2\\cos\\left(\\frac{p+q}{2}\\right)\\cos\\left(\\frac{p-q}{2}\\right)$$"
+            ],
+            "insight": "> **Insight:** Le formule di prostaferesi trasformano somme e differenze di seni e coseni in un unico prodotto di fattori.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Fenomeno dei Battimenti e Modulazione di Frequenza",
+            "line": 119,
+            "isCorollary": true,
+            "latex": [
+              "$$\\cos(\\omega_1 t) + \\cos(\\omega_2 t) = 2\\cos\\left(\\frac{\\omega_1 - \\omega_2}{2}t\\right)\\cos\\left(\\frac{\\omega_1 + \\omega_2}{2}t\\right)$$"
+            ],
+            "insight": "> **Insight:** Spiega l'insorgere dei battimenti acustici e la modulazione di ampiezza nei circuiti a radiofrequenza quando due onde di frequenza vicina interferiscono.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/geometry_trig/trigonometry/mat_trig_circ_01.md",
+    "id": "mat_trig_circ_01",
+    "title": "Circonferenza Goniometrica e Relazione Fondamentale",
+    "category": "Matematica",
+    "subCategory": "Goniometria e Trigonometria",
+    "template": "trig_circle",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 25,
+        "steps": [
+          {
+            "header": "### 1. Definizione del cerchio goniometrico unitario",
+            "line": 27,
+            "isCorollary": false,
+            "latex": [
+              "$$x^2 + y^2 = 1 \\quad \\text{sul piano cartesiano}$$"
+            ],
+            "insight": "> **Insight:** Ogni semiretta uscente dall'origine forma un angolo θ con il semiasse positivo delle x.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Definizione analitica di Coseno e Seno come coordinate",
+            "line": 31,
+            "isCorollary": false,
+            "latex": [
+              "$$x_P \\equiv \\cos(\\theta), \\quad y_P \\equiv \\sin(\\theta)$$"
+            ],
+            "insight": "> **Insight:** Il coseno è l'ascissa e il seno è l'ordinata del punto P sulla circonferenza unitaria.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Sostituzione nell'equazione della circonferenza",
+            "line": 35,
+            "isCorollary": false,
+            "latex": [
+              "$$(\\cos\\theta)^2 + (\\sin\\theta)^2 = 1 \\implies \\sin^2\\theta + \\cos^2\\theta = 1$$"
+            ],
+            "insight": "> **Insight:** La prima relazione fondamentale della goniometria è la formulazione trigonometrica del Teorema di Pitagora.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Definizione di Tangente e Relazione Fondamentale Secondaria",
+            "line": 39,
+            "isCorollary": true,
+            "latex": [
+              "$$\\tan\\theta \\equiv \\frac{\\sin\\theta}{\\cos\\theta} \\implies 1 + \\tan^2\\theta = \\frac{1}{\\cos^2\\theta}$$"
+            ],
+            "insight": "> **Insight:** Dividendo l'identità fondamentale per cos²θ si ottiene la relazione diretta tra tangente e coseno.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/geometry_trig/trigonometry/mat_trig_triang_01.md",
+    "id": "mat_trig_triang_01",
+    "title": "Teoremi dei Triangoli: Carnot, Seni e Formula dell'Area",
+    "category": "Matematica",
+    "subCategory": "Goniometria e Trigonometria",
+    "template": "triangle_solver",
+    "demoCount": 3,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione: Teorema di Carnot (Legge del Coseno)",
+        "line": 24,
+        "steps": [
+          {
+            "header": "### 1. Scomposizione del triangolo scaleno mediante l'altezza h",
+            "line": 26,
+            "isCorollary": false,
+            "latex": [
+              "$$h = b \\sin\\gamma, \\quad p = b \\cos\\gamma \\implies \\text{segmento residuo: } d = a - p = a - b \\cos\\gamma$$"
+            ],
+            "insight": "> **Insight:** L'altezza divide il triangolo obliquo in due triangoli rettangoli adiacenti: l'ipotenusa b viene proiettata sulla base a.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Applicazione del Teorema di Pitagora al triangolo rettangolo contenente il lato c",
+            "line": 30,
+            "isCorollary": false,
+            "latex": [
+              "$$c^2 = h^2 + d^2 = (b \\sin\\gamma)^2 + (a - b \\cos\\gamma)^2$$"
+            ],
+            "insight": "> **Insight:** Il lato c e l'ipotenusa del secondo triangolo rettangolo avente cateti h e d.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Sviluppo algebrico e raccoglimento della relazione fondamentale",
+            "line": 34,
+            "isCorollary": false,
+            "latex": [
+              "$$c^2 = b^2 \\sin^2\\gamma + a^2 - 2ab\\cos\\gamma + b^2 \\cos^2\\gamma = a^2 + b^2(\\sin^2\\gamma + \\cos^2\\gamma) - 2ab\\cos\\gamma$$"
+            ],
+            "insight": "> **Insight:** Poiche sin^2(γ) + cos^2(γ) = 1, la somma dei due termini trigonometrici si compatta esattamente a b^2.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Teorema di Carnot e Riduzione a Pitagora",
+            "line": 38,
+            "isCorollary": true,
+            "latex": [
+              "$$c^2 = a^2 + b^2 - 2 a b \\cos\\gamma \\implies (\\gamma = 90^\\circ \\implies \\cos(90^\\circ) = 0 \\implies c^2 = a^2 + b^2)$$"
+            ],
+            "insight": "> **Insight:** Il termine correttivo -2ab cos(γ) quantifica esattamente la deviazione dell'angolo compreso rispetto all'angolo retto (allunga c se γ e ottuso, lo accorcia se e acuto).",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Teorema dei Seni e Circonferenza Circoscritta (2R)",
+        "line": 42,
+        "steps": [
+          {
+            "header": "### 1. Inserimento del triangolo nella circonferenza di raggio R e tracciamento del diametro",
+            "line": 44,
+            "isCorollary": false,
+            "latex": [
+              "$$CD = 2R \\quad \\text{con diametro condotto dal vertice } C$$"
+            ],
+            "insight": "> **Insight:** Si congiunge il punto D con il vertice B, formando il triangolo rettangolo CBD inscritto nella semicirconferenza.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Teorema degli angoli alla circonferenza che insistono sulla stessa corda",
+            "line": 48,
+            "isCorollary": false,
+            "latex": [
+              "$$\\angle CDB = \\angle CAB = \\alpha \\implies \\sin(\\angle CDB) = \\sin\\alpha$$"
+            ],
+            "insight": "> **Insight:** Angoli alla circonferenza che sottendono il medesimo arco BC hanno esattamente la stessa ampiezza.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Relazione trigonometrica nel triangolo rettangolo CBD",
+            "line": 52,
+            "isCorollary": false,
+            "latex": [
+              "$$\\sin\\alpha = \\frac{a}{CD} = \\frac{a}{2R} \\iff \\frac{a}{\\sin\\alpha} = 2R$$"
+            ],
+            "insight": "> **Insight:** Il cateto a e uguale all'ipotenusa (diametro 2R) moltiplicata per il seno dell'angolo opposto α.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: La Legge dei Seni per Qualsiasi Triangolo",
+            "line": 56,
+            "isCorollary": true,
+            "latex": [
+              "$$\\frac{a}{\\sin\\alpha} = \\frac{b}{\\sin\\beta} = \\frac{c}{\\sin\\gamma} = 2 R$$"
+            ],
+            "insight": "> **Insight:** Il rapporto tra la misura di qualsiasi lato e il seno dell'angolo a esso opposto e costante e coincide esattamente con il diametro della circonferenza circoscritta.",
+            "textLines": []
+          }
+        ]
+      },
+      {
+        "header": "## Dimostrazione: Formula Goniometrica dell'Area e Formula di Erone",
+        "line": 60,
+        "steps": [
+          {
+            "header": "### 1. Calcolo dell'area tramite altezza espressa con il seno",
+            "line": 62,
+            "isCorollary": false,
+            "latex": [
+              "$$\\text{Area} = \\frac{\\text{base} \\cdot \\text{altezza}}{2} = \\frac{a \\cdot h}{2} = \\frac{a \\cdot (b \\sin\\gamma)}{2} = \\frac{1}{2} a b \\sin\\gamma$$"
+            ],
+            "insight": "> **Insight:** Permette di calcolare l'area di qualsiasi triangolo conoscendo unicamente due lati e l'angolo tra essi compreso.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Espressione di sen(gamma) tramite la formula di Carnot",
+            "line": 66,
+            "isCorollary": false,
+            "latex": [
+              "$$\\sin\\gamma = \\sqrt{1 - \\cos^2\\gamma} = \\sqrt{1 - \\left(\\frac{a^2 + b^2 - c^2}{2ab}\\right)^2}$$"
+            ],
+            "insight": "> **Insight:** Il coseno viene isolato direttamente dal Teorema di Carnot e convertito in seno con la relazione fondamentale.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Fattorizzazione per differenza di quadrati e semiperimetro",
+            "line": 70,
+            "isCorollary": false,
+            "latex": [
+              "$$p = \\frac{a + b + c}{2} \\implies \\text{Area} = \\sqrt{p(p - a)(p - b)(p - c)}$$"
+            ],
+            "insight": "> **Insight:** Lo sviluppo algebrico decompone i fattori esattamente nella somma e nelle differenze dei tre lati rispetto al semiperimetro p.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: La Formula di Erone per il Calcolo dell'Area dai Soli Lati",
+            "line": 74,
+            "isCorollary": true,
+            "latex": [
+              "$$\\text{Area} = \\sqrt{p(p-a)(p-b)(p-c)} \\quad \\text{con } p = \\frac{a+b+c}{2}$$"
+            ],
+            "insight": "> **Insight:** Consente di calcolare l'area di un triangolo qualunque conoscendo esclusivamente le lunghezze dei suoi tre lati, senza richiedere il calcolo di angoli o altezze.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/physics/chem_ph_01.md",
+    "id": "chem_ph_01",
+    "title": "Chimica Fisica: Soluzioni Acido-Base e Calcolo del pH",
+    "category": "Fisica",
+    "subCategory": "Chimica Fisica",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 39,
+        "steps": [
+          {
+            "header": "### 1. Equilibrio di autoionizzazione dell'acqua pura a 25°C",
+            "line": 41,
+            "isCorollary": false,
+            "latex": [
+              "$$K_w = [\\text{H}_3\\text{O}^+] \\cdot [\\text{OH}^-] = 1.0 \\times 10^{-14} \\text{ M}^2$$"
+            ],
+            "insight": "> **Insight:** In soluzione acquosa neutra, la concentrazione di ioni idronio e idrossido è identica: 10^-7 M.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Definizione dell'operatore logaritmico p = -log10",
+            "line": 45,
+            "isCorollary": false,
+            "latex": [
+              "$$\\text{pH} = -\\log_{10}([\\text{H}_3\\text{O}^+]), \\quad \\text{pOH} = -\\log_{10}([\\text{OH}^-])$$"
+            ],
+            "insight": "> **Insight:** Trasforma variazioni di quattordici ordini di grandezza in una scala lineare comoda da 0 a 14.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Proprietà del logaritmo del prodotto applicata al prodotto ionico",
+            "line": 49,
+            "isCorollary": false,
+            "latex": [
+              "$$-\\log_{10}(K_w) = -\\log_{10}([\\text{H}_3\\text{O}^+]) - \\log_{10}([\\text{OH}^-])$$"
+            ],
+            "insight": "> **Insight:** La moltiplicazione delle concentrazioni si traduce nella somma delle grandezze p.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Corollario: Relazione Fondamentale pH + pOH = 14",
+            "line": 53,
+            "isCorollary": true,
+            "latex": [
+              "$$\\text{pH} + \\text{pOH} = 14.00 \\iff \\text{pH} = 14 - \\text{pOH}$$"
+            ],
+            "insight": "> **Insight:** Permette di determinare istantaneamente il pH di soluzioni fortemente basiche conoscendo la concentrazione di OH-.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/physics/circuits/ele_joule_01.md",
+    "id": "ele_joule_01",
+    "title": "Effetto Joule e Dissipazione Termica",
+    "category": "Elettrotecnica",
+    "subCategory": "Circuiti in Corrente Continua",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 49,
+        "steps": [
+          {
+            "header": "### 1. Integrazione della potenza dissipata nel tempo",
+            "line": 51,
+            "isCorollary": false,
+            "latex": [
+              "$$Q = \\int_0^{\\Delta t} P \\, dt = P \\cdot \\Delta t \\quad (\\text{per } P \\text{ costante})$$"
+            ],
+            "insight": "> **Insight:** Gli urti anelastici dei portatori di carica trasferiscono energia cinetica al reticolo cristallino sotto forma di calore in Joule (J).",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sostituzione della potenza resistiva P = R * I²",
+            "line": 55,
+            "isCorollary": false,
+            "latex": [
+              "$$Q = R \\cdot I^2 \\cdot \\Delta t$$"
+            ],
+            "insight": "> **Insight:** La dissipazione cresce con il quadrato dell'intensità di corrente.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Equivalente Meccanico del Calore e Calcolo in Calorie",
+            "line": 59,
+            "isCorollary": true,
+            "latex": [
+              "$$Q_{\\text{cal}} = \\frac{R \\cdot I^2 \\cdot \\Delta t}{4.186}$$"
+            ],
+            "insight": "> **Insight:** Consente il calcolo dell'innalzamento termico e il dimensionamento dei dissipatori termici.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/physics/circuits/ele_ohm_01.md",
+    "id": "ele_ohm_01",
+    "title": "Legge di Ohm e Resistenza Elettrica",
+    "category": "Elettrotecnica",
+    "subCategory": "Circuiti in Corrente Continua",
+    "template": "circuit_simulation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 38,
+        "steps": [
+          {
+            "header": "### 1. Formulazione microscopica e velocità di deriva",
+            "line": 40,
+            "isCorollary": false,
+            "latex": [
+              "$$\\vec{J} = \\sigma \\vec{E} = \\frac{1}{\\rho} \\vec{E}$$"
+            ],
+            "insight": "> **Insight:** La densità di corrente è direttamente proporzionale al gradiente di potenziale elettrico.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Seconda Legge di Ohm: dipendenza geometrica",
+            "line": 44,
+            "isCorollary": false,
+            "latex": [
+              "$$R = \\rho \\frac{L}{A}$$"
+            ],
+            "insight": "> **Insight:** La resistenza aumenta con la lunghezza del filo e diminuisce con la sezione trasversale.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Prima Legge di Ohm e Formule Inverse",
+            "line": 48,
+            "isCorollary": true,
+            "latex": [
+              "$$V = R \\cdot I \\iff I = \\frac{V}{R} \\iff R = \\frac{V}{I}$$"
+            ],
+            "insight": "> **Insight:** Regola il rapporto lineare tra potenziale e intensità di corrente nei bipoli resistivi ideali.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/physics/circuits/ele_power_01.md",
+    "id": "ele_power_01",
+    "title": "Potenza Elettrica nei Circuiti",
+    "category": "Elettrotecnica",
+    "subCategory": "Circuiti in Corrente Continua",
+    "template": "live_equation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 48,
+        "steps": [
+          {
+            "header": "### 1. Definizione di potenza istantanea come derivata del lavoro",
+            "line": 50,
+            "isCorollary": false,
+            "latex": [
+              "$$P = \\frac{dL}{dt} = \\frac{V \\cdot dq}{dt}$$"
+            ],
+            "insight": "> **Insight:** Quantifica il tasso di trasferimento di energia potenziale per unità di tempo.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Sostituzione dell'intensità di corrente: I = dq / dt",
+            "line": 54,
+            "isCorollary": false,
+            "latex": [
+              "$$P = V \\cdot I$$"
+            ],
+            "insight": "> **Insight:** Relazione universale per la potenza assorbita o erogata da qualsiasi bipolo elettrico.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Corollario: Formule di Potenza per Carichi Resistivi",
+            "line": 58,
+            "isCorollary": true,
+            "latex": [
+              "$$P = R \\cdot I^2 = \\frac{V^2}{R}$$"
+            ],
+            "insight": "> **Insight:** Ottenute sostituendo la Legge di Ohm V = R*I; governano il dimensionamento dei componenti in Watt (W).",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  },
+  {
+    "file": "assets/content/physics/phys_kin_01.md",
+    "id": "phys_kin_01",
+    "title": "Cinematica: Moto Rettilineo e Corollario di Torricelli",
+    "category": "Fisica",
+    "subCategory": "Cinematica e Dinamica",
+    "template": "kinematics_simulation",
+    "demoCount": 1,
+    "demoSections": [
+      {
+        "header": "## Dimostrazione Logico-Algebrica",
+        "line": 44,
+        "steps": [
+          {
+            "header": "### 1. Definizione di accelerazione costante come derivata temporale",
+            "line": 46,
+            "isCorollary": false,
+            "latex": [
+              "$$a = \\frac{dv}{dt} = \\text{costante} \\implies v(t) = v_0 + a t$$"
+            ],
+            "insight": "> **Insight:** La velocità cresce in modo direttamente proporzionale al tempo trascorso.",
+            "textLines": []
+          },
+          {
+            "header": "### 2. Integrazione della velocità nel tempo",
+            "line": 50,
+            "isCorollary": false,
+            "latex": [
+              "$$x(t) = x_0 + \\int_0^t v(t) dt = x_0 + v_0 t + \\frac{1}{2} a t^2$$"
+            ],
+            "insight": "> **Insight:** L'area sotto la retta delle velocità nel piano (t, v) genera il termine parabolico quadratico.",
+            "textLines": []
+          },
+          {
+            "header": "### 3. Isolamento del tempo t dalla relazione della velocità",
+            "line": 54,
+            "isCorollary": false,
+            "latex": [
+              "$$t = \\frac{v - v_0}{a}$$"
+            ],
+            "insight": "> **Insight:** Elimina il parametro temporale unificando cinematica e geometria cartesiana.",
+            "textLines": []
+          },
+          {
+            "header": "### 4. Sostituzione di t nella legge oraria dello spostamento",
+            "line": 58,
+            "isCorollary": false,
+            "latex": [
+              "$$\\Delta x = v_0 \\left(\\frac{v - v_0}{a}\\right) + \\frac{1}{2} a \\left(\\frac{v - v_0}{a}\\right)^2$$"
+            ],
+            "insight": "> **Insight:** Espansione del quadrato di binomio e somma a denominatore comune 2a.",
+            "textLines": []
+          },
+          {
+            "header": "### 5. Corollario: Formula Senza Tempo di Torricelli",
+            "line": 62,
+            "isCorollary": true,
+            "latex": [
+              "$$v^2 = v_0^2 + 2 a \\Delta x$$"
+            ],
+            "insight": "> **Insight:** Collega direttamente la velocità finale allo spazio percorso senza necessità di misurare il tempo.",
+            "textLines": []
+          }
+        ]
+      }
+    ],
+    "standaloneCorollaries": []
+  }
+]

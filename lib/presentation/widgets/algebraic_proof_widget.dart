@@ -7,8 +7,19 @@ import '../../domain/models/knowledge_node.dart';
 /// passaggi algebrici e derivazione esplicita di corollari.
 class AlgebraicProofWidget extends StatefulWidget {
   final List<ProofStep> proofSteps;
+  final String? initialGroup;
+  final int? initialStepIndex;
+  final bool initialShowAll;
+  final String? targetCorollary;
 
-  const AlgebraicProofWidget({super.key, required this.proofSteps});
+  const AlgebraicProofWidget({
+    super.key,
+    required this.proofSteps,
+    this.initialGroup,
+    this.initialStepIndex,
+    this.initialShowAll = false,
+    this.targetCorollary,
+  });
 
   @override
   State<AlgebraicProofWidget> createState() => _AlgebraicProofWidgetState();
@@ -18,6 +29,36 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
   int currentStepIndex = 0;
   bool _showAllSteps = false;
   String? _selectedGroup;
+
+  @override
+  void initState() {
+    super.initState();
+    _showAllSteps = widget.initialShowAll;
+    currentStepIndex = widget.initialStepIndex ?? 0;
+    if (widget.initialGroup != null) {
+      _selectedGroup = widget.initialGroup;
+    }
+
+    if (widget.targetCorollary != null &&
+        widget.targetCorollary!.trim().isNotEmpty) {
+      final target = widget.targetCorollary!.trim().toLowerCase();
+      for (final step in widget.proofSteps) {
+        final desc = (step.description ?? '').toLowerCase();
+        final ins = (step.insight ?? '').toLowerCase();
+        final corTitle = (step.corollaryTitle ?? '').toLowerCase();
+        if (desc.contains(target) ||
+            ins.contains(target) ||
+            corTitle.contains(target)) {
+          final g = step.groupName;
+          if (g != null) {
+            _selectedGroup = g;
+          }
+          _showAllSteps = true;
+          break;
+        }
+      }
+    }
+  }
 
   List<String> get _groups {
     final groups = <String>[];
@@ -50,9 +91,32 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
   @override
   void didUpdateWidget(covariant AlgebraicProofWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.proofSteps != widget.proofSteps) {
-      currentStepIndex = 0;
-      _selectedGroup = null;
+    if (oldWidget.proofSteps != widget.proofSteps ||
+        oldWidget.initialGroup != widget.initialGroup ||
+        oldWidget.targetCorollary != widget.targetCorollary) {
+      currentStepIndex = widget.initialStepIndex ?? 0;
+      _showAllSteps = widget.initialShowAll;
+      _selectedGroup = widget.initialGroup;
+
+      if (widget.targetCorollary != null &&
+          widget.targetCorollary!.trim().isNotEmpty) {
+        final target = widget.targetCorollary!.trim().toLowerCase();
+        for (final step in widget.proofSteps) {
+          final desc = (step.description ?? '').toLowerCase();
+          final ins = (step.insight ?? '').toLowerCase();
+          final corTitle = (step.corollaryTitle ?? '').toLowerCase();
+          if (desc.contains(target) ||
+              ins.contains(target) ||
+              corTitle.contains(target)) {
+            final g = step.groupName;
+            if (g != null) {
+              _selectedGroup = g;
+            }
+            _showAllSteps = true;
+            break;
+          }
+        }
+      }
     }
   }
 
@@ -165,37 +229,7 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
                 final isSelected = (_selectedGroup ?? _groups.first) == group;
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    label: Text(group),
-                    selected: isSelected,
-                    onSelected: (_) {
-                      setState(() {
-                        _selectedGroup = group;
-                        currentStepIndex = 0;
-                        _showAllSteps = false;
-                      });
-                    },
-                    selectedColor: const Color(0xFFEFF6FF),
-                    checkmarkColor: const Color(0xFF2563EB),
-                    backgroundColor: Colors.white,
-                    side: BorderSide(
-                      color: isSelected
-                          ? const Color(0xFF2563EB)
-                          : const Color(0xFFE2E8F0),
-                      width: isSelected ? 1.5 : 1.0,
-                    ),
-                    labelStyle: TextStyle(
-                      fontSize: 12,
-                      fontWeight:
-                          isSelected ? FontWeight.w700 : FontWeight.w500,
-                      color: isSelected
-                          ? const Color(0xFF1D4ED8)
-                          : const Color(0xFF475569),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
+                  child: _buildGroupChip(group, isSelected),
                 );
               }).toList(),
             ),
@@ -275,10 +309,62 @@ class _AlgebraicProofWidgetState extends State<AlgebraicProofWidget> {
     );
   }
 
+  Widget _buildGroupChip(String group, bool isSelected) {
+    final isCorollaryGroup = group.toLowerCase().contains('corollario');
+    return FilterChip(
+      avatar: isCorollaryGroup
+          ? const Icon(
+              Icons.star_rounded,
+              size: 16,
+              color: Color(0xFFD97706),
+            )
+          : null,
+      label: Text(group),
+      selected: isSelected,
+      onSelected: (_) {
+        setState(() {
+          _selectedGroup = group;
+          currentStepIndex = 0;
+          _showAllSteps = false;
+        });
+      },
+      selectedColor: isCorollaryGroup
+          ? const Color(0xFFFEF3C7)
+          : const Color(0xFFEFF6FF),
+      checkmarkColor: isCorollaryGroup
+          ? const Color(0xFFD97706)
+          : const Color(0xFF2563EB),
+      backgroundColor: Colors.white,
+      side: BorderSide(
+        color: isSelected
+            ? (isCorollaryGroup
+                ? const Color(0xFFD97706)
+                : const Color(0xFF2563EB))
+            : (isCorollaryGroup
+                ? const Color(0xFFFDE68A)
+                : const Color(0xFFE2E8F0)),
+        width: isSelected ? 1.5 : 1.0,
+      ),
+      labelStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+        color: isSelected
+            ? (isCorollaryGroup
+                ? const Color(0xFF92400E)
+                : const Color(0xFF1D4ED8))
+            : (isCorollaryGroup
+                ? const Color(0xFFB45309)
+                : const Color(0xFF475569)),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+  }
+
   Widget _buildProofStepCard(int stepNumber, ProofStep step) {
-    final rawDesc = step.description ?? '';
-    final cleanDesc = rawDesc.replaceFirst(RegExp(r'^\[.*?\]\s*'), '');
-    final isCorollary =
+    final cleanDesc = step.cleanDescription;
+    final isCorollary = step.isCorollary ||
         cleanDesc.trim().toLowerCase().startsWith('corollario') ||
         cleanDesc.toLowerCase().contains('corollario:');
 

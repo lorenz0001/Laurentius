@@ -17,14 +17,54 @@ import 'exercise_screen.dart';
 class NodeDetailScreen extends StatefulWidget {
   final KnowledgeNode node;
   final Isar? isar;
+  final String? targetProofGroup;
+  final int? targetStepIndex;
+  final String? targetCorollary;
+  final bool autoUnlockProof;
 
-  const NodeDetailScreen({super.key, required this.node, this.isar});
+  const NodeDetailScreen({
+    super.key,
+    required this.node,
+    this.isar,
+    this.targetProofGroup,
+    this.targetStepIndex,
+    this.targetCorollary,
+    this.autoUnlockProof = false,
+  });
 
   @override
   State<NodeDetailScreen> createState() => _NodeDetailScreenState();
 }
 
 class _NodeDetailScreenState extends State<NodeDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _proofSectionKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.targetProofGroup != null ||
+        widget.targetStepIndex != null ||
+        widget.targetCorollary != null ||
+        widget.autoUnlockProof) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final proofCtx = _proofSectionKey.currentContext;
+        if (proofCtx != null && mounted) {
+          Scrollable.ensureVisible(
+            proofCtx,
+            duration: const Duration(milliseconds: 450),
+            curve: Curves.easeInOutCubic,
+          );
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
   void _openAIRephraseModal() {
     showModalBottomSheet(
       context: context,
@@ -111,6 +151,7 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollController,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Column(
@@ -215,60 +256,21 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
 
               // Sezione Blocchi Contenuto Ricco (Markdown, LaTeX, Info Box)
               if (node.effectiveBlocks.isNotEmpty) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                const Row(
                   children: [
-                    const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.auto_stories_rounded,
-                          size: 18,
-                          color: Color(0xFF334155),
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          'APPROFONDIMENTO TEORICO',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 0.6,
-                            color: Color(0xFF334155),
-                          ),
-                        ),
-                      ],
+                    Icon(
+                      Icons.auto_stories_rounded,
+                      size: 18,
+                      color: Color(0xFF334155),
                     ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(8),
-                      onTap: _openAIRephraseModal,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE0F2FE),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.auto_fix_high_rounded,
-                              size: 14,
-                              color: Color(0xFF0284C7),
-                            ),
-                            SizedBox(width: 4),
-                            Text(
-                              'Rielabora con AI',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF0284C7),
-                              ),
-                            ),
-                          ],
-                        ),
+                    SizedBox(width: 8),
+                    Text(
+                      'APPROFONDIMENTO TEORICO',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.6,
+                        color: Color(0xFF334155),
                       ),
                     ),
                   ],
@@ -302,7 +304,14 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
                   ],
                 ),
                 const SizedBox(height: 12),
-                AlgebraicProofWidget(proofSteps: node.algebraicProof),
+                AlgebraicProofWidget(
+                  key: _proofSectionKey,
+                  proofSteps: node.algebraicProof,
+                  initialGroup: widget.targetProofGroup,
+                  initialStepIndex: widget.targetStepIndex,
+                  initialShowAll: widget.autoUnlockProof,
+                  targetCorollary: widget.targetCorollary,
+                ),
                 const SizedBox(height: 28),
               ],
 
@@ -316,24 +325,9 @@ class _NodeDetailScreenState extends State<NodeDetailScreen> {
               // Invito Esercizio con AI Tutor
               _buildExercisePromptCard(node),
 
-              const SizedBox(height: 80),
+              const SizedBox(height: 40),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => ExerciseScreen(node: node)),
-          );
-        },
-        backgroundColor: const Color(0xFF0F172A),
-        foregroundColor: Colors.white,
-        icon: const Icon(Icons.psychology_outlined),
-        label: const Text(
-          'Mettiti alla Prova',
-          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
     );

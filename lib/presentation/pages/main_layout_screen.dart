@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
 import '../../core/services/mock_data_service.dart';
-import '../widgets/node_search_delegate.dart';
+import '../widgets/spotlight_search_bar_widget.dart';
 import 'category_explorer_screen.dart';
 import 'home_screen.dart';
 import 'settings_screen.dart';
 
 /// Schermata principale (Root Layout) di Brilliant-OS.
-/// Gestisce la navigazione tramite BottomNavigationBar in stile iOS tra
-/// la vista a Grafo (GraphViewScreen) e la vista gerarchica a Categorie (CategoryExplorerScreen),
-/// oltre ad ospitare la barra di ricerca globale e i controlli di sincronizzazione.
+/// Radically simplified: elimina il vecchio AppBar affollato con pulsanti di debug ("Ricarica")
+/// e icone modali nascoste, introducendo una barra di ricerca istantanea Spotlight omnipresente
+/// con integrazione ⌘K, navigazione fluida tra Grafo ed Esplora e accesso rapido alle impostazioni.
 class MainLayoutScreen extends StatefulWidget {
   final Isar? isar;
 
@@ -67,110 +67,76 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
     }
   }
 
-  void _openSearch() {
-    showSearch(
-      context: context,
-      delegate: GlobalNodeSearchDelegate(isar: widget.isar),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: const Color(0xFFEFF6FF),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.hub_rounded,
-                color: Color(0xFF2563EB),
-                size: 20,
-              ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(color: Color(0xFFE2E8F0), width: 1.0),
             ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          padding: const EdgeInsets.fromLTRB(16, 8, 10, 8),
+          child: SafeArea(
+            bottom: false,
+            child: Row(
               children: [
+                // Logo & Titolo Brilliant OS
+                Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEFF6FF),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.hub_rounded,
+                    color: Color(0xFF2563EB),
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 10),
                 const Text(
                   'Brilliant OS',
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
                     letterSpacing: -0.3,
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Color(0xFF0F172A),
                   ),
                 ),
-                Text(
-                  _currentIndex == 0
-                      ? 'Mappa Conoscenze (DAG)'
-                      : 'Libreria Categorie',
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: Color(0xFF64748B),
-                    fontWeight: FontWeight.w600,
+                const SizedBox(width: 12),
+
+                // Barra di Ricerca Istantanea Omnipresente Spotlight
+                Expanded(
+                  child: SpotlightSearchBarWidget(
+                    isar: widget.isar,
                   ),
+                ),
+                const SizedBox(width: 6),
+
+                // Ingranaggio Impostazioni AI & DeepSeek
+                IconButton(
+                  tooltip: 'Impostazioni AI & DeepSeek',
+                  icon: const Icon(
+                    Icons.settings_outlined,
+                    color: Color(0xFF475569),
+                    size: 22,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    );
+                  },
                 ),
               ],
             ),
-          ],
+          ),
         ),
-        actions: [
-          // Pulsante Ricerca Globale
-          IconButton(
-            tooltip: 'Cerca per titolo, categoria o formula',
-            icon: const Icon(
-              Icons.search_rounded,
-              color: Color(0xFF0F172A),
-              size: 22,
-            ),
-            onPressed: _openSearch,
-          ),
-
-          // Pulsante Ricarica catalogo
-          IconButton(
-            tooltip: 'Ricarica e sincronizza catalogo',
-            onPressed: _isSyncing ? null : _handleRefresh,
-            icon: _isSyncing
-                ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Color(0xFF2563EB),
-                    ),
-                  )
-                : const Icon(
-                    Icons.refresh_rounded,
-                    color: Color(0xFF2563EB),
-                    size: 22,
-                  ),
-          ),
-          // Pulsante Impostazioni AI & DeepSeek
-          IconButton(
-            tooltip: 'Impostazioni AI & DeepSeek',
-            icon: const Icon(
-              Icons.settings_outlined,
-              color: Color(0xFF0F172A),
-              size: 22,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SettingsScreen()),
-              );
-            },
-          ),
-          const SizedBox(width: 4),
-        ],
       ),
       body: IndexedStack(
         index: _currentIndex,

@@ -136,6 +136,51 @@ class ProofStep {
   }
 }
 
+/// Estensione non-breaking con getter computati per [ProofStep]
+/// (Isar retrocompatibile al 100% senza modifiche allo schema di persistenza).
+extension ProofStepExt on ProofStep {
+  /// Determina se il passaggio è un corollario o parte di una dimostrazione di corollario.
+  bool get isCorollary {
+    final desc = description?.toLowerCase() ?? '';
+    final ins = insight?.toLowerCase() ?? '';
+    return desc.contains('corollario') || ins.contains('corollario');
+  }
+
+  /// Estrae il nome del gruppo di dimostrazione dal prefisso [Gruppo], se presente.
+  String? get groupName {
+    if (description == null) return null;
+    final match = RegExp(r'^\[(.*?)\]').firstMatch(description!);
+    return match?.group(1)?.trim();
+  }
+
+  /// Restituisce la descrizione senza il prefisso [Gruppo].
+  String get cleanDescription {
+    if (description == null) return '';
+    return description!.replaceFirst(RegExp(r'^\[.*?\]\s*'), '').trim();
+  }
+
+  /// Estrae il titolo del corollario se il passaggio ne definisce uno.
+  String? get corollaryTitle {
+    final clean = cleanDescription;
+    final match =
+        RegExp(r'corollario:\s*(.*)', caseSensitive: false).firstMatch(clean);
+    if (match != null && match.group(1)!.trim().isNotEmpty) {
+      return match.group(1)!.trim();
+    }
+    final g = groupName;
+    if (g != null) {
+      final gMatch = RegExp(
+        r'corollario(?:\s*[:-]\s*|\s+)(.*)',
+        caseSensitive: false,
+      ).firstMatch(g);
+      if (gMatch != null && gMatch.group(1)!.trim().isNotEmpty) {
+        return gMatch.group(1)!.trim();
+      }
+    }
+    return null;
+  }
+}
+
 @embedded
 class InteractiveData {
   String? templateType;

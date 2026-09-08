@@ -210,7 +210,11 @@ class MarkdownContentParser {
   }
 
   static void _parseBody(String body, KnowledgeNode node) {
-    final demoRegex = RegExp(r'^##\s+Dimostrazione.*$', caseSensitive: false, multiLine: true);
+    final demoRegex = RegExp(
+      r'^##\s+(?:Dimostrazione|Corollario).*$',
+      caseSensitive: false,
+      multiLine: true,
+    );
     final firstDemoMatch = demoRegex.firstMatch(body);
 
     final preProof = firstDemoMatch != null
@@ -238,7 +242,10 @@ class MarkdownContentParser {
         } else if (b.startsWith('>')) {
           final callout = b
               .replaceAll(
-                RegExp(r'^>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?', multiLine: true),
+                RegExp(
+                  r'^>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?',
+                  multiLine: true,
+                ),
                 '',
               )
               .trim();
@@ -258,12 +265,19 @@ class MarkdownContentParser {
     }
     node.blocks = blocks;
 
-    // 2. Parse Proof Steps across one or multiple ## Dimostrazione sections
+    // 2. Parse Proof Steps across one or multiple ## Dimostrazione / ## Corollario sections
     if (proofPart.isNotEmpty) {
       final steps = <ProofStep>[];
       final sectionChunks = proofPart.split(
-        RegExp(r'(?=^##\s+Dimostrazione)', caseSensitive: false, multiLine: true),
+        RegExp(
+          r'(?=^##\s+(?:Dimostrazione|Corollario))',
+          caseSensitive: false,
+          multiLine: true,
+        ),
       );
+
+      final hasMultipleSections =
+          sectionChunks.where((s) => s.trim().isNotEmpty).length > 1;
 
       for (final section in sectionChunks) {
         final trimmedSection = section.trim();
@@ -273,15 +287,26 @@ class MarkdownContentParser {
         final firstLine = lines.first.trim();
         String? groupName;
 
-        // Check if a specific sub-demonstration title is provided after colon or dash
-        final colonIdx = firstLine.indexOf(':');
-        final dashIdx = firstLine.indexOf(' - ');
-        if (colonIdx != -1) {
-          final name = firstLine.substring(colonIdx + 1).trim();
-          if (name.isNotEmpty) groupName = name;
-        } else if (dashIdx != -1) {
-          final name = firstLine.substring(dashIdx + 3).trim();
-          if (name.isNotEmpty) groupName = name;
+        if (RegExp(r'^##\s+Corollario\b', caseSensitive: false)
+            .hasMatch(firstLine)) {
+          final stripped = firstLine
+              .replaceFirst(RegExp(r'^##\s+', caseSensitive: false), '')
+              .trim();
+          groupName = stripped;
+        } else {
+          final colonIdx = firstLine.indexOf(':');
+          final dashIdx = firstLine.indexOf(' - ');
+          if (colonIdx != -1 && (dashIdx == -1 || colonIdx < dashIdx)) {
+            final name = firstLine.substring(colonIdx + 1).trim();
+            if (name.isNotEmpty) groupName = name;
+          } else if (dashIdx != -1) {
+            final name = firstLine.substring(dashIdx + 3).trim();
+            if (name.isNotEmpty) groupName = name;
+          } else if (hasMultipleSections &&
+              RegExp(r'^##\s+Dimostrazione\b', caseSensitive: false)
+                  .hasMatch(firstLine)) {
+            groupName = 'Dimostrazione Principale';
+          }
         }
 
         final sectionBody = lines.skip(1).join('\n').trim();
@@ -299,33 +324,140 @@ class MarkdownContentParser {
               .trim();
           final remaining = stepLines.skip(1).join('\n').trim();
 
-          String? latex;
-          String? insight;
+          final subHeaderRegex = RegExp(r'^#{4,5}\s+', multiLine: true);
+          final firstSubMatch = subHeaderRegex.firstMatch(remaining);
 
-          final mathMatch = RegExp(
-            r'\$\$(.*?)\$\$',
-            dotAll: true,
-          ).firstMatch(remaining);
-          if (mathMatch != null) {
-            latex = mathMatch.group(1)?.trim();
+          if (firstSubMatch == null) {
+            // Passaggio standard singolo (###)
+            String? latex;
+            String? insight;
+
+            final mathMatch = RegExp(
+              r'\$\$(.*?)\$\$',
+              dotAll: true,
+            ).firstMatch(remaining);
+            if (mathMatch != null) {
+              latex = mathMatch.group(1)?.trim();
+            }
+
+            final insightMatch = RegExp(
+              r'>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?\s*(.*?)(?=(\n|$))',
+              dotAll: true,
+            ).firstMatch(remaining);
+            if (insightMatch != null) {
+              insight = insightMatch.group(2)?.trim();
+            }
+
+            final finalDesc =
+                groupName != null ? '[$groupName] $headerLine' : headerLine;
+
+            steps.add(
+              ProofStep()
+                ..description = finalDesc
+                ..latexEquation = latex
+                ..insight = insight,
+            );
+          } else {
+            // Passaggio con sotto-dimostrazione esplicita (#### o #####)
+            final parentContent =
+                remaining.substring(0, firstSubMatch.start).trim();
+            final subContent =
+                remaining.substring(firstSubMatch.start).trim();
+
+            String? parentLatex;
+            String? parentInsight;
+
+            final mathMatch = RegExp(
+              r'\$\$(.*?)\$\$',
+              dotAll: true,
+            ).firstMatch(parentContent);
+            if (mathMatch != null) {
+              parentLatex = mathMatch.group(1)?.trim();
+            }
+
+            final insightMatch = RegExp(
+              r'>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?\s*(.*?)(?=(\n|$))',
+              dotAll: true,
+            ).firstMatch(parentContent);
+            if (insightMatch != null) {
+              parentInsight = insightMatch.group(2)?.trim();
+            }
+
+            final finalDesc =
+                groupName != null ? '[$groupName] $headerLine' : headerLine;
+
+            steps.add(
+              ProofStep()
+                ..description = finalDesc
+                ..latexEquation = parentLatex
+                ..insight = parentInsight,
+            );
+
+            // Sotto-passaggi dimostrativi del corollario
+            final subChunks = subContent.split(
+              RegExp(r'(?=^#{4,5}\s+)', multiLine: true),
+            );
+
+            for (final subChunk in subChunks) {
+              final trimmedSub = subChunk.trim();
+              if (!trimmedSub.startsWith('####') &&
+                  !trimmedSub.startsWith('#####')) {
+                continue;
+              }
+
+              final subLines = trimmedSub.split('\n');
+              final subHeader = subLines.first
+                  .replaceFirst(RegExp(r'^#{4,5}\s+'), '')
+                  .trim();
+              final subRemaining = subLines.skip(1).join('\n').trim();
+
+              String? subLatex;
+              String? subInsight;
+
+              final subMathMatch = RegExp(
+                r'\$\$(.*?)\$\$',
+                dotAll: true,
+              ).firstMatch(subRemaining);
+              if (subMathMatch != null) {
+                subLatex = subMathMatch.group(1)?.trim();
+              }
+
+              final subInsightMatch = RegExp(
+                r'>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?\s*(.*?)(?=(\n|$))',
+                dotAll: true,
+              ).firstMatch(subRemaining);
+              if (subInsightMatch != null) {
+                subInsight = subInsightMatch.group(2)?.trim();
+              }
+
+              // Salta intestazioni puramente descrittive senza equazione o insight
+              if (subHeader.toLowerCase().startsWith('dimostrazione') &&
+                  subLatex == null &&
+                  subInsight == null) {
+                continue;
+              }
+
+              final isSubCoro =
+                  subHeader.toLowerCase().contains('corollario') ||
+                  headerLine.toLowerCase().contains('corollario');
+              final subPrefix = (isSubCoro &&
+                      !subHeader.toLowerCase().contains('corollario'))
+                  ? 'Corollario - '
+                  : '';
+              final formattedSubHeader = '$subPrefix$subHeader';
+
+              final finalSubDesc = groupName != null
+                  ? '[$groupName] $formattedSubHeader'
+                  : formattedSubHeader;
+
+              steps.add(
+                ProofStep()
+                  ..description = finalSubDesc
+                  ..latexEquation = subLatex
+                  ..insight = subInsight,
+              );
+            }
           }
-
-          final insightMatch = RegExp(
-            r'>\s*(\*\*Insight:\*\*|\*\*Intuizione:\*\*)?\s*(.*?)(?=(\n|$))',
-            dotAll: true,
-          ).firstMatch(remaining);
-          if (insightMatch != null) {
-            insight = insightMatch.group(2)?.trim();
-          }
-
-          final finalDesc = groupName != null ? '[$groupName] $headerLine' : headerLine;
-
-          steps.add(
-            ProofStep()
-              ..description = finalDesc
-              ..latexEquation = latex
-              ..insight = insight,
-          );
         }
       }
       node.algebraicProof = steps;

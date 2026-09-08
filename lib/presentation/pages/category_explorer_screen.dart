@@ -26,7 +26,6 @@ class CategoryExplorerScreen extends StatefulWidget {
 
 class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
     with TickerProviderStateMixin {
-  List<KnowledgeNode> _allNodes = [];
   Map<String, int> _nodeDepths = {};
   Map<String, List<KnowledgeNode>> _categoryNodes = {};
   List<String> _categories = [];
@@ -36,6 +35,10 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
 
   bool _isLoading = true;
   String? _errorMessage;
+
+  // Traccia le cartellette di sotto-argomenti compresse/chiuse dall'utente.
+  // Di default sono tutte espanse per visualizzazione immediata.
+  final Set<String> _collapsedFolders = {};
 
   // Ordine preferito delle macro-materie
   static const List<String> _preferredOrder = [
@@ -166,7 +169,6 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
       );
 
       setState(() {
-        _allNodes = nodes;
         _nodeDepths = depths;
         _categoryNodes = categoryMap;
         _categories = categories;
@@ -278,12 +280,6 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: _buildHeaderHero(),
-              ),
-            ),
             // Header persistente con Tab delle Materie e Barra Filtri Difficoltà
             SliverPersistentHeader(
               pinned: true,
@@ -352,96 +348,6 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
             return _buildCategoryNodeListView(category, filteredNodes);
           }).toList(),
         ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderHero() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 16,
-            offset: Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2563EB),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
-                  Icons.auto_stories_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Libreria Didattica STEM',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -0.3,
-                      ),
-                    ),
-                    Text(
-                      'Esplora per materia e livello di padronanza',
-                      style: TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF334155),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '${_allNodes.length} Nodi',
-                  style: const TextStyle(
-                    color: Color(0xFF93C5FD),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'Seleziona una materia e filtra per livello: Fondamenti, Intermedio, Avanzato o Superiore.',
-            style: TextStyle(
-              color: Color(0xFFCBD5E1),
-              fontSize: 12,
-              height: 1.35,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -534,16 +440,149 @@ class _CategoryExplorerScreenState extends State<CategoryExplorerScreen>
       );
     }
 
+    // 1. Raggruppa i nodi per sotto-argomento (subCategory) preservando l'ordine
+    final Map<String, List<KnowledgeNode>> subGroups = {};
+    for (final node in nodes) {
+      final sub = (node.subCategory != null && node.subCategory!.trim().isNotEmpty)
+          ? node.subCategory!.trim()
+          : node.category;
+      subGroups.putIfAbsent(sub, () => []).add(node);
+    }
+
     return RefreshIndicator(
       onRefresh: _loadNodes,
       color: const Color(0xFF2563EB),
-      child: ListView.builder(
+      child: ListView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 40),
-        itemCount: nodes.length,
-        itemBuilder: (context, index) {
-          final node = nodes[index];
-          return _buildCleanNodeCard(node, catStyle);
-        },
+        children: [
+          for (final entry in subGroups.entries)
+            if (entry.value.length > 1)
+              _buildSubCategoryFolderCard(entry.key, entry.value, catStyle)
+            else
+              _buildCleanNodeCard(entry.value.first, catStyle),
+        ],
+      ),
+    );
+  }
+
+  /// Widget Cartelletta per sotto-argomenti con più di 1 argomento.
+  Widget _buildSubCategoryFolderCard(
+    String subCategoryTitle,
+    List<KnowledgeNode> subNodes,
+    CategoryStyle catStyle,
+  ) {
+    final isCollapsed = _collapsedFolders.contains(subCategoryTitle);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Header Sottocategoria / Cartelletta compatto e pulito
+          Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(14),
+              onTap: () {
+                setState(() {
+                  if (isCollapsed) {
+                    _collapsedFolders.remove(subCategoryTitle);
+                  } else {
+                    _collapsedFolders.add(subCategoryTitle);
+                  }
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                child: Row(
+                  children: [
+                    // Icona Cartella coordinata
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: catStyle.primary.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        isCollapsed
+                            ? Icons.folder_rounded
+                            : Icons.folder_open_rounded,
+                        color: catStyle.primary,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+
+                    // Titolo sotto-argomento
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              subCategoryTitle,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF0F172A),
+                                letterSpacing: -0.2,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: catStyle.primary.withValues(alpha: 0.10),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              'CARTELLETTA',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 0.5,
+                                color: catStyle.primary,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '(${subNodes.length})',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF94A3B8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Icona freccia
+                    Icon(
+                      isCollapsed
+                          ? Icons.keyboard_arrow_down_rounded
+                          : Icons.keyboard_arrow_up_rounded,
+                      color: const Color(0xFF94A3B8),
+                      size: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+
+          // Se espansa: lista diretta delle card dei singoli argomenti senza indentazione pesante
+          if (!isCollapsed)
+            ...subNodes
+                .map((node) => _buildCleanNodeCard(node, catStyle)),
+        ],
       ),
     );
   }

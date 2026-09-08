@@ -39,17 +39,53 @@ Nel piano cartesiano, la funzione associata $y = ax^2 + c$ descrive una parabola
 ## Dimostrazione: Risoluzione dell'Equazione Pura
 
 ### 1. Trasposizione del termine noto e isolamento quadratico
-$$a x^2 + c = 0 \iff a x^2 = -c \iff x^2 = -\frac{c}{a}$$
+$$a x^2 + c = 0 \iff a x^2 = -c \iff x^2 = -\frac{c}{a} \quad (a \neq 0)$$
 > **Insight:** Si applicano i principi di equivalenza delle equazioni algebriche per isolare la potenza x^2 al primo membro.
 
-### 2. Discussione algebrica del segno del rapporto
-$$\text{Se } a \cdot c < 0 \implies -\frac{c}{a} > 0; \quad \text{Se } a \cdot c > 0 \implies -\frac{c}{a} < 0$$
-> **Insight:** Se i coefficienti a e c sono concordi, il rapporto e negativo e l'equazione e impossibile nel campo reale; se sono discordi, il rapporto e positivo.
+### 2. Condizione di realtà ed estrazione della radice
+$$a \cdot c < 0 \implies -\frac{c}{a} > 0 \implies |x| = \sqrt{-\frac{c}{a}} \iff x = \pm \sqrt{-\frac{c}{a}}$$
+> **Insight:** Se i coefficienti sono discordi, il rapporto è strettamente positivo e l'estrazione genera due valori reali opposti.
 
-### 3. Estrazione della radice quadrata e calcolo delle radici
-$$x^2 = -\frac{c}{a} \implies x = \pm \sqrt{-\frac{c}{a}}$$
-> **Insight:** L'operazione di estrazione di radice quadrata genera due valori opposti di identico modulo.
+## Dimostrazione: Corollario - Simmetria delle Radici Reali e Traslazione Assiale
+
+### 1. Ipotesi di coefficienti discordi per soluzioni reali
+Siano $a, c \in \mathbb{R}$ con $ac < 0$, garantendo la positività del radicando $-\frac{c}{a} > 0$:
+$$x_1 = -\sqrt{-\frac{c}{a}}, \qquad x_2 = +\sqrt{-\frac{c}{a}}$$
+> **Insight:** Vogliamo provare che le due radici sono simmetriche rispetto all'origine e che la loro somma si annulla.
+
+### 2. Somma algebrica delle due radici reali
+Eseguiamo la somma delle soluzioni opposte:
+$$x_1 + x_2 = \left(-\sqrt{-\frac{c}{a}}\right) + \left(+\sqrt{-\frac{c}{a}}\right) = 0$$
+> **Insight:** I due radicali hanno modulo identico e segno discorde, determinando la cancellazione esatta della somma.
+
+### 3. Calcolo del punto medio delle soluzioni
+L'ascissa del punto medio tra le due radici sull'asse cartesiano orizzontale è:
+$$x_M = \frac{x_1 + x_2}{2} = \frac{0}{2} = 0$$
+> **Insight:** Il punto medio coincide esattamente con l'asse delle ordinate x = 0.
 
 ### 4. Corollario: Simmetria Radici Reali e Traslazione Assiale
-$$x_1 = -\sqrt{-\frac{c}{a}}, \quad x_2 = +\sqrt{-\frac{c}{a}} \implies x_1 = -x_2 \quad (x_1 + x_2 = 0)$$
-> **Insight:** Le due soluzioni reali di un'equazione pura sono sempre opposte: la parabola e perfettamente speculare rispetto all'asse y con vertice V(0, c).
+Le radici reali di un'equazione pura sono sempre opposte e la parabola associata $y = ax^2+c$ è simmetrica rispetto all'asse $y$:
+$$x_1 = -x_2 \iff x_1 + x_2 = 0 \quad \text{con Vertice } V(0, c)$$
+> **Insight:** Il vertice della parabola giace sull'asse delle ordinate nel punto V(0, c), confermando l'assoluta specularità della curva rispetto all'asse verticale.
+
+## Dimostrazione: Corollario - Condizione di Esistenza in Campo Reale e Radici Complesse
+
+### 1. Calcolo del discriminante con termine lineare nullo
+Sostituendo il coefficiente lineare $b = 0$ nella definizione generale del discriminante $\Delta = b^2 - 4ac$:
+$$\Delta = 0^2 - 4ac = -4ac$$
+> **Insight:** Il discriminante dell'equazione pura dipende unicamente dal prodotto dei coefficienti a e c.
+
+### 2. Studio della disequazione per la realtà delle soluzioni
+Affinché esistano soluzioni nel campo reale, il discriminante deve essere non negativo:
+$$\Delta \ge 0 \iff -4ac \ge 0 \iff ac \le 0$$
+> **Insight:** Dividendo per il numero negativo -4, il verso della disuguaglianza si inverte.
+
+### 3. Caso di coefficienti concordi ed estrazione complessa
+Se $a$ e $c$ sono concordi ($ac > 0$), si ha $\Delta < 0$ e $-\frac{c}{a} < 0$. Ponendo l'unità immaginaria $i = \sqrt{-1}$:
+$$x = \pm \sqrt{-\frac{c}{a}} = \pm \sqrt{-1 \cdot \frac{c}{a}} = \pm i \sqrt{\frac{c}{a}}$$
+> **Insight:** Nel campo complesso emergono due radici puramente immaginarie coniugate.
+
+### 4. Corollario: Dicotomia dell'Equazione Pura
+L'equazione pura ammette soluzioni reali se e solo se $a$ e $c$ sono discordi; altrimenti ammette radici immaginarie coniugate:
+$$\begin{cases} ac < 0 \implies x_{1,2} = \pm \sqrt{-\frac{c}{a}} \in \mathbb{R} \quad (\text{2 soluzioni reali opposte}) \\ ac > 0 \implies x_{1,2} = \pm i \sqrt{\frac{c}{a}} \in \mathbb{C} \setminus \mathbb{R} \quad (\text{nessuna soluzione reale}) \end{cases}$$
+> **Insight:** Fornisce il criterio immediato per valutare la risolubilità reale senza calcolare per esteso l'intera formula quadratica.

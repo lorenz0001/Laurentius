@@ -1,14 +1,13 @@
-# Progress — teamwork_preview_explorer_survey_3
+# Progress Tracker
 
-Last visited: 2026-09-07T12:03:00Z
-Status: Survey completed, handoff ready
+Last visited: 2026-09-07T23:44:00Z
 
-## Milestones
-- [x] Initialized DISPATCH.md and BRIEFING.md
-- [x] Read ORIGINAL_REQUEST.md and skills (laurentius-dev, server-content-agent)
-- [x] Inventory interactive simulation widgets under lib/ (9 widgets identified)
-- [x] Analyze InteractiveTemplateFactory, template keys, bindings, and equation handling
-- [x] Analyze R5 requirements (Declarative Widget Linking via frontmatter)
-- [x] Analyze R2 requirements (PROJECT_MAP.md outline, <300 lines limit, structure)
-- [x] Verified test suite (62 tests pass) and static analysis (0 warnings/errors)
-- [x] Wrote handoff.md and sending message to parent
+## Current Tasks
+- [x] Initialize BRIEFING.md, DISPATCH.md, and progress.md
+- [x] Review ORIGINAL_REQUEST.md, PROJECT_MAP.md, and laurentius-dev SKILL.md
+- [x] Review home_screen.dart, main_layout_screen.dart, category_explorer_screen.dart for UI clutter & Brilliant simplification
+- [x] Review node_search_delegate.dart, node_repository.dart, curriculum_registry.dart for current search mechanics
+- [x] Design omnipresent Instant Spotlight Search architecture (predictive indexing, theorem/corollary granularity, 1-tap deep jump)
+- [x] Detail widget architecture, state management, keyboard handling, transitions
+- [x] Identify existing tests and recommend new unit/widget tests
+- [x] Write 5-component handoff.md report and notify parent

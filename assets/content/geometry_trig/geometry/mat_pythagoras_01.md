@@ -39,9 +39,27 @@ $$(a + b)^2 = a^2 + 2ab + b^2 \iff a^2 + 2ab + b^2 = 2ab + c^2$$
 $$a^2 + 2ab + b^2 - 2ab = 2ab + c^2 - 2ab \iff a^2 + b^2 = c^2$$
 > **Insight:** Sottraendo l'area dei 4 triangoli rimane l'uguaglianza rigorosa tra i quadrati costruiti sui cateti e il quadrato costruito sull'ipotenusa.
 
-### 4. Corollario: Metrica Euclidea e Diagonale del Quadrato
-$$c = \sqrt{a^2 + b^2}, \qquad d_{\text{quadrato}} = \sqrt{l^2 + l^2} = l\sqrt{2}$$
-> **Insight:** Fornisce la formula universale della distanza cartesiana euclidea e la dimostrazione dell'irrazionalita della diagonale del quadrato unitario.
+## Dimostrazione: Corollario - Diagonale del Quadrato e Metrica Euclidea
+
+### 1. Ipotesi di triangolo rettangolo isoscele con cateti identici
+Consideriamo un quadrato di lato $l$ tagliato lungo la diagonale $d$. I due cateti coincidono: $a = l$ e $b = l$. Per il Teorema di Pitagora:
+$$d^2 = l^2 + l^2$$
+> **Insight:** La diagonale del quadrato è l'ipotenusa di un triangolo rettangolo isoscele con angoli acuti di 45°.
+
+### 2. Somma dei monomi simili
+Sommando le aree dei due quadrati identici costruiti sui lati:
+$$d^2 = 2l^2$$
+> **Insight:** L'area del quadrato costruito sulla diagonale è esattamente il doppio dell'area del quadrato di partenza.
+
+### 3. Estrazione della radice quadrata
+Estraendo la radice quadrata con la lunghezza $l > 0$:
+$$d = \sqrt{2l^2} = \sqrt{2} \cdot \sqrt{l^2} = l\sqrt{2}$$
+> **Insight:** Il fattore irrazionale radice di 2 dimostrò storicamente ai pitagorici l'esistenza di grandezze incommensurabili.
+
+### 4. Corollario: Diagonale del Quadrato e Distanza Cartesiana Euclidea
+Applicando il risultato a incrementi cartesiani $\Delta x = x_2 - x_1$ e $\Delta y = y_2 - y_1$:
+$$d_{\text{quadrato}} = l\sqrt{2} \quad \land \quad d(P_1, P_2) = \sqrt{\Delta x^2 + \Delta y^2}$$
+> **Insight:** Fornisce la metrica fondamentale che definisce la geometria euclidea nello spazio cartesiano a due dimensioni.
 
 ## Dimostrazione: Primo Teorema di Euclide (Similitudine dei Triangoli)
 
@@ -57,9 +75,27 @@ $$\angle A \text{ in comune}, \quad \angle AHC = \angle ACB = 90^\circ \implies 
 $$\frac{\text{ipotenusa } ABC}{\text{cateto } AC} = \frac{\text{ipotenusa } ACH}{\text{proiezione } AH} \iff \frac{c}{b} = \frac{b}{p_2} \iff b^2 = c \cdot p_2$$
 > **Insight:** Il cateto e medio proporzionale tra l'intera ipotenusa e la propria proiezione su di essa.
 
-### 4. Corollario: Primo Teorema di Euclide e Deduzione Alternativa di Pitagora
-$$a^2 = c \cdot p_1, \quad b^2 = c \cdot p_2 \implies a^2 + b^2 = c(p_1 + p_2) = c \cdot c = c^2$$
-> **Insight:** Sommando membro a membro i due enunciati di Euclide I si ottiene una dimostrazione elegantissima e istantanea del Teorema di Pitagora.
+## Dimostrazione: Corollario - Deduzione Alternativa del Teorema di Pitagora tramite Euclide
+
+### 1. Ipotesi dai due enunciati del Primo Teorema di Euclide
+Applichiamo la relazione di Euclide I a entrambi i cateti $a$ e $b$ del triangolo rettangolo:
+$$a^2 = c \cdot p_1 \quad \land \quad b^2 = c \cdot p_2$$
+> **Insight:** Ciascun quadrato costruito su un cateto è equivalente al rettangolo avente per lati l'ipotenusa e la relativa proiezione.
+
+### 2. Somma algebrica membro a membro
+Sommiamo le due equazioni membro a membro:
+$$a^2 + b^2 = c \cdot p_1 + c \cdot p_2$$
+> **Insight:** La somma delle aree dei due quadrati sui cateti equivale alla somma delle aree dei due rettangoli parziali.
+
+### 3. Raccoglimento a fattor comune dell'ipotenusa
+Raccogliendo $c$ a fattor comune a secondo membro:
+$$a^2 + b^2 = c \cdot (p_1 + p_2)$$
+> **Insight:** La partizione dell'ipotenusa unifica i due segmenti di proiezione adiacenti.
+
+### 4. Corollario: Deduzione Istantanea di Pitagora
+Poiché per costruzione geometrica la somma delle proiezioni è l'intera ipotenusa ($p_1 + p_2 = c$):
+$$a^2 + b^2 = c \cdot c = c^2$$
+> **Insight:** Dimostra il Teorema di Pitagora come conseguenza diretta e naturale della similitudine euclidea.
 
 ## Dimostrazione: Secondo Teorema di Euclide (Altezza Medio Proporzionale)
 
@@ -75,6 +111,24 @@ $$\frac{\text{cateto lungo } ACH}{\text{cateto corto } ACH} = \frac{\text{cateto
 $$\frac{h}{p_1} = \frac{p_2}{h} \iff h^2 = p_1 \cdot p_2 \iff h = \sqrt{p_1 \cdot p_2}$$
 > **Insight:** Il quadrato dell'altezza relativa all'ipotenusa e equivalente al rettangolo avente per lati le proiezioni dei due cateti.
 
-### 4. Corollario: Secondo Teorema di Euclide e Media Geometrica
+## Dimostrazione: Corollario - Secondo Teorema di Euclide e Media Geometrica
+
+### 1. Ipotesi dall'uguaglianza dei prodotti nella proporzione
+Dalla proporzione fondamentale dei cateti omologhi dei triangoli simili:
+$$h^2 = p_1 \cdot p_2 \quad \text{con } p_1, p_2 > 0$$
+> **Insight:** Vogliamo interpretare geometricamente e analiticamente l'altezza h rispetto ai due segmenti di proiezione.
+
+### 2. Estrazione della radice quadrata positiva
+Estraendo la radice quadrata su ambo i membri con $h > 0$:
+$$h = \sqrt{p_1 \cdot p_2}$$
+> **Insight:** L'altezza h è espressa come radice quadrata del prodotto delle due proiezioni.
+
+### 3. Definizione formale di media geometrica
+Per due numeri reali positivi $x$ e $y$, la media geometrica $\mathcal{G}(x, y)$ è definita come:
+$$\mathcal{G}(x, y) \equiv \sqrt{x \cdot y}$$
+> **Insight:** Rappresenta il lato di un quadrato equivalente all'area di un rettangolo di lati x e y.
+
+### 4. Corollario: Identificazione Geometrica dell'Altezza
+L'altezza relativa all'ipotenusa è esattamente la media geometrica delle proiezioni dei cateti:
 $$h = \sqrt{p_1 \cdot p_2} = \text{Media Geometrica}(p_1, p_2)$$
-> **Insight:** Fornisce la classica costruzione geometrica con riga e compasso per calcolare esattamente la radice quadrata del prodotto di due segmenti.
+> **Insight:** Fornisce la classica costruzione con riga e compasso per determinare graficamente la radice quadrata di un segmento.

@@ -98,7 +98,7 @@ class PhysicsCatalog {
       serverId: 'ele_joule_01',
       title: 'Effetto Joule e Dissipazione Termica',
       category: 'Elettrotecnica',
-      subCategory: 'Termodinamica & Circuiti',
+      subCategory: 'Circuiti in Corrente Continua',
       interactiveData: InteractiveData()
         ..templateType = 'live_equation'
         ..unit = 'J'

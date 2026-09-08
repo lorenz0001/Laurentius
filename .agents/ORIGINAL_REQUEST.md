@@ -100,3 +100,53 @@ Integrity mode: development
 - [ ] `flutter test test/curriculum_dag_test.dart` passes.
 - [ ] The full test suite (`flutter test`) passes without regressions.
 
+## 2026-09-07T23:39:08Z
+
+# Complete UI Simplification & Comprehensive Corollary Proofs Overhaul
+
+Redesign the Laurentius UI to be radically simple, clean, and low-friction, featuring an omnipresent instant Spotlight search bar that allows users to find and jump to any theorem, proof, or corollary in a single tap with minimum buttons. Simultaneously, expand every corollary across all 35+ curriculum topics to include a complete, fully expanded step-by-step mathematical demonstration with all algebraic derivations visible in the text rather than just stating the final result.
+
+Working directory: c:\Users\catte\Desktop\Laurentius
+Integrity mode: development
+
+## Requirements
+
+### R1. Radically Simplified UI & Instant Spotlight Search
+- Centralize and simplify the main user interface: eliminate redundant buttons, deeply nested menus, and clutter.
+- Provide a persistent, top-level **Instant Spotlight Search bar** (with live predictive indexing of theorems, formulas, corollaries, and definitions):
+  - Typing any keyword (e.g., "bisezione", "pura", "viète", "carabinieri", "ridotta", "corollario") instantly displays matching proof and corollary cards.
+  - Tapping a result immediately opens the topic directly focused on that exact theorem or corollary in a single tap.
+- Streamline the topic view: present content cleanly and effortlessly with minimal button clutter.
+
+### R2. Complete, Unabridged Proofs for All Corollaries
+- Audit every topic across the entire curriculum (`arithmetic`, `algebra`, `calculus`, `geometry_trig`, `physics`).
+- For every corollary, provide a comprehensive, fully written-out step-by-step mathematical proof directly in the text:
+  - Explain the initial hypothesis derived from the main theorem.
+  - Detail every single intermediate algebraic manipulation, substitution, and simplification.
+  - Never merely state the final result formula without the mathematical derivation.
+- Proofs for corollaries must be clearly visible and formatted for immediate reading and study without requiring extra button presses to uncover the steps.
+
+### R3. Interactive Proof Switcher & Quick Navigation Synchronization
+- Update the interactive proof engine (`AlgebraicProofWidget`, `MarkdownContentParser`) and SDUI parser so that all corollaries with proofs are properly recognized, indexed in the proof selector bar, and linkable from the search index.
+- Maintain full offline-first capability and compatibility with existing simulation widgets.
+
+## Acceptance Criteria
+
+### UI Usability & Simplicity
+- [ ] Omnipresent Spotlight Search bar is accessible from the top of the main screen, returning instant matching results for any theorem, rule, or corollary as the user types.
+- [ ] Selecting a search result navigates directly to that topic in <= 1 tap.
+- [ ] The overall UI layout has fewer buttons, clear visual hierarchy, and zero confusing nested layers.
+
+### Mathematical Rigor & Content Quality
+- [ ] Every corollary in the curriculum contains its complete mathematical demonstration step-by-step (`#### Dimostrazione del Corollario` / `### Dimostrazione`), detailing all intermediate algebraic steps.
+- [ ] No corollary simply states the final equation without derivation.
+- [ ] Markdown parser and search index cleanly ingest all theorem and corollary proofs.
+
+### Code Quality & Automated Tests
+- [ ] `flutter analyze` passes with 0 errors and 0 warnings.
+- [ ] Dedicated widget and unit tests verify:
+  - Instant Spotlight search functionality and direct 1-tap navigation.
+  - Presence of full step-by-step proofs for corollaries across curriculum nodes.
+- [ ] Entire test suite (`flutter test`) passes 100% without regressions.
+
+

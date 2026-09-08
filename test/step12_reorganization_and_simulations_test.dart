@@ -122,12 +122,44 @@ void main() {
       await tester.pumpAndSettle();
 
       // In Fisica, i nodi sono "Cinematica e Dinamica" (1 nodo) e "Chimica Fisica" (1 nodo).
-      // Entrambi hanno 1 solo elemento, quindi non devono avere ExpansionTile folders ma essere visualizzati direttamente!
+      // Entrambi hanno 1 solo elemento, quindi non devono avere Cartellette ma essere visualizzati direttamente!
       expect(find.textContaining('Cinematica'), findsWidgets);
       expect(find.textContaining('Soluzioni Acido-Base'), findsOneWidget);
-      
-      // Nessun ExpansionTile di cartella in questa vista
-      expect(find.byType(ExpansionTile), findsNothing);
+      expect(find.text('CARTELLETTA'), findsNothing);
+    });
+
+    testWidgets('Sub-topics with count > 1 render Cartelletta folder headers and collapse/expand', (tester) async {
+      tester.view.physicalSize = const Size(1200, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: CategoryExplorerScreen(),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      // Nella tab Matematica iniziale:
+      // Verifichiamo la presenza dei badge CARTELLETTA per i sottoargomenti con più di 1 elemento
+      expect(find.text('CARTELLETTA'), findsWidgets);
+      expect(find.text('Aritmetica e Fondamenti'), findsWidgets);
+
+      // Verifichiamo che i nodi con 1 solo elemento (come Frazioni) non abbiano header cartelletta
+      expect(find.textContaining('Frazioni'), findsWidgets);
+
+      // Tocco sull'header della cartelletta per collassarla
+      await tester.tap(find.text('Aritmetica e Fondamenti').first);
+      await tester.pumpAndSettle();
+
+      // L'icona diventa cartella chiusa
+      expect(find.byIcon(Icons.folder_rounded), findsWidgets);
     });
   });
 
