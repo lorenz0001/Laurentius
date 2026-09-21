@@ -192,14 +192,40 @@ class UniversityTermScreen extends StatelessWidget {
                         letterSpacing: -0.3,
                       ),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Simbolo / Notazione: ${term.symbol}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontFamily: 'monospace',
-                        color: Color(0xFF94A3B8),
-                      ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        const Text(
+                          'Simbolo: ',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF94A3B8),
+                          ),
+                        ),
+                        Flexible(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Math.tex(
+                              term.symbol,
+                              textStyle: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFFE2E8F0),
+                              ),
+                              mathStyle: MathStyle.text,
+                              onErrorFallback: (err) => Text(
+                                term.symbol,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'monospace',
+                                  color: Color(0xFF94A3B8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

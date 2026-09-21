@@ -174,6 +174,108 @@ class MathMarkdownView extends StatelessWidget {
             ),
           ),
         );
+      } else if (line == '---' || line == '***' || line == '___') {
+        // Separatore orizzontale
+        paragraphs.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            child: Container(
+              height: 1,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF334155).withAlpha(0),
+                    const Color(0xFF334155),
+                    const Color(0xFF334155).withAlpha(0),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      } else if (line.startsWith('> ')) {
+        // Blockquote: raccolta di righe consecutive che iniziano con >
+        final List<String> quoteLines = [line.substring(2)];
+        while (i + 1 < lines.length) {
+          final nextLine = lines[i + 1].trim();
+          if (nextLine.startsWith('> ')) {
+            quoteLines.add(nextLine.substring(2));
+            i++;
+          } else if (nextLine == '>') {
+            quoteLines.add('');
+            i++;
+          } else {
+            break;
+          }
+        }
+        paragraphs.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E293B),
+                borderRadius: BorderRadius.circular(12),
+                border: Border(
+                  left: BorderSide(
+                    color: const Color(0xFF38BDF8).withAlpha(180),
+                    width: 3,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: quoteLines.map((ql) {
+                  if (ql.isEmpty) return const SizedBox(height: 6);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text.rich(
+                      _buildInlineSpans(
+                        ql,
+                        baseStyle.copyWith(
+                          fontSize: 13.5,
+                          color: const Color(0xFFCBD5E1),
+                          fontStyle: FontStyle.italic,
+                        ),
+                        onTermTap,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        );
+      } else if (RegExp(r'^\d+\.\s').hasMatch(line)) {
+        // Lista numerata (1. testo, 2. testo, ...)
+        final dotIndex = line.indexOf('. ');
+        final number = line.substring(0, dotIndex);
+        final content = line.substring(dotIndex + 2);
+        paragraphs.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 26,
+                  child: Text(
+                    '$number.',
+                    style: baseStyle.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.accentBlueBright,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text.rich(
+                    _buildInlineSpans(content, baseStyle, onTermTap),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       } else if (line.startsWith('- ') || line.startsWith('* ')) {
         // Elemento di elenco puntato
         paragraphs.add(
