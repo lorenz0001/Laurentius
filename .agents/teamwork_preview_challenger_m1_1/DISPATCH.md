@@ -1,25 +1,15 @@
-## 2026-09-07T12:15:34Z
-<USER_REQUEST>
-You are Challenger 1 for Milestone 1 (M1: R4 Configurable Slider System & Unit Decoupling).
-Your identity: teamwork_preview_challenger_m1_1
-Your working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_1
-Workspace root: c:\Users\catte\Desktop\Laurentius
+## 2026-09-14T10:12:51Z
+You are teamwork_preview_challenger_m1_1.
+Your working directory is: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_1
+The project workspace root is: c:\Users\catte\Desktop\Laurentius
+Mandatory input: You MUST read the original user request at c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting work (specifically the latest request dated 2026-09-14T09:56:11Z). Also read c:\Users\catte\Desktop\Laurentius\PROJECT.md and the worker handoff report at c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m1\handoff.md.
 
-MANDATORY: Read c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting.
-Also read:
-- c:\Users\catte\Desktop\Laurentius\PROJECT.md
-- c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m1_1\handoff.md
-
-Tasks:
-1. Empirically verify the correctness and robustness of the unit decoupling across `LiveEquationWidget`, `InteractiveData`, and `InteractiveParameter`.
-2. Test or challenge with edge cases:
-   - Dynamic math expressions with custom units (`unit: "N"`, `unit: "W"`, `unit: "J"`).
-   - Empty or null units to confirm 'V' NEVER appears.
-   - Sliders with negative ranges, decimals, and custom unit labels.
-   - Run `flutter test test/live_equation_and_sliders_test.dart` and full test suite.
-3. Render a formal verdict: APPROVE or CHALLENGE_DETECTED.
-
-Deliverable:
-Write report to `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_1\handoff.md`.
-Send message to parent with verdict.
-</USER_REQUEST>
+Objective:
+Adversarially challenge and stress-test the performance, reactivity, and error recovery of `CartesianGraphWidget` (Milestone 1):
+1. Write a temporary or dedicated stress test harness to verify:
+   - Rapid parameter changes (simulate slider dragging at 60fps) do not throw or leak memory.
+   - Expressions with unbound variables or complex syntax (e.g. `sin(x) + cos(x)`, `1 / (x * x + 1)`, `(1 + 1/x)^x`) evaluate gracefully without exceptions in `_evaluateY`.
+   - Division by zero or domain boundaries (e.g. `x = 0` in `1/x`) are handled smoothly without crashing or yielding `NaN`/`Infinity` in canvas points.
+   - Benchmark that evaluating cached `Expression` is significantly faster than re-parsing per pixel.
+2. Run your tests with `flutter test`.
+3. Deliver your verdict (`APPROVE` or `REQUEST_CHANGES`) with empirical test results in `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_1\handoff.md` and notify parent.

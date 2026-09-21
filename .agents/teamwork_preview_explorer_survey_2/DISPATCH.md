@@ -1,18 +1,24 @@
-## 2026-09-08T01:40:52Z
-You are the Proof Engine & SDUI Architecture Explorer for Laurentius (Brilliant-OS).
-Your working directory is: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2
-You MUST read c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting work (specifically the section ## 2026-09-07T23:39:08Z).
-Also review:
-- c:\Users\catte\Desktop\Laurentius\PROJECT_MAP.md
-- c:\Users\catte\Desktop\Laurentius\.agents\skills\laurentius-dev\SKILL.md
+## 2026-09-14T09:58:49Z
 
-Your objective:
-Analyze the code and architecture of the proof engine and content parsing pipeline:
-1. lib/data/content/markdown_content_parser.dart: How does it currently parse Markdown, theorems, proofs (ProofStep), and corollaries? How does it extract > Corollario: [Nome] or #### Dimostrazione del Corollario? Does it capture corollary proofs as distinct ProofSteps or sub-proofs?
-2. lib/domain/models/knowledge_node.dart: How are ProofSteps, corollaries, and metadata structured in the data models? Does ProofStep or KnowledgeNode need enhancement to store corollary names, types, or distinct sub-proofs?
-3. lib/presentation/widgets/algebraic_proof_widget.dart: How does the interactive proof accordion/switcher work? Can it display and switch between main theorem proofs and corollary proofs? How does it handle unlocking, badge display, and scrolling?
-4. lib/presentation/pages/node_detail_screen.dart: How does the detail screen render proofs? How can an external caller (e.g., Spotlight search) deep-link or jump directly to a specific focused theorem or corollary?
-5. Identify all tests covering parsing and proof widgets (test/markdown_content_parser_test.dart, etc.).
+Conduct a thorough investigation of the curriculum content system and design the Linear Algebra foundational module (R2 & R4):
+1. Inspect existing markdown files in `assets/content/` (`arithmetic/`, `algebra/`, `geometry_trig/`, `calculus/`, `physics/`).
+2. Inspect `pubspec.yaml` to see how assets are declared.
+3. Analyze the prerequisite DAG in the existing curriculum and inspect how `test/curriculum_dag_test.dart` checks for cycles and prerequisite resolution.
+4. Design the 5 sequential linear algebra nodes in `assets/content/linear_algebra/` (or designated path):
+   - Node 1: Concetto di n-upla ordinata e spazio R^n (from pairs/triplets to R^n, algebraic & geometric meaning).
+   - Node 2: Vettori Geometrici e Coordinate (applied vector, magnitude/norm, direction, orientation, component representation wrt canonical basis).
+   - Node 3: Operazioni Vettoriali Fondamentali (vector addition via parallelogram rule & tip-to-tail, scalar multiplication, axiomatic vector space properties).
+   - Node 4: Combinazioni Lineari e Spazio Generato (span) (definition, geometric interpretation of line, plane, hyperplane span).
+   - Node 5: Dipendenza e Indipendenza Lineare (formal definition, non-trivial zero linear combination, geometric meaning of collinear/coplanar vectors).
+5. For each node, detail:
+   - Proposed ID (e.g. `lin_alg_01_tuples`, `lin_alg_02_vectors`, etc.)
+   - Category and subCategory
+   - Prerequisite chain connecting to foundational algebra/geometry nodes without cycles
+   - Structure of mathematical content, LaTeX equations (`$...$`, `$$...$$`), step-by-step derivations without logical leaps, `> **Insight:**` intuition boxes, theorems, and corollaries with full proofs
+   - Proposed `interactive` configuration binding to the 2D vector widget or other relevant templates
+6. Produce a concrete specification and step-by-step authoring plan for Milestone 3.
 
-Write your architectural analysis, code snippets, concrete design proposals, and migration plan to c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2\handoff.md and update progress.md in your working directory.
-When done, notify the caller with a concise summary and the path to your report.
+Scope Boundaries:
+- You are a read-only exploration agent. Do NOT modify source code or tests.
+- Deliver your detailed report and handoff in: `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_2\survey_curriculum_report.md` and `handoff.md`.
+- Send a completion message back to parent when done.

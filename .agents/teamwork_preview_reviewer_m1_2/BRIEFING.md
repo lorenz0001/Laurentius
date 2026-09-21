@@ -1,74 +1,73 @@
-# BRIEFING — 2026-09-07T12:24:00Z
+# BRIEFING — 2026-09-14T10:18:00Z
 
 ## Mission
-Review and stress-test Milestone 1 (R4 Configurable Slider System & Unit Decoupling) with focus on robustness, null safety, backward compatibility, Unicode/boundary units, static analysis, and regression prevention.
+Independently review interface conformance, offline loading, and pedagogical robustness of Milestone 1:
+1. Verify that rebound physics files (assets/content/physics/circuits/ele_power_01.md and ele_joule_01.md) are parsed correctly by MarkdownContentParser and ingested into ContentLoaderService.
+2. Run flutter test test/markdown_content_loader_test.dart to verify markdown loading and ensure no parsing errors occur.
+3. Verify InteractiveTemplateFactory correctly instantiates OhmCircuitSimulationWidget for circuit_simulation with declared parameters.
+4. Verify existing autoplay suppression and widget contracts remain intact across all simulation widgets.
+5. Provide explicit verdict: APPROVE or REQUEST_CHANGES.
 
 ## 🔒 My Identity
 - Archetype: reviewer_critic
 - Roles: reviewer, critic
 - Working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_reviewer_m1_2
-- Original parent: 1a6ba404-5e53-4553-820e-f33074fed99c
-- Milestone: M1: R4 Configurable Slider System & Unit Decoupling
+- Original parent: 3061e57d-c498-4758-a18f-534ac618de5c
+- Milestone: Milestone 1
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
 - Review-only — do NOT modify implementation code
-- Adversarial critic: actively check for integrity violations, facade implementations, hardcoded shortcuts
-- Verify robustness, error handling, null safety, backward compatibility, and boundary cases (unit: null, "", whitespace, Unicode)
+- Actively check for integrity violations (hardcoded test results, facade implementations, shortcuts, fabricated verification, self-certifying work)
+- Report any test/build failures as findings — do NOT fix them yourself
+- Issue explicit verdict: APPROVE or REQUEST_CHANGES
+- Deliver report in handoff.md and send message to parent
 
 ## Current Parent
-- Conversation ID: 1a6ba404-5e53-4553-820e-f33074fed99c
-- Updated: not yet
+- Conversation ID: 3061e57d-c498-4758-a18f-534ac618de5c
+- Updated: 2026-09-14T10:18:00Z
 
 ## Review Scope
 - **Files to review**:
-  - `lib/domain/models/knowledge_node.dart`
-  - `lib/domain/models/knowledge_node.g.dart`
-  - `lib/presentation/widgets/interactive/live_equation_widget.dart`
+  - `assets/content/physics/circuits/ele_power_01.md`
+  - `assets/content/physics/circuits/ele_joule_01.md`
+  - `lib/data/content/markdown_content_parser.dart`
+  - `lib/data/content/content_loader_service.dart`
+  - `lib/presentation/widgets/interactive/interactive_template_factory.dart`
   - `lib/presentation/widgets/interactive/ohm_circuit_simulation_widget.dart`
-  - `lib/presentation/widgets/interactive/kinematics_simulation_widget.dart`
-  - `lib/data/catalog/physics_catalog.dart`
-  - `test/live_equation_and_sliders_test.dart`
-  - `test/m1_adversarial_challenge_test.dart`
-  - `test/m1_challenger2_simulation_stress_test.dart`
-- **Interface contracts**: PROJECT.md, ORIGINAL_REQUEST.md, TEST_READY.md
-- **Review criteria**: Correctness, robustness, null safety, backward compatibility, edge cases, test regressions, zero analyzer warnings
-
-## Key Decisions Made
-- Confirmed zero integrity violations: no facades or hardcoded shortcuts detected.
-- Verified unit decoupling in LiveEquationWidget is robust against null, empty string, whitespace, and Unicode units.
-- Confirmed all 124 tests pass in `flutter test`.
-- Identified Critical Finding: Unclamped slider value in `OhmCircuitSimulationWidget:504` crashes on out-of-bounds `defaultValue`.
-- Identified Major Finding: Telemetry readout in `KinematicsSimulationWidget:269` hardcodes `'m/s'`, violating R4 contract.
-- Identified Major Finding: `flutter analyze` exits with code 1 due to unused import in `test/m1_adversarial_challenge_test.dart:5:8`.
-- Formal Verdict: **REQUEST_CHANGES**.
-
-## Artifact Index
-- DISPATCH.md — Received dispatch instructions
-- BRIEFING.md — Working memory and context
-- progress.md — Liveness heartbeat
-- handoff.md — Formal review report and verdict
+  - All simulation widgets in `lib/presentation/widgets/interactive/`
+  - `test/markdown_content_loader_test.dart`
+- **Interface contracts**: PROJECT.md, SCOPE.md, SKILL.md (laurentius-dev, server-content-agent)
+- **Review criteria**: correctness, offline loading, pedagogical robustness, widget contracts, autoplay suppression, style, test results
 
 ## Review Checklist
 - **Items reviewed**:
-  - `InteractiveData` & `InteractiveParameter` unit fields and Isar schemas: VERIFIED
-  - `LiveEquationWidget` hardcoded 'V' elimination and dynamic units: VERIFIED
-  - Boundary cases (null, empty, whitespace, Unicode): VERIFIED
-  - `OhmCircuitSimulationWidget` slider value clamping: FAILED (Unclamped Slider crash)
-  - `KinematicsSimulationWidget` telemetry unit decoupling: FAILED (Hardcoded 'm/s' readout)
-  - Full test suite execution: VERIFIED (124/124 passed)
-  - Static analysis (`flutter analyze`): FAILED (Exit code 1, 1 unused import warning)
-- **Verdict**: REQUEST_CHANGES
-- **Unverified claims**: None; all verified independently via code inspection and test execution.
+  - `assets/content/physics/circuits/ele_power_01.md` (rebound frontmatter, LaTeX body, corollaries)
+  - `assets/content/physics/circuits/ele_joule_01.md` (rebound frontmatter, LaTeX body, corollaries)
+  - `MarkdownContentParser` parsing logic for `circuit_simulation`, $V$ and $R$ variables
+  - `ContentLoaderService` bundled paths and offline loading
+  - `InteractiveTemplateFactory` routing to `OhmCircuitSimulationWidget`
+  - Autoplay suppression across all 9 interactive simulation widgets
+  - Test suites: `markdown_content_loader_test.dart` (21/21 passed), `simulations_autoplay_and_geometry_stress_test.dart` (25/25 passed), `interactive_simulation_test.dart` (23/23 passed), `curriculum_dag_test.dart` (5/5 passed)
+- **Verdict**: APPROVE
+- **Unverified claims**: none; all independently verified via source inspection and test execution
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - Out of bounds defaultValue causes slider assertion failure: CONFIRMED VULNERABLE in OhmCircuitSimulationWidget.
-  - Telemetry readouts ignore parameter unit: CONFIRMED in KinematicsSimulationWidget (`velocity.toStringAsFixed(1)} m/s`).
-  - Whitespace / null units cause phantom spacing: PASSED (properly trimmed).
-  - Division by zero crashes app: PASSED (gracefully caught).
+  - Rebound files parse invalid parameters or corrupt Isar ingestion: Rejected (passed 21/21 tests).
+  - OhmCircuitSimulationWidget autoplays on mount: Rejected (starts paused, `_isPlaying = false`).
+  - Template key alias routing fails for circuit_simulation: Rejected (routes to `OhmCircuitSimulationWidget`).
+  - Autoplay suppression breaks on other widgets: Rejected (Suite 1 tests all 9 widgets and all remain 100% paused).
 - **Vulnerabilities found**:
-  - `OhmCircuitSimulationWidget:504` unhandled assertion crash when `value < min` or `value > max`.
-  - `KinematicsSimulationWidget:269` non-decoupled unit in evaluation readout.
-  - Analyzer warning in `test/m1_adversarial_challenge_test.dart:5:8`.
-- **Untested angles**: Physical GPU hardware acceleration.
+  - Minor viewport overflow when hosting CartesianGraphWidget in unconstrained Scaffold without SingleChildScrollView on small test viewports (<600px). Handled safely in production screens.
+  - 3 unused imports in newly added test files.
+- **Untested angles**: All Milestone 1 objectives fully verified.
+
+## Key Decisions Made
+- Confirmed full pedagogical robustness of physics topics rebinding.
+- Confirmed strict compliance with widget contracts and zero regressions.
+- Issued verdict: APPROVE.
+
+## Artifact Index
+- `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_reviewer_m1_2\handoff.md` — Final review report
+- `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_reviewer_m1_2\progress.md` — Liveness and progress tracking

@@ -21,6 +21,8 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
   final GrammarParser _parser = GrammarParser();
 
   String _equationString = 'a * x * x + b * x + c';
+  Expression? _parsedExpression;
+  bool _isQuadratic = true;
   bool _isAutoMorphing = false;
   late final AnimationController _graphAnimController;
 
@@ -32,6 +34,16 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
       vsync: this,
       duration: const Duration(seconds: 4),
     )..addListener(_onGraphAnimTick);
+  }
+
+  @override
+  void didUpdateWidget(covariant CartesianGraphWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final oldEq = oldWidget.data?.equations?.firstOrNull;
+    final newEq = widget.data?.equations?.firstOrNull;
+    if (oldEq != newEq || oldWidget.data != widget.data) {
+      _initializeParams();
+    }
   }
 
   void _onGraphAnimTick() {
@@ -73,7 +85,11 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
     final eq = widget.data?.equations?.firstOrNull;
     if (eq != null && eq.isNotEmpty) {
       _equationString = eq;
+    } else {
+      _equationString = 'a * x * x + b * x + c';
     }
+
+    _compileExpression();
 
     final params = widget.data?.parameters;
     if (params != null && params.isNotEmpty) {
@@ -91,27 +107,91 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
     }
   }
 
-  double _evaluateY(double x) {
+  void _compileExpression() {
+    _isQuadratic = _isQuadraticEquation(_equationString);
     try {
-      final expression = _parser.parse(_equationString);
-      final contextModel = ContextModel();
-
-      _paramValues.forEach((key, value) {
-        contextModel.bindVariable(Variable(key), Number(value));
-      });
-      contextModel.bindVariable(Variable('x'), Number(x));
-
-      final evaluator = RealEvaluator(contextModel);
-      final res = evaluator.evaluate(expression);
-      final val = res.toDouble();
-      return val.isFinite ? val : 0.0;
+      _parsedExpression = _parser.parse(_equationString);
     } catch (_) {
-      // Fallback analitico standard per y = a*x^2 + b*x + c
-      final a = _paramValues['a'] ?? 1.0;
-      final b = _paramValues['b'] ?? 0.0;
-      final c = _paramValues['c'] ?? 0.0;
-      return a * x * x + b * x + c;
+      _parsedExpression = null;
     }
+  }
+
+  bool _isQuadraticEquation(String eq) {
+    final clean = eq.replaceAll(' ', '').toLowerCase();
+    // Non-quadratica se contiene funzioni trascendenti, divisione per x, moltiplicazioni di grado 3+, esponenziali o potenze diverse da 2
+    if (clean.contains('sin') ||
+        clean.contains('cos') ||
+        clean.contains('tan') ||
+        clean.contains('log') ||
+        clean.contains('ln') ||
+        clean.contains('exp') ||
+        clean.contains('sqrt') ||
+        clean.contains('^x') ||
+        clean.contains('^3') ||
+        clean.contains('^4') ||
+        clean.contains('^5') ||
+        clean.contains(RegExp(r'\^[013-9]')) ||
+        clean.contains(RegExp(r'\^-[0-9]')) ||
+        clean.contains('x*x*x') ||
+        clean.contains('/x') ||
+        clean.contains('/(')) {
+      return false;
+    }
+    // Deve contenere termine di grado 2: x*x o x^2
+    final hasDegree2 = clean.contains('x*x') || clean.contains('x^2');
+    if (!hasDegree2) {
+      return false;
+    }
+    return true;
+  }
+
+  double _evaluateY(double x) {
+    final expr = _parsedExpression;
+    if (expr != null) {
+      try {
+        final contextModel = ContextModel();
+        for (final entry in _paramValues.entries) {
+          contextModel.bindVariable(Variable(entry.key), Number(entry.value));
+        }
+        contextModel.bindVariable(Variable('x'), Number(x));
+
+        final evaluator = RealEvaluator(contextModel);
+        final res = evaluator.evaluate(expr);
+        final val = res.toDouble();
+        return val.isFinite ? val : 0.0;
+      } catch (e) {
+        // Auto-recovery se math_expressions segnala una variabile non vincolata
+        if (e.toString().contains('Variable not bound:')) {
+          final match = RegExp(
+            r'Variable not bound:\s*([a-zA-Z0-9_]+)',
+          ).firstMatch(e.toString());
+          if (match != null) {
+            final missingVar = match.group(1)!;
+            _paramValues[missingVar] = 1.0;
+            try {
+              final contextModel = ContextModel();
+              for (final entry in _paramValues.entries) {
+                contextModel.bindVariable(
+                  Variable(entry.key),
+                  Number(entry.value),
+                );
+              }
+              contextModel.bindVariable(Variable('x'), Number(x));
+              final evaluator = RealEvaluator(contextModel);
+              final res = evaluator.evaluate(expr);
+              final val = res.toDouble();
+              return val.isFinite ? val : 0.0;
+            } catch (_) {}
+          }
+        }
+      }
+    }
+
+    // Fallback analitico standard per y = a*x^2 + b*x + c
+    final a = _paramValues['a'] ?? 1.0;
+    final b = _paramValues['b'] ?? 0.0;
+    final c = _paramValues['c'] ?? 0.0;
+    return a * x * x + b * x + c;
   }
 
   @override
@@ -142,12 +222,32 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
             ..defaultValue = -2.0,
         ];
 
-    // Rappresentazione testuale della formula con valori sostituiti
+    // Rappresentazione testuale della formula con valori sostituiti o equazione reale
     final a = _paramValues['a'] ?? 1.0;
     final b = _paramValues['b'] ?? 0.0;
     final c = _paramValues['c'] ?? 0.0;
-    final formulaText =
-        'y = ${a.toStringAsFixed(1)}x² ${b >= 0 ? '+ ' : '- '}${b.abs().toStringAsFixed(1)}x ${c >= 0 ? '+ ' : '- '}${c.abs().toStringAsFixed(1)}';
+    final String formulaText;
+    if (_isQuadratic) {
+      if (b.abs() < 0.001 && c.abs() < 0.001) {
+        formulaText = 'y = ${a.toStringAsFixed(1)}x²';
+      } else if (b.abs() < 0.001) {
+        formulaText =
+            'y = ${a.toStringAsFixed(1)}x² ${c >= 0 ? '+ ' : '- '}${c.abs().toStringAsFixed(1)}';
+      } else if (c.abs() < 0.001) {
+        formulaText =
+            'y = ${a.toStringAsFixed(1)}x² ${b >= 0 ? '+ ' : '- '}${b.abs().toStringAsFixed(1)}x';
+      } else {
+        formulaText =
+            'y = ${a.toStringAsFixed(1)}x² ${b >= 0 ? '+ ' : '- '}${b.abs().toStringAsFixed(1)}x ${c >= 0 ? '+ ' : '- '}${c.abs().toStringAsFixed(1)}';
+      }
+    } else {
+      if (_equationString.startsWith('y =') ||
+          _equationString.startsWith('f(x) =')) {
+        formulaText = _equationString;
+      } else {
+        formulaText = 'y = $_equationString';
+      }
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -198,7 +298,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
               IconButton(
                 icon: Icon(
                   _isAutoMorphing
-                      ? Icons.pause_circle_rounded
+                      ? Icons.pause_circle_filled_rounded
                       : Icons.play_circle_fill_rounded,
                 ),
                 color: const Color(0xFF818CF8),
@@ -228,6 +328,7 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
                   a: a,
                   b: b,
                   c: c,
+                  isQuadratic: _isQuadratic,
                 ),
               ),
             ),
@@ -265,6 +366,38 @@ class _CartesianGraphWidgetState extends State<CartesianGraphWidget>
               ],
             ),
           ),
+          if (_isQuadratic && a.abs() > 0.001) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1C1917),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: const Color(0xFF78350F)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'VERTICE DELLA PARABOLA:',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFF59E0B),
+                    ),
+                  ),
+                  Text(
+                    'V(${(-b / (2 * a)).toStringAsFixed(1)}, ${(a * (-b / (2 * a)) * (-b / (2 * a)) + b * (-b / (2 * a)) + c).toStringAsFixed(1)})',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFFCD34D),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 16),
 
           // Sliders dei Parametri
@@ -376,12 +509,14 @@ class _CartesianPainter extends CustomPainter {
   final double a;
   final double b;
   final double c;
+  final bool isQuadratic;
 
   _CartesianPainter({
     required this.evaluateY,
     required this.a,
     required this.b,
     required this.c,
+    required this.isQuadratic,
   });
 
   @override
@@ -469,8 +604,8 @@ class _CartesianPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round;
     canvas.drawPath(curvePath, curvePaint);
 
-    // 4. Evidenziazione Vertice (se a != 0)
-    if (a.abs() > 0.001) {
+    // 4. Evidenziazione Vertice (solo se equazione quadratica e a != 0)
+    if (isQuadratic && a.abs() > 0.001) {
       final vx = -b / (2 * a);
       final vy = a * vx * vx + b * vx + c;
 
@@ -524,7 +659,5 @@ class _CartesianPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _CartesianPainter oldDelegate) {
-    return oldDelegate.a != a || oldDelegate.b != b || oldDelegate.c != c;
-  }
+  bool shouldRepaint(covariant _CartesianPainter oldDelegate) => true;
 }

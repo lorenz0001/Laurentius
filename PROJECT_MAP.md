@@ -36,7 +36,9 @@ lib/
 │   │   ├── arithmetic_catalog.dart    # Fallback catalog definitions for elementary arithmetic
 │   │   ├── calculus_catalog.dart      # Fallback catalog definitions for limits, derivatives, integrals
 │   │   ├── geometry_trig_catalog.dart # Fallback catalog definitions for Euclidean geometry & trigonometry
-│   │   └── physics_catalog.dart       # Fallback catalog definitions for kinematics, Ohm's law, thermodynamics
+│   │   ├── physics_catalog.dart       # Fallback catalog definitions for kinematics, Ohm's law, thermodynamics
+│   │   ├── university_glossary_catalog.dart # 40+ rigorous terms with KaTeX, definitions & diagrams
+│   │   └── university_linear_algebra_course.dart # PoliMi Chapter 1 (81 pp.) 6 decomposed master lectures
 │   ├── content/                       # Decoupled content parsing & offline loading engine
 │   │   ├── content_loader_service.dart# Discovers assets/content/**/*.md via AssetManifest; 2-phase Isar sync
 │   │   └── markdown_content_parser.dart# Pure Dart parser: YAML frontmatter -> models, body -> blocks & proofs
@@ -46,26 +48,26 @@ lib/
 │   └── models/
 │       ├── exercise_model.dart        # Practice quizzes & validation models linked to knowledge nodes
 │       ├── knowledge_node.dart        # Core entity: KnowledgeNode, ContentBlock, ProofStep, InteractiveData/Param
-│       └── knowledge_node.g.dart      # Generated Isar schema code, type adapters, and index queries
+│       ├── knowledge_node.g.dart      # Generated Isar schema code, type adapters, and index queries
+│       └── university_course_model.dart# UniversityCourse, Chapter, Lecture, UniversityTerm, VisualDiagramType
 └── presentation/                      # UI layer: screens, custom components, and interactive simulations
     ├── pages/                         # Primary application screens
     │   ├── category_explorer_screen.dart # Filterable topic catalog with domain tabs & difficulty chips
     │   ├── exercise_screen.dart       # Practice runner with instant answer validation & feedback
     │   ├── home_screen.dart           # Interactive 2D knowledge graph view with pan/zoom and node status
-    │   ├── main_layout_screen.dart    # Scaffold navigation bar: Grafo (DAG) vs. Esplora (Catalog)
+    │   ├── main_layout_screen.dart    # Scaffold navigation bar: Grafo, Esplora, and Università
     │   ├── node_detail_screen.dart    # Article view: simulation widget, markdown blocks, step proofs, DAG links
-    │   └── settings_screen.dart       # Preferences screen: AI config, database inspection, cache wipe
+    │   ├── settings_screen.dart       # Preferences screen: AI config, database inspection, cache wipe
+    │   └── university/                # Complete university courses & hypertextual glossary screens
+    │       ├── university_courses_screen.dart  # Course hub, PoliMi metadata, lecture cards & color legend
+    │       ├── university_lecture_screen.dart  # Lecture reader with back button, key terms & KaTeX markdown
+    │       ├── university_term_screen.dart     # Term detail with visual diagram, formula & related terms
+    │       └── university_glossary_screen.dart # Searchable & filterable alphabetical term glossary
     └── widgets/                       # Reusable UI widgets and simulation canvas components
-        ├── ai_rephrase_bottom_sheet.dart  # Bottom sheet offering simplified Socratic rephrasing
-        ├── ai_tutor_qna_bottom_sheet.dart # Interactive Q&A chat interface with AI tutor
         ├── algebraic_proof_widget.dart    # Step-by-step collapsible proof accordion with corollary badges
-        ├── category_style.dart        # Domain color palettes, category gradients, and icon mappings
-        ├── content_block_factory.dart # Dispatches ContentBlocks into text, LaTeX callouts, or info boxes
-        ├── graph_controls_widget.dart # Floating HUD buttons for knowledge graph layout, center, and zoom
-        ├── knowledge_node_card.dart   # Summary topic card for explorer list and prerequisite items
-        ├── math_markdown_view.dart    # Hybrid renderer combining Markdown formatting and KaTeX formulas
-        ├── node_search_delegate.dart  # In-memory fast search delegate across all curriculum topics
-        ├── prerequisites_section_widget.dart # Interactive chips showing prerequisites and unlocked topics
+        ├── math_markdown_view.dart    # Hybrid Markdown + KaTeX renderer with [term](term:id) taps
+        ├── university/
+        │   └── term_visual_example_widget.dart # Static CustomPainter diagrams (arrows, clocks, Cayley, etc.)
         └── interactive/               # 60fps reactive simulation widgets and dynamic factory
             ├── interactive_template_factory.dart   # SDUI router: resolves templateType to simulation widgets
             ├── cartesian_graph_widget.dart        # 2D coordinate plot with dynamic curves & coefficient sliders
@@ -122,7 +124,7 @@ interactive:                           # Optional map: links topic to simulation
 
 ## 4. Interactive Simulation Widget Catalog
 
-All 9 interactive simulation widgets reside in `lib/presentation/widgets/interactive/`. The `InteractiveTemplateFactory` routes 17 template key aliases to widgets:
+All 10 interactive simulation widgets reside in `lib/presentation/widgets/interactive/`. The `InteractiveTemplateFactory` routes 22+ template key aliases to widgets:
 
 | Widget Class | Template Key Aliases | Parameters (`variableName`) | Equations & Math Engine | Unit Support | Visuals & Interactive Features |
 |---|---|---|---|---|---|
@@ -135,6 +137,7 @@ All 9 interactive simulation widgets reside in `lib/presentation/widgets/interac
 | `TrigCircleWidget` | `trig_circle`, `trigonometric_circle` | `angle` ($\theta$, default: $\pi/4$) | $\sin\theta, \cos\theta, \tan\theta$, identity $\sin^2\theta + \cos^2\theta = 1$ | Radian and degree display; unitless trig ratios | Interactive canvas drag, orthogonal projections ($\sin$ green, $\cos$ blue), tangent line $x=1$, 60fps auto-rotation |
 | `DerivativeTangentWidget` | `derivative_tangent`, `difference_quotient` | `x0` (base point, def: 1.0), `h` (increment, def: 1.5) | Parabola $f(x) = \frac{1}{2}x^2$, quotient $\frac{f(x_0+h)-f(x_0)}{h}$ | Sliders: `param.unit` | Secant line collapsing to tangent line as $h \to 0$, convergence error telemetry, limit animation |
 | `RiemannSumWidget` | `riemann_sum`, `riemann_integral` | `nRectangles` ($N$, default: 6) on $[a,b] = [0,2]$ | $f(x) = 0.75x^2 + 0.5$, $F(x) = 0.25x^3 + 0.5x$ | Slider: rectangle count badge | Rectangular partitions under curve, exact definite integral, convergence error $|\Sigma - \int|$, partition step animation |
+| `Vector2DSimulationWidget` | `vector_2d`, `linear_combination`, `vector_addition`, `span_2d`, `vector_simulation` | `vx`, `vy`, `v1x`, `v1y`, `v2x`, `v2y`, `c1`, `c2` | $\mathbf{v} = v_x \mathbf{e}_1 + v_y \mathbf{e}_2$, $\mathbf{s} = \mathbf{v}_1 + \mathbf{v}_2$, $\mathbf{w} = c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2$, $\det = v_{1x}v_{2y} - v_{1y}v_{2x}$ | Sliders: `param.unit` | 2D cartesian canvas, 3 modes (Components, Addition with Parallelogram/Punta-Coda, Span & Combinations), touch drag vector heads, determinant & collinearity check |
 
 *Routing Rule*: For `function_graph` / `cartesian_plot`, if the equation contains `x * x * x / 3` or `rolle`, `InteractiveTemplateFactory` automatically delegates to `RolleLagrangeWidget`. If `templateType` is omitted but equations or parameters exist, it falls back to `LiveEquationWidget`. Pure theory topics use `template: null`.
 
@@ -201,3 +204,37 @@ flutter test test/markdown_content_loader_test.dart
 flutter test test/curriculum_dag_test.dart
 ```
 The tests automatically verify that the new file is discovered, YAML syntax is valid, parameters map cleanly to `InteractiveData`, and no circular prerequisites exist in the curriculum DAG.
+
+---
+
+## 7. University Courses & Hypertextual Term System
+
+Laurentius includes a dedicated module for complete university curriculums ("Materie Universitarie Complete"), accessible via the `"Università"` tab in `MainLayoutScreen`.
+
+### 7.1 Architecture & Domain Models
+- **`UniversityCourse`**: Top-level entity (`id`, `title`, `university`, `professor`, `semester`, `chapters`).
+- **`UniversityChapter`**: Thematic syllabus section (`id`, `title`, `pageRange`, `lectures`).
+- **`UniversityLecture`**: Decomposed lecture unit (`id`, `title`, `sectionNumber`, `professorPages`, `defaultColor`, `keyTermIds`, `markdownContent`).
+- **`UniversityTerm`**: Formal mathematical definition (`id`, `name`, `symbol`, `category`, `shortDefinition`, `formalLatex`, `pedagogicalExplanation`, `visualType`, `exampleTitle`, `exampleText`, `relatedTermIds`).
+- **`LectureColorCode`**: Professor Constantinescu's 4-color rating convention:
+  - **Verde**: Fondamentale, teoria obbligatoria (es. Definizioni base, $M/\sim$).
+  - **Giallo**: Rilevante per gli esercizi e la pratica applicata (es. Bézout, Euclide).
+  - **Arancione**: Utile ma di importanza secondaria/complementare.
+  - **Rosso**: Teoria avanzata o fuori programma d'esame diretto.
+
+### 7.2 Decomposed Linear Algebra Curriculum (PoliMi - Prof. Alexandru Constantinescu)
+Chapter 1: "Fondamenti" (81 pages) is decomposed into 6 connected master lectures in `UniversityLinearAlgebraCourse`:
+1. **Lezione 1.1**: *Enunciati Matematici e Logica Proposizionale* (pp. 8–16)
+2. **Lezione 1.2**: *Insiemi, Paradossi e Prodotto Cartesiano* (pp. 17–24)
+3. **Lezione 1.3**: *Applicazioni, Composizione e Invertibilità* (pp. 25–36)
+4. **Lezione 1.4**: *Famiglie, Cardinalità e Assioma della Scelta* (pp. 37–45)
+5. **Lezione 1.5**: *Relazioni, Insiemi Quoziente e Aritmetica Intera* (pp. 46–57)
+6. **Lezione 1.6**: *Strutture Algebriche: Gruppi, Anelli e Campi* (pp. 58–81)
+
+### 7.3 Hypertextual Term System & Visual Diagrams
+- In-lecture terms use markdown syntax `[Term Name](term:term_id)`.
+- `MathMarkdownView` recognizes `term:` URLs and routes via `onTermTap` to `UniversityTermScreen`.
+- `TermVisualExampleWidget` renders static `CustomPainter` diagrams without animation (arrow mappings, equivalence partitions, modulo clock rings, truth matrices, Cayley tables, permutation cycle graphs, subset lattices, and Euclidean division timelines).
+- **Navigation**: Top back buttons on `UniversityLectureScreen` and `UniversityTermScreen` allow seamless hierarchical and back-stack traversal.
+- **Glossary Hub**: `UniversityGlossaryScreen` provides instant search and category filtering over all 40+ catalogued terms.
+

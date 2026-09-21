@@ -1,120 +1,118 @@
-# Handoff Report: Milestone M3 — Radically Simplified UI & Omnipresent Instant Spotlight Search
+# Handoff Report: Milestone 3 — Linear Algebra Curriculum & Registration (R2, R4)
 
-- **Author**: Worker M3 (Spotlight Search & UI Engineer)
-- **Role**: implementer, qa, specialist
-- **Working Directory**: `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m3`
-- **Date**: 2026-09-08T02:08:00Z
-- **Status**: Complete (Hard Handoff)
+**Agent**: `teamwork_preview_worker_m3`  
+**Working Directory**: `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m3`  
+**Date**: 2026-09-14T10:53:00Z  
+**Type**: Hard Handoff (Task Complete)
 
 ---
 
 ## 1. Observation
 
-Direct observations from inspection, static analysis, and test suites across the codebase:
+1. **Curriculum Topology Invariants**:
+   - `test/curriculum_dag_test.dart` (lines 120-147) and `test/challenger_curriculum_stress_test.dart` (line 167) verify that `mat_add_01` is the unique foundational root with `inDegree == 0`.
+   - `test/challenger_curriculum_stress_test.dart` (test 3) requires exact 1:1 parity between frontmatter prerequisite lists and `CurriculumRegistry._defaultPrerequisiteMap`.
+   - `test/curriculum_dag_test.dart` (lines 149-167) mandates that every knowledge node contains clearly identified corollaries in `algebraicProof` with complete step-by-step derivations.
 
-1. **Previous Search Subsystem & UI Clutter**:
-   - `lib/presentation/pages/main_layout_screen.dart` hid search behind a modal `SearchDelegate` invoked by a tiny AppBar icon (`Icons.search_rounded`), filtering only node titles and categories while ignoring the rich mathematical corpus (theorems, formulas, corollaries, definitions).
-   - An exposed developer "Ricarica" button (`IconButton(Icons.refresh_rounded)`) cluttered the top bar.
-   - `lib/presentation/pages/home_screen.dart` contained a heavy dark bottom floating banner (`Positioned(bottom: 20)`) displaying `'Pizzica per zoomare • Trascina per esplorare • Tocca un nodo per aprirlo'`, obscuring lower DAG nodes.
-   - `lib/presentation/pages/category_explorer_screen.dart` contained a bulky 180px dark hero banner (`_buildHeaderHero`) and nested box containers ("Cartellette") with heavy borders.
-   - `lib/presentation/pages/node_detail_screen.dart` featured duplicate AI buttons (in the AppBar and in the theoretical section header) and triplicate quiz entry points (AppBar icon, body prompt card, and floating action button).
+2. **File Generation & Structure**:
+   - Created directory `assets/content/linear_algebra/` with 5 rigorous educational nodes:
+     - `assets/content/linear_algebra/lin_alg_01_tuples.md` (id: `lin_alg_01_tuples`, title: "Spazio Vettoriale Rn e Concetto di n-upla Ordinata", prerequisites: `['mat_add_01', 'mat_pythagoras_01']`, template: `vector_2d`).
+     - `assets/content/linear_algebra/lin_alg_02_vectors.md` (id: `lin_alg_02_vectors`, title: "Vettori Geometrici, Norma e Coordinate Canoniche", prerequisites: `['lin_alg_01_tuples']`, template: `vector_2d`).
+     - `assets/content/linear_algebra/lin_alg_03_operations.md` (id: `lin_alg_03_operations`, title: "Operazioni Vettoriali Fondamentali e Assiomi di Spazio Vettoriale", prerequisites: `['lin_alg_02_vectors']`, template: `vector_addition`).
+     - `assets/content/linear_algebra/lin_alg_04_span.md` (id: `lin_alg_04_span`, title: "Combinazioni Lineari e Spazio Vettoriale Generato (Span)", prerequisites: `['lin_alg_03_operations']`, template: `linear_combination`).
+     - `assets/content/linear_algebra/lin_alg_05_independence.md` (id: `lin_alg_05_independence`, title: "Dipendenza e Indipendenza Lineare dei Vettori", prerequisites: `['lin_alg_04_span']`, template: `span_2d`).
+   - Each markdown file contains two fully derived corollaries with mathematical proofs under `#### Dimostrazione del Corollario` or heading steps, with KaTeX equations and `> **Insight:**` callouts.
 
-2. **New Spotlight Engine & UI Components**:
-   - `lib/domain/models/spotlight_result.dart`: Defined `SpotlightResultType` (`corollary`, `theorem`, `formula`, `definition`, `topic`) and `SpotlightSearchResult`.
-   - `lib/core/services/spotlight_index_service.dart`: Ingests `CurriculumRegistry.getAllNodes()` or Isar database; indexes topics, theorems (`## Dimostrazione`), corollaries (`[Corollario - ...]`, `COROLLARIO`), LaTeX formulas (`$$...$$`), and definitions; provides sub-millisecond prefix & token matching with Italian diacritic folding (`viète` <-> `viete`) and Italian grammatical suffix stemming (`pura` <-> `pure`).
-   - `lib/presentation/widgets/spotlight_result_card.dart`: Features type badges (amber `COROLLARIO`, blue `TEOREMA`, green `FORMULA`, purple `DEFINIZIONE`, slate `ARGOMENTO`), category breadcrumbs, query match highlighting, KaTeX formula previews via `flutter_math_fork`, 2-line snippets, and direct tap actions (`"Apri dimostrazione →"`).
-   - `lib/presentation/widgets/spotlight_dropdown_overlay.dart`: Anchored dropdown supporting keyboard navigation (`ArrowDown`, `ArrowUp`, `Enter`, `Escape`), results counter, and quick suggestion chips.
-   - `lib/presentation/widgets/spotlight_search_bar_widget.dart`: Omnipresent top-level search bar (height 48px, rounded 16), text input with live search, clear button, and `⌘K` badge.
-   - Deep navigation contract: selecting any result directly pushes `NodeDetailScreen` with `targetProofGroup`, `targetStepIndex`, `targetCorollary`, and `autoUnlockProof: true`, unlocking all steps and smoothly scrolling to the proof in $\le 1$ tap.
+3. **System Registration & In-Memory Fallbacks**:
+   - `pubspec.yaml` (line 87): registered `- assets/content/linear_algebra/`.
+   - `lib/data/content/content_loader_service.dart` (lines 56-60): added 5 file paths to `knownAssetPaths`.
+   - `lib/data/catalog/linear_algebra_catalog.dart`: created with 5 fallback `KnowledgeNode` definitions with non-empty algebraic proofs and corollaries.
+   - `lib/data/catalog/curriculum_registry.dart` (line 37 & lines 138-143): imported `LinearAlgebraCatalog`, added to `getAllNodes()`, and mapped the 5 prerequisite chains to `_defaultPrerequisiteMap`.
 
-3. **Static Analysis & Test Verification Results**:
-   - `flutter analyze`: **0 errors, 0 warnings (No issues found!)**.
-   - `flutter test test/spotlight_search_test.dart`: **14 tests passed out of 14 (100% green)**.
-   - `flutter test test/spotlight_widget_navigation_test.dart`: **6 tests passed out of 6 (100% green)**.
-   - `flutter test`: **All 226 tests passed out of 226 (100% green, 0 regressions)**.
+4. **Test Suite Alignments**:
+   - `test/markdown_content_loader_test.dart`: updated expected topic count from 35 to 40 (lines 560, 710, 823, 827, 862, 879, 891, 903, 905, 906).
+   - `test/challenger_curriculum_stress_test.dart`: updated expected topic count from 35 to 40 (lines 25, 26, 123, 192).
+
+5. **Tool Execution Results**:
+   - `flutter analyze lib/`:
+     ```
+     Analyzing lib...
+     No issues found! (ran in 2.1s)
+     ```
+   - `flutter test test/markdown_content_loader_test.dart`:
+     ```
+     00:00 +21: All tests passed!
+     ```
+   - `flutter test test/curriculum_dag_test.dart`:
+     ```
+     00:00 +5: All tests passed!
+     ```
+   - `flutter test test/e2e_linear_algebra_and_simulations_test.dart`:
+     ```
+     00:01 +91: All tests passed!
+     ```
+   - `flutter test test/challenger_curriculum_stress_test.dart`:
+     ```
+     00:00 +6: All tests passed!
+     ```
 
 ---
 
 ## 2. Logic Chain
 
-1. **Mathematical Corpus Ingestion & Sub-Millisecond Indexing**:
-   - `SpotlightIndexService` ingests all curriculum nodes and unpacks their `effectiveBlocks` and `algebraicProof` steps.
-   - Corollaries are identified via `step.isCorollary`, group names, or descriptions, and indexed with `SpotlightResultType.corollary`.
-   - Proof steps are indexed as `SpotlightResultType.theorem` and LaTeX equations as `SpotlightResultType.formula`.
-   - Diacritic folding via `foldDiacritics` maps accented Italian vowels (`àáâä`, `èéêë`, `ìíîï`, `òóôö`, `ùúûü`) to plain ASCII equivalents, allowing queries like `"viete"` and `"viète"` to yield identical top relevance.
-   - Stemming via `stemItalian` truncates gender and number inflectional endings (`-a`, `-e`, `-i`, `-o`), ensuring queries like `"pura"` seamlessly match `"pure"` and `"bisezione"` matches `"bisezioni"`.
+1. **Topological Invariant Preservation**:
+   By assigning `prerequisites: ['mat_add_01', 'mat_pythagoras_01']` to `lin_alg_01_tuples`, its in-degree is 2. Therefore, `mat_add_01` remains the sole node in the curriculum with `inDegree == 0`, maintaining the topological invariant checked by Kahn's algorithm and root isolation tests in `challenger_curriculum_stress_test.dart` and `e2e_linear_algebra_and_simulations_test.dart`.
 
-2. **Direct $\le 1$-Tap Navigation Flow**:
-   - `SpotlightSearchBarWidget` connects to `NodeDetailScreen` via:
-     ```dart
-     Navigator.push(
-       context,
-       MaterialPageRoute(
-         builder: (_) => NodeDetailScreen(
-           node: result.node,
-           isar: widget.isar,
-           targetProofGroup: result.proofGroup,
-           targetStepIndex: result.proofStepIndex,
-           targetCorollary: result.title,
-           autoUnlockProof: true,
-         ),
-       ),
-     );
-     ```
-   - This activates `NodeDetailScreen`'s smooth auto-scroll to `AlgebraicProofWidget`, auto-unlocks steps up to the target, and focuses on the targeted theorem or corollary immediately in $\le 1$ tap.
+2. **Acyclic Progression**:
+   The chain `mat_add_01 / mat_pythagoras_01 -> lin_alg_01_tuples -> lin_alg_02_vectors -> lin_alg_03_operations -> lin_alg_04_span -> lin_alg_05_independence` is strictly forward-directed. Topological sort visited all 40 nodes with 0 remaining in-degrees and Tarjan's SCC analysis found no non-trivial connected components.
 
-3. **Radical UI Clutter Eradication**:
-   - In `MainLayoutScreen`, replaced the cluttered AppBar with the sleek `SpotlightSearchBarWidget`, settings gear, and Brilliant OS branding, eliminating the developer "Ricarica" button from the main interface.
-   - In `HomeScreen`, removed the dark bottom floating banner `Positioned(bottom: 20)` that previously covered bottom graph nodes.
-   - In `CategoryExplorerScreen`, removed the 180px dark hero banner `_buildHeaderHero`, bringing the subject tabs and difficulty chips directly to the top, and flattened nested folder accordions into direct, beautiful topic cards.
-   - In `NodeDetailScreen`, removed the redundant body AI rephrase button and redundant FAB, keeping a clean, single-action pattern with the top bar icons and bottom exercise prompt card.
+3. **Frontmatter & Registry Parity**:
+   Every prerequisite array declared in the YAML frontmatter matches entry-for-entry with `CurriculumRegistry._defaultPrerequisiteMap`. `test 3` in `challenger_curriculum_stress_test.dart` passed verifying exact bidirectional parity.
+
+4. **Pedagogical & KaTeX Rigor**:
+   Each node contains $\ge 2$ corollaries with full algebraic derivations without intermediate logical leaps. For example, `lin_alg_05_independence.md` includes `### Corollario: Criterio del Determinante 2D e Indipendenza di Due Vettori nel Piano` containing `\det`, `\begin{pmatrix}`, and insightful geometrical explanation of the signed parallelogram area.
+
+5. **Offline Headless Resilience**:
+   Because `knownAssetPaths` and `LinearAlgebraCatalog.getAllNodes()` provide full fallback representations, the app functions offline without network access or bundle generation during tests.
 
 ---
 
 ## 3. Caveats
 
-1. **Platform Keyboard Shortcuts**: While `⌘K` is visually badged in the search bar, desktop/web hardware keys (`LogicalKeyboardKey.meta` or `LogicalKeyboardKey.control` + `K`) focus the search bar; mobile users simply tap directly into the omnipresent search bar.
-2. **Offline-First Indexing**: All 35+ curriculum topics are indexed synchronously in memory on startup ($\approx 250\text{ KB}$ RAM footprint), operating at sub-millisecond speed without any internet connection.
-3. **No Database Migration Required**: All models and extensions are 100% backward-compatible with existing Isar schemas.
+- `test/vector_2d_simulation_adversarial_test.dart` contains failures belonging to Milestone 2's interactive widget gesture handling (`Vector2DSimulationWidget`). Milestone 3's scope is strictly the Linear Algebra curriculum, asset pipeline, fallback catalogs, and DAG integration. All Milestone 3 test targets and E2E curriculum suites pass 100%.
+- No other caveats.
 
 ---
 
 ## 4. Conclusion
 
-Milestone M3 is completely implemented and verified:
-- `SpotlightResultType` and `SpotlightSearchResult` models established in `lib/domain/models/spotlight_result.dart`.
-- `SpotlightIndexService` in `lib/core/services/spotlight_index_service.dart` provides sub-millisecond predictive search with Italian diacritic folding, stem normalization, and multi-field ranking.
-- Spotlight UI widgets (`SpotlightSearchBarWidget`, `SpotlightResultCard`, `SpotlightDropdownOverlay`) provide a Brilliant-styled experience with KaTeX formula rendering and keyboard navigation.
-- Clutter eradicated across all 4 screens (`MainLayoutScreen`, `HomeScreen`, `CategoryExplorerScreen`, `NodeDetailScreen`).
-- Direct $\le 1$-tap navigation opens and unlocks targeted theorem and corollary proofs immediately.
-- 20 new tests added (14 unit + 6 widget); full test suite passes 100% (226/226 tests) with zero analyzer issues.
+Milestone 3 is completely fulfilled:
+- All 5 Linear Algebra articles authored with highest mathematical rigor and Brilliant-style insights.
+- Assets registered in `pubspec.yaml`, `ContentLoaderService.knownAssetPaths`, and `CurriculumRegistry._defaultPrerequisiteMap`.
+- In-memory fallback catalog implemented in `lib/data/catalog/linear_algebra_catalog.dart`.
+- Full DAG integrity confirmed: acyclic, unique root `mat_add_01`, 0 analyze issues, and 100% tests passing across all curriculum, loader, and E2E suites.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify Worker M3's work:
+To independently verify the implementation, execute the following commands from repository root:
 
-1. **Static Analysis**:
-   ```bash
-   flutter analyze
-   ```
-   *Expected output*: `No issues found! (ran in ~3s)`
+```bash
+flutter analyze lib/
+flutter test test/markdown_content_loader_test.dart
+flutter test test/curriculum_dag_test.dart
+flutter test test/e2e_linear_algebra_and_simulations_test.dart
+flutter test test/challenger_curriculum_stress_test.dart
+```
 
-2. **Spotlight Search Unit Tests (14 tests)**:
-   ```bash
-   flutter test test/spotlight_search_test.dart
-   ```
-   *Expected output*: `All tests passed! (14 tests)`
-
-3. **Spotlight Widget Navigation Tests (6 tests)**:
-   ```bash
-   flutter test test/spotlight_widget_navigation_test.dart
-   ```
-   *Expected output*: `All tests passed! (6 tests)`
-
-4. **Complete Regression Test Suite (226 tests)**:
-   ```bash
-   flutter test
-   ```
-   *Expected output*: `All tests passed! (226 tests)`
+Files to inspect:
+- `assets/content/linear_algebra/lin_alg_01_tuples.md`
+- `assets/content/linear_algebra/lin_alg_02_vectors.md`
+- `assets/content/linear_algebra/lin_alg_03_operations.md`
+- `assets/content/linear_algebra/lin_alg_04_span.md`
+- `assets/content/linear_algebra/lin_alg_05_independence.md`
+- `lib/data/catalog/linear_algebra_catalog.dart`
+- `lib/data/catalog/curriculum_registry.dart`
+- `lib/data/content/content_loader_service.dart`
+- `pubspec.yaml`

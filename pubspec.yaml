@@ -84,6 +84,7 @@ flutter:
     - assets/content/calculus/integrals/
     - assets/content/physics/
     - assets/content/physics/circuits/
+    - assets/content/linear_algebra/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

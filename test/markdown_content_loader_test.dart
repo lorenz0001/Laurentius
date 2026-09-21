@@ -552,13 +552,13 @@ category: "Matematica"
     },
   );
 
-  group('Tier 4: Real-World & Topological Curriculum Integrity (All 35 Topics)', () {
-    test('Curriculum contains exactly 35 topics with valid unique serverIds and categories', () {
+  group('Tier 4: Real-World & Topological Curriculum Integrity (All 40 Topics)', () {
+    test('Curriculum contains exactly 40 topics with valid unique serverIds and categories', () {
       final allNodes = CurriculumRegistry.getAllNodes();
       expect(
         allNodes.length,
-        35,
-        reason: 'Curriculum must contain exactly 35 knowledge topics',
+        40,
+        reason: 'Curriculum must contain exactly 40 knowledge topics',
       );
 
       final ids = <String>{};
@@ -704,12 +704,12 @@ category: "Matematica"
         }
       }
 
-      // Acyclicity Assertion: all 35 nodes must be topologically ordered
+      // Acyclicity Assertion: all 40 nodes must be topologically ordered
       expect(
         topologicalOrder.length,
-        35,
+        40,
         reason:
-            'Prerequisite graph contains a cycle! Topologically ordered only ${topologicalOrder.length} of 35 nodes',
+            'Prerequisite graph contains a cycle! Topologically ordered only ${topologicalOrder.length} of 40 nodes',
       );
 
       // Verify that advanced topics appear after their foundational dependencies
@@ -820,11 +820,11 @@ category: "Matematica"
         loadedNodes.add(node);
       }
 
-      expect(loadedNodes.length, 35);
+      expect(loadedNodes.length, 40);
 
       // Verify serverId uniqueness
       final idSet = loadedNodes.map((n) => n.serverId).toSet();
-      expect(idSet.length, 35);
+      expect(idSet.length, 40);
 
       // Verify DAG acyclicity over the loaded Markdown files
       final inDegree = <String, int>{for (final id in idSet) id: 0};
@@ -859,8 +859,8 @@ category: "Matematica"
 
       expect(
         visited.length,
-        35,
-        reason: 'All 35 loaded Markdown articles must form an acyclic DAG',
+        40,
+        reason: 'All 40 loaded Markdown articles must form an acyclic DAG',
       );
     });
 
@@ -876,7 +876,7 @@ category: "Matematica"
 
         // Populate cache
         ContentLoaderService.setCachedNodes(loadedNodes);
-        expect(CurriculumRegistry.getAllNodes().length, 35);
+        expect(CurriculumRegistry.getAllNodes().length, 40);
         expect(
           CurriculumRegistry.prerequisiteMap.containsKey('phys_kin_01'),
           isTrue,
@@ -888,7 +888,7 @@ category: "Matematica"
 
         // Clear cache and verify fallback behavior
         ContentLoaderService.clearCache();
-        expect(CurriculumRegistry.getAllNodes().length, 35);
+        expect(CurriculumRegistry.getAllNodes().length, 40);
         expect(
           CurriculumRegistry.prerequisiteMap.containsKey('phys_kin_01'),
           isTrue,
@@ -900,10 +900,10 @@ category: "Matematica"
       'ContentLoaderService.loadAllFromBundle loads and parses articles from bundle',
       (tester) async {
         final nodes = await ContentLoaderService.loadAllFromBundle();
-        expect(nodes.length, 35);
+        expect(nodes.length, 40);
         expect(ContentLoaderService.cachedNodes, isNotNull);
-        expect(ContentLoaderService.cachedNodes!.length, 35);
-        expect(CurriculumRegistry.getAllNodes().length, 35);
+        expect(ContentLoaderService.cachedNodes!.length, 40);
+        expect(CurriculumRegistry.getAllNodes().length, 40);
       },
     );
   });

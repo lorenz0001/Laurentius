@@ -53,6 +53,11 @@ class ContentLoaderService {
     'assets/content/physics/circuits/ele_power_01.md',
     'assets/content/physics/circuits/ele_joule_01.md',
     'assets/content/physics/chem_ph_01.md',
+    'assets/content/linear_algebra/lin_alg_01_tuples.md',
+    'assets/content/linear_algebra/lin_alg_02_vectors.md',
+    'assets/content/linear_algebra/lin_alg_03_operations.md',
+    'assets/content/linear_algebra/lin_alg_04_span.md',
+    'assets/content/linear_algebra/lin_alg_05_independence.md',
   ];
 
   /// Populates the in-memory cache and propagates it to [CurriculumRegistry].

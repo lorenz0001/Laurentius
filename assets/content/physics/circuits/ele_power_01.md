@@ -6,25 +6,25 @@ subCategory: "Circuiti in Corrente Continua"
 prerequisites:
   - ele_ohm_01
 interactive:
-  template: live_equation
+  template: circuit_simulation
   unit: "W"
   equations:
-    - "V * I"
+    - "V * V / R"
   parameters:
     - variable: V
-      label: "Tensione (V)"
+      label: "Tensione del Generatore (V)"
       unit: "V"
       min: 1.0
       max: 48.0
       default: 12.0
       step: 1.0
-    - variable: I
-      label: "Corrente (A)"
-      unit: "A"
-      min: 0.1
-      max: 10.0
-      default: 2.0
-      step: 0.1
+    - variable: R
+      label: "Resistenza del Carico (Ω)"
+      unit: "Ω"
+      min: 1.0
+      max: 48.0
+      default: 6.0
+      step: 1.0
 ---
 
 ### L'Energia al Secondo: La Potenza Elettrica

@@ -22,12 +22,12 @@ void main() {
 
       final known = List<String>.from(ContentLoaderService.knownAssetPaths)..sort();
 
-      expect(diskFiles.length, 35, reason: 'Disk must contain exactly 35 markdown files');
-      expect(known.length, 35, reason: 'knownAssetPaths must contain exactly 35 paths');
+      expect(diskFiles.length, 40, reason: 'Disk must contain exactly 40 markdown files');
+      expect(known.length, 40, reason: 'knownAssetPaths must contain exactly 40 paths');
       expect(diskFiles, equals(known), reason: 'Every disk file must match knownAssetPaths exactly');
     });
 
-    test('2. Deep Markdown and Frontmatter Schema Validation across all 35 files', () {
+    test('2. Deep Markdown and Frontmatter Schema Validation across all 40 files', () {
       final validCategories = {
         'Matematica',
         'Fisica',
@@ -61,6 +61,11 @@ void main() {
         'quadratic_visual',
         'quadratic_proof',
         'dimostrazione_quadratica',
+        'vector_2d',
+        'linear_combination',
+        'vector_addition',
+        'span_2d',
+        'vector_simulation',
       };
 
       final parsedNodes = <String, KnowledgeNode>{};
@@ -115,7 +120,7 @@ void main() {
         parsedNodes[node.serverId] = node;
       }
 
-      expect(parsedNodes.length, 35);
+      expect(parsedNodes.length, 40);
     });
 
     test('3. Strict Parity: Markdown Frontmatter DAG vs CurriculumRegistry._defaultPrerequisiteMap', () {
@@ -184,7 +189,7 @@ void main() {
           if (inDegCopy[v] == 0) q.add(v);
         }
       }
-      expect(topoOrder.length, 35, reason: 'Kahn algorithm must order all 35 nodes');
+      expect(topoOrder.length, 40, reason: 'Kahn algorithm must order all 40 nodes');
 
       // Tarjan's strongly connected components algorithm
       int index = 0;

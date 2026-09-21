@@ -1,42 +1,41 @@
-# BRIEFING — 2026-09-07T23:41:00Z
+# BRIEFING — 2026-09-14T10:02:25Z
 
 ## Mission
-Comprehensive, exhaustive audit of all 35+ curriculum topics across arithmetic, algebra, calculus, geometry_trig, and physics. Audit corollary status (unabridged step-by-step mathematical demonstration vs formula only), identify missing corollaries, and provide concrete recommendations and expansion templates for Requirement R2.
+Technical investigation and audit of all interactive simulations and templates in Laurentius (R1 and R3), producing a comprehensive survey report and actionable recommendations for Milestone 1 (R1 fixes) and Milestone 2 (R3 2D vector widget).
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: survey, codebase investigation, technical reporting, curriculum & corollaries auditor
+- Roles: read-only investigation, code audit, synthesis, recommendation
 - Working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_explorer_survey_1
-- Original parent: 1a6ba404-5e53-4553-820e-f33074fed99c
-- Milestone: Curriculum & Corollaries Exhaustive Audit (R2)
+- Original parent: 3061e57d-c498-4758-a18f-534ac618de5c
+- Milestone: Survey & Architectural Design (R1 & R3)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement changes to project source code
-- Strictly write reports/metadata only to .agents/teamwork_preview_explorer_survey_1
-- Follow 5-Component Handoff Protocol (Observation, Logic Chain, Caveats, Conclusion, Verification Method)
+- Read-only investigation — do NOT implement or modify source code/tests
+- Produce survey_interactive_report.md and handoff.md in working directory
+- Communicate via send_message to parent (ID: 3061e57d-c498-4758-a18f-534ac618de5c)
 
 ## Current Parent
-- Conversation ID: e2a6aa4b-4ae5-4307-ae6e-a44540e77d71
-- Updated: 2026-09-07T23:41:00Z
+- Conversation ID: 3061e57d-c498-4758-a18f-534ac618de5c
+- Updated: 2026-09-14T10:02:25Z
 
 ## Investigation State
-- **Explored paths**: All 35 Markdown articles under `assets/content/` (arithmetic: 4, algebra: 8, calculus: 13, geometry_trig: 5, physics: 5), `lib/data/content/markdown_content_parser.dart`, `lib/presentation/widgets/algebraic_proof_widget.dart`, `test/curriculum_dag_test.dart`, `test/markdown_content_loader_test.dart`.
+- **Explored paths**: `lib/presentation/widgets/interactive/` (12 files), `assets/content/**/*.md` (35 files), `test/` (23 test suites), `PROJECT_MAP.md`, `ORIGINAL_REQUEST.md`.
 - **Key findings**:
-  1. Exactly 35 topics exist in the curriculum; all 35 contain at least one step mentioning "Corollario".
-  2. 100% (35/35) of corollaries are formatted merely as the final single step of a main proof (`### N. Corollario: ...`) with only the final equation and an insight callout.
-  3. Zero topics (0/35) currently possess an unabridged, step-by-step mathematical demonstration for their corollaries detailing intermediate algebraic derivations, substitutions, and simplifications (100% deficiency against Requirement R2).
-  4. 14 topics bundle multiple distinct theorems into a single corollary equation line (e.g. `mat_binom_01`, `mat_deriv_rules_01`, `mat_mul_01`, `mat_lim_sinc_01`).
-  5. `MarkdownContentParser` natively supports `## Dimostrazione: [GroupName]`, allowing corollaries to be structured as `## Dimostrazione: Corollario - [Nome]` with 3–5 dedicated steps that seamlessly map into `AlgebraicProofWidget` tabs and Spotlight Search indexing.
-- **Unexplored areas**: None within the curriculum and corollaries scope.
+  - Exactly 11 simulation widgets exist, all mapped in `InteractiveTemplateFactory` and bound to 35 markdown files.
+  - All 11 widgets satisfy autoplay suppression on mount.
+  - `CartesianGraphWidget` has a performance bottleneck (parsing expression string 250+ times per frame in paint loop) and a pedagogical bug (hardcoded quadratic formula and parabola vertex for non-quadratic functions).
+  - `LiveEquationWidget` is purely numerical; physics topics `ele_power_01` and `ele_joule_01` should be upgraded to `circuit_simulation`.
+  - Only `TrigCircleWidget` implements direct canvas touch drag.
+  - Complete architecture designed for R3 `Vector2DSimulationWidget` (Components, Addition, Span & Linear Combinations).
+- **Unexplored areas**: None within scope.
 
 ## Key Decisions Made
-- Conducted exhaustive census of all 35 topics and cataloged all 52 existing corollaries in `handoff.md`.
-- Documented all missing standard corollaries across all 5 domains.
-- Formulated the exact R2-compliant expansion blueprint using dedicated demonstration blocks (`## Dimostrazione: Corollario - [Nome]`).
-- Established independent verification methodology for remediation workers.
+- Fully documented survey report and 5-component handoff report.
+- Formulated concrete 2-milestone implementation plan for builder agents.
 
 ## Artifact Index
-- handoff.md — Comprehensive 5-component audit report for all 35 topics and corollaries
-- progress.md — Liveness heartbeat and milestone tracking
-- DISPATCH.md — Task assignment log
-- audit_data.json — Raw structured census data for all 35 curriculum nodes
+- DISPATCH.md — Recorded incoming dispatch
+- progress.md — Liveness heartbeat (all steps completed)
+- survey_interactive_report.md — Comprehensive survey and technical audit report
+- handoff.md — 5-component handoff report

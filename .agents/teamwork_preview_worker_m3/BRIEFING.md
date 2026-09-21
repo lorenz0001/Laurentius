@@ -1,83 +1,85 @@
-# BRIEFING — 2026-09-08T02:08:00Z
+# BRIEFING — 2026-09-14T10:52:00Z
 
 ## Mission
-Implement Milestone M3: Radically Simplified UI & Omnipresent Instant Spotlight Search for Laurentius (Brilliant-OS).
+Author 5 rigorous Linear Algebra educational nodes in assets/content/linear_algebra/, register assets in pubspec.yaml, wire ContentLoaderService, update CurriculumRegistry and linear algebra catalog fallbacks, and verify full DAG integrity and test pass.
 
 ## 🔒 My Identity
-- Archetype: implementer
+- Archetype: teamwork_preview_worker_m3
 - Roles: implementer, qa, specialist
 - Working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m3
-- Original parent: e2a6aa4b-4ae5-4307-ae6e-a44540e77d71
-- Milestone: M3 (Radically Simplified UI & Instant Spotlight Search)
+- Original parent: 3061e57d-c498-4758-a18f-534ac618de5c
+- Milestone: Milestone 3: Linear Algebra Curriculum & Registration (R2, R4)
 
 ## 🔒 Key Constraints
-- Exclusive write ownership:
-  - lib/domain/models/spotlight_result.dart (new)
-  - lib/core/services/spotlight_index_service.dart (new)
-  - lib/presentation/widgets/spotlight_search_bar_widget.dart (new)
-  - lib/presentation/widgets/spotlight_result_card.dart (new)
-  - lib/presentation/widgets/spotlight_dropdown_overlay.dart (new)
-  - lib/presentation/pages/main_layout_screen.dart
-  - lib/presentation/pages/home_screen.dart
-  - lib/presentation/pages/category_explorer_screen.dart
-  - lib/presentation/pages/node_detail_screen.dart
-  - test/spotlight_search_test.dart (new)
-  - test/spotlight_widget_navigation_test.dart (new)
-- DO NOT CHEAT: Genuine implementations only, no hardcoded test outputs or dummy facades.
-- All existing tests (206) and new tests must pass.
-- flutter analyze with 0 errors and 0 warnings.
+- Preserve `mat_add_01` as the sole foundational root with inDegree == 0.
+- `lin_alg_01_tuples` prerequisites MUST be `['mat_add_01', 'mat_pythagoras_01']`.
+- Exact parity between YAML frontmatter prerequisites and `CurriculumRegistry._defaultPrerequisiteMap`.
+- Highest mathematical rigor: full step-by-step proofs for corollaries (no skipped steps), Brilliant-style `> **Insight:**` callouts.
+- Zero analyze issues (`flutter analyze lib/`).
+- 100% test pass for `markdown_content_loader_test.dart`, `curriculum_dag_test.dart`, `e2e_linear_algebra_and_simulations_test.dart`.
+- Do not cheat, do not create facade/dummy implementations.
 
 ## Current Parent
-- Conversation ID: e2a6aa4b-4ae5-4307-ae6e-a44540e77d71
-- Updated: 2026-09-08T02:08:00Z
+- Conversation ID: 3061e57d-c498-4758-a18f-534ac618de5c
+- Updated: 2026-09-14T10:52:00Z
 
 ## Task Summary
-- **What was built**:
-  1. `SpotlightSearchResult` & `SpotlightResultType` data models in `lib/domain/models/spotlight_result.dart`.
-  2. `SpotlightIndexService` in `lib/core/services/spotlight_index_service.dart` with sub-millisecond predictive scoring, Italian diacritic folding (`viète` <-> `viete`), Italian stem matching (`pura` <-> `pure`), multi-field matching, and match range highlights.
-  3. UI components: `SpotlightSearchBarWidget` with `⌘K` badge, `SpotlightDropdownOverlay` with keyboard navigation, and `SpotlightResultCard` with KaTeX formula preview and type badge pills.
-  4. Radical clutter eradication in `MainLayoutScreen`, `HomeScreen`, `CategoryExplorerScreen`, and `NodeDetailScreen`.
-  5. Direct <= 1-tap navigation directly pushing `NodeDetailScreen` with target proof group, step index, corollary, and auto-unlock.
-  6. Automated test suites: 14 unit tests in `test/spotlight_search_test.dart` and 6 widget navigation tests in `test/spotlight_widget_navigation_test.dart`.
-- **Success criteria**: 0 flutter analyze warnings/errors, all 226 tests pass (100% green).
-- **Interface contracts**: PROJECT.md § Interface Contracts.
-- **Code layout**: PROJECT.md § Code Layout.
+- **What to build**:
+  1. 5 markdown files under `assets/content/linear_algebra/`:
+     - `lin_alg_01_tuples.md`: R^n, ordered n-tuples, Euclidean metric, Cauchy-Schwarz, identity/inverse
+     - `lin_alg_02_vectors.md`: Free vectors, norm, canonical basis, normalization/versor, translation invariance
+     - `lin_alg_03_operations.md`: Parallelogram & tip-to-tail rules, 8 axioms, 0v=0, (-1)v=-v
+     - `lin_alg_04_span.md`: Linear combinations, Span subspace proof, minimality, parallel collapse
+     - `lin_alg_05_independence.md`: Linear independence, non-trivial cancellation, zero vector criterion, 2D determinant & area
+  2. Asset registration in `pubspec.yaml` (`- assets/content/linear_algebra/`).
+  3. Registration in `lib/data/content/content_loader_service.dart` (`knownAssetPaths`).
+  4. Registration in `lib/data/catalog/curriculum_registry.dart` (`_defaultPrerequisiteMap` & catalog fallback).
+  5. Fallback catalog nodes in `lib/data/catalog/linear_algebra_catalog.dart`.
+  6. Aligned node count (35 -> 40) in `test/markdown_content_loader_test.dart` and `test/challenger_curriculum_stress_test.dart`.
+- **Success criteria**:
+  - `flutter analyze lib/` -> 0 errors, 0 warnings (PASSED)
+  - `flutter test test/markdown_content_loader_test.dart` passes (PASSED, 21/21)
+  - `flutter test test/curriculum_dag_test.dart` passes (PASSED, 5/5)
+  - `flutter test test/e2e_linear_algebra_and_simulations_test.dart` passes (PASSED, 91/91)
+  - `flutter test test/challenger_curriculum_stress_test.dart` passes (PASSED, 6/6)
+- **Interface contracts**: PROJECT.md § Interface Contracts (M2 <-> M3, M3 <-> M4)
+- **Code layout**: PROJECT.md § Code Layout
 
 ## Key Decisions Made
-- Implemented `foldDiacritics` and `stemItalian` to achieve robust Italian language matching (e.g. `pura` matches `pure`, `viète` matches `viete`).
-- Replaced traditional AppBar in `MainLayoutScreen` with a sleek top bar featuring the omnipresent Spotlight Search Bar, settings gear, and Brilliant OS branding.
-- Removed the heavy floating bottom banner from `HomeScreen`.
-- Removed the 180px dark hero banner from `CategoryExplorerScreen` and flattened nested accordion boxes into direct topic cards.
-- Removed duplicate AI rephrase button from body header and removed redundant FAB from `NodeDetailScreen`.
-- Fully verified backwards compatibility: all 206 original tests and 20 new tests pass seamlessly.
-
-## Artifact Index
-- `.agents/teamwork_preview_worker_m3/DISPATCH.md` — Assignment from parent
-- `.agents/teamwork_preview_worker_m3/BRIEFING.md` — Working memory and identity
-- `.agents/teamwork_preview_worker_m3/progress.md` — Progress tracker and liveness heartbeat
-- `.agents/teamwork_preview_worker_m3/handoff.md` — Final handoff report
+- Anchored `lin_alg_01_tuples` to `['mat_add_01', 'mat_pythagoras_01']`, ensuring `mat_add_01` remains the unique root of the curriculum.
+- Maintained exact 1:1 parity between YAML frontmatter prerequisites and `_defaultPrerequisiteMap`.
+- Added 2 fully developed corollaries per node with complete algebraic derivations and `> **Insight:**` pedagogical commentary.
+- Created `LinearAlgebraCatalog` implementing `CurriculumRegistry.createFallbackNode()` with non-empty algebraic proofs and corollaries.
 
 ## Change Tracker
 - **Files modified**:
-  - `lib/domain/models/spotlight_result.dart` (created)
-  - `lib/core/services/spotlight_index_service.dart` (created)
-  - `lib/presentation/widgets/spotlight_search_bar_widget.dart` (created)
-  - `lib/presentation/widgets/spotlight_result_card.dart` (created)
-  - `lib/presentation/widgets/spotlight_dropdown_overlay.dart` (created)
-  - `lib/presentation/pages/main_layout_screen.dart` (updated)
-  - `lib/presentation/pages/home_screen.dart` (updated)
-  - `lib/presentation/pages/category_explorer_screen.dart` (updated)
-  - `lib/presentation/pages/node_detail_screen.dart` (updated)
-  - `test/spotlight_search_test.dart` (created)
-  - `test/spotlight_widget_navigation_test.dart` (created)
-- **Build status**: 226/226 tests passing, flutter analyze 0 issues.
-- **Pending issues**: None.
+  - `assets/content/linear_algebra/lin_alg_01_tuples.md`: Created node 1
+  - `assets/content/linear_algebra/lin_alg_02_vectors.md`: Created node 2
+  - `assets/content/linear_algebra/lin_alg_03_operations.md`: Created node 3
+  - `assets/content/linear_algebra/lin_alg_04_span.md`: Created node 4
+  - `assets/content/linear_algebra/lin_alg_05_independence.md`: Created node 5
+  - `pubspec.yaml`: Added `- assets/content/linear_algebra/`
+  - `lib/data/content/content_loader_service.dart`: Added 5 paths to `knownAssetPaths`
+  - `lib/data/catalog/linear_algebra_catalog.dart`: Created fallback catalog
+  - `lib/data/catalog/curriculum_registry.dart`: Wired catalog in `getAllNodes()` and added 5 prerequisite mappings
+  - `test/markdown_content_loader_test.dart`: Updated node counts from 35 to 40
+  - `test/challenger_curriculum_stress_test.dart`: Updated node counts from 35 to 40
+- **Build status**: PASS (flutter analyze: 0 issues, tests: 100% pass across target suites)
+- **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: PASS (226 tests passed out of 226)
-- **Lint status**: Clean (0 errors, 0 warnings)
-- **Tests added/modified**: 20 new automated unit and widget tests.
+- **Build/test result**: PASS (all 4 target verification commands exit code 0)
+- **Lint status**: 0 violations in `lib/`
+- **Tests added/modified**: Updated test counts to 40 in `markdown_content_loader_test.dart` and `challenger_curriculum_stress_test.dart`.
 
 ## Loaded Skills
-- **Source**: c:\Users\catte\Desktop\Laurentius\.agents\skills\laurentius-dev\SKILL.md
-- **Core methodology**: Brilliant-style UI/UX: clean, modern, educational, ample whitespace, rounded corners (R12-R16), pastel accents, interactive focus, offline-first.
+- **Source**: `c:\Users\catte\Desktop\Laurentius\.agents\skills\server-content-agent\SKILL.md`
+- **Local copy**: `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m3\server-content-agent-SKILL.md`
+- **Core methodology**: Guidelines for authoring SDUI Markdown educational articles with YAML frontmatter, KaTeX math blocks, interactive parameter schemas, step-by-step proofs, and `### Corollario:` headings.
+
+## Artifact Index
+- `.agents/teamwork_preview_worker_m3/DISPATCH.md` — Assignment instructions
+- `.agents/teamwork_preview_worker_m3/BRIEFING.md` — Working memory and status
+- `.agents/teamwork_preview_worker_m3/progress.md` — Liveness and execution progress
+- `.agents/teamwork_preview_worker_m3/server-content-agent-SKILL.md` — Local copy of domain skill
+- `.agents/teamwork_preview_worker_m3/handoff.md` — Final 5-component handoff report

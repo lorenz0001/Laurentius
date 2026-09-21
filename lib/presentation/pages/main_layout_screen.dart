@@ -6,6 +6,7 @@ import '../widgets/spotlight_search_bar_widget.dart';
 import 'category_explorer_screen.dart';
 import 'home_screen.dart';
 import 'settings_screen.dart';
+import 'university/university_courses_screen.dart';
 
 /// Schermata principale (Root Layout) di Brilliant-OS.
 /// Radically simplified: elimina il vecchio AppBar affollato con pulsanti di debug ("Ricarica")
@@ -147,6 +148,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
             isar: widget.isar,
             onRefreshRequested: _handleRefresh,
           ),
+          const UniversityCoursesScreen(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -184,6 +186,11 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
               icon: Icon(Icons.auto_stories_outlined),
               activeIcon: Icon(Icons.auto_stories_rounded),
               label: 'Esplora',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school_outlined),
+              activeIcon: Icon(Icons.school_rounded),
+              label: 'Università',
             ),
           ],
         ),

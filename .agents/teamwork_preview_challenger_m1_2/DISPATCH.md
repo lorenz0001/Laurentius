@@ -1,21 +1,17 @@
-## 2026-09-07T12:15:34Z
-You are Challenger 2 for Milestone 1 (M1: R4 Configurable Slider System & Unit Decoupling).
-Your identity: teamwork_preview_challenger_m1_2
-Your working directory: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_2
-Workspace root: c:\Users\catte\Desktop\Laurentius
+## 2026-09-14T10:12:52Z
+You are teamwork_preview_challenger_m1_2.
+Your working directory is: c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_2
+The project workspace root is: c:\Users\catte\Desktop\Laurentius
+Mandatory input: You MUST read the original user request at c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting work (specifically the latest request dated 2026-09-14T09:56:11Z). Also read c:\Users\catte\Desktop\Laurentius\PROJECT.md and the worker handoff report at c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m1\handoff.md.
 
-MANDATORY: Read c:\Users\catte\Desktop\Laurentius\.agents\ORIGINAL_REQUEST.md before starting.
-Also read:
-- c:\Users\catte\Desktop\Laurentius\PROJECT.md
-- c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_worker_m1_1\handoff.md
-
-Tasks:
-1. Empirically challenge simulation widgets (`OhmCircuitSimulationWidget`, `KinematicsSimulationWidget`, and `InteractiveTemplateFactory`).
-2. Verify slider badge formatting under custom parameter units and fallback defaults.
-3. Verify that interactive slider gestures and parameter updates re-evaluate calculations accurately without crashing or lagging.
-4. Run `flutter test test/e2e_content_and_widgets_test.dart` and `flutter test test/all_animations_test.dart`.
-5. Render a formal verdict: APPROVE or CHALLENGE_DETECTED.
-
-Deliverable:
-Write report to `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_2\handoff.md`.
-Send message to parent with verdict.
+Objective:
+Adversarially challenge and stress-test the formula display and vertex marker logic in `CartesianGraphWidget` and the physics rebinding (Milestone 1):
+1. Test formula display for various mathematical function forms:
+   - Quadratic: $x^2 - 4$, $2x^2 + 3x - 1$ -> must display quadratic form and calculate vertex.
+   - Non-quadratic: `(1 + 1/x)^x`, `ln(1+x)/x`, `sin(x)`, `x * x * x / 3 - x` -> must display genuine equation and suppress vertex marker.
+   - Edge case: $a = 0$ ($bx + c$, a line) -> must suppress vertex marker.
+2. Verify physics articles `ele_power_01.md` and `ele_joule_01.md`:
+   - Ensure they load with `template: circuit_simulation`.
+   - Verify `OhmCircuitSimulationWidget` correctly computes current $I = V/R$ and power $P = V \cdot I$ with the parameters provided.
+3. Run tests using `flutter test`.
+4. Deliver your verdict (`APPROVE` or `REQUEST_CHANGES`) with test evidence in `c:\Users\catte\Desktop\Laurentius\.agents\teamwork_preview_challenger_m1_2\handoff.md` and notify parent.

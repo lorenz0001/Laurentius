@@ -12,6 +12,7 @@ import 'rolle_lagrange_widget.dart';
 import 'squeeze_theorem_widget.dart';
 import 'triangle_solver_widget.dart';
 import 'trig_circle_widget.dart';
+import 'vector_2d_simulation_widget.dart';
 
 /// Factory Pattern per l'istanziazione dinamica di widget interattivi (Server-Driven UI).
 /// A seconda del [templateType] specificato nel database, restituisce il widget corrispondente.
@@ -23,6 +24,17 @@ class InteractiveTemplateFactory {
     }
 
     switch (data.templateType) {
+      case 'vector_2d':
+      case 'linear_combination':
+      case 'vector_addition':
+      case 'span_2d':
+      case 'vector_simulation':
+      case 'vector_span':
+      case 'vector_space':
+      case 'vettori_2d':
+      case 'somma_vettoriale':
+      case 'combinazione_lineare':
+        return Vector2DSimulationWidget(data: data);
       case 'circuit_simulation':
       case 'ohm_simulation':
         return OhmCircuitSimulationWidget(data: data);

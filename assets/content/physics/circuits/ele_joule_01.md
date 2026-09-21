@@ -7,31 +7,24 @@ prerequisites:
   - ele_power_01
   - mat_fund_calc_01
 interactive:
-  template: live_equation
-  unit: "J"
+  template: circuit_simulation
+  unit: "W"
   equations:
-    - "R * I * I * t"
+    - "V * V / R"
   parameters:
+    - variable: V
+      label: "Tensione del Generatore (V)"
+      unit: "V"
+      min: 1.0
+      max: 48.0
+      default: 12.0
+      step: 1.0
     - variable: R
-      label: "Resistenza (Ohm)"
+      label: "Resistenza Dissipante (Ω)"
       unit: "Ω"
       min: 1.0
-      max: 20.0
-      default: 5.0
-      step: 1.0
-    - variable: I
-      label: "Corrente (A)"
-      unit: "A"
-      min: 0.5
-      max: 5.0
-      default: 2.0
-      step: 0.5
-    - variable: t
-      label: "Tempo (s)"
-      unit: "s"
-      min: 1.0
-      max: 60.0
-      default: 10.0
+      max: 48.0
+      default: 4.0
       step: 1.0
 ---
 

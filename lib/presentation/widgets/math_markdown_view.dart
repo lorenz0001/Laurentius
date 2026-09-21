@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
@@ -5,15 +6,17 @@ import '../../core/theme/app_theme.dart';
 
 /// Widget didattico che effettua il parsing e rendering ibrido di Markdown e formule LaTeX
 /// sia inline ($formula$) sia a blocco display ($$formula$$), con tipografia ad alta risoluzione
-/// ottimizzata per Wikipedia Mobile Dark Mode.
+/// ottimizzata per Wikipedia Mobile Dark Mode. Supporta termini ipertestuali interattivi [Termine](term:id).
 class MathMarkdownView extends StatelessWidget {
   final String text;
   final TextStyle? baseStyle;
+  final void Function(String termId)? onTermTap;
 
   const MathMarkdownView({
     super.key,
     required this.text,
     this.baseStyle,
+    this.onTermTap,
   });
 
   @override
@@ -35,7 +38,7 @@ class MathMarkdownView extends StatelessWidget {
       if (match.start > lastEnd) {
         final textChunk = text.substring(lastEnd, match.start).trim();
         if (textChunk.isNotEmpty) {
-          widgets.addAll(_buildTextAndInlineMathParagraphs(textChunk, effectiveBaseStyle));
+          widgets.addAll(_buildTextAndInlineMathParagraphs(textChunk, effectiveBaseStyle, onTermTap));
         }
       }
 
@@ -50,7 +53,7 @@ class MathMarkdownView extends StatelessWidget {
     if (lastEnd < text.length) {
       final textChunk = text.substring(lastEnd).trim();
       if (textChunk.isNotEmpty) {
-        widgets.addAll(_buildTextAndInlineMathParagraphs(textChunk, effectiveBaseStyle));
+        widgets.addAll(_buildTextAndInlineMathParagraphs(textChunk, effectiveBaseStyle, onTermTap));
       }
     }
 
@@ -104,6 +107,7 @@ class MathMarkdownView extends StatelessWidget {
   static List<Widget> _buildTextAndInlineMathParagraphs(
     String text,
     TextStyle baseStyle,
+    void Function(String termId)? onTermTap,
   ) {
     final List<Widget> paragraphs = [];
     final lines = text.split('\n');
@@ -129,6 +133,7 @@ class MathMarkdownView extends StatelessWidget {
                   color: AppTheme.textPrimary,
                   letterSpacing: -0.2,
                 ),
+                onTermTap,
               ),
             ),
           ),
@@ -146,6 +151,7 @@ class MathMarkdownView extends StatelessWidget {
                   color: AppTheme.textPrimary,
                   letterSpacing: -0.3,
                 ),
+                onTermTap,
               ),
             ),
           ),
@@ -163,6 +169,7 @@ class MathMarkdownView extends StatelessWidget {
                   color: AppTheme.textPrimary,
                   letterSpacing: -0.4,
                 ),
+                onTermTap,
               ),
             ),
           ),
@@ -185,7 +192,7 @@ class MathMarkdownView extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text.rich(
-                    _buildInlineSpans(line.substring(2), baseStyle),
+                    _buildInlineSpans(line.substring(2), baseStyle, onTermTap),
                   ),
                 ),
               ],
@@ -198,7 +205,7 @@ class MathMarkdownView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text.rich(
-              _buildInlineSpans(line, baseStyle),
+              _buildInlineSpans(line, baseStyle, onTermTap),
             ),
           ),
         );
@@ -209,7 +216,11 @@ class MathMarkdownView extends StatelessWidget {
   }
 
   /// Suddivide una riga di testo identificando le porzioni matematiche inline racchiuse tra $ ... $
-  static InlineSpan _buildInlineSpans(String line, TextStyle textStyle) {
+  static InlineSpan _buildInlineSpans(
+    String line,
+    TextStyle textStyle,
+    void Function(String termId)? onTermTap,
+  ) {
     final inlineMathRegex = RegExp(r'\$(.*?)\$');
     final List<InlineSpan> spans = [];
     int cursor = 0;
@@ -217,7 +228,7 @@ class MathMarkdownView extends StatelessWidget {
     for (final match in inlineMathRegex.allMatches(line)) {
       if (match.start > cursor) {
         final textBefore = line.substring(cursor, match.start);
-        spans.addAll(_parseMarkdownFormatting(textBefore, textStyle));
+        spans.addAll(_parseMarkdownFormatting(textBefore, textStyle, onTermTap));
       }
 
       final latexFormula = match.group(1)?.trim() ?? '';
@@ -253,19 +264,23 @@ class MathMarkdownView extends StatelessWidget {
 
     if (cursor < line.length) {
       final remaining = line.substring(cursor);
-      spans.addAll(_parseMarkdownFormatting(remaining, textStyle));
+      spans.addAll(_parseMarkdownFormatting(remaining, textStyle, onTermTap));
     }
 
     return TextSpan(children: spans);
   }
 
-  /// Converte la formattazione markdown inline di base (**grassetto** e *corsivo*)
-  static List<InlineSpan> _parseMarkdownFormatting(String text, TextStyle base) {
+  /// Converte la formattazione markdown inline di base (**grassetto**, *corsivo*, link [testo](term:id))
+  static List<InlineSpan> _parseMarkdownFormatting(
+    String text,
+    TextStyle base,
+    void Function(String termId)? onTermTap,
+  ) {
     final List<InlineSpan> spans = [];
-    final boldItalicRegex = RegExp(r'(\*\*\*.*?\*\*\*|\*\*.*?\*\*|\*.*?\*|`.*?`)');
+    final tokenRegex = RegExp(r'(\[.*?\]\(.*?\)|\*\*\*.*?\*\*\*|\*\*.*?\*\*|\*.*?\*|`.*?`)');
     int cursor = 0;
 
-    for (final match in boldItalicRegex.allMatches(text)) {
+    for (final match in tokenRegex.allMatches(text)) {
       if (match.start > cursor) {
         spans.add(TextSpan(
           text: text.substring(cursor, match.start),
@@ -274,7 +289,37 @@ class MathMarkdownView extends StatelessWidget {
       }
 
       final token = match.group(0) ?? '';
-      if (token.startsWith('***') && token.endsWith('***') && token.length >= 6) {
+      if (token.startsWith('[') && token.endsWith(')') && token.contains('](')) {
+        final closingBracket = token.indexOf('](');
+        final label = token.substring(1, closingBracket);
+        final url = token.substring(closingBracket + 2, token.length - 1);
+        if (url.startsWith('term:')) {
+          final termId = url.substring(5);
+          spans.add(
+            TextSpan(
+              text: label,
+              style: base.copyWith(
+                color: const Color(0xFF38BDF8),
+                fontWeight: FontWeight.w600,
+                decoration: TextDecoration.underline,
+                decorationColor: const Color(0xFF38BDF8).withAlpha(160),
+                decorationStyle: TextDecorationStyle.solid,
+              ),
+              recognizer: onTermTap != null
+                  ? (TapGestureRecognizer()..onTap = () => onTermTap(termId))
+                  : null,
+            ),
+          );
+        } else {
+          spans.add(TextSpan(
+            text: label,
+            style: base.copyWith(
+              color: const Color(0xFF60A5FA),
+              decoration: TextDecoration.underline,
+            ),
+          ));
+        }
+      } else if (token.startsWith('***') && token.endsWith('***') && token.length >= 6) {
         spans.add(TextSpan(
           text: token.substring(3, token.length - 3),
           style: base.copyWith(

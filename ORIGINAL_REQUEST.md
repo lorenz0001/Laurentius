@@ -144,4 +144,56 @@ Preservare integralmente tutte le funzionalità esistenti dell'applicazione:
 - [ ] `flutter analyze` termina con 0 errori e 0 warning.
 - [ ] L'intera suite di test `flutter test` passes con successo senza regressioni.
 
+## 2026-09-14T09:56:11Z
+
+Revisione e ottimizzazione delle animazioni e simulazioni interattive di Laurentius (eliminazione di widget/animazioni prive di utilità didattica, garanzia di reattività fluida a 60fps con controlli diretti) e creazione di un nuovo modulo fondativo di Algebra Lineare a partire dal concetto di n-upla, con standard di scrittura matematica e intuizione visiva di altissimo livello.
+
+Working directory: c:/Users/catte/Desktop/Laurentius
+Integrity mode: development
+
+## Requirements
+
+### R1. Audit, Semplificazione e Fix delle Simulazioni Interattive
+- Ispezionare tutti i widget in `lib/presentation/widgets/interactive/` e i relativi template collegati nei nodi Markdown.
+- Eliminare o sostituire comportamenti non funzionali, autoplay disorientanti e widget puramente numerici privi di intuizione geometrica o fisica (es. formule statiche senza reale interazione visuale).
+- Garantire che ogni simulazione offra un controllo manuale reattivo (slider/gesture touch), rendering a 60fps su canvas e un chiaro modello concettuale (stile Brilliant.org).
+- Mantenere il codice snello ed elegante: evitare file ipertrofici o duplicazione di logica matematica, preferendo astrazioni pulite e librerie sicure ove consentano di risparmiare codice ("meno codice, maggiore espressività").
+
+### R2. Modulo Didattico Fondativo di Algebra Lineare
+- Introdurre il nuovo settore didattico di Algebra Lineare in `assets/content/linear_algebra/` (o sotto `algebra/`), registrando il percorso in `pubspec.yaml`.
+- Articolare il percorso didattico in almeno 5 nodi sequenziali ad altissima cura espositiva e rigore formale:
+  1. **Concetto di $n$-upla ordinata e spazio $\mathbb{R}^n$**: dalle coppie e terne ordinate alla generalizzazione a $n$ dimensioni, significato algebrico e geometrico.
+  2. **Vettori Geometrici e Coordinate**: vettore applicato, modulo, direzione, verso e rappresentazione per componenti rispetto alla base canonica.
+  3. **Operazioni Vettoriali Fondamentali**: somma di vettori (regola del parallelogramma e punta-coda) e moltiplicazione per uno scalare con relative proprietà assiomatiche.
+  4. **Combinazioni Lineari e Spazio Generato ($\text{span}$)**: definizione, interpretazione geometrica di retta, piano e iperpiano generati.
+  5. **Dipendenza e Indipendenza Lineare**: definizione formale, condizione di annullamento a coefficienti non nulli, significato geometrico (vettori collineari/complanari).
+- Ogni articolo deve includere: frontmatter YAML valido con prerequisiti, passaggi algebrici senza salti logici, riquadri `> **Insight:**` per l'intuizione profonda, e teoremi/corollari ben identificati.
+
+### R3. Visualizzazione Interattiva per l'Algebra Lineare
+- Fornire un widget interattivo 2D dedicato (o integrazione in canvas cartesiano) per manipolare vettori sul piano:
+  - Spostamento interattivo dei vettori o variazione dei coefficienti scalari tramite slider/gesture.
+  - Visualizzazione in tempo reale della regola del parallelogramma / somma vettoriale e della combinazione lineare $c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2$.
+
+### R4. Integrità Architetturale e Test Automatizzati
+- La struttura dei prerequisiti tra i nuovi nodi e i nodi esistenti deve formare un Grafo Aciclico Diretto (DAG) privo di cicli.
+- I nuovi file `.md` devono essere caricati correttamente dal `ContentLoaderService` offline in Isar Database.
+- Il codice deve superare `flutter analyze` senza errori né warning e tutti i test di `flutter test` devono avere esito positivo (inclusi test per i nuovi contenuti e per le simulazioni).
+
+## Acceptance Criteria
+
+### Interactive Simulations
+- [ ] Nessun widget interattivo presenta crash, loop di render a vuoto o autoplay caotico incontrollabile.
+- [ ] I widget interattivi collegati agli articoli rispondono a gesti/slider aggiornando visualmente la rappresentazione geometrica a 60fps.
+- [ ] Le visualizzazioni prive di senso pedagogico sono state sostituite da rappresentazioni grafiche concrete o rimosse dai template attivi.
+
+### Linear Algebra Curriculum
+- [ ] Sono presenti i 5 articoli didattici completi che coprono la progressione da $n$-upla a indipendenza lineare.
+- [ ] Tutti i passaggi algebrici e le definizioni nei file `.md` utilizzano LaTeX corretto (`$...$` e `$$...$$`) e non contengono salti logici non dimostrati.
+- [ ] È attivo e funzionante il widget visuale per esplorare vettori, somma vettoriale e combinazioni lineari.
+
+### Code Quality & Verification
+- [ ] `flutter analyze` restituisce 0 errori e 0 warning.
+- [ ] `flutter test test/curriculum_dag_test.dart` conferma che il DAG è rigorosamente aciclico.
+- [ ] `flutter test test/markdown_content_loader_test.dart` e l'intera suite `flutter test` superano tutti i test con codice di uscita 0.
+
 

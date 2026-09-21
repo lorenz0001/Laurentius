@@ -6,6 +6,7 @@ import 'algebra_catalog.dart';
 import 'arithmetic_catalog.dart';
 import 'calculus_catalog.dart';
 import 'geometry_trig_catalog.dart';
+import 'linear_algebra_catalog.dart';
 import 'physics_catalog.dart';
 
 /// Registro centrale del Curriculum Matematico e Scientifico di Laurentius.
@@ -35,6 +36,7 @@ class CurriculumRegistry {
       ...GeometryTrigCatalog.getAllNodes(),
       ...CalculusCatalog.getAllNodes(),
       ...PhysicsCatalog.getAllNodes(),
+      ...LinearAlgebraCatalog.getAllNodes(),
     ];
   }
 
@@ -132,5 +134,12 @@ class CurriculumRegistry {
     'ele_power_01': ['ele_ohm_01'],
     'ele_joule_01': ['ele_power_01', 'mat_fund_calc_01'],
     'chem_ph_01': ['mat_log_01'],
+
+    // Algebra Lineare
+    'lin_alg_01_tuples': ['mat_add_01', 'mat_pythagoras_01'],
+    'lin_alg_02_vectors': ['lin_alg_01_tuples'],
+    'lin_alg_03_operations': ['lin_alg_02_vectors'],
+    'lin_alg_04_span': ['lin_alg_03_operations'],
+    'lin_alg_05_independence': ['lin_alg_04_span'],
   };
 }
